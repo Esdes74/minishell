@@ -17,6 +17,9 @@ int	main(void)
 	char	*buff;
 	int		id;
 
+	init_list(&list);
+	if (add_list(getpid(), &list) == 1)
+		return (error(ADD_LIST), 1);
 	signals();
 	while (1)
 	{

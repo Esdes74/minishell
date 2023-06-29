@@ -40,7 +40,8 @@ typedef enum e_type {
 	QUEUE = 12,
 	DICO = 13,
 	TREE = 14,
-	ALEA = 15
+	ALEA = 15,
+	PID = 16,
 }	t_type;
 
 typedef enum e_bool{

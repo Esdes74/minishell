@@ -33,7 +33,9 @@ HEADER := minishell.h
 
 # Definition of files variables
 SRC := main.c \
-	   signals.c
+	   signals.c \
+	   add_list.c \
+	   error.c
 OBJ := $(SRC:%.c=.obj/%.o)
 
 #
@@ -47,7 +49,7 @@ $(NAME): $(OBJ)
 	$(CC) $(FLAGS) $(OBJ) -o $@ -L. $(LIB) $(LIBRAIRIE)
 
 .obj/%.o: %.c $(HEADER) $(LIB)
-	$(CC) $(FLAGS) $(INC) -c $< -o $@ 
+	$(CC) $(FLAGS) $(INC) -c $< -o $@ $(LIBRAIRIE)
 
 $(LIB): FORCE
 	make -C libft

@@ -13,26 +13,42 @@
 #include "minishell.h"
 
 static void	handle_control_c(int sig);
-static void	test(int sig);
+static void	kill_all(int sig);
 
 void	signals(void)
 {
 	signal(CON_C, handle_control_c);
-	signal(5, test);
+	signal(KILL_ALL, kill_all);
+	signal(SCAN, scan_all);
 }
 
 static void	handle_control_c(int sig)
 {
 	(void) sig;
 
-	printf("\nc'est la fin\n");
-	kill(0, SIGKILL);
-	/* exit(0); */
+	printf("\ndébut du scan des processus enfants pour tous les fermer\n");
+	kill((int) list->head->data_cell->data, SCAN);
 }
 
-static void	test(int sig)
+static void	kill_all(int sig)
+{
+	// TODO : Mettre en place l'algo de destruction des différentes 
+	// structures
+	// Faire une boucle pour trouver a partir de quand on doit envoyer
+	// le signal dans la liste puis détruire les structures et envoyer 
+	// le signal afin de pouvoir fermer le process en cours
+	(void) sig;
+	kill(KILL_ALL);
+	annihilation(list, free, DEBUG);
+	printf("exited\n");
+	exit(0);
+}
+
+static void	scan_all(int sig)
 {
 	(void) sig;
 
-	printf("ceci est un test\n");
+	// TODO : faire une boucle pour commencer a scanner la liste du 
+	// premier process et envoyer le signal kill_all a tous les process
+	// enfants du process 1
 }

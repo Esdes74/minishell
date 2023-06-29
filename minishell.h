@@ -22,8 +22,23 @@
 
 # include "libft/libft.h"
 
+# define KILL_ALL -1
+# define SCAN -2
 # define CON_C SIGINT
+# define DEBUG 1
+
+t_list  list;
+
+typedef enum    e_error{
+    ADD_LIST,
+    MALLOC,
+    TAILING,
+}   t_error;
 
 void	signals(void);
+
+int     add_list(pid_t data, t_list *list);
+
+void    error(t_error err);
 
 #endif
