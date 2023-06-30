@@ -15,7 +15,7 @@
 int	main(void)
 {
 	char	*buff;
-	int		id;
+	// int		id;
 
 	init_list(&list);
 	if (add_list(getpid(), &list) == 1)
@@ -25,11 +25,9 @@ int	main(void)
 	{
 		buff = getcwd(NULL, 0);
 		readline(ft_strjoin(buff, "$ "));
-		id = fork();
-		if (id == -1)
-			return (1);
-		else if (id == 0)
-			sleep(2);
+		// id = fork();
+		// if (id == -1)
+		// 	return (1);
 	}
 	return (0);
 }

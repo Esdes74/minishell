@@ -14,41 +14,68 @@
 
 static void	handle_control_c(int sig);
 static void	kill_all(int sig);
+static void	scan_all(int sig);
+static void	quit(int sig);
 
 void	signals(void)
 {
 	signal(CON_C, handle_control_c);
 	signal(KILL_ALL, kill_all);
 	signal(SCAN, scan_all);
+	signal(EOF, quit);
 }
 
 static void	handle_control_c(int sig)
 {
 	(void) sig;
 
-	printf("\ndébut du scan des processus enfants pour tous les fermer\n");
-	kill((int) list->head->data_cell->data, SCAN);
+	printf("\ndébut du scan des processus enfants pour tous les fermer");
+	kill(*((pid_t *) list.head->data_cell->data), SCAN);
 }
 
 static void	kill_all(int sig)
 {
-	// TODO : Mettre en place l'algo de destruction des différentes 
-	// structures
-	// Faire une boucle pour trouver a partir de quand on doit envoyer
-	// le signal dans la liste puis détruire les structures et envoyer 
-	// le signal afin de pouvoir fermer le process en cours
-	(void) sig;
-	kill(KILL_ALL);
-	annihilation(list, free, DEBUG);
+	(void)	sig;
+	t_cell	*tmp;
+
+	tmp = list.head;
+	while (tmp != NULL && *((pid_t *) tmp->data_cell->data) != getpid())
+		tmp = tmp->next;
+	tmp = tmp->next;
+	while (tmp != NULL)
+	{
+		kill(*((pid_t *) tmp->data_cell->data), KILL_ALL);
+		tmp = tmp->next;
+	}
+	annihilation(&list, free, DEBUG);
 	printf("exited\n");
 	exit(0);
 }
 
 static void	scan_all(int sig)
 {
-	(void) sig;
+	(void)	sig;
+	t_cell	*tmp;
 
-	// TODO : faire une boucle pour commencer a scanner la liste du 
-	// premier process et envoyer le signal kill_all a tous les process
-	// enfants du process 1
+	if (list.len > 1)
+	{
+		while (list.len > 1)
+		{
+			tmp = untail_list(&list, DEBUG);
+			kill(*((pid_t *) tmp->data_cell->data), KILL_ALL);
+			free(tmp->data_cell->data);
+			free(tmp->data_cell);
+			free(tmp);
+		}
+	}
+}
+
+static void	quit(int sig)
+{
+	(void)	sig;
+
+	printf("exit");
+	scan_all(CON_C);
+	annihilation(&list, free, DEBUG);
+	exit(0);
 }
