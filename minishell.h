@@ -6,7 +6,7 @@
 /*   By: eslamber <eslamber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 15:35:11 by eslamber          #+#    #+#             */
-/*   Updated: 2023/06/27 16:53:02 by eslamber         ###   ########.fr       */
+/*   Updated: 2023/07/03 11:16:08 by eslamber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@
 # define CON_C SIGINT
 # define DEBUG 1
 
-t_list  list;
+extern t_list  list;
 
 typedef enum    e_error{
     ADD_LIST,
