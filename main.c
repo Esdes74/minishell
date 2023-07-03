@@ -14,20 +14,23 @@
 
 t_list	*list;
 
-int	main(void)
+int	main(int argc, char **argv, char **env)
 {
 	char	*buff;
 	char	*buf;
 	char	*test = NULL;
-	// int		id;
+	int		id;
+	char	*cmd;
 
 	list = (t_list *) malloc(sizeof(t_list));
 	if (list == NULL)
-		return (error(MALLOC), 1);
+		return (error(MALLOC, NULL), 1);
 	init_list(list);
 	if (add_list(getpid(), list) == 1)
-		return (error(ADD_LIST), 1);
+		return (error(ADD_LIST, NULL), 1);
 	signals();
+	using_history();
+	rl_bind_key('\t', rl_complete);
 	while (1)
 	{
 		buf = getcwd(NULL, 0);

@@ -15,7 +15,7 @@
 #
 
 # Compilation flags
-FLAGS := -Wall -Werror -Wextra
+FLAGS := -Wall -Werror -Wextra -g3
 CC := gcc
 
 #
@@ -35,7 +35,8 @@ HEADER := minishell.h
 SRC := main.c \
 	   signals.c \
 	   add_list.c \
-	   error.c
+	   error.c \
+	   cmd_build.c
 OBJ := $(SRC:%.c=.obj/%.o)
 
 #

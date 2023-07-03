@@ -19,6 +19,7 @@
 # include <signal.h>
 # include <readline/readline.h>
 # include <readline/history.h>
+# include <sys/wait.h>
 
 # include "libft/libft.h"
 
@@ -34,14 +35,17 @@ typedef enum    e_error{
     ADD_LIST,
     MALLOC,
     TAILING,
+    CMD,
+    JOIN,
 }   t_error;
 
 void	signals(void);
 
 int     add_list(pid_t data, t_list *list);
 
-void    error(t_error err);
+void    error(t_error err, char *cmd);
 
 void	quit(void);
 
+char	*cmd_build(char *str, char **env);
 #endif

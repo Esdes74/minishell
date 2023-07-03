@@ -13,7 +13,7 @@
 #include "minishell.h"
 #define ERR STDERR_FILENO
 
-void    error(t_error err)
+void    error(t_error err, char *cmd)
 {
     if (err == ADD_LIST)
         ft_printf_fd(ERR, "Error : Problem when adding pid to list.\n");
@@ -21,5 +21,10 @@ void    error(t_error err)
         ft_printf_fd(ERR, "Error : Problem with malloc function.\n");
     if (err == TAILING)
         ft_printf_fd(ERR, "Error : Problem tailing PID tailing in list.\n");
-    exit(1);
+    if (err == CMD)
+        ft_printf_fd(ERR, "Error : command not found %s\n", cmd);
+    if (err == JOIN)
+        ft_printf_fd(ERR, "Error : Problem with strjoin function\n");
+    if (cmd == NULL)
+        exit(1);
 }
