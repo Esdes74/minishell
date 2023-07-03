@@ -6,7 +6,7 @@
 /*   By: eslamber <eslamber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 15:35:11 by eslamber          #+#    #+#             */
-/*   Updated: 2023/07/03 11:16:08 by eslamber         ###   ########.fr       */
+/*   Updated: 2023/07/03 14:10:33 by eslamber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,13 @@
 
 # include "libft/libft.h"
 
-# define KILL_ALL -1
+# define KILL_ALL -3
 # define SCAN -2
+# define QUIT -1
 # define CON_C SIGINT
 # define DEBUG 1
 
-extern t_list  list;
+extern t_list  *list;
 
 typedef enum    e_error{
     ADD_LIST,
@@ -40,5 +41,7 @@ void	signals(void);
 int     add_list(pid_t data, t_list *list);
 
 void    error(t_error err);
+
+void	quit(void);
 
 #endif
