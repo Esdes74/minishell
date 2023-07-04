@@ -14,14 +14,16 @@
 
 t_list	*list;
 
-int	main(void)
+int	main(int argc, char **argv, char **env)
 {
 	char	*buff;
 	char	*buf;
 	char	*bufff;
 	char	*test = NULL;
 	// int		id;
-	// char	*cmd;
+	char	*cmd;
+	(void)argc;
+	(void)argv;
 
 	list = (t_list *) malloc(sizeof(t_list));
 	if (list == NULL)
@@ -39,6 +41,8 @@ int	main(void)
 		buff = ft_strjoin(buf, "$ ");
 		free(buf);
 		test = readline(buff);
+		// récupère la string complete
+		cmd = cmd_build(test, env);
 		historic_fct(bufff, test);
 		bufff = test;
 		free(buff);

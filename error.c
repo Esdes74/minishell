@@ -25,6 +25,8 @@ void    error(t_error err, char *cmd)
         ft_printf_fd(ERR, "Error : command not found %s\n", cmd);
     if (err == JOIN)
         ft_printf_fd(ERR, "Error : Problem with strjoin function\n");
+    if (err == PIPE)
+        ft_printf_fd(ERR, "Error : Problem with pipe function\n");
     if (cmd == NULL)
         exit(1);
 }

@@ -37,6 +37,7 @@ typedef enum    e_error{
     TAILING,
     CMD,
     JOIN,
+    PIPE,
 }   t_error;
 
 void	signals(void);
