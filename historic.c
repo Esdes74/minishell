@@ -6,7 +6,7 @@
 /*   By: dbaule <dbaule@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/03 11:30:24 by dbaule            #+#    #+#             */
-/*   Updated: 2023/07/03 16:23:30 by dbaule           ###   ########.fr       */
+/*   Updated: 2023/07/04 10:26:16 by dbaule           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,3 +23,13 @@ History :
 -   history (nombre : n) renvoie les n dernieres commandes
 */
 
+void    historic_fct(char *bufff, char *test)
+{
+    if (bufff == NULL)
+        add_history(test);
+    else if (bufff != NULL)
+    {
+        if (strncmp(test, bufff, ft_strlen(test)) != 0)
+            add_history(test);
+    }
+}

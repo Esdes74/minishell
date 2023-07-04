@@ -14,13 +14,14 @@
 
 t_list	*list;
 
-int	main(int argc, char **argv, char **env)
+int	main(void)
 {
 	char	*buff;
 	char	*buf;
+	char	*bufff;
 	char	*test = NULL;
-	int		id;
-	char	*cmd;
+	// int		id;
+	// char	*cmd;
 
 	list = (t_list *) malloc(sizeof(t_list));
 	if (list == NULL)
@@ -31,12 +32,15 @@ int	main(int argc, char **argv, char **env)
 	signals();
 	using_history();
 	rl_bind_key('\t', rl_complete);
+	bufff = NULL;
 	while (1)
 	{
 		buf = getcwd(NULL, 0);
 		buff = ft_strjoin(buf, "$ ");
 		free(buf);
 		test = readline(buff);
+		historic_fct(bufff, test);
+		bufff = test;
 		free(buff);
 		if (test == NULL)
 			quit();

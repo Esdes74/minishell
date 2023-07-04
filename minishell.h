@@ -48,4 +48,6 @@ void    error(t_error err, char *cmd);
 void	quit(void);
 
 char	*cmd_build(char *str, char **env);
+
+void    historic_fct(char *bufff, char *test);
 #endif
