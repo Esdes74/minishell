@@ -60,6 +60,7 @@ typedef struct s_list {
 	t_type	type_lst;
 	t_cell	*head;
 	t_cell	*tail;
+	int		fd[2];
 }	t_list;
 
 // Initailisation of head of list
