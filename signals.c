@@ -6,7 +6,7 @@
 /*   By: eslamber <eslamber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 16:50:47 by eslamber          #+#    #+#             */
-/*   Updated: 2023/07/04 17:32:25 by eslamber         ###   ########.fr       */
+/*   Updated: 2023/07/05 12:07:29 by eslamber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static void	handle_control_c(int sig)
 {
 	(void) sig;
 
-	printf("\ndébut du scan des processus enfants pour tous les fermer\n");
+	printf("\ndébut du scan des processus enfants pour tous les fermer id(%d)\n", getpid());
 	kill(*((pid_t *) list->head->data_cell->data), SCAN);
 	/* scan_all(SCAN); */
 }
@@ -45,7 +45,7 @@ static void	kill_all(int sig)
 	(void)	sig;
 	t_cell	*tmp;
 
-	printf("Fonction KILL\n");
+	printf("Fonction KILL id(%d)\n", getpid());
 	tmp = list->head;
 	while (tmp != NULL && *((pid_t *) tmp->data_cell->data) != getpid())
 		tmp = tmp->next;
@@ -57,7 +57,7 @@ static void	kill_all(int sig)
 		tmp = tmp->next;
 	}
 	annihilation(list, free, DEBUG);
-	printf("exited\n");
+	printf("exited id(%d)\n", getpid());
 	exit(0);
 }
 
@@ -67,13 +67,14 @@ static void	scan_all(int sig)
 	t_cell	*tmp;
 	int		i;
 
-	printf("Fonction SCAN\n");
+	printf("Fonction SCAN id(%d)\n", getpid());
 	if (list->len > 1)
 	{
 		i = 0;
 		while (list->len > 0)
 		{
-			tmp = untail_list(list, DEBUG);
+			tmp = unstack_list(list, DEBUG);
+			printf("tmp = %d\n", *((pid_t *) tmp->data_cell->data));
 			if (i != 0)
 				kill(*((pid_t *) tmp->data_cell->data), KILL_ALL);
 			free(tmp->data_cell->data);
@@ -82,6 +83,6 @@ static void	scan_all(int sig)
 			i++;
 		}
 		if (add_list(getpid(), list) == 1)
-			return (error(ADD_LIST));
+			return (error(ADD_LIST, NULL));
 	}
 }
