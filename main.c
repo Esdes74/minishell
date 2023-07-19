@@ -44,7 +44,7 @@ int	main(int argc, char **argv, char **env)
 		free(buf);
 		test = readline(buff);
 		if (test == NULL)
-			return (free(bufff), quit(), 1);
+			return (free(bufff), free(buff), quit(), 1);
 		// récupère la string complete
 		cmd = cmd_build(test, env);
 		historic_fct(bufff, test);

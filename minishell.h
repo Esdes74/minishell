@@ -51,4 +51,15 @@ void	quit(void);
 char	*cmd_build(char *str, char **env);
 
 void    historic_fct(char *bufff, char *test);
+
+// Builtins
+char    *pwd(void);
+
+void    env(char **envir);
+
+void    exitt(void);
+
+void    echo(char *arg, int option);
+
+void    cd(char *path);
 #endif
