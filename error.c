@@ -27,6 +27,12 @@ void    error(t_error err, char *cmd)
         ft_printf_fd(ERR, "Error : Problem with strjoin function\n");
     if (err == PIPE)
         ft_printf_fd(ERR, "Error : Problem with pipe function\n");
+    if (err == FORK)
+        ft_printf_fd(ERR, "Error : Problem with the fork function\n");
+    if (err == SPLIT)
+        ft_printf_fd(ERR, "Error : Problem with split function\n");
+    if (err == EXEC)
+        ft_printf_fd(ERR, "Error: problem with the execve function\n");
     if (cmd == NULL)
         exit(1);
 }

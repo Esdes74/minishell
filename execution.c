@@ -12,10 +12,8 @@
 
 #include "minishell.h"
 
-static int	exec_child(t_pipex *pip, int ac, char **av, char **environ);
-static int	dup_in_file_child(t_pipex *pip, char **av);
-static int	dup_out_file_child(t_pipex *pip, char **av, int ac);
-static int	execute_child(t_pipex *pip, char **environ, char **av);
+static int	exec_child(t_cmd *pip, char *str, char **environ);
+static int	execute_child(t_cmd *pip, char **environ, char *str);
 
 /*
 Forking -> creating a child process that will execute command
@@ -28,7 +26,7 @@ int	exec(t_cmd *struc, char *str, char **environ)
 
 	id = fork();
 	if (id == -1)
-		return (errors(FORK, "0"), 1);
+		return (error(FORK, "0"), 1);
 	if (id == 0)
 	{
 		err = exec_child(struc, str, environ);
@@ -48,8 +46,8 @@ static int	exec_child(t_cmd *pip, char *str, char **environ)
 {
 	int	err;
 
-    dup2(fd->infile, STDIN_FILENO);
-    dup2(fd->outfile, STDOUT_FILENO);
+    // dup2(fd->infile, STDIN_FILENO);
+    // dup2(fd->outfile, STDOUT_FILENO);
 	err = execute_child(pip, environ, str);
 	if (err == 1)
 		return (1);
@@ -68,13 +66,13 @@ static int	execute_child(t_cmd *pip, char **environ, char *str)
 
 	splitted = ft_split(str, ' '); //au parsing les commande genre ls -a devront être envoyé comme ça "ls -a"
 	if (splitted == NULL)
-		return (errors(SPLIT, "0"), 1);
+		return (error(SPLIT, "0"), 1);
 	cmd = cmd_build(splitted[0], environ);
 	if (cmd == NULL)
 		return (anihilation(splitted), 1);
-	if (close_all_pipes(pip) == 1)
-		return (free(cmd), anihilation(splitted), 2);
+	// if (close_all_pipes(pip) == 1)
+	// 	return (free(cmd), anihilation(splitted), 2);
 	execve(cmd, splitted, environ);
-	errors(EXEC, "0");
+	error(EXEC, "0");
 	return (free(cmd), anihilation(splitted), 2);
 }

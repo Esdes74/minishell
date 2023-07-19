@@ -38,6 +38,9 @@ typedef enum    e_error{
     CMD,
     JOIN,
     PIPE,
+    FORK,
+    SPLIT,
+    EXEC,
 }   t_error;
 
 typedef struct t_cmd
@@ -74,9 +77,9 @@ void    echo(char *arg, int option);
 void    cd(char *path);
 void    anihilation(char **str);
 
-int     close_all_pipes(t_pipex *pi);
+int     close_all_pipes(t_cmd *pi);
 
 char	*ft_strjoin_pip(char *dest, char *src);
 
-int	exec(t_cmd *struc, char *str, char **environ);
+int     cmd_center(char *str, t_cmd *fd, char **env);
 #endif
