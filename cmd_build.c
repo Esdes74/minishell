@@ -26,6 +26,8 @@ char	*cmd_build(char *str, char **env)
 	cmd = check_slash(cmd, str);
 	if (cmd == NULL && ft_in('/', str) == 1)
 		return (NULL);
+	if (cmd != NULL)
+		return (cmd);
 	while (env[i])
 	{
 		new = ft_strncmp(env[i], "PATH=", 5);
@@ -35,7 +37,8 @@ char	*cmd_build(char *str, char **env)
 	}
 	if (!env[i])
 		return (NULL);
-	cmd = ft_strdup(&env[i][5]);
+	if (cmd == NULL)
+		cmd = ft_strdup(&env[i][5]);
 	if (!cmd)
 		return (perror("Error"), NULL);
 	cmd = search_command(str, cmd);
@@ -59,18 +62,18 @@ static char	*search_command(char *str, char *new)
 	{
 		new = ft_strjoin(path[i], "/");
 		if (new == NULL)
-			return (error(JOIN, "0"), NULL);
+			return (anihilation(path), error(JOIN, "0"), NULL);
 		cmd = ft_strjoin(new, str);
 		free(new);
 		new = NULL;
 		if (cmd == NULL)
-			return (error(JOIN, "0"), NULL);
+			return (anihilation(path), error(JOIN, "0"), NULL);
 		if (access(cmd, F_OK | X_OK) == 0)
-			return (cmd);
+			return (anihilation(path), cmd);
 		free(cmd);
 		cmd = NULL;
 	}
-	return (free(cmd), NULL);
+	return (anihilation(path), free(cmd), NULL);
 }
 
 static char	*check_slash(char *cmd, char *str)

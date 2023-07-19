@@ -40,6 +40,16 @@ typedef enum    e_error{
     PIPE,
 }   t_error;
 
+typedef struct t_cmd
+{
+    char    *infile;
+    char    *outfile;
+    int     nb_pipe;
+    int     pipe;
+    int     nb_proc;
+    int     heredoc;
+} t_cmd;
+
 void	signals(void);
 
 int     add_list(pid_t data, t_list *list);
@@ -62,4 +72,11 @@ void    exitt(void);
 void    echo(char *arg, int option);
 
 void    cd(char *path);
+void    anihilation(char **str);
+
+int     close_all_pipes(t_pipex *pi);
+
+char	*ft_strjoin_pip(char *dest, char *src);
+
+int	exec(t_cmd *struc, char *str, char **environ);
 #endif

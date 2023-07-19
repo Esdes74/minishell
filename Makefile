@@ -38,7 +38,10 @@ SRC := main.c \
 	   error.c \
 	   cmd_build.c \
 	   historic.c \
-	   builtins.c
+	   builtins.c \
+	   free_struc.c \
+	   cmd_center.c \
+	   execution.c \
 OBJ := $(SRC:%.c=.obj/%.o)
 
 #

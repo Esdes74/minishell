@@ -24,6 +24,7 @@ int	main(int argc, char **argv, char **env)
 	char	*cmd;
 	(void)	argc;
 	(void)	argv;
+	t_cmd	*okok;
 
 	printf("main process id(%d)\n", getpid());
 	cmd = NULL;
@@ -45,8 +46,7 @@ int	main(int argc, char **argv, char **env)
 		test = readline(buff);
 		if (test == NULL)
 			return (free(bufff), free(buff), quit(), 1);
-		// récupère la string complete
-		cmd = cmd_build(test, env);
+		cmd = cmd_center(test, okok, env);
 		historic_fct(bufff, test);
 		free(bufff);
 		bufff = test;
