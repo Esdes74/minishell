@@ -82,4 +82,6 @@ int     close_all_pipes(t_cmd *pi);
 char	*ft_strjoin_pip(char *dest, char *src);
 
 int     cmd_center(char *str, t_cmd *fd, char **env);
+
+int     parsing_check(char *rd_line);
 #endif

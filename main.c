@@ -19,7 +19,7 @@ int	main(int argc, char **argv, char **env)
 	char	*buff;
 	char	*buf;
 	char	*bufff;
-	char	*test = NULL;
+	char	*rd_line = NULL;
 	/* int		id; */
 	char	*cmd;
 	(void)	argc;
@@ -43,15 +43,18 @@ int	main(int argc, char **argv, char **env)
 		buf = getcwd(NULL, 0);
 		buff = ft_strjoin(buf, "$ ");
 		free(buf);
-		test = readline(buff);
-		if (test == NULL)
+		rd_line = readline(buff);
+		if (rd_line == NULL)
 			return (free(bufff), free(buff), quit(), 1);
-		cmd_center(test, &okok, env);
-		historic_fct(bufff, test);
+		if (parsing_check(rd_line) == 0)
+		{
+			cmd_center(rd_line, &okok, env);
+			free(buff);
+			free(cmd);
+		}
+		historic_fct(bufff, rd_line);
 		free(bufff);
-		bufff = test;
-		free(buff);
-		free(cmd);
+		bufff = rd_line;
 		/* id = fork(); */
 		/* if (id == -1) // TODO : tester correctement le ctrl+C en mettant les id des enfants dans la liste */
 		/* 	return (1); */
