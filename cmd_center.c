@@ -21,6 +21,7 @@
 #include "minishell.h"
 static int search_buildins(char *str, char **envi);
 static int	execute_child(char **environ, char *str);
+static char *echo_string(char *str, int *option);
 
 int cmd_center(char *str, t_cmd *fd, char **env) //j'ai enlever la condtion si env != NULL 
 {
@@ -48,15 +49,27 @@ int cmd_center(char *str, t_cmd *fd, char **env) //j'ai enlever la condtion si e
 
 static int search_buildins(char *str, char **envi)
 {
+    char    *buf;
+    int     option;
+
+    option = 0;
     if (strncmp(str, "pwd", 3) == 0)
         return (pwd(), 1);
     else if (strncmp(str, "exit", 4) == 0)
         return (exitt(), 1);
-    else if (strncmp(str, "env", 3) == 0) // segfault
+    else if (strncmp(str, "env", 3) == 0)
         return (env(envi), 1);
-    else if (strncmp(str, "echo", 4) == 0) // prend pas en compte le \n sois la string de base, soit option ?
-        return (echo(str, 0), 1);
-    else if (strncmp(str, "cd", 2) == 0) // marche pas vraiment ?
+    else if (strncmp(str, "echo ", 5) == 0)
+    {
+        buf = echo_string(str, &option);
+        if (buf == NULL)
+            return (error(MALLOC, NULL), 2);
+        if (option == 1)
+            return (echo(buf, option), 1);
+        else
+            return(echo(buf, option), 1);
+    }
+    else if (strncmp(str, "cd ", 3) == 0)
         return (cd(pwd()), 1);
     return (0);
 }
@@ -77,4 +90,56 @@ static int	execute_child(char **environ, char *str)
 	execve(cmd, splitted, environ);
 	error(EXEC, "0");
 	return (free(cmd), anihilation(splitted), 2);
+}
+
+static char *echo_string(char *str, int *option)
+{
+    char *buf;
+    int i;
+    int j;
+
+    i = 5;
+    j = 0;
+    while (str[i] == ' ')
+        i++;
+    if (!str[i])
+    {
+        buf = ft_calloc(1, 1);
+        if (buf == NULL)
+            return (NULL);
+        return (buf);
+    }
+    if (strncmp(str + i, "echo", 4) == 0)
+        i = i + 4;
+    if (strncmp(str + i, "-n", 2) == 0)
+    {
+        *option = 1;
+        i = i + 3;
+        if (str[i] == '\0')
+        {
+            buf = ft_calloc(1, 1);
+            return (buf);
+        }
+    }
+    buf = ft_calloc(sizeof(char), (ft_strlen(str) - i));
+    if (buf == NULL)
+        return (NULL);
+    while (str[i] == ' ')
+        i++;
+    while (str[i])
+    {
+        if (str[i] == ' ' && str[i + 1] == ' ')
+        {
+            while (str[i] == ' ')
+                i++;
+            if (str[i] == '\0')
+                return(buf);
+            i--;
+            buf[j] = str[i];
+        }
+        buf[j] = str[i];
+        j++;
+        i++;
+    }
+    return (buf);
 }
