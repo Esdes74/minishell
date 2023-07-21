@@ -135,7 +135,6 @@ static char *echo_string(char *str, int *option)
             if (str[i] == '\0')
                 return(buf);
             i--;
-            buf[j] = str[i];
         }
         buf[j] = str[i];
         j++;
