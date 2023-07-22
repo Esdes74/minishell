@@ -19,27 +19,26 @@
 */
 
 #include "minishell.h"
-static int search_buildins(char *str, char **envi);
+static int  search_builtins(char *str, char **envi);
 static int	execute_child(char **environ, char *str);
-static char *echo_string(char *str, int *option);
+static char *adapt_string(char *str, int *option);
+static char *determine_echo_or_cd(char *str, int *i, int *option);
 
 int cmd_center(char *str, t_cmd *fd, char **env) //j'ai enlever la condtion si env != NULL 
 {
 	int		i;
+    int     check;
     fd->infile = NULL;
     fd->outfile = NULL;
 
     i = 0;
-    if (search_buildins(str, env) == 1)
+    check = search_builtins(str, env);
+    if (check == 1)
         return (0);
+    if (check == 2)
+        return (1);
     fd->infile = NULL;
     fd->outfile = NULL;
-    // if (fd->infile == NULL && fd->outfile == NULL)
-    //     i = exec(fd, str, env);
-    // else if (fd->infile == NULL)
-    //     i = exec(fd, str, env);
-    // else if (fd->outfile == NULL)
-    //     i = exec(fd, str , env);
     if (execute_child(env, str) == 1)
         return (1);
     if (i == 2 || i == 1)
@@ -47,30 +46,34 @@ int cmd_center(char *str, t_cmd *fd, char **env) //j'ai enlever la condtion si e
     return (0);
 }
 
-static int search_buildins(char *str, char **envi)
+static int search_builtins(char *str, char **envi)
 {
     char    *buf;
     int     option;
+    int     i;
 
     option = 0;
-    if (strncmp(str, "pwd", 3) == 0)
+    i = 0;
+    while (str[i] == ' ') // actuellement  le probleme c'est si on met pas le echo en premier par exemple, il ne fonctionnera pas, mais avec un split avec les pipes ça dne devrais pas poser de soucis
+        i++;
+    if (ft_strncmp(str + i, "pwd", 3) == 0)
         return (pwd(), 1);
-    else if (strncmp(str, "exit", 4) == 0)
+    else if (ft_strncmp(str + i, "exit", 4) == 0)
         return (exitt(), 1);
-    else if (strncmp(str, "env", 3) == 0)
+    else if (ft_strncmp(str + i, "env", 3) == 0)
         return (env(envi), 1);
-    else if (strncmp(str, "echo ", 5) == 0)
+    else if (ft_strncmp(str + i, "echo", 4) == 0 || ft_strncmp(str + i, "cd", 2) == 0)
     {
-        buf = echo_string(str, &option);
+        buf = adapt_string(str, &option);
         if (buf == NULL)
             return (error(MALLOC, NULL), 2);
-        if (option == 1)
-            return (echo(buf, option), 1);
-        else
+        if (option == 0)
             return(echo(buf, option), 1);
+        else if (option == 1)
+            return (echo(buf, option), 1);
+        else if (option == 2)
+            return (cd(buf), 1);
     }
-    else if (strncmp(str, "cd ", 3) == 0)
-        return (cd(pwd()), 1);
     return (0);
 }
 
@@ -92,41 +95,27 @@ static int	execute_child(char **environ, char *str)
 	return (free(cmd), anihilation(splitted), 2);
 }
 
-static char *echo_string(char *str, int *option)
+static char *adapt_string(char *str, int *option)
 {
     char *buf;
     int i;
     int j;
+    int k;
 
-    i = 5;
+    i = 0;
     j = 0;
     while (str[i] == ' ')
         i++;
-    if (!str[i])
-    {
-        buf = ft_calloc(1, 1);
-        if (buf == NULL)
-            return (NULL);
+    buf = determine_echo_or_cd(str, &i, option);
+    if (buf != NULL)
         return (buf);
-    }
-    if (strncmp(str + i, "echo", 4) == 0)
-        i = i + 4;
-    if (strncmp(str + i, "-n", 2) == 0)
-    {
-        *option = 1;
-        i = i + 3;
-        if (str[i] == '\0')
-        {
-            buf = ft_calloc(1, 1);
-            return (buf);
-        }
-    }
-    buf = ft_calloc(sizeof(char), (ft_strlen(str) - i));
+    k = ft_strlen(str) - i;
+    buf = ft_calloc(sizeof(char), k + 1);
     if (buf == NULL)
         return (NULL);
     while (str[i] == ' ')
         i++;
-    while (str[i])
+    while (j < k)
     {
         if (str[i] == ' ' && str[i + 1] == ' ')
         {
@@ -136,9 +125,66 @@ static char *echo_string(char *str, int *option)
                 return(buf);
             i--;
         }
-        buf[j] = str[i];
-        j++;
+        if (str[i] != '"')
+        {
+            buf[j] = str[i];
+            j++;
+        }
         i++;
     }
     return (buf);
+}
+
+static char     *determine_echo_or_cd(char *str, int *i, int *option)
+{
+    char *buf;
+
+    if (ft_strncmp(str + *i, "echo", 4) == 0)
+    {
+        *i = *i + 4;
+        if (str[*i] == '\0')
+        {
+            buf = ft_calloc(1, 1);
+            return (buf);
+        }
+        if (str[*i] != ' ')
+            return (*option = 3, NULL);
+        while (str[*i] == ' ' || str[*i] == '"') // je sais pas pourquoi mais je compilait pas avec i++; ?
+            *i += 1;
+        if (str[*i] == '\0')
+        {
+            buf = ft_calloc(1, 1);
+            return (buf);
+        }
+        if (ft_strncmp(str + *i, "-n", 2) == 0)
+        {
+            *option = 1;
+            *i = *i + 2;
+            if (str[*i] == '\0')
+            {
+                buf = ft_calloc(1, 1);
+                return (buf);
+            }
+            while (str[*i] == '"' || str[*i] == ' ' || str[*i] == '\n')
+                *i += 1;
+            if (str[*i] == '\0')
+            {
+                buf = ft_calloc(1, 1);
+                return (buf);
+            }
+        }
+    }
+    else if (ft_strncmp(str + *i, "cd", 2) == 0)
+    {
+        *i = *i + 2;
+        if (str[*i] == 0)
+        {
+            buf = ft_calloc(1, 1);
+            return (buf);
+        }
+        if (str[*i] != ' ')
+            return(*option = 3, NULL);
+        *option = 2;
+    }
+    return (NULL);
 }
