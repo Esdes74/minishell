@@ -33,7 +33,7 @@ int cmd_center(char *str, t_cmd *fd, char **env) //j'ai enlever la condtion si e
 
     i = 0;
     check = search_builtins(str, env);
-    if (check == 1)
+    if (check == 1) 
         return (0);
     if (check == 2)
         return (1);
@@ -56,7 +56,7 @@ static int search_builtins(char *str, char **envi)
     i = 0;
     while (str[i] == ' ') // actuellement  le probleme c'est si on met pas le echo en premier par exemple, il ne fonctionnera pas, mais avec un split avec les pipes ça dne devrais pas poser de soucis
         i++;
-    if (ft_strncmp(str + i, "pwd", 3) == 0)
+    if (ft_strncmp(str + i, "pwd ", ft_strlen(str)) == 0) // pas sur sur
         return (pwd(), 1);
     else if (ft_strncmp(str + i, "exit", 4) == 0)
         return (exitt(), 1);
@@ -109,12 +109,12 @@ static char *adapt_string(char *str, int *option)
     buf = determine_echo_or_cd(str, &i, option);
     if (buf != NULL)
         return (buf);
+    while (str[i] == ' ')
+        i++;
     k = ft_strlen(str) - i;
     buf = ft_calloc(sizeof(char), k + 1);
     if (buf == NULL)
         return (NULL);
-    while (str[i] == ' ')
-        i++;
     while (j < k)
     {
         if (str[i] == ' ' && str[i + 1] == ' ')
@@ -135,7 +135,7 @@ static char *adapt_string(char *str, int *option)
     return (buf);
 }
 
-static char     *determine_echo_or_cd(char *str, int *i, int *option)
+static char     *determine_echo_or_cd(char *str, int *i, int *option) // gère mieux les "" et ''
 {
     char *buf;
 
@@ -149,7 +149,7 @@ static char     *determine_echo_or_cd(char *str, int *i, int *option)
         }
         if (str[*i] != ' ')
             return (*option = 3, NULL);
-        while (str[*i] == ' ' || str[*i] == '"') // je sais pas pourquoi mais je compilait pas avec i++; ?
+        while (str[*i] == ' ' || str[*i] == '"')
             *i += 1;
         if (str[*i] == '\0')
         {
@@ -165,7 +165,7 @@ static char     *determine_echo_or_cd(char *str, int *i, int *option)
                 buf = ft_calloc(1, 1);
                 return (buf);
             }
-            while (str[*i] == '"' || str[*i] == ' ' || str[*i] == '\n')
+            while (str[*i] == '"' || str[*i] == ' ')
                 *i += 1;
             if (str[*i] == '\0')
             {
@@ -182,6 +182,7 @@ static char     *determine_echo_or_cd(char *str, int *i, int *option)
             buf = ft_calloc(1, 1);
             return (buf);
         }
+        // gérer si cd == \0
         if (str[*i] != ' ')
             return(*option = 3, NULL);
         *option = 2;

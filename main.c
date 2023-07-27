@@ -48,7 +48,8 @@ int	main(int argc, char **argv, char **env)
 			return (free(bufff), free(buff), quit(), 1);
 		if (parsing_check(rd_line) == 0)
 		{
-			cmd_center(rd_line, &okok, env);
+			if (cmd_center(rd_line, &okok, env) == 1)
+				return (free(buff), free(cmd), exit(1));
 			free(buff);
 			free(cmd);
 		}
