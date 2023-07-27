@@ -19,11 +19,13 @@ int	main(int argc, char **argv, char **env)
 	char	*buff;
 	char	*buf;
 	char	*bufff;
+	char	**bu;
 	char	*rd_line = NULL;
 	/* int		id; */
 	char	*cmd;
 	(void)	argc;
 	(void)	argv;
+	(void)	env;
 
 	cmd = NULL;
 	list = (t_list *) malloc(sizeof(t_list));
@@ -44,16 +46,23 @@ int	main(int argc, char **argv, char **env)
 		rd_line = readline(buff);
 		if (rd_line == NULL)
 			return (free(bufff), free(buff), quit(), 1);
-		if (parsing_check(rd_line) == 0)
+		bu = second_parsing_check(rd_line);
+		int i = 0;
+		while (bu[i])
 		{
-			if (cmd_center_simple(rd_line, env) == 1)
-				return (free(buff), free(cmd), exit(1), 1);
-			free(buff);
-			free(cmd);
+			ft_printf(bu[i]);
+			i++;
 		}
-		historic_fct(bufff, rd_line);
-		free(bufff);
-		bufff = rd_line;
+		// if (bu == 0)
+		// {
+		// 	if (cmd_center_simple(rd_line, env) == 1)
+		// 		return (free(buff), free(cmd), exit(1), 1);
+		// 	free(buff);
+		// 	free(cmd);
+		// }
+		// historic_fct(bufff, rd_line);
+		// free(bufff);
+		// bufff = rd_line;
 		/* id = fork(); */
 		/* if (id == -1) // TODO : tester correctement le ctrl+C en mettant les id des enfants dans la liste */
 		/* 	return (1); */

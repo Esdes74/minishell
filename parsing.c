@@ -53,3 +53,88 @@ int parsing_check(char *rd_line) // on peux compter le nombrede pipe dans cette 
     }
     return (0);
 }
+
+char    **second_parsing_check(char *rd_line)
+{
+    int     i;
+    int     j;
+    int     flag;
+    int     compt;
+    int     *tab;
+    char    **spt;
+
+    i = 0;
+    flag = 0;
+    compt = 1;
+    while (rd_line[i])
+    {
+        if (rd_line[i] == '"' && flag == 0)
+            flag = 1;
+        else if (rd_line[i] == '"' && flag == 1)
+            flag = 0;
+        else if (rd_line[i] == '\'' && flag == 0)
+            flag = 2;
+        else if (rd_line[i] == '\'' && flag == 2)
+            flag = 0;
+        else if (rd_line[i] == '|' && flag == 0)
+            compt++;
+        i++;
+    }
+    spt = (char **) malloc(sizeof(char*) * (compt + 1));
+    if (spt == NULL)
+        return (error(MALLOC, NULL), NULL);
+    spt[compt] = NULL;
+    tab = (int *) ft_calloc(compt, sizeof(int));
+    if (tab == NULL)
+        return (error(MALLOC, NULL), NULL);
+    i = 0;
+    compt = 0;
+    flag = 0;
+    while (rd_line[i])
+    {
+        if (rd_line[i] == '"' && flag == 0)
+            flag = 1;
+        else if (rd_line[i] == '"' && flag == 1)
+            flag = 0;
+        else if (rd_line[i] == '\'' && flag == 0)
+            flag = 2;
+        else if (rd_line[i] == '\'' && flag == 2)
+            flag = 0;
+        else if (rd_line[i] == '|' && flag == 0)
+            compt++;
+        tab[compt] += 1;
+        i++;
+    }
+    i = 0;
+    while (spt[i] != NULL)
+    {
+        spt[i] = (char *) malloc(sizeof(char) * (tab[i] + 1));
+        if (spt[i] == NULL)
+            return (error(MALLOC, NULL), NULL);
+        i++;
+    }
+    i = 0;
+    compt = 0;
+    flag = 0;
+    j = 0;
+    while (rd_line[i])
+    {
+        if (rd_line[i] == '"' && flag == 0)
+            flag = 1;
+        else if (rd_line[i] == '"' && flag == 1)
+            flag = 0;
+        else if (rd_line[i] == '\'' && flag == 0)
+            flag = 2;
+        else if (rd_line[i] == '\'' && flag == 2)
+            flag = 0;
+        else if (rd_line[i] == '|' && flag == 0)
+        {
+            j = 0;
+            compt++;
+        }
+        spt[compt][j] = rd_line[i];
+        i++;
+        j++;
+    }
+    return (spt);
+}
