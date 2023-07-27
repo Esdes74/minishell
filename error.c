@@ -17,22 +17,24 @@ void    error(t_error err, char *cmd)
 {
     if (err == ADD_LIST)
         ft_printf_fd(ERR, "Error : Problem when adding pid to list.\n");
-    if (err == MALLOC)
+    else if (err == MALLOC)
         ft_printf_fd(ERR, "Error : Problem with malloc function.\n");
-    if (err == TAILING)
+    else if (err == TAILING)
         ft_printf_fd(ERR, "Error : Problem tailing PID tailing in list.\n");
-    if (err == CMD)
+    else if (err == CMD)
         ft_printf_fd(ERR, "Error : command not found %s\n", cmd);
-    if (err == JOIN)
+    else if (err == JOIN)
         ft_printf_fd(ERR, "Error : Problem with strjoin function\n");
-    if (err == PIPE)
+    else if (err == PIPE)
         ft_printf_fd(ERR, "Error : Problem with pipe function\n");
-    if (err == FORK)
+    else if (err == FORK)
         ft_printf_fd(ERR, "Error : Problem with the fork function\n");
-    if (err == SPLIT)
+    else if (err == SPLIT)
         ft_printf_fd(ERR, "Error : Problem with split function\n");
-    if (err == EXEC)
+    else if (err == EXEC)
         ft_printf_fd(ERR, "Error: problem with the execve function\n");
+    else if (err == TOO_MANY_ARG)
+        ft_printf_fd(ERR, "Error : too many arguments %s\n", cmd);
     if (cmd == NULL)
         exit(1);
 }

@@ -41,6 +41,7 @@ typedef enum    e_error{
     FORK,
     SPLIT,
     EXEC,
+    TOO_MANY_ARG,
 }   t_error;
 
 typedef struct t_cmd
@@ -53,6 +54,7 @@ typedef struct t_cmd
     int     heredoc;
 } t_cmd;
 
+// Générals
 void	signals(void);
 
 int     add_list(pid_t data, t_list *list);
@@ -60,8 +62,6 @@ int     add_list(pid_t data, t_list *list);
 void    error(t_error err, char *cmd);
 
 void	quit(void);
-
-char	*cmd_build(char *str, char **env);
 
 void    historic_fct(char *bufff, char *test);
 
@@ -72,16 +72,21 @@ void    env(char **envir);
 
 void    exitt(void);
 
-void    echo(char *arg, int option);
+void    echo(char **arg, int option);
 
 void    cd(char *path);
+
+// Fork and pipes
 void    anihilation(char **str);
 
 int     close_all_pipes(t_cmd *pi);
 
 char	*ft_strjoin_pip(char *dest, char *src);
 
-int     cmd_center(char *str, t_cmd *fd, char **env);
+// Commands
+char	*cmd_build(char *str, char **env);
+
+int     cmd_center(char *str, char **env);
 
 int     parsing_check(char *rd_line);
 #endif

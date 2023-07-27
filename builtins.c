@@ -19,12 +19,19 @@ void    env(char **envir)
         ft_printf(envir[i++]);
 }
 
-void    echo(char *arg, int option)
+void    echo(char **arg, int option)
 {
-    ft_printf(arg);
+    int i;
+
+    i = 1 + option;
+    while (arg[i])
+    {
+        ft_printf(arg[i]);
+        ft_printf(" ");
+        i++;
+    }
     if (option == 0)
         ft_printf("\n");
-    free(arg);
 }
 
 void    cd(char *path)

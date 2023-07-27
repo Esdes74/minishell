@@ -24,9 +24,7 @@ int	main(int argc, char **argv, char **env)
 	char	*cmd;
 	(void)	argc;
 	(void)	argv;
-	t_cmd	okok;
 
-	printf("main process id(%d)\n", getpid());
 	cmd = NULL;
 	list = (t_list *) malloc(sizeof(t_list));
 	if (list == NULL && cmd == NULL)
@@ -48,8 +46,8 @@ int	main(int argc, char **argv, char **env)
 			return (free(bufff), free(buff), quit(), 1);
 		if (parsing_check(rd_line) == 0)
 		{
-			if (cmd_center(rd_line, &okok, env) == 1)
-				return (free(buff), free(cmd), exit(1));
+			if (cmd_center(rd_line, env) == 1)
+				return (free(buff), free(cmd), exit(1), 1);
 			free(buff);
 			free(cmd);
 		}
