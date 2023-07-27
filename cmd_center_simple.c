@@ -24,7 +24,7 @@ static int	execute_child(char **environ, char **str);
 static char *determine_echo_or_cd(char **str, int *option);
 static char *return_buf(char **spt);
 
-int cmd_center(char *str, char **env) //j'ai enlever la condtion si env != NULL 
+int cmd_center_simple(char *str, char **env) //j'ai enlever la condtion si env != NULL 
 {
     int     check;
     char    **spt;

@@ -86,7 +86,7 @@ char	*ft_strjoin_pip(char *dest, char *src);
 // Commands
 char	*cmd_build(char *str, char **env);
 
-int     cmd_center(char *str, char **env);
+int     cmd_center_simple(char *str, char **env);
 
 int     parsing_check(char *rd_line);
 #endif

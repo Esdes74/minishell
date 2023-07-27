@@ -40,7 +40,7 @@ SRC := main.c \
 	   historic.c \
 	   builtins.c \
 	   free_struc.c \
-	   cmd_center.c \
+	   cmd_center_simple.c \
 	   parsing.c
 OBJ := $(SRC:%.c=.obj/%.o)
 
