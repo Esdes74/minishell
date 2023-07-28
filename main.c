@@ -51,8 +51,10 @@ int	main(int argc, char **argv, char **env)
 		while (bu[i])
 		{
 			ft_printf(bu[i]);
+			ft_printf("\n");
 			i++;
 		}
+		anihilation(bu);
 		// if (bu == 0)
 		// {
 		// 	if (cmd_center_simple(rd_line, env) == 1)

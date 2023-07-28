@@ -15,7 +15,7 @@
 #
 
 # Compilation flags
-FLAGS := -Wall -Werror -Wextra -g3
+FLAGS := -Wall -Werror -Wextra
 CC := gcc
 
 #
