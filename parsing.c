@@ -200,7 +200,7 @@ char    **second_parsing_check(char *rd_line)
         }
         if (rd_line[i] == ' ' && flag == 0)
             flag = 3;
-        if (flag != 3 && rd_line[i] != '|')
+        if (flag != 3 || (rd_line[i] != '|' && flag != 0))
         {
             ft_printf("compt = %d, j = %d\n", compt, j);
             spt[compt][j] = rd_line[i];
