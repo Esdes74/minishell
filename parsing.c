@@ -79,7 +79,11 @@ char    **second_parsing_check(char *rd_line)
             flag = 2;
         else if (rd_line[i] == '\'' && flag == 2)
             flag = 0;
-        else if ((rd_line[i] == '|' || rd_line[i] == ' ') && flag == 0)
+        else if (rd_line[i] == ' ' && flag == 0)
+            compt++;
+        if (rd_line[i] == '|' && rd_line[i - 1] != ' ' && flag == 0)
+            compt++;
+        if (rd_line[i] == '|' && rd_line[i + 1] != ' ' && flag == 0)
             compt++;
         if (rd_line[i] == ' ' && flag == 0)
             flag = 3;
@@ -108,12 +112,17 @@ char    **second_parsing_check(char *rd_line)
             flag = 2;
         else if (rd_line[i] == '\'' && flag == 2)
             flag = 0;
-        else if ((rd_line[i] == '|' || rd_line[i] == ' ') && flag == 0)
+        else if (rd_line[i] == ' ' && flag == 0)
+        {
             compt++;
-        if (rd_line[i] == ' ' && flag == 0)
             flag = 3;
+        }
+        if (rd_line[i] == '|' && rd_line[i - 1] != ' ' && flag == 0)
+            compt++;
         if (flag != 3)
             tab[compt] += 1;
+        if (rd_line[i] == '|' && rd_line[i + 1] != ' ' && flag == 0)
+            compt++;
         i++;
     }
     i = 0;
@@ -162,7 +171,28 @@ char    **second_parsing_check(char *rd_line)
                 compt++;
             }
         }
-        else if ((rd_line[i] == '|' || rd_line[i] == ' ') && flag == 0)
+        else if (rd_line[i] == ' ' && flag == 0)
+        {
+            spt[compt][j] = '\0';
+            j = 0;
+            compt++;
+        }
+        else if (rd_line[i] == '|' && flag == 0 \
+        && (rd_line[i - 1] != ' ' || \
+        (rd_line[i - 1] != ' ' && rd_line[i + 1] != ' ')))
+        {
+            spt[compt][j] = '\0';
+            j = 0;
+            compt++;
+            spt[compt][j] = '|';
+            j++;
+        }
+        else if (rd_line[i] == '|' && flag == 0 && rd_line[i - 1] == ' ')
+        {
+            spt[compt][j] = '|';
+            j++;
+        }
+        if (rd_line[i] == '|' && flag == 0 && rd_line[i + 1] != ' ')
         {
             spt[compt][j] = '\0';
             j = 0;
@@ -170,8 +200,9 @@ char    **second_parsing_check(char *rd_line)
         }
         if (rd_line[i] == ' ' && flag == 0)
             flag = 3;
-        if (flag != 3)
+        if (flag != 3 && rd_line[i] != '|')
         {
+            ft_printf("compt = %d, j = %d\n", compt, j);
             spt[compt][j] = rd_line[i];
             j++;
         }
