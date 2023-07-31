@@ -65,6 +65,8 @@ void	quit(void);
 
 void    historic_fct(char *bufff, char *test);
 
+int     verif_read(char *rd_line);
+
 // Builtins
 char    *pwd(void);
 
@@ -90,5 +92,5 @@ int     cmd_center_simple(char *str, char **env);
 
 int     parsing_check(char *rd_line);
 
-char    **second_parsing_check(char *rd_line);
+char    **second_parsing_check(char *rd_line, int *flag);
 #endif

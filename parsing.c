@@ -54,100 +54,102 @@ int parsing_check(char *rd_line) // on peux compter le nombrede pipe dans cette 
     return (0);
 }
 
-char    **second_parsing_check(char *rd_line)
+char    **second_parsing_check(char *rd_line, int *flag)
 {
     int     i;
     int     j;
-    int     flag;
     int     compt;
+    int     save_flag;
     int     *tab;
     char    **spt;
 
     i = 0;
-    flag = 0;
     compt = 1;
+    save_flag = *flag;
     spt = 0;
     while (rd_line[i])
     {
-        if (rd_line[i] != ' ' && flag == 3)
-            flag = 0;
-        if (rd_line[i] == '"' && flag == 0)
-            flag = 1;
-        else if (rd_line[i] == '"' && flag == 1)
-            flag = 0;
-        else if (rd_line[i] == '\'' && flag == 0)
-            flag = 2;
-        else if (rd_line[i] == '\'' && flag == 2)
-            flag = 0;
-        else if (rd_line[i] == ' ' && flag == 0)
+        if (rd_line[i] != ' ' && *flag == 3)
+            *flag = 0;
+        if (rd_line[i] == '"' && *flag == 0)
+            *flag = 1;
+        else if (rd_line[i] == '"' && *flag == 1)
+            *flag = 0;
+        else if (rd_line[i] == '\'' && *flag == 0)
+            *flag = 2;
+        else if (rd_line[i] == '\'' && *flag == 2)
+            *flag = 0;
+        else if (rd_line[i] == ' ' && *flag == 0)
             compt++;
-        if (rd_line[i] == '|' && rd_line[i - 1] != ' ' && flag == 0)
+        if (rd_line[i] == '|' && rd_line[i - 1] != ' ' && *flag == 0)
             compt++;
-        if (rd_line[i] == '|' && rd_line[i + 1] != ' ' && flag == 0)
+        if (rd_line[i] == '|' && rd_line[i + 1] != ' ' && *flag == 0)
             compt++;
-        if (rd_line[i] == ' ' && flag == 0)
-            flag = 3;
+        if (rd_line[i] == ' ' && *flag == 0)
+            *flag = 3;
         i++;
     }
-    ft_printf("compt = %d\n", compt);
     spt = (char **) malloc(sizeof(char *) * (compt + 1));
     if (spt == NULL)
         return (error(MALLOC, NULL), NULL);
     spt[compt] = NULL;
     tab = (int *) ft_calloc(compt, sizeof(int));
     if (tab == NULL)
-        return (error(MALLOC, NULL), NULL);
+        return (free(spt), error(MALLOC, NULL), NULL);
     i = 0;
     compt = 0;
-    flag = 0;
+    *flag = save_flag;
     while (rd_line[i])
     {
-        if (rd_line[i] != ' ' && flag == 3)
-            flag = 0;
-        if (rd_line[i] == '"' && flag == 0)
-            flag = 1;
-        else if (rd_line[i] == '"' && flag == 1)
-            flag = 0;
-        else if (rd_line[i] == '\'' && flag == 0)
-            flag = 2;
-        else if (rd_line[i] == '\'' && flag == 2)
-            flag = 0;
-        else if (rd_line[i] == ' ' && flag == 0)
+        if (rd_line[i] != ' ' && *flag == 3)
+            *flag = 0;
+        if (rd_line[i] == '"' && *flag == 0)
+            *flag = 1;
+        else if (rd_line[i] == '"' && *flag == 1)
+            *flag = 0;
+        else if (rd_line[i] == '\'' && *flag == 0)
+            *flag = 2;
+        else if (rd_line[i] == '\'' && *flag == 2)
+            *flag = 0;
+        else if (rd_line[i] == ' ' && *flag == 0)
         {
             compt++;
-            flag = 3;
+            *flag = 3;
         }
-        if (rd_line[i] == '|' && rd_line[i - 1] != ' ' && flag == 0)
+        if (rd_line[i] == '|' && rd_line[i - 1] != ' ' && *flag == 0)
             compt++;
-        if (flag != 3)
+        if (*flag != 3)
             tab[compt] += 1;
-        if (rd_line[i] == '|' && rd_line[i + 1] != ' ' && flag == 0)
+        if (rd_line[i] == '|' && rd_line[i + 1] != ' ' && *flag == 0)
             compt++;
         i++;
     }
     i = 0;
     while (i <= compt)
     {
-        ft_printf("tab[%d] = %d\n", i, tab[i]);
         spt[i] = (char *) malloc(sizeof(char) * (tab[i] + 1));
         if (spt[i] == NULL)
-            return (error(MALLOC, NULL), NULL);
+        {
+            while (i >= 0)
+                free(spt[i--]);
+            return (free(tab), free(spt), error(MALLOC, NULL), NULL);
+        }
         i++;
     }
     free(tab);
     i = 0;
     compt = 0;
-    flag = 0;
+    *flag = save_flag;
     j = 0;
     while (rd_line[i])
     {
-        if (rd_line[i] != ' ' && flag == 3)
-            flag = 0;
-        if (rd_line[i] == '"' && flag == 0)
-            flag = 1;
-        else if (rd_line[i] == '"' && flag == 1)
+        if (rd_line[i] != ' ' && *flag == 3)
+            *flag = 0;
+        if (rd_line[i] == '"' && *flag == 0)
+            *flag = 1;
+        else if (rd_line[i] == '"' && *flag == 1)
         {
-            flag = 0;
+            *flag = 0;
             spt[compt][j] = '"';
             if (rd_line[i + 1] == ' ')
             {
@@ -157,11 +159,11 @@ char    **second_parsing_check(char *rd_line)
                 compt++;
             }
         }
-        else if (rd_line[i] == '\'' && flag == 0)
-            flag = 2;
-        else if (rd_line[i] == '\'' && flag == 2)
+        else if (rd_line[i] == '\'' && *flag == 0)
+            *flag = 2;
+        else if (rd_line[i] == '\'' && *flag == 2)
         {
-            flag = 0;
+            *flag = 0;
             spt[compt][j] = '\'';
             if (rd_line[i + 1] == ' ')
             {
@@ -171,13 +173,13 @@ char    **second_parsing_check(char *rd_line)
                 compt++;
             }
         }
-        else if (rd_line[i] == ' ' && flag == 0)
+        else if (rd_line[i] == ' ' && *flag == 0)
         {
             spt[compt][j] = '\0';
             j = 0;
             compt++;
         }
-        else if (rd_line[i] == '|' && flag == 0 \
+        else if (rd_line[i] == '|' && *flag == 0 \
         && (rd_line[i - 1] != ' ' || \
         (rd_line[i - 1] != ' ' && rd_line[i + 1] != ' ')))
         {
@@ -187,22 +189,21 @@ char    **second_parsing_check(char *rd_line)
             spt[compt][j] = '|';
             j++;
         }
-        else if (rd_line[i] == '|' && flag == 0 && rd_line[i - 1] == ' ')
+        else if (rd_line[i] == '|' && *flag == 0 && rd_line[i - 1] == ' ')
         {
             spt[compt][j] = '|';
             j++;
         }
-        if (rd_line[i] == '|' && flag == 0 && rd_line[i + 1] != ' ')
+        if (rd_line[i] == '|' && *flag == 0 && rd_line[i + 1] != ' ')
         {
             spt[compt][j] = '\0';
             j = 0;
             compt++;
         }
-        if (rd_line[i] == ' ' && flag == 0)
-            flag = 3;
-        if (flag != 3 || (rd_line[i] != '|' && flag != 0))
+        if (rd_line[i] == ' ' && *flag == 0)
+            *flag = 3;
+        if (*flag != 3 && rd_line[i] != '|')
         {
-            ft_printf("compt = %d, j = %d\n", compt, j);
             spt[compt][j] = rd_line[i];
             j++;
         }

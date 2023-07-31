@@ -19,7 +19,7 @@ int	main(int argc, char **argv, char **env)
 	char	*buff;
 	char	*buf;
 	char	*bufff;
-	char	**bu;
+	int	 	vr;
 	char	*rd_line = NULL;
 	/* int		id; */
 	char	*cmd;
@@ -46,15 +46,9 @@ int	main(int argc, char **argv, char **env)
 		rd_line = readline(buff);
 		if (rd_line == NULL)
 			return (free(bufff), free(buff), quit(), 1);
-		bu = second_parsing_check(rd_line);
-		int i = 0;
-		while (bu[i])
-		{
-			ft_printf(bu[i]);
-			ft_printf("\n");
-			i++;
-		}
-		anihilation(bu);
+		vr = verif_read(rd_line);
+		if (vr == 1)
+			return (1);
 		// if (bu == 0)
 		// {
 		// 	if (cmd_center_simple(rd_line, env) == 1)
