@@ -125,6 +125,8 @@ void    second_parsing_check(char *rd_line, int *flag, t_list *ret)
         i++;
     }
     i = 0;
+    if (*flag != 0 && *flag == save_flag)
+        tab[compt] += 1;
     while (i <= compt)
     {
         spt[i] = (char *) malloc(sizeof(char) * (tab[i] + 1));
@@ -209,6 +211,8 @@ void    second_parsing_check(char *rd_line, int *flag, t_list *ret)
         }
         i++;
     }
+    if (*flag != 0 && *flag == save_flag)
+        spt[compt][j++] = '\n';
     spt[compt][j] = '\0';
     i = 0;
     while (spt[i])
