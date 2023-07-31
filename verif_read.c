@@ -3,32 +3,28 @@
 int verif_read(char *rd_line)
 {
     int     flag;
-    char    **spt;
+    t_list  *spt;
 
     flag = 0;
-    spt = second_parsing_check(rd_line, &flag);
+    spt = (t_list *) malloc(sizeof(t_list));
+	if (spt == NULL)
+		return (error(MALLOC, NULL), 1);
+    init_list(spt);
+    second_parsing_check(rd_line, &flag, spt);
     free(rd_line);
-    if (spt == NULL)
-        return (1);
     while (flag == 1 || flag == 2)
     {
-        anihilation(spt);
         rd_line = readline("> ");
-        spt = second_parsing_check(rd_line, &flag);
+        second_parsing_check(rd_line, &flag, spt);
         free(rd_line);
-        int i = 0;
-        while (spt[i])
-        {
-            ft_printf(spt[i++]);
-            ft_printf("\n");
-        }
     }
-    int i = 0;
-    while (spt[i])
+    t_cell *cell = spt->head;// liste -> main_exec -> pipes, forks, dups, cmd_center
+    while (cell != NULL)
     {
-        ft_printf(spt[i++]);
+        ft_printf(cell->data_cell->data);
         ft_printf("\n");
+        cell = cell->next;
     }
-	anihilation(spt);
+	annihilation(spt, free, DEBUG);
     return (0);
 }

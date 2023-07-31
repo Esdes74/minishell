@@ -54,7 +54,7 @@ int parsing_check(char *rd_line) // on peux compter le nombrede pipe dans cette 
     return (0);
 }
 
-char    **second_parsing_check(char *rd_line, int *flag)
+void    second_parsing_check(char *rd_line, int *flag, t_list *ret)
 {
     int     i;
     int     j;
@@ -91,11 +91,11 @@ char    **second_parsing_check(char *rd_line, int *flag)
     }
     spt = (char **) malloc(sizeof(char *) * (compt + 1));
     if (spt == NULL)
-        return (error(MALLOC, NULL), NULL);
+        return (error(MALLOC, NULL), annihilation(ret, free, DEBUG));
     spt[compt] = NULL;
     tab = (int *) ft_calloc(compt, sizeof(int));
     if (tab == NULL)
-        return (free(spt), error(MALLOC, NULL), NULL);
+        return (free(spt), error(MALLOC, NULL), annihilation(ret, free, DEBUG));
     i = 0;
     compt = 0;
     *flag = save_flag;
@@ -132,7 +132,7 @@ char    **second_parsing_check(char *rd_line, int *flag)
         {
             while (i >= 0)
                 free(spt[i--]);
-            return (free(tab), free(spt), error(MALLOC, NULL), NULL);
+            return (free(tab), free(spt), error(MALLOC, NULL), annihilation(ret, free, DEBUG));
         }
         i++;
     }
@@ -202,7 +202,7 @@ char    **second_parsing_check(char *rd_line, int *flag)
         }
         if (rd_line[i] == ' ' && *flag == 0)
             *flag = 3;
-        if (*flag != 3 && rd_line[i] != '|')
+        if ((*flag != 3 && rd_line[i] != '|') || (*flag != 0 && rd_line[i] == '|'))
         {
             spt[compt][j] = rd_line[i];
             j++;
@@ -210,5 +210,14 @@ char    **second_parsing_check(char *rd_line, int *flag)
         i++;
     }
     spt[compt][j] = '\0';
-    return (spt);
+    i = 0;
+    while (spt[i])
+    {
+        if (tailing_list(ret, spt[i++], CHAR, DEBUG) == 0)
+        {
+            anihilation(spt);
+            error(MALLOC, NULL);
+        }
+    }
+    free(spt);
 }

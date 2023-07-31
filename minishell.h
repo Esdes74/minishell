@@ -92,5 +92,5 @@ int     cmd_center_simple(char *str, char **env);
 
 int     parsing_check(char *rd_line);
 
-char    **second_parsing_check(char *rd_line, int *flag);
+void    second_parsing_check(char *rd_line, int *flag, t_list *spt);
 #endif

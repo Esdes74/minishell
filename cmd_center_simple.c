@@ -103,7 +103,7 @@ static char     *determine_echo_or_cd(char **str, int *option)
         if (str[1] == NULL)
             return (return_buf(str));
         *option = 2;
-        if (str[2] != NULL)
+        if (str[2] != NULL) // TODO: Bulle a résoudre
             return (error(TOO_MANY_ARG, str[0]), return_buf(str));
     }
     else
