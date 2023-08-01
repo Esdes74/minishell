@@ -8,9 +8,9 @@ int *counting_arg(t_cell *cell, int count, t_list *spt)
 
     i = 0;
     j = 0;
-    tab = malloc(sizeof(int *) * count + 1); // le +1 c'est parce que count comence à 0
+    tab = malloc(sizeof(int *) * count + 1);
     if (tab == NULL)
-        return (NULL);
+        return (error(MALLOC, NULL), NULL);
     while (cell != NULL)
     {
         if (((char *)(cell->data_cell->data))[0] == '|')
@@ -23,6 +23,7 @@ int *counting_arg(t_cell *cell, int count, t_list *spt)
         cell = cell->next;
     }
     tab[j] = i;
+    tab[j + 1] = '\0';
     cell = spt->head;
     return (tab);
 }
@@ -35,12 +36,12 @@ char    **string_for_cmd_center(int *tab, t_cell *cell, int i, t_list *spt)
     j = 0;
     for_cmd = malloc(sizeof(char **) * tab[i] + 1);
     if (!for_cmd)
-        return (NULL);
+        return (error(MALLOC, NULL), NULL);
     while (tab[i] > j)
     {
         for_cmd[j] = ft_strdup(cell->data_cell->data);
         if (!for_cmd[j])
-            return (NULL);
+            return (error(MALLOC, NULL), NULL);
         j++;
         cell = cell->next;
     }

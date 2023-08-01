@@ -25,19 +25,19 @@ void    anihilation(char **str)
     free(str);
 }
 
-// int	close_all_pipes(t_cmd *pi)
-// {
-// 	int	j;
+int	close_all_pipes(t_cmd *pi, int count)
+{
+	int	j;
 
-// 	j = 0;
-// 	while (j < pi->nb_pipe)
-// 	{
-// 		if (close(pi->pipe[j][0]) == -1)
-// 			return (errors(CLOSE_P0, "0"), anihilation((char **) pi->pipe), 1);
-// 		if (close(pi->pipe[j][1]) == -1)
-// 			return (errors(CLOSE_P1, "0"), anihilation((char **) pi->pipe), 1);
-// 		j++;
-// 	}
-// 	anihilation((char **) pi->pipe);
-// 	return (0);
-// }
+	j = 0;
+	while (j < count)
+	{
+		if (close(pi->pipe[j][0]) == -1)
+			return (error(CLOSE, "0"), anihilation((char **) pi->pipe), 1);
+		if (close(pi->pipe[j][1]) == -1)
+			return (error(CLOSE, "0"), anihilation((char **) pi->pipe), 1);
+		j++;
+	}
+	anihilation((char **) pi->pipe);
+	return (0);
+}

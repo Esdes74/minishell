@@ -27,13 +27,7 @@ static char *return_buf(char **spt);
 int cmd_center_simple(char **str, char **env) //j'ai enlever la condtion si env != NULL 
 {
     int     check;
-    // char    **spt;
 
-    // spt = ft_split(str, ' '); // en gros l'elever et ue ca continue que ca marche
-    // if (spt == NULL)
-    //     return (error(SPLIT, NULL), 1);
-    // else if (spt[0] == 0)
-    //     return (0);
     check = search_builtins(str, env);
     if (check == 1) 
         return (anihilation(str), 1);

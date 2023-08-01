@@ -35,6 +35,8 @@ void    error(t_error err, char *cmd)
         ft_printf_fd(ERR, "Error: problem with the execve function\n");
     else if (err == TOO_MANY_ARG)
         ft_printf_fd(ERR, "Error : too many arguments %s\n", cmd);
+    else if (err == CLOSE)
+        ft_printf_fd(ERR, "Error : problem with clausing function\n");
     if (cmd == NULL)
         exit(1);
 }

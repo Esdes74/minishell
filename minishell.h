@@ -42,6 +42,7 @@ typedef enum    e_error{
     SPLIT,
     EXEC,
     TOO_MANY_ARG,
+    CLOSE,
 }   t_error;
 
 typedef struct t_cmd
@@ -49,7 +50,7 @@ typedef struct t_cmd
     char    *infile;
     char    *outfile;
     int     nb_pipe;
-    int     pipe;
+    int     **pipe;
     int     nb_proc;
     int     heredoc;
 } t_cmd;
@@ -81,7 +82,7 @@ void    cd(char *path);
 // Fork and pipes
 void    anihilation(char **str);
 
-int     close_all_pipes(t_cmd *pi);
+int     close_all_pipes(t_cmd *pi, int count);
 
 char	*ft_strjoin_pip(char *dest, char *src);
 
@@ -97,4 +98,6 @@ void    second_parsing_check(char *rd_line, int *flag, t_list *spt);
 int     *counting_arg(t_cell *cell, int count, t_list *spt);
 
 char    **string_for_cmd_center(int *tab, t_cell *cell, int i, t_list *spt);
+
+int execution_center(t_list *spt, char **env);
 #endif
