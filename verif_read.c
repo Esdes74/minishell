@@ -1,9 +1,12 @@
 #include "minishell.h"
 
+static int checking_pipe(t_cell *cell);
+
 int verif_read(char *rd_line)
 {
     int     flag;
     t_list  *spt;
+    int     count;
 
     flag = 0;
     spt = (t_list *) malloc(sizeof(t_list));
@@ -19,12 +22,24 @@ int verif_read(char *rd_line)
         free(rd_line);
     }
     t_cell *cell = spt->head;// liste -> main_exec -> pipes, forks, dups, cmd_center
-    while (cell != NULL)
-    {
-        ft_printf(cell->data_cell->data);
-        ft_printf("\n");
-        cell = cell->next;
-    }
+    count = checking_pipe(cell);
+    ft_printf("%d\n", count);
+    counting_arg();
 	annihilation(spt, free, DEBUG);
     return (0);
+}
+
+static int checking_pipe(t_cell *cell)
+{
+    int count;
+
+    count = 0;
+    while (cell != NULL)
+    {
+        if (((char *)(cell->data_cell->data))[0] == '|')
+            count++;
+        ft_printf(cell->data_cell->data);
+        cell = cell->next;
+    }
+    return (count);
 }

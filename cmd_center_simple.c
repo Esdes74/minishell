@@ -29,7 +29,7 @@ int cmd_center_simple(char *str, char **env) //j'ai enlever la condtion si env !
     int     check;
     char    **spt;
 
-    spt = ft_split(str, ' ');
+    spt = ft_split(str, ' '); // en gros l'elever et ue ca continue que ca marche
     if (spt == NULL)
         return (error(SPLIT, NULL), 1);
     else if (spt[0] == 0)
@@ -40,7 +40,7 @@ int cmd_center_simple(char *str, char **env) //j'ai enlever la condtion si env !
     if (check == 0)
         return (0);
     if (execute_child(env, spt) == 1)
-        return (1); 
+        return (1);
     return (0);
 }
 
