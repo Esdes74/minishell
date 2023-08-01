@@ -45,7 +45,7 @@ int	main(int argc, char **argv, char **env)
 		rd_line = readline(buff);
 		if (rd_line == NULL)
 			return (free(bufff), free(buff), quit(), 1);
-		rd_line = verif_read(rd_line);
+		rd_line = verif_read(rd_line, env);
 		if (rd_line == NULL)
 			return (1);
 		// if (bu == 0)

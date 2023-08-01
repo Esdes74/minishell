@@ -24,22 +24,22 @@ static int	execute_child(char **environ, char **str);
 static char *determine_echo_or_cd(char **str, int *option);
 static char *return_buf(char **spt);
 
-int cmd_center_simple(char *str, char **env) //j'ai enlever la condtion si env != NULL 
+int cmd_center_simple(char **str, char **env) //j'ai enlever la condtion si env != NULL 
 {
     int     check;
-    char    **spt;
+    // char    **spt;
 
-    spt = ft_split(str, ' '); // en gros l'elever et ue ca continue que ca marche
-    if (spt == NULL)
-        return (error(SPLIT, NULL), 1);
-    else if (spt[0] == 0)
-        return (0);
-    check = search_builtins(spt, env);
+    // spt = ft_split(str, ' '); // en gros l'elever et ue ca continue que ca marche
+    // if (spt == NULL)
+    //     return (error(SPLIT, NULL), 1);
+    // else if (spt[0] == 0)
+    //     return (0);
+    check = search_builtins(str, env);
     if (check == 1) 
-        return (anihilation(spt), 1);
-    if (check == 0)
+        return (anihilation(str), 1);
+    if (check == -1)
         return (0);
-    if (execute_child(env, spt) == 1)
+    if (execute_child(env, str) == 1)
         return (1);
     return (0);
 }

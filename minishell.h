@@ -65,7 +65,7 @@ void	quit(void);
 
 void    historic_fct(char *bufff, char *test);
 
-char    *verif_read(char *rd_line);
+char *verif_read(char *rd_line, char **env);
 
 // Builtins
 char    *pwd(void);
@@ -88,9 +88,13 @@ char	*ft_strjoin_pip(char *dest, char *src);
 // Commands
 char	*cmd_build(char *str, char **env);
 
-int     cmd_center_simple(char *str, char **env);
+int     cmd_center_simple(char **str, char **env);
 
 int     parsing_check(char *rd_line);
 
 void    second_parsing_check(char *rd_line, int *flag, t_list *spt);
+
+int     *counting_arg(t_cell *cell, int count, t_list *spt);
+
+char    **string_for_cmd_center(int *tab, t_cell *cell, int i, t_list *spt);
 #endif
