@@ -19,7 +19,6 @@ int	main(int argc, char **argv, char **env)
 	char	*buff;
 	char	*buf;
 	char	*bufff;
-	int	 	vr;
 	char	*rd_line = NULL;
 	/* int		id; */
 	char	*cmd;
@@ -46,8 +45,8 @@ int	main(int argc, char **argv, char **env)
 		rd_line = readline(buff);
 		if (rd_line == NULL)
 			return (free(bufff), free(buff), quit(), 1);
-		vr = verif_read(rd_line);
-		if (vr == 1)
+		rd_line = verif_read(rd_line);
+		if (rd_line == NULL)
 			return (1);
 		// if (bu == 0)
 		// {
@@ -56,9 +55,11 @@ int	main(int argc, char **argv, char **env)
 		// 	free(buff);
 		// 	free(cmd);
 		// }
-		// historic_fct(bufff, rd_line);
-		// free(bufff);
-		// bufff = rd_line;
+		free(buff);
+		free(cmd);
+		historic_fct(bufff, rd_line);
+		free(bufff);
+		bufff = rd_line;
 		/* id = fork(); */
 		/* if (id == -1) // TODO : tester correctement le ctrl+C en mettant les id des enfants dans la liste */
 		/* 	return (1); */

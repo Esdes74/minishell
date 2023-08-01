@@ -65,7 +65,7 @@ void	quit(void);
 
 void    historic_fct(char *bufff, char *test);
 
-int     verif_read(char *rd_line);
+char    *verif_read(char *rd_line);
 
 // Builtins
 char    *pwd(void);
