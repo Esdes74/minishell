@@ -1,5 +1,6 @@
 #include "minishell.h"
 
+// static int  check_redirection(char **arg);
 
 char *verif_read(char *rd_line, char **env)
 {
@@ -13,12 +14,12 @@ char *verif_read(char *rd_line, char **env)
 	if (spt == NULL)
 		return (error(MALLOC, NULL), NULL);
     init_list(spt);
-    second_parsing_check(rd_line, &flag, spt);
+    parsing(rd_line, &flag, spt);
     buff = rd_line;
     while (flag == 1 || flag == 2)
     {
         rd_line = readline("> ");
-        second_parsing_check(rd_line, &flag, spt);
+        parsing(rd_line, &flag, spt);
         buf = ft_strjoin(buff, "\n");
         free(buff);
         buff = ft_strjoin(buf, rd_line);
@@ -30,5 +31,23 @@ char *verif_read(char *rd_line, char **env)
     }
     wait(NULL);
 	annihilation(spt, free, DEBUG);
-    return (buf);
+    return (buff);
 }
+
+// static int  check_redirection(char **arg)
+// {
+//     int infile;
+
+//     if (arg[0][0] == '<')
+//     {
+//         if (arg[0][1] == '\0')
+//         {
+//             infile = open(arg[1], O_RDONLY);
+//             if (infile == -1)
+//                 return (error(OPEN, "0"), 1)
+//             if (dup2(infile, STDIN_FILENO) == -1)
+//                 return (error(DUP, "0"), 1);
+//         }
+//     }
+//     return (0);
+// }
