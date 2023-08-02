@@ -44,7 +44,11 @@ int	main(int argc, char **argv, char **env)
 		free(buf);
 		rd_line = readline(buff);
 		if (rd_line == NULL)
-			return (free(bufff), free(buff), quit(), 1);
+		{
+			free(buff);
+			free(bufff);
+			return (quit(), 1);
+		}
 		rd_line = verif_read(rd_line, env);
 		if (rd_line == NULL)
 			return (1);
@@ -58,19 +62,8 @@ int	main(int argc, char **argv, char **env)
 		free(buff);
 		free(cmd);
 		historic_fct(bufff, rd_line);
-		free(bufff);
-		bufff = rd_line;
-		/* id = fork(); */
-		/* if (id == -1) // TODO : tester correctement le ctrl+C en mettant les id des enfants dans la liste */
-		/* 	return (1); */
-		/* else if (id == 0) */
-		/* { */
-		/* 	if (add_list(getpid(), list) == 1) */
-		/* 		return (error(ADD_LIST, NULL), 1); */
-		/* } */
-		/* else */
-		/* 	if (add_list(id, list) == 1) */
-		/* 		return (error(ADD_LIST, NULL), 1); */
+		free(bufff); // ne fonctionne pas avec le rappel
+		bufff = ft_strdup(rd_line);
 	}
 	return (0);
 }

@@ -71,7 +71,7 @@ debug:
 
 val_deb:
 	make -C libft valgrind_deb
-	make -C ./ "FLAGS = -Wall -Werror -Wextra -g"
+	make -C ./ "FLAGS = -Wall -Werror -Wextra -g3"
 
 bonus_deb:
 	make -C libft valgrind_deb

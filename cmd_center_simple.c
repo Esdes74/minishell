@@ -73,6 +73,7 @@ static int	execute_child(char **environ, char **str)
 		return (anihilation(str), 1);
 	// if (close_all_pipes(pip) == 1)
 	// 	return (free(cmd), anihilation(splitted), 2);
+    annihilation(list, free, DEBUG);
 	execve(cmd, str, environ);
 	error(EXEC, "0");
 	return (free(cmd), anihilation(str), 2);

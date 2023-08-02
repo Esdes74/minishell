@@ -66,7 +66,7 @@ void	quit(void);
 
 void    historic_fct(char *bufff, char *test);
 
-char *verif_read(char *rd_line, char **env);
+char    *verif_read(char *rd_line, char **env);
 
 // Builtins
 char    *pwd(void);
@@ -82,7 +82,7 @@ void    cd(char *path);
 // Fork and pipes
 void    anihilation(char **str);
 
-int     close_all_pipes(t_cmd *pi, int count);
+int     close_all_pipes(t_cmd *pi);
 
 char	*ft_strjoin_pip(char *dest, char *src);
 
@@ -99,5 +99,5 @@ int     *counting_arg(t_cell *cell, int count, t_list *spt);
 
 char    **string_for_cmd_center(int *tab, t_cell *cell, int i, t_list *spt);
 
-int execution_center(t_list *spt, char **env);
+int     execution_center(t_list *spt, char **env);
 #endif

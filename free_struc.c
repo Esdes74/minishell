@@ -25,12 +25,12 @@ void    anihilation(char **str)
     free(str);
 }
 
-int	close_all_pipes(t_cmd *pi, int count)
+int	close_all_pipes(t_cmd *pi)
 {
 	int	j;
 
 	j = 0;
-	while (j < count)
+	while (j < pi->nb_pipe)
 	{
 		if (close(pi->pipe[j][0]) == -1)
 			return (error(CLOSE, "0"), anihilation((char **) pi->pipe), 1);

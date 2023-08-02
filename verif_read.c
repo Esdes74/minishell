@@ -28,6 +28,7 @@ char *verif_read(char *rd_line, char **env)
     {
         return (NULL);
     }
+    wait(NULL);
 	annihilation(spt, free, DEBUG);
-    return (0);
+    return (buf);
 }
