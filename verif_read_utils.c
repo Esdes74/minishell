@@ -32,17 +32,21 @@ char    **string_for_cmd_center(int *tab, t_cell *cell, int i, t_list *spt)
 {
     int     j;
     char    **for_cmd;
+    char    *buf;
 
     j = 0;
     cell = spt->head;
-    for_cmd = malloc(sizeof(char **) * (tab[i] + 1));
+    for_cmd = (char **)malloc(sizeof(char *) * (tab[i] + 1));
     if (!for_cmd)
         return (error(MALLOC, NULL), NULL);
     while (tab[i] > j)
     {
+        buf = (char *)cell->data_cell->data;
+        if (buf[0] == '|')
+            cell = cell->next;
         for_cmd[j] = (char *)cell->data_cell->data;
         if (!for_cmd[j])
-            return (NULL);
+            return (anihilation(for_cmd), NULL);
         j++;
         cell = cell->next;
     }

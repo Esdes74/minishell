@@ -66,7 +66,7 @@ void	quit(void);
 
 void    historic_fct(char *bufff, char *test);
 
-char    *verif_read(char *rd_line, char **env);
+char    *verif_read(char *rd_line, char **env, t_cmd *pip);
 
 // Builtins
 char    *pwd(void);
@@ -97,5 +97,5 @@ int     *counting_arg(t_cell *cell, int count, t_list *spt);
 
 char    **string_for_cmd_center(int *tab, t_cell *cell, int i, t_list *spt);
 
-int     execution_center(t_list *spt, char **env);
+int     execution_center(t_list *spt, char **env, t_cmd *pip);
 #endif

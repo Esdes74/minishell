@@ -25,6 +25,7 @@ int	main(int argc, char **argv, char **env)
 	(void)	argc;
 	(void)	argv;
 	(void)	env;
+	t_cmd   pip;
 
 	cmd = NULL;
 	list = (t_list *) malloc(sizeof(t_list));
@@ -49,7 +50,7 @@ int	main(int argc, char **argv, char **env)
 			free(bufff);
 			return (quit(), 1);
 		}
-		rd_line = verif_read(rd_line, env);
+		rd_line = verif_read(rd_line, env, &pip);
 		if (rd_line == NULL)
 			return (1);
 		// if (bu == 0)
@@ -64,6 +65,8 @@ int	main(int argc, char **argv, char **env)
 		historic_fct(bufff, rd_line);
 		free(bufff); // ne fonctionne pas avec le rappel
 		bufff = ft_strdup(rd_line);
+		while (wait(NULL) == 0)
+		close_all_pipes(&pip);
 	}
 	return (0);
 }

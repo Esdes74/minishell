@@ -189,7 +189,7 @@ void    parsing(char *rd_line, int *flag, t_list *ret)
         spt[compt][j++] = '\n';
     spt[compt][j] = '\0';
     i = 0;
-    while (spt[i])
+    while (spt[i] && spt[i][0] != '\0')
     {
         if (tailing_list(ret, spt[i++], CHAR, DEBUG) == 0)
         {

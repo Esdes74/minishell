@@ -38,6 +38,6 @@ int	close_all_pipes(t_cmd *pi)
 			return (error(CLOSE, "0"), anihilation((char **) pi->pipe), 1);
 		j++;
 	}
-	anihilation((char **) pi->pipe);
+	free(pi->pipe);
 	return (0);
 }

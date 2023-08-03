@@ -2,7 +2,7 @@
 
 // static int  check_redirection(char **arg);
 
-char *verif_read(char *rd_line, char **env)
+char *verif_read(char *rd_line, char **env, t_cmd *pip)
 {
     int     flag;
     char    *buff;
@@ -15,6 +15,8 @@ char *verif_read(char *rd_line, char **env)
 		return (error(MALLOC, NULL), NULL);
     init_list(spt);
     parsing(rd_line, &flag, spt);
+    if (spt->len == 0)
+        return (rd_line);
     buff = rd_line;
     while (flag == 1 || flag == 2)
     {
@@ -25,7 +27,7 @@ char *verif_read(char *rd_line, char **env)
         buff = ft_strjoin(buf, rd_line);
         free(buf);
     }
-    if (execution_center(spt, env) == 1)
+    if (execution_center(spt, env, pip) == 1)
     {
         return (NULL);
     }
