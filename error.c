@@ -22,7 +22,7 @@ void    error(t_error err, char *cmd)
     else if (err == TAILING)
         ft_printf_fd(ERR, "Error : Problem tailing PID tailing in list.\n");
     else if (err == CMD)
-        ft_printf_fd(ERR, "Error : command not found %s\n", cmd);
+        ft_printf_fd(ERR, "Error : Command not found %s\n", cmd);
     else if (err == JOIN)
         ft_printf_fd(ERR, "Error : Problem with strjoin function\n");
     else if (err == PIPE)
@@ -32,11 +32,13 @@ void    error(t_error err, char *cmd)
     else if (err == SPLIT)
         ft_printf_fd(ERR, "Error : Problem with split function\n");
     else if (err == EXEC)
-        ft_printf_fd(ERR, "Error: problem with the execve function\n");
+        ft_printf_fd(ERR, "Error : Problem with the execve function\n");
     else if (err == TOO_MANY_ARG)
-        ft_printf_fd(ERR, "Error : too many arguments %s\n", cmd);
+        ft_printf_fd(ERR, "Error : Too many arguments %s\n", cmd);
     else if (err == CLOSE)
-        ft_printf_fd(ERR, "Error : problem with clausing function\n");
+        ft_printf_fd(ERR, "Error : Problem with clausing function\n");
+    else if (err == TOKE)
+        ft_printf_fd(ERR, "Error : Syntax error near unexpected token `\\n`\n");
     if (cmd == NULL)
         exit(1);
 }

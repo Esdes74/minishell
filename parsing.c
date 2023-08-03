@@ -28,7 +28,7 @@
 This function checks whether the parameter sent by the user is actually the one he should send in terms of syntax.
 */
 
-void    parsing(char *rd_line, int *flag, t_list *ret)
+void    parsing(const char *rd_line, int *flag, t_list *ret)
 {
     int     i;
     int     j;
@@ -41,7 +41,7 @@ void    parsing(char *rd_line, int *flag, t_list *ret)
     compt = 1;
     save_flag = *flag;
     spt = 0;
-    while (rd_line[i])
+    while (rd_line[i]) // Compte le nombre d'aguments qu'il y a (le | sont contés comme des arguments a part entière)
     {
         if (rd_line[i] != ' ' && *flag == 3)
             *flag = 0;
@@ -63,6 +63,7 @@ void    parsing(char *rd_line, int *flag, t_list *ret)
             *flag = 3;
         i++;
     }
+    // Créer le tableau de chaine de caractères et le tableau permettant de compter le nombre de caractères dans chaque arguments
     spt = (char **) malloc(sizeof(char *) * (compt + 1));
     if (spt == NULL)
         return (error(MALLOC, NULL), annihilation(ret, free, DEBUG));
@@ -73,7 +74,7 @@ void    parsing(char *rd_line, int *flag, t_list *ret)
     i = 0;
     compt = 0;
     *flag = save_flag;
-    while (rd_line[i])
+    while (rd_line[i]) // compte le nombre de caractère par arguments
     {
         if (rd_line[i] != ' ' && *flag == 3)
             *flag = 0;
@@ -99,9 +100,9 @@ void    parsing(char *rd_line, int *flag, t_list *ret)
         i++;
     }
     i = 0;
-    if (*flag != 0 && *flag == save_flag)
+    if (*flag != 0 && *flag == save_flag) // permet de compter le \n si jamais on doit en rajouter un a la fin de la chaine pasque l'argument n'est pas finis
         tab[compt] += 1;
-    while (i <= compt)
+    while (i <= compt) // créer les chaines de caractères
     {
         spt[i] = (char *) malloc(sizeof(char) * (tab[i] + 1));
         if (spt[i] == NULL)
@@ -117,7 +118,7 @@ void    parsing(char *rd_line, int *flag, t_list *ret)
     compt = 0;
     *flag = save_flag;
     j = 0;
-    while (rd_line[i])
+    while (rd_line[i]) // remplis les chaines de caractères
     {
         if (rd_line[i] != ' ' && *flag == 3)
             *flag = 0;
@@ -185,11 +186,11 @@ void    parsing(char *rd_line, int *flag, t_list *ret)
         }
         i++;
     }
-    if (*flag != 0 && *flag == save_flag)
+    if (*flag != 0 && *flag == save_flag) // Rajoute le \n si c'est un rappel de la fonction et qu'on est toujours pas sortie
         spt[compt][j++] = '\n';
     spt[compt][j] = '\0';
     i = 0;
-    while (spt[i] && spt[i][0] != '\0')
+    while (spt[i] && spt[i][0] != '\0') // ajoute les arguments a la liste
     {
         if (tailing_list(ret, spt[i++], CHAR, DEBUG) == 0)
         {
@@ -197,5 +198,5 @@ void    parsing(char *rd_line, int *flag, t_list *ret)
             error(MALLOC, NULL);
         }
     }
-    free(spt);
+    anihilation(spt);
 }
