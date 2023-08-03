@@ -6,13 +6,13 @@
 /*   By: dbaule <dbaule@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 21:29:25 by dbaule            #+#    #+#             */
-/*   Updated: 2023/08/03 15:34:48 by dbaule           ###   ########.fr       */
+/*   Updated: 2023/08/03 17:30:00 by dbaule           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int  checking_pipe(t_cell *cell, t_list *spt);
+static int  checking_pipe(t_list *spt);
 static int	prep_pipe(t_cmd *pip, int count);
 static int  dup_in_cmd(t_cmd *pip, int i);
 static int dup_out_cmd(t_cmd *pip, int i);
@@ -20,19 +20,17 @@ static int dup_out_cmd(t_cmd *pip, int i);
 int execution_center(t_list *spt, char **env, t_cmd *pip)
 {
     int     *arg_count;
-    t_cell  *cell; // liste -> main_exec -> pipes, forks, dups, cmd_center
     char    **exec_cmd;
     int     i;
     int     id;
     int     count;
 
     i = 0;
-    cell = malloc(sizeof(t_cell));
-    count = checking_pipe(cell, spt);
+    count = checking_pipe(spt);
     if (count > 1)
         if (prep_pipe(pip, count) == 1)
             return (1);
-    arg_count = counting_arg(cell, count, spt);
+    arg_count = counting_arg(count, spt);
     if (arg_count == NULL)
         return (1);
     while (i < count)
@@ -41,7 +39,7 @@ int execution_center(t_list *spt, char **env, t_cmd *pip)
         if (id == 0)
         {
             add_list(getpid(), list);
-            exec_cmd = string_for_cmd_center(arg_count, cell, i, spt);
+            exec_cmd = string_for_cmd_center(arg_count, i, spt);
             if (exec_cmd == NULL)
                 return (1);
             // ft_printf_fd(2, "valeur de exec cmd %s\n", exec_cmd[i]);
@@ -63,20 +61,20 @@ int execution_center(t_list *spt, char **env, t_cmd *pip)
     return (0);
 }
 
-static int checking_pipe(t_cell *cell, t_list *spt)
+static int checking_pipe(t_list *spt)
 {
     int count;
+    t_cell *tmp;
 
     count = 1;
-    cell = spt->head;
-    while (cell != NULL)
+    tmp = spt->head;
+    while (tmp != NULL)
     {
         
-        if (((char *)(cell->data_cell->data))[0] == '|')
+        if (((char *)(tmp->data_cell->data))[0] == '|')
             count++;
-        cell = cell->next;
+        tmp = tmp->next;
     }
-    cell = spt->head;
     return (count);
 }
 
@@ -112,14 +110,12 @@ static int	prep_pipe(t_cmd *pip, int count)
 
 static int  dup_in_cmd(t_cmd *pip, int i)
 {
-    (void)i;
-    dup2(pip->pipe[0][0], STDIN_FILENO);
+    dup2(pip->pipe[i][0], STDIN_FILENO);
     return (0);
 }
 
 static int dup_out_cmd(t_cmd *pip, int i)
 {
-    (void)i;
-    dup2(pip->pipe[0][1], STDOUT_FILENO);
+    dup2(pip->pipe[i][1], STDOUT_FILENO);
     return (0);
 }

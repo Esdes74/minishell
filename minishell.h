@@ -43,6 +43,7 @@ typedef enum    e_error{
     EXEC,
     TOO_MANY_ARG,
     CLOSE,
+    TOKEN,
 }   t_error;
 
 typedef struct t_cmd
@@ -91,11 +92,11 @@ char	*cmd_build(char *str, char **env);
 
 int     cmd_center_simple(char **str, char **env);
 
-void    parsing(char *rd_line, int *flag, t_list *spt);
+void    parsing(const char *rd_line, int *flag, t_list *spt);
 
-int     *counting_arg(t_cell *cell, int count, t_list *spt);
+int     *counting_arg(int count, t_list *spt);
 
-char    **string_for_cmd_center(int *tab, t_cell *cell, int i, t_list *spt);
+char    **string_for_cmd_center(int *tab, int i, t_list *spt);
 
 int     execution_center(t_list *spt, char **env, t_cmd *pip);
 #endif

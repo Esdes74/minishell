@@ -198,5 +198,5 @@ void    parsing(const char *rd_line, int *flag, t_list *ret)
             error(MALLOC, NULL);
         }
     }
-    anihilation(spt);
+    free(spt);
 }

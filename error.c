@@ -37,7 +37,7 @@ void    error(t_error err, char *cmd)
         ft_printf_fd(ERR, "Error : Too many arguments %s\n", cmd);
     else if (err == CLOSE)
         ft_printf_fd(ERR, "Error : Problem with clausing function\n");
-    else if (err == TOKE)
+    else if (err == TOKEN)
         ft_printf_fd(ERR, "Error : Syntax error near unexpected token `\\n`\n");
     if (cmd == NULL)
         exit(1);
