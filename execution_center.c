@@ -17,7 +17,7 @@ static int	prep_pipe(t_cmd *pip, int count);
 static int  dup_in_cmd(t_cmd *pip, int i);
 static int dup_out_cmd(t_cmd *pip, int i);
 
-static void check_redirection(char **arg, t_bool *in, t_bool *out);
+static char **check_redirection(char **arg, t_bool *in, t_bool *out);
 static void heredoc(char *arg);
 
 int execution_center(t_list *spt, char **env, t_cmd *pip)
@@ -47,8 +47,7 @@ int execution_center(t_list *spt, char **env, t_cmd *pip)
             exec_cmd = string_for_cmd_center(arg_count, i, spt);
             if (exec_cmd == NULL)
                 return (1);
-            check_redirection(exec_cmd, &in, &out);
-            ft_printf_fd(2, "valeur de exec cmd %s\n", exec_cmd[i]);
+            exec_cmd = check_redirection(exec_cmd, &in, &out);
             if (count > 1)
             {
                 if (i > 0 && in == FALSE)
@@ -126,7 +125,7 @@ static int dup_out_cmd(t_cmd *pip, int i)
     return (0);
 }
 
-static void check_redirection(char **arg, t_bool *in, t_bool *out)
+static char **check_redirection(char **arg, t_bool *in, t_bool *out)
 {
     char    **tmp;
     int     file;
@@ -145,12 +144,12 @@ static void check_redirection(char **arg, t_bool *in, t_bool *out)
             if (arg[i][1] == '\0')
             {
                 if (arg[i + 1] == NULL)
-                    return (error(TOKEN, "0"));
+                    return (error(TOKEN, "0"), NULL);
                 file = open(arg[i + 1], O_RDONLY);
                 if (file == -1)
-                    return (error(OPEN, "0"));
+                    return (error(OPEN, "0"), NULL);
                 else if (dup2(file, STDIN_FILENO) == -1)
-                    return (close(file), error(DUP, "0"));
+                    return (close(file), error(DUP, "0"), NULL);
                 close(file);
                 i++;
             }
@@ -165,9 +164,9 @@ static void check_redirection(char **arg, t_bool *in, t_bool *out)
             {
                 file = open(&arg[i][1], O_RDONLY);
                 if (file == -1)
-                    return (error(OPEN, "0"));
+                    return (error(OPEN, "0"), NULL);
                 else if (dup2(file, STDIN_FILENO) == -1)
-                    return (close(file), error(DUP, "0"));
+                    return (close(file), error(DUP, "0"), NULL);
                 close(file);
             }
         }
@@ -177,12 +176,12 @@ static void check_redirection(char **arg, t_bool *in, t_bool *out)
             if (arg[i][1] == '\0')
             {
                 if (arg[i + 1] == NULL)
-                    return (error(TOKEN, "0"));
+                    return (error(TOKEN, "0"), NULL);
                 file = open(arg[i + 1], O_CREAT | O_RDWR | O_TRUNC, 0644);
                 if (file == -1)
-                    return (error(OPEN, "0"));
+                    return (error(OPEN, "0"), NULL);
                 else if (dup2(file, STDOUT_FILENO) == -1)
-                    return (close(file), error(DUP, "0"));
+                    return (close(file), error(DUP, "0"), NULL);
                 close(file);
                 i++;
             }
@@ -191,12 +190,12 @@ static void check_redirection(char **arg, t_bool *in, t_bool *out)
                 if (arg[i][2] == '\0')
                 {
                     if (arg[i + 1] == NULL)
-                        return (error(TOKEN, "0"));
+                        return (error(TOKEN, "0"), NULL);
                     file = open(arg[i + 1], O_CREAT | O_RDWR | O_APPEND, 0644);
                     if (file == -1)
-                        return (error(OPEN, "0"));
+                        return (error(OPEN, "0"), NULL);
                     else if (dup2(file, STDOUT_FILENO) == -1)
-                        return (close(file), error(DUP, "0"));
+                        return (close(file), error(DUP, "0"), NULL);
                     close(file);
                     i++;
                 }
@@ -204,9 +203,9 @@ static void check_redirection(char **arg, t_bool *in, t_bool *out)
                 {
                     file = open(&arg[i][2], O_CREAT | O_RDWR | O_APPEND, 0644);
                     if (file == -1)
-                        return (error(OPEN, "0"));
+                        return (error(OPEN, "0"), NULL);
                     else if (dup2(file, STDOUT_FILENO) == -1)
-                        return (close(file), error(DUP, "0"));
+                        return (close(file), error(DUP, "0"), NULL);
                     close(file);
                 }
             }
@@ -214,16 +213,16 @@ static void check_redirection(char **arg, t_bool *in, t_bool *out)
             {
                 file = open(&arg[i][1], O_CREAT | O_RDWR | O_TRUNC, 0644);
                 if (file == -1)
-                    return (error(OPEN, "0"));
+                    return (error(OPEN, "0"), NULL);
                 else if (dup2(file, STDOUT_FILENO) == -1)
-                    return (close(file), error(DUP, "0"));
+                    return (close(file), error(DUP, "0"), NULL);
                 close(file);
             }
         }
         i++;
     }
     if (*in == FALSE && *out == FALSE) // S'il n'y a pas de redirections pas besoin de retravailler le tableau de chaine de caractères
-        return ;
+        return (arg);
     i = 0;
     compt = 0;
     while (arg[i]) // compte le nombre de redirection pour refaire un tableau de chaines de caractères
@@ -243,7 +242,7 @@ static void check_redirection(char **arg, t_bool *in, t_bool *out)
         i++;
         compt++;
     }
-    tmp = (char **) malloc(sizeof(char *) * compt);
+    tmp = (char **) malloc(sizeof(char *) * (compt + 1));
     i = 0;
     j = 0;
     while (i < compt) // ici on ajoute les chaines de caractère correctes a tmp, on free les redirections car elles ne servent plus et on remet tmp dans arg a la fin
@@ -273,8 +272,8 @@ static void check_redirection(char **arg, t_bool *in, t_bool *out)
     }
     free(arg);
     arg = tmp;
-    printf("j = %d\n", j);
     arg[j] = NULL;
+    return (arg);
 }
 
 static void heredoc(char *arg)
