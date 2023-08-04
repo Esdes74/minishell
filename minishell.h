@@ -44,6 +44,8 @@ typedef enum    e_error{
     TOO_MANY_ARG,
     CLOSE,
     TOKEN,
+    OPEN,
+    DUP,
 }   t_error;
 
 typedef struct t_cmd

@@ -291,7 +291,7 @@ debug:
 	-fno-omit-frame-pointer" print
 
 valgrind_deb:
-	make -C ./ "FLAGS+= -Wall -Werror -Wextra -g" print
+	make -C ./ "FLAGS+= -Wall -Werror -Wextra -g3" print
 
 #rl_clear_history langage c
 ### Directories rules

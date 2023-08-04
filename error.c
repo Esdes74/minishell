@@ -39,6 +39,10 @@ void    error(t_error err, char *cmd)
         ft_printf_fd(ERR, "Error : Problem with clausing function\n");
     else if (err == TOKEN)
         ft_printf_fd(ERR, "Error : Syntax error near unexpected token `\\n`\n");
+    else if (err == OPEN)
+        ft_printf_fd(ERR, "Error : Problem with open function\n");
+    else if (err == DUP)
+        ft_printf_fd(ERR, "Error : Problem with dup2 function\n");
     if (cmd == NULL)
         exit(1);
 }
