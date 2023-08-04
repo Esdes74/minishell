@@ -68,6 +68,7 @@ static int	execute_child(char **environ, char **str)
 {
 	char	*cmd;
 
+    // ft_printf_fd(2, "valeur de str[0] %s\n", str[0]);
 	cmd = cmd_build(str[0], environ);
 	if (cmd == NULL)
 		return (anihilation(str), 1);
@@ -75,6 +76,7 @@ static int	execute_child(char **environ, char **str)
 	// 	return (free(cmd), anihilation(splitted), 2);
     annihilation(list, free, DEBUG);
 	execve(cmd, str, environ);
+    // ft_printf_fd(2, "deerriere exec\n")
 	error(EXEC, "0");
 	return (free(cmd), anihilation(str), 2);
 }

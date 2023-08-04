@@ -34,28 +34,32 @@ char    **string_for_cmd_center(int *tab, int i, t_list *spt)
     char    **for_cmd;
     char    *buf;
     t_cell  *tmp;
+    int     y;
 
     j = 0;
     tmp = spt->head;
     while (j < i)
     {
-        tmp = tmp->next;
+        y = 0;
+        while(tab[j] && y < tab[j])
+        {
+            tmp = tmp->next;
+            y++;
+        }
+        if (((char *)tmp->data_cell->data)[0] == '|')
+            tmp = tmp->next;
         j++;
     }
-    buf = (char *)tmp->data_cell->data;
-    if (buf[0] == '|')
-        tmp = tmp->next; // il faudra protéger dans le ca ou le pipe est en derniere position
-    buf = (char *)tmp->data_cell->data;
     for_cmd = (char **)malloc(sizeof(char *) * (tab[i] + 1));
     if (!for_cmd)
         return (error(MALLOC, NULL), NULL);
+    j = 0;
     while (tab[i] > j)
     {
         buf = (char *)tmp->data_cell->data;
         if (buf[0] == '|')
         {
             tmp = tmp->next;
-            printf ("detection du pipe\n");
         }
         for_cmd[j] = (char *)tmp->data_cell->data;
         if (!for_cmd[j])

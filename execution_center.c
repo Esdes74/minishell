@@ -13,7 +13,7 @@
 #include "minishell.h"
 
 static int  checking_pipe(t_list *spt);
-static int	prep_pipe(t_cmd *pip, int count);
+static int	prep_pipe(t_cmd *pip);
 static int  dup_in_cmd(t_cmd *pip, int i);
 static int dup_out_cmd(t_cmd *pip, int i);
 
@@ -26,19 +26,18 @@ int execution_center(t_list *spt, char **env, t_cmd *pip)
     char    **exec_cmd;
     int     i;
     int     id;
-    int     count;
     t_bool  in;
     t_bool  out;
 
     i = 0;
-    count = checking_pipe(spt);
-    if (count > 1)
-        if (prep_pipe(pip, count) == 1)
+    pip->nb_proc = checking_pipe(spt);
+    if (pip->nb_proc > 1)
+        if (prep_pipe(pip) == 1)
             return (1);
-    arg_count = counting_arg(count, spt);
+    arg_count = counting_arg(pip->nb_proc, spt);
     if (arg_count == NULL)
         return (1);
-    while (i < count)
+    while (i < pip->nb_proc)
     {
         id = fork();
         if (id == 0)
@@ -46,9 +45,9 @@ int execution_center(t_list *spt, char **env, t_cmd *pip)
             add_list(getpid(), list);
             exec_cmd = string_for_cmd_center(arg_count, i, spt);
             if (exec_cmd == NULL)
-                return (1);
+                return (error(MALLOC, NULL), 1);
             exec_cmd = check_redirection(exec_cmd, &in, &out);
-            if (count > 1)
+            if (pip->nb_proc > 1)
             {
                 if (i > 0 && in == FALSE)
                     dup_in_cmd(pip, i - 1);
@@ -59,6 +58,13 @@ int execution_center(t_list *spt, char **env, t_cmd *pip)
             cmd_center_simple(exec_cmd, env);
         }
         add_list(id, list);
+        i++;
+    }
+    i = 1;
+	while (i < pip->nb_proc)
+    {
+        if (wait(NULL) == -1)
+            return (1);
         i++;
     }
     while (list->len > 1)
@@ -75,7 +81,6 @@ static int checking_pipe(t_list *spt)
     tmp = spt->head;
     while (tmp != NULL)
     {
-        
         if (((char *)(tmp->data_cell->data))[0] == '|')
             count++;
         tmp = tmp->next;
@@ -83,12 +88,12 @@ static int checking_pipe(t_list *spt)
     return (count);
 }
 
-static int	prep_pipe(t_cmd *pip, int count)
+static int	prep_pipe(t_cmd *pip)
 {
 	int	i;
 
 	i = 0;
-    pip->nb_pipe = count - 1;
+    pip->nb_pipe = pip->nb_proc - 1;
     pip->pipe = (int **) ft_calloc(pip->nb_pipe, sizeof(int *));
     if (pip->pipe == NULL)
     {
@@ -245,13 +250,13 @@ static char **check_redirection(char **arg, t_bool *in, t_bool *out)
     tmp = (char **) malloc(sizeof(char *) * (compt + 1));
     i = 0;
     j = 0;
-    while (i < compt) // ici on ajoute les chaines de caractère correctes a tmp, on free les redirections car elles ne servent plus et on remet tmp dans arg a la fin
+    while (arg[i]) // ici on ajoute les chaines de caractère correctes a tmp, on free les redirections car elles ne servent plus et on remet tmp dans arg a la fin
     {
         if (arg[i][0] == '<')
         {
             if (arg[i][1] == '\0' || (arg[i][1] == '<' && arg[i][2] == '\0'))
             {
-                free(arg[i + 1]);
+                free(arg[i]);
                 i++;
             }
             free(arg[i]);
@@ -260,15 +265,14 @@ static char **check_redirection(char **arg, t_bool *in, t_bool *out)
         {
             if (arg[i][1] == '\0' || (arg[i][1] == '>' && arg[i][2] == '\0'))
             {
-                free(arg[i + 1]);
+                free(arg[i]);
                 i++;
             }
             free(arg[i]);
         }
         else
-            tmp[j] = arg[i];
+            tmp[j++] = arg[i];
         i++;
-        j++;
     }
     free(arg);
     arg = tmp;

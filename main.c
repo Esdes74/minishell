@@ -40,6 +40,7 @@ int	main(int argc, char **argv, char **env)
 	bufff = NULL;
 	while (1)
 	{
+		pip.nb_proc = 0;
 		buf = getcwd(NULL, 0);
 		buff = ft_strjoin(buf, "$ ");
 		free(buf);
@@ -65,8 +66,8 @@ int	main(int argc, char **argv, char **env)
 		historic_fct(bufff, rd_line);
 		free(bufff); // ne fonctionne pas avec le rappel
 		bufff = ft_strdup(rd_line);
-		while (wait(NULL) == 0)
-		close_all_pipes(&pip);
+		if (pip.nb_proc > 1)
+			close_all_pipes(&pip);
 	}
 	return (0);
 }
