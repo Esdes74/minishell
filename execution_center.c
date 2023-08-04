@@ -46,6 +46,7 @@ int execution_center(t_list *spt, char **env, t_cmd *pip)
             exec_cmd = string_for_cmd_center(arg_count, i, spt);
             if (exec_cmd == NULL)
                 return (error(MALLOC, NULL), 1);
+            free(arg_count);
             exec_cmd = check_redirection(exec_cmd, &in, &out);
             if (pip->nb_proc > 1)
             {
@@ -60,7 +61,8 @@ int execution_center(t_list *spt, char **env, t_cmd *pip)
         add_list(id, list);
         i++;
     }
-    i = 1;
+    free(arg_count);
+    i = 0;
 	while (i < pip->nb_proc)
     {
         if (wait(NULL) == -1)

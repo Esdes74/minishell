@@ -37,7 +37,7 @@ static void	handle_control_c(int sig)
 
 	printf("\ndébut du scan des processus enfants pour tous les fermer id(%d)\n", getpid());
 	kill(*((pid_t *) list->head->data_cell->data), SCAN);
-	/* scan_all(SCAN); */
+	// scan_all(SCAN);
 }
 
 static void	kill_all(int sig)
