@@ -64,7 +64,7 @@ int	main(int argc, char **argv, char **env)
 		free(buff);
 		free(cmd);
 		historic_fct(bufff, rd_line);
-		free(bufff); // ne fonctionne pas avec le rappel
+		free(bufff);
 		bufff = ft_strdup(rd_line);
 		if (pip.nb_proc > 1)
 			close_all_pipes(&pip);

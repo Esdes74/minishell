@@ -12,6 +12,7 @@
 
 #include "minishell.h"
 #define ERR STDERR_FILENO
+static void    error_bis(t_error err, char *cmd);
 
 void    error(t_error err, char *cmd)
 {
@@ -31,7 +32,14 @@ void    error(t_error err, char *cmd)
         ft_printf_fd(ERR, "Error : Problem with the fork function\n");
     else if (err == SPLIT)
         ft_printf_fd(ERR, "Error : Problem with split function\n");
-    else if (err == EXEC)
+    error_bis(err, cmd);
+    if (cmd == NULL)
+        exit(1);
+}
+
+static void    error_bis(t_error err, char *cmd)
+{
+    if (err == EXEC)
         ft_printf_fd(ERR, "Error : Problem with the execve function\n");
     else if (err == TOO_MANY_ARG)
         ft_printf_fd(ERR, "Error : Too many arguments %s\n", cmd);
@@ -43,6 +51,4 @@ void    error(t_error err, char *cmd)
         ft_printf_fd(ERR, "Error : Problem with open function\n");
     else if (err == DUP)
         ft_printf_fd(ERR, "Error : Problem with dup2 function\n");
-    if (cmd == NULL)
-        exit(1);
 }

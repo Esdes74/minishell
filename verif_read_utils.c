@@ -1,4 +1,5 @@
 #include "minishell.h"
+static t_cell *moving_to_the_needed_cell(int *tab, int i, t_cell *tmp);
 
 int *counting_arg(int count, t_list *spt)
 {
@@ -34,10 +35,35 @@ char    **string_for_cmd_center(int *tab, int i, t_list *spt)
     char    **for_cmd;
     char    *buf;
     t_cell  *tmp;
-    int     y;
-
-    j = 0;
+    
     tmp = spt->head;
+    tmp = moving_to_the_needed_cell(tab, i, tmp);
+    for_cmd = (char **)malloc(sizeof(char *) * (tab[i] + 1));
+    if (!for_cmd)
+        return (error(MALLOC, NULL), NULL);
+    j = 0;
+    while (tab[i] > j)
+    {
+        buf = (char *)tmp->data_cell->data;
+        if (buf[0] == '|')
+            tmp = tmp->next;
+        for_cmd[j] = (char *)tmp->data_cell->data;
+        if (!for_cmd[j])
+            return (anihilation(for_cmd), NULL);
+        j++;
+        tmp = tmp->next;
+    }
+    for_cmd[j] = 0;
+    return (for_cmd);
+}
+
+static t_cell *moving_to_the_needed_cell(int *tab, int i, t_cell *tmp)
+{
+    int j;
+    int y;
+
+    y = 0;
+    j = 0;
     while (j < i)
     {
         y = 0;
@@ -50,23 +76,5 @@ char    **string_for_cmd_center(int *tab, int i, t_list *spt)
             tmp = tmp->next;
         j++;
     }
-    for_cmd = (char **)malloc(sizeof(char *) * (tab[i] + 1));
-    if (!for_cmd)
-        return (error(MALLOC, NULL), NULL);
-    j = 0;
-    while (tab[i] > j)
-    {
-        buf = (char *)tmp->data_cell->data;
-        if (buf[0] == '|')
-        {
-            tmp = tmp->next;
-        }
-        for_cmd[j] = (char *)tmp->data_cell->data;
-        if (!for_cmd[j])
-            return (anihilation(for_cmd), NULL);
-        j++;
-        tmp = tmp->next;
-    }
-    for_cmd[j] = 0;
-    return (for_cmd);
+    return (tmp);
 }
