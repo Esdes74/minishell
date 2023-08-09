@@ -107,5 +107,7 @@ int     *counting_arg(int count, t_list *spt);
 
 char    **string_for_cmd_center(int *tab, int i, t_list *spt);
 
+char    **check_redirection(char **arg, t_cmd *pip);
+
 int     execution_center(t_list *spt, char **env, t_cmd *pip);
 #endif

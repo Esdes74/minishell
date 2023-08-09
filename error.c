@@ -57,6 +57,4 @@ static void    error_bis(t_error err, char *cmd)
         ft_printf_fd(ERR, "Error : Problem with ft_strdup function\n");
     else if (err == WRITE)
         ft_printf_fd(ERR, "Error : Problem with write function\n");
-    if (cmd == NULL)
-        exit(1);
 }

@@ -44,7 +44,8 @@ SRC := main.c \
 	   parsing.c \
 	   verif_read.c \
 	   verif_read_utils.c \
-	   execution_center.c
+	   execution_center.c \
+	   check_redirection.c
 OBJ := $(SRC:%.c=.obj/%.o)
 
 #
