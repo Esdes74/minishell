@@ -34,6 +34,7 @@ extern t_list  *list;
 typedef enum    e_error{
     ADD_LIST,
     MALLOC,
+    CALLOC,
     TAILING,
     CMD,
     JOIN,
@@ -46,17 +47,23 @@ typedef enum    e_error{
     TOKEN,
     OPEN,
     DUP,
+    STRDUP,
+    WRITE,
 }   t_error;
 
-typedef struct t_cmd
+typedef struct  t_cmd
 {
     char    *infile;
     char    *outfile;
     int     nb_pipe;
     int     **pipe;
     int     nb_proc;
-    int     heredoc;
-} t_cmd;
+    int     heredoc; // utilisé
+    int     *here_pipe; // utilisé
+    char    *hd_history; // utilisé
+    t_bool  in; // utilisé
+    t_bool  out; // utilisé
+}   t_cmd;
 
 // Générals
 void	signals(void);

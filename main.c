@@ -38,8 +38,14 @@ int	main(int argc, char **argv, char **env)
 	using_history();
 	rl_bind_key('\t', rl_complete);
 	bufff = NULL;
+	pip.hd_history = NULL;
 	while (1)
 	{
+		if (pip.hd_history != NULL)
+		{
+			free(pip.hd_history);
+			pip.hd_history = NULL;
+		}
 		pip.nb_proc = 0;
 		buf = getcwd(NULL, 0);
 		buff = ft_strjoin(buf, "$ ");

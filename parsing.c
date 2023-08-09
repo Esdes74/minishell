@@ -53,7 +53,7 @@ void    parsing(const char *rd_line, int *flag, t_list *ret)
             *flag = 2;
         else if (rd_line[i] == '\'' && *flag == 2)
             *flag = 0;
-        else if (rd_line[i] == ' ' && *flag == 0)
+        else if (rd_line[i] == ' ' && *flag == 0 && i > 0)
             compt++;
         if (rd_line[i] == '|' && rd_line[i - 1] != ' ' && *flag == 0)
             compt++;
@@ -86,7 +86,7 @@ void    parsing(const char *rd_line, int *flag, t_list *ret)
             *flag = 2;
         else if (rd_line[i] == '\'' && *flag == 2)
             *flag = 0;
-        else if (rd_line[i] == ' ' && *flag == 0)
+        else if (rd_line[i] == ' ' && *flag == 0 && i > 0)
         {
             compt++;
             *flag = 3;
@@ -150,7 +150,7 @@ void    parsing(const char *rd_line, int *flag, t_list *ret)
                 compt++;
             }
         }
-        else if (rd_line[i] == ' ' && *flag == 0)
+        else if (rd_line[i] == ' ' && *flag == 0 && i > 0)
         {
             spt[compt][j] = '\0';
             j = 0;

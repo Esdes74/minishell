@@ -19,6 +19,8 @@ void    error(t_error err, char *cmd)
         ft_printf_fd(ERR, "Error : Problem when adding pid to list.\n");
     else if (err == MALLOC)
         ft_printf_fd(ERR, "Error : Problem with malloc function.\n");
+    else if (err == CALLOC)
+        ft_printf_fd(ERR, "Error : Problem with calloc function.\n");
     else if (err == TAILING)
         ft_printf_fd(ERR, "Error : Problem tailing PID tailing in list.\n");
     else if (err == CMD)
@@ -43,6 +45,10 @@ void    error(t_error err, char *cmd)
         ft_printf_fd(ERR, "Error : Problem with open function\n");
     else if (err == DUP)
         ft_printf_fd(ERR, "Error : Problem with dup2 function\n");
+    else if (err == STRDUP)
+        ft_printf_fd(ERR, "Error : Problem with ft_strdup function\n");
+    else if (err == WRITE)
+        ft_printf_fd(ERR, "Error : Problem with write function\n");
     if (cmd == NULL)
         exit(1);
 }
