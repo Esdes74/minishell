@@ -275,6 +275,7 @@ static int  write_hd_to_pip(t_cmd *struc, char *rd_line)
 {
     if (write(struc->here_pipe[1], rd_line, ft_strlen(rd_line)) == -1)
         return (error(WRITE, "0"), 1);
+    free(rd_line);
     if (close(struc->here_pipe[1]) == -1)
         return (error(CLOSE, "0"), 1);
     if (dup2(struc->here_pipe[0], STDIN_FILENO) == -1)

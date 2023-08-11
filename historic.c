@@ -24,10 +24,10 @@ History :
 */
 
 
-void    historic_fct(char *bufff, char *test) // gérer les espace dans l'historique
+int historic_fct(char *bufff, char *test) // gérer les espace dans l'historique
 {
     if (test[0] == ' ')
-        return ;
+        return (0);
     if (bufff == NULL)
         add_history(test);
     else
@@ -35,4 +35,5 @@ void    historic_fct(char *bufff, char *test) // gérer les espace dans l'histor
         if (strncmp(test, bufff, ft_strlen(test) + 1) != 0)
             add_history(test);
     }
+    return (0);
 }
