@@ -216,13 +216,14 @@ static char *heredoc(char *arg, char *rd_line, t_cmd *struc)
     tmp = readline("> ");
     while (ft_strncmp(arg, tmp, ft_strlen(tmp) + 1) != 0)
     {
-        if (rd_line == NULL)
+        if (rd_line == NULL) // Si c'est la première phrase alors je join un \n
         {
             rd_line = ft_strjoin(tmp, "\n");
             if (rd_line == NULL)
                 return (error(JOIN, "0"), free(tmp), free(buf), NULL);
+            free(tmp);
         }
-        else
+        else // Sinon je join un \n et je join le nouveau a l'ancien
         {
             buf = ft_strjoin(tmp, "\n");
             if (buf == NULL)
