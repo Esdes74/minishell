@@ -19,7 +19,7 @@ void	rmstack(t_list *lst, t_bool allow, int debug)
 	if (lst == 0)
 	{
 		if (debug)
-			write(1, "Error : fct rmstack : lst null\n", 31);
+			write(2, "Error : fct rmstack : lst null\n", 31);
 		return ;
 	}
 	if (lst->type_lst == STACK && lst->len != 0)
@@ -32,6 +32,6 @@ void	rmstack(t_list *lst, t_bool allow, int debug)
 	}
 	else
 		if (debug == 1 && lst->type_lst != STACK)
-			write(1, "ERROR : fct rmstack : Utilisation of fct stack on non \
+			write(2, "ERROR : fct rmstack : Utilisation of fct stack on non \
 stack data structure\n", 76);
 }

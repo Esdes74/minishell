@@ -19,13 +19,13 @@ t_cell	*untail_list(t_list *lst, int debug)
 	if (lst == 0)
 	{
 		if (debug)
-			write(1, "ERROR : fct untail_list : lst null\n", 35);
+			write(2, "ERROR : fct untail_list : lst null\n", 35);
 		return (0);
 	}
 	if (lst->type_lst != LIST || lst->len == 0)
 	{
 		if (debug == 1 && lst->type_lst != LIST)
-			write(1, "ERROR : fct untail_list : Utilisation of fct list on non \
+			write(2, "ERROR : fct untail_list : Utilisation of fct list on non \
 list data structure\n", 78);
 		return (0);
 	}

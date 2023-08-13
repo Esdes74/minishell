@@ -20,7 +20,7 @@ t_cell	*unstack_list(t_list *lst, int debug)
 	if (lst == 0)
 	{
 		if (debug)
-			write(1, "ERROR : fct unstack_list : lst null\n", 36);
+			write(2, "ERROR : fct unstack_list : lst null\n", 36);
 		return (0);
 	}
 	rm = lst->head;
@@ -28,7 +28,7 @@ t_cell	*unstack_list(t_list *lst, int debug)
 	{
 		if (debug == 1 && lst->type_lst != LIST)
 		{
-			write(1, "ERROR : fct unstack_list : Utilisation of fct list \
+			write(2, "ERROR : fct unstack_list : Utilisation of fct list \
 on non list data structure\n", 79);
 		}
 		return (0);

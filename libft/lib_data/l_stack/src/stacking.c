@@ -17,11 +17,11 @@ static void	debuger_stacking(int debug, int mod, t_list *lst)
 	if (debug == 1)
 	{
 		if (lst == 0)
-			write(1, "ERROR : fct stacking : lst null\n", 32);
+			write(2, "ERROR : fct stacking : lst null\n", 32);
 		if (mod == 1)
-			write(1, "ERROR : fct stacking : Malloc not OK\n", 37);
+			write(2, "ERROR : fct stacking : Malloc not OK\n", 37);
 		else if (mod == 0)
-			write(1, "ERROR : fct stacking : Utilisation of fct list on \
+			write(2, "ERROR : fct stacking : Utilisation of fct list on \
 non list data structure\n", 75);
 	}
 }

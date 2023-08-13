@@ -33,7 +33,8 @@ L_SRC := init_list.c \
 		 unstack_list.c \
 		 rmstack_list.c \
 		 untail_list.c \
-		 rmtail_list.c
+		 rmtail_list.c \
+		 rmindex_list.c
 L_OBJ := $(L_SRC:%.c=$(OBJ)%.o)
 
 # Definitions of differents printed colors

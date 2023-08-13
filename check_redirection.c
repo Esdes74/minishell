@@ -4,7 +4,7 @@ static int  check_heredoc(char **arg, t_cmd *struc);
 static char *heredoc(char *arg, char *rd_line, t_cmd *struc);
 static int  write_hd_to_pip(t_cmd *struc, char *rd_line);
 
-char    **check_redirection(char **arg, t_cmd *struc)
+char    **check_redirection(char **arg, t_list *spt, t_cmd *struc)
 {
     char    **tmp;
     char    *rd_line;
@@ -143,19 +143,19 @@ char    **check_redirection(char **arg, t_cmd *struc)
         {
             if (arg[i][1] == '\0' || (arg[i][1] == '<' && arg[i][2] == '\0'))
             {
-                free(arg[i]);
+                rmindex_list(spt, TRUE, i, DEBUG);
                 i++;
             }
-            free(arg[i]);
+            rmindex_list(spt, TRUE, i, DEBUG);
         }
         else if (arg[i][0] == '>')
         {
             if (arg[i][1] == '\0' || (arg[i][1] == '>' && arg[i][2] == '\0'))
             {
-                free(arg[i]);
+                rmindex_list(spt, TRUE, i, DEBUG);
                 i++;
             }
-            free(arg[i]);
+            rmindex_list(spt, TRUE, i, DEBUG);
         }
         else
             tmp[j++] = arg[i];

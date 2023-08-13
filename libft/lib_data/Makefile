@@ -69,7 +69,8 @@ LIST_LIB := init_list.c \
 			unstack_list.c \
 			rmstack_list.c \
 			untail_list.c \
-			rmtail_list.c
+			rmtail_list.c \
+			rmindex_list.c
 LIST_LIB_H := $(LIB_LIST)lib_list.h
 LIST_OBJ_LIB := $(LIST_LIB:%.c=$(LIB_LIST_OBJ)%.o)
 LIST_OBJ_LIB_DEB := $(LIST_LIB:%.c=$(LIB_LIST_OBJ)%_debug.o)

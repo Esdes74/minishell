@@ -19,7 +19,7 @@ void	rmtail_list(t_list *lst, t_bool allow, int debug)
 	if (lst == 0)
 	{
 		if (debug)
-			write(1, "Error : fct rmtail_list : lst null\n", 35);
+			write(2, "Error : fct rmtail_list : lst null\n", 35);
 		return ;
 	}
 	if (lst->type_lst == LIST && lst->len != 0)
@@ -32,6 +32,6 @@ void	rmtail_list(t_list *lst, t_bool allow, int debug)
 	}
 	else
 		if (debug == 1 && lst->type_lst != LIST)
-			write(1, "ERROR : fct rmtail_list : Utilisation of fct stack on \
+			write(2, "ERROR : fct rmtail_list : Utilisation of fct stack on \
 non list data structure\n", 79);
 }

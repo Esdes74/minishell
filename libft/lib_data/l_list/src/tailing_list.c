@@ -17,11 +17,11 @@ static void	debuger(int debug, int mod, t_list *lst)
 	if (debug == 1)
 	{
 		if (lst == NULL)
-			write(1, "ERROR : fct tailing_list : lst null\n", 36);
+			write(2, "ERROR : fct tailing_list : lst null\n", 36);
 		if (mod == 11)
-			write(1, "ERROR : fct tailing_list : Malloc not OK\n", 41);
+			write(2, "ERROR : fct tailing_list : Malloc not OK\n", 41);
 		else if (mod == 0)
-			write(1, "ERROR : fct tailing_list : Utilisation of fct list on \
+			write(2, "ERROR : fct tailing_list : Utilisation of fct list on \
 non list data structure\n", 78);
 	}
 }

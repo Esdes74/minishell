@@ -108,6 +108,9 @@ t_cell			*untail_list(t_list *lst, int debug);
 // Remove cell from the back of list and free it
 void			rmtail_list(t_list *lst, t_bool allow, int debug);
 
+// Remove cell at the index i and free it
+void    rmindex_list(t_list *lst, t_bool allow, int index, int debug);
+
 /*##################### LIST_IND ######################*/
 void			init_list_ind(void);
 

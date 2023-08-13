@@ -88,7 +88,7 @@ int	ft_printf_fd(int fd, const char *str, ...)
 	int		format;
 	int		res;
 
-	if (write(1, 0, 0) == -1)
+	if (write(fd, 0, 0) == -1)
 		return (-1);
 	data.ind = 0;
 	data.fd = fd;

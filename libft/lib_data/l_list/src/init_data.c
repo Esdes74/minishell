@@ -15,7 +15,7 @@
 t_data	*init_data(void *d, t_type t, t_bool allow, t_data *cell)
 {
 	if (cell == 0)
-		return (write(1, "Error : fct init_data : cell null\n", 34), 0);
+		return (write(2, "Error : fct init_data : cell null\n", 34), 0);
 	cell->allowed = allow;
 	cell->type_data = t;
 	cell->data = d;

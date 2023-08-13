@@ -19,7 +19,7 @@ void	rmstack_list(t_list *lst, t_bool allow, int debug)
 	if (lst == 0)
 	{
 		if (debug)
-			write(1, "Error : fct rmstack_list : lst null\n", 36);
+			write(2, "Error : fct rmstack_list : lst null\n", 36);
 		return ;
 	}
 	if (lst->type_lst == LIST && lst->len != 0)
@@ -32,6 +32,6 @@ void	rmstack_list(t_list *lst, t_bool allow, int debug)
 	}
 	else
 		if (debug == 1 && lst->type_lst != LIST)
-			write(1, "ERROR : fct rmstack_list : Utilisation of fct list on \
+			write(2, "ERROR : fct rmstack_list : Utilisation of fct list on \
 non list data structure\n", 79);
 }

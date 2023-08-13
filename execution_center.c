@@ -34,15 +34,15 @@ int execution_center(t_list *spt, char **env, t_cmd *pip)
         return (1);
     while (i < pip->nb_proc)
     {
+        exec_cmd = string_for_cmd_center(arg_count, i, spt);
+        if (exec_cmd == NULL)
+            return (error(MALLOC, NULL), 1);
         id = fork();
         if (id == 0)
         {
             add_list(getpid(), list);
-            exec_cmd = string_for_cmd_center(arg_count, i, spt);
-            if (exec_cmd == NULL)
-                return (error(MALLOC, NULL), 1);
+            exec_cmd = check_redirection(exec_cmd, spt, pip);
             free(arg_count);
-            exec_cmd = check_redirection(exec_cmd, pip);
             if (pip->nb_proc > 1)
             {
                 if (i > 0 && pip->in == FALSE)
@@ -54,6 +54,7 @@ int execution_center(t_list *spt, char **env, t_cmd *pip)
             cmd_center_simple(exec_cmd, env);
         }
         add_list(id, list);
+        free(exec_cmd);
         i++;
     }
     if (id != 0)
