@@ -12,6 +12,7 @@ char    **check_redirection(char **arg, t_list *spt, t_cmd *struc)
     int     compt;
     int     i;
     int     j;
+    (void)  spt;
 
     i = 0;
     rd_line = NULL;
@@ -139,25 +140,25 @@ char    **check_redirection(char **arg, t_list *spt, t_cmd *struc)
     j = 0;
     while (arg[i]) // ici on ajoute les chaines de caractère correctes a tmp, on free les redirections car elles ne servent plus et on remet tmp dans arg a la fin
     {
-        if (arg[i][0] == '<')
-        {
-            if (arg[i][1] == '\0' || (arg[i][1] == '<' && arg[i][2] == '\0'))
-            {
-                rmindex_list(spt, TRUE, i, DEBUG);
-                i++;
-            }
-            rmindex_list(spt, TRUE, i, DEBUG);
-        }
-        else if (arg[i][0] == '>')
-        {
-            if (arg[i][1] == '\0' || (arg[i][1] == '>' && arg[i][2] == '\0'))
-            {
-                rmindex_list(spt, TRUE, i, DEBUG);
-                i++;
-            }
-            rmindex_list(spt, TRUE, i, DEBUG);
-        }
-        else
+        // if (arg[i][0] == '<')
+        // {
+        //     if (arg[i][1] == '\0' || (arg[i][1] == '<' && arg[i][2] == '\0'))
+        //     {
+        //         rmindex_list(spt, TRUE, i, DEBUG);
+        //         i++;
+        //     }
+        //     rmindex_list(spt, TRUE, i, DEBUG);
+        // }
+        // else if (arg[i][0] == '>')
+        // {
+        //     if (arg[i][1] == '\0' || (arg[i][1] == '>' && arg[i][2] == '\0'))
+        //     {
+        //         rmindex_list(spt, TRUE, i, DEBUG);
+        //         i++;
+        //     }
+        //     rmindex_list(spt, TRUE, i, DEBUG);
+        // }
+        if (arg[i][0] != '>' && arg[i][0] != '<')
             tmp[j++] = arg[i];
         i++;
     }
