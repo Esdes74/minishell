@@ -60,7 +60,7 @@ typedef struct  t_cmd
     int     nb_proc;
     int     heredoc; // utilisé
     int     *here_pipe; // utilisé
-    char    *hd_history; // utilisé
+    char    **hd_history; // utilisé
     t_bool  in; // utilisé
     t_bool  out; // utilisé
 }   t_cmd;
@@ -107,7 +107,9 @@ int     *counting_arg(int count, t_list *spt);
 
 char    **string_for_cmd_center(int *tab, int i, t_list *spt);
 
-char    **check_redirection(char **arg, t_list *spt, t_cmd *pip);
+char    **check_redirection(char **arg, t_cmd *pip);
+
+char    **prep_hd(t_cmd *pip, t_list *spt);
 
 int     execution_center(t_list *spt, char **env, t_cmd *pip);
 #endif

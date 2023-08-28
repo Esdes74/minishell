@@ -19,8 +19,8 @@ static int dup_out_cmd(t_cmd *pip, int i);
 
 int execution_center(t_list *spt, char **env, t_cmd *pip)
 {
-    int     *arg_count;
     char    **exec_cmd;
+    int     *arg_count;
     int     i;
     int     id;
 
@@ -32,6 +32,7 @@ int execution_center(t_list *spt, char **env, t_cmd *pip)
     arg_count = counting_arg(pip->nb_proc, spt);
     if (arg_count == NULL)
         return (1);
+    pip->hd_history = prep_hd(pip, spt);
     while (i < pip->nb_proc)
     {
         exec_cmd = string_for_cmd_center(arg_count, i, spt);
@@ -41,7 +42,7 @@ int execution_center(t_list *spt, char **env, t_cmd *pip)
         if (id == 0)
         {
             add_list(getpid(), list);
-            exec_cmd = check_redirection(exec_cmd, spt, pip);
+            exec_cmd = check_redirection(exec_cmd, pip);
             free(arg_count);
             if (pip->nb_proc > 1)
             {

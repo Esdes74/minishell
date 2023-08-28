@@ -43,7 +43,7 @@ int	main(int argc, char **argv, char **env)
 	{
 		if (pip.hd_history != NULL)
 		{
-			free(pip.hd_history);
+			anihilation(pip.hd_history);
 			pip.hd_history = NULL;
 		}
 		pip.nb_proc = 0;
@@ -70,7 +70,7 @@ int	main(int argc, char **argv, char **env)
 		// 	free(cmd);
 		// }
 		free(cmd);
-		historic_fct(bufff, rd_line);
+		historic_fct(bufff, rd_line, pip);
 		free(bufff);
 		bufff = ft_strdup(rd_line);
 		if (pip.nb_proc > 1)

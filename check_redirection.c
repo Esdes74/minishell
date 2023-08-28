@@ -4,7 +4,7 @@ static int  check_heredoc(char **arg, t_cmd *struc);
 static char *heredoc(char *arg, char *rd_line, t_cmd *struc);
 static int  write_hd_to_pip(t_cmd *struc, char *rd_line);
 
-char    **check_redirection(char **arg, t_list *spt, t_cmd *struc)
+char    **check_redirection(char **arg, t_cmd *struc)
 {
     char    **tmp;
     char    *rd_line;
@@ -12,7 +12,6 @@ char    **check_redirection(char **arg, t_list *spt, t_cmd *struc)
     int     compt;
     int     i;
     int     j;
-    (void)  spt;
 
     i = 0;
     rd_line = NULL;
@@ -160,7 +159,7 @@ char    **check_redirection(char **arg, t_list *spt, t_cmd *struc)
     return (arg);
 }
 
-// Cette fonction doit mettre en place le pipe du heredoc s'il  y en a besoin,
+// Cette fonction doit mettre en place le pipe du heredoc s'il y en a besoin,
 // pour le savoir elle check si la dernière redirection est un heredoc ou non
 static int  check_heredoc(char **arg, t_cmd *struc)
 {
@@ -191,78 +190,48 @@ static int  check_heredoc(char **arg, t_cmd *struc)
 
 static char *heredoc(char *arg, char *rd_line, t_cmd *struc)
 {
-    char    *tmp;
-    char    *buf;
-    char    *ret;
-
-    tmp = NULL;
-    buf = NULL;
-
-    // Ici je fais en sorte que s'il y avait d'autres heredoc ils soient effacés
-    if (rd_line != NULL)
-    {
-        free(rd_line);
-        rd_line = NULL;
-    }
-    
-    // Ici je demande a l'utilisateur de rentrer ses phrases jusqu'a ce que je retrouve le bon mot
-    tmp = readline("> ");
-    while (ft_strncmp(arg, tmp, ft_strlen(tmp) + 1) != 0)
-    {
-        if (rd_line == NULL) // Si c'est la première phrase alors je join un \n
-        {
-            rd_line = ft_strjoin(tmp, "\n");
-            if (rd_line == NULL)
-                return (error(JOIN, "0"), free(tmp), free(buf), NULL);
-            free(tmp);
-        }
-        else // Sinon je join un \n et je join le nouveau a l'ancien
-        {
-            buf = ft_strjoin(tmp, "\n");
-            if (buf == NULL)
-                return (error(JOIN, "0"), free(tmp), free(rd_line), NULL);
-            free(tmp);
-            tmp = ft_strjoin(rd_line, buf);
-            if (tmp == NULL)
-                return (error(JOIN, "0"), free(rd_line), free(buf), NULL);
-            free(rd_line);
-            free(buf);
-            rd_line = tmp;
-        }
-        tmp = readline("> ");
-    }
+    (void) arg;
+    (void) rd_line;
+    (void) struc;
+    return (NULL);
+    // // Ici je fais en sorte que s'il y avait d'autres heredoc ils soient effacés
+    // if (rd_line != NULL)
+    // {
+    //     free(rd_line);
+    //     rd_line = NULL;
+    // }
 
 
-    // Ici je fais tous un mic mac trop compliqué (a cause des gestions d'erreures)
-    // Pour permettre de récupérer correctement les phrases dans l'historique ET de
-    // Retourner le bon truc pour le heredoc
-    ret = ft_strdup(rd_line); // Je duplique la valeur de retour pour ensuite pouvoir la manipuler
-    if (ret == NULL) // Petite vérif
-        return (error(STRDUP, "0"), NULL);
-    buf = ft_strjoin(rd_line, tmp); // Je rajoute le dernier mot pour que l'hitorique soit plus propre
-    if (buf == NULL) // Petite verif
-        return (error(JOIN, "0"), NULL);
-    free(tmp); // Je free tmp ici une fois que je l'ai ajouté au buf de l'historique
-    free(rd_line); // Je free rd_line ici pour pouvoir remettre un join dedans sans leaks
-    rd_line = ft_strjoin(buf, "\n"); // Je join un \n pour que l'historique soit plus beau
-    if (rd_line == NULL) // Petite verif
-        return (error(JOIN, "0"), NULL);
-    free(buf); // Je free buf ici parcequ'il y en a plus besoin
+    // // Ici je fais tous un mic mac trop compliqué (a cause des gestions d'erreures)
+    // // Pour permettre de récupérer correctement les phrases dans l'historique ET de
+    // // Retourner le bon truc pour le heredoc
+    // ret = ft_strdup(rd_line); // Je duplique la valeur de retour pour ensuite pouvoir la manipuler
+    // if (ret == NULL) // Petite vérif
+    //     return (error(STRDUP, "0"), NULL);
+    // buf = ft_strjoin(rd_line, tmp); // Je rajoute le dernier mot pour que l'hitorique soit plus propre
+    // if (buf == NULL) // Petite verif
+    //     return (error(JOIN, "0"), NULL);
+    // free(tmp); // Je free tmp ici une fois que je l'ai ajouté au buf de l'historique
+    // free(rd_line); // Je free rd_line ici pour pouvoir remettre un join dedans sans leaks
+    // rd_line = ft_strjoin(buf, "\n"); // Je join un \n pour que l'historique soit plus beau
+    // if (rd_line == NULL) // Petite verif
+    //     return (error(JOIN, "0"), NULL);
+    // free(buf); // Je free buf ici parcequ'il y en a plus besoin
 
 
-    // Ici c'est le mic mac de l'hitorique
-    if (struc->hd_history != NULL) // S'il existe
-    {
-        tmp = ft_strjoin(struc->hd_history, rd_line); // Alors je peux join
-        if (tmp == NULL) // Petite verif
-            return (error(JOIN, "0"), free(rd_line), free(struc->hd_history), NULL);
-        free(rd_line); // Plus besoin
-        free(struc->hd_history); // Je le free avant de mettre je nouvel hitorique
-        struc->hd_history = tmp; // Remplacmeent de l'ancien historique
-    }
-    else // Sinon s'il n'existe pas
-        struc->hd_history = rd_line; // Je met l'historique a sa place
-    return (ret); // Je retourne la valeur qu'il faut retourner (le heredoc sans le mot d'arret)
+    // // Ici c'est le mic mac de l'hitorique
+    // if (struc->hd_history != NULL) // S'il existe
+    // {
+    // tmp = ft_strjoin(struc->hd_history, rd_line); // Alors je peux join
+    //     if (tmp == NULL) // Petite verif
+    //         return (error(JOIN, "0"), free(rd_line), free(struc->hd_history), NULL);
+    //     free(rd_line); // Plus besoin
+    //     free(struc->hd_history); // Je le free avant de mettre je nouvel hitorique
+    //     struc->hd_history = tmp; // Remplacmeent de l'ancien historique
+    // }
+    // else // Sinon s'il n'existe pas
+    //     struc->hd_history = rd_line; // Je met l'historique a sa place
+    // return (ret); // Je retourne la valeur qu'il faut retourner (le heredoc sans le mot d'arret)
 }
 
 static int  write_hd_to_pip(t_cmd *struc, char *rd_line)
