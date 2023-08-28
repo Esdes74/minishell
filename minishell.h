@@ -59,6 +59,7 @@ typedef struct  t_cmd
     int     **pipe;
     int     nb_proc;
     int     heredoc; // utilisé
+    int     ind_hd; // utilisé
     int     *here_pipe; // utilisé
     char    **hd_history; // utilisé
     t_bool  in; // utilisé

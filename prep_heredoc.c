@@ -86,5 +86,6 @@ char    **prep_hd(t_cmd *pip, t_list *spt)
         i++;
     }
     pip->hd_history[i] = NULL;
+    pip->ind_hd = -1;
     return (pip->hd_history);
 }

@@ -54,7 +54,6 @@ int	main(int argc, char **argv, char **env)
 		free(buff);
 		if (rd_line == NULL)
 		{
-			free(buff);
 			free(bufff);
 			free(rd_line);
 			return (quit(), 1);
