@@ -43,8 +43,6 @@ static int search_builtins(char **spt, char **envi)
     int     option;
 
     option = 0;
-    // while (str[i] == ' ') // actuellement  le probleme c'est si on met pas le echo en premier par exemple, il ne fonctionnera pas, mais avec un split avec les pipes ça dne devrais pas poser de soucis
-    //     i++;
     if (ft_strlen(spt[0]) == 3 && ft_strncmp(spt[0], "pwd", 3) == 0)
         return (pwd(), -1);
     else if (ft_strlen(spt[0]) == 4 && ft_strncmp(spt[0], "exit", 4) == 0)
@@ -68,15 +66,11 @@ static int	execute_child(char **environ, char **str)
 {
 	char	*cmd;
 
-    // ft_printf_fd(2, "valeur de str[0] %s\n", str[0]);
 	cmd = cmd_build(str[0], environ);
 	if (cmd == NULL)
 		return (free(str), 1);
-	// if (close_all_pipes(pip) == 1)
-	// 	return (free(cmd), anihilation(splitted), 2);
     annihilation(list, free, DEBUG);
 	execve(cmd, str, environ);
-    // ft_printf_fd(2, "deerriere exec\n")
 	error(EXEC, "0");
 	return (free(cmd), anihilation(str), 2);
 }

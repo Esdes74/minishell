@@ -61,13 +61,6 @@ int	main(int argc, char **argv, char **env)
 		rd_line = verif_read(rd_line, env, &pip);
 		if (rd_line == NULL)
 			return (1);
-		// if (bu == 0)
-		// {
-		// 	if (cmd_center_simple(rd_line, env) == 1)
-		// 		return (free(buff), free(cmd), exit(1), 1);
-		// 	free(buff);
-		// 	free(cmd);
-		// }
 		free(cmd);
 		historic_fct(bufff, rd_line, &pip);
 		free(bufff);

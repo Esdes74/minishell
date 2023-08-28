@@ -10,6 +10,7 @@ char    **prep_hd(t_cmd *pip, t_list *spt)
     char    *buff;
     char    *stop;
     char    *rd_line;
+
     // Compte du nombre de potentiels hd pour savoir de combien doit etre fait
     // le malloc
     compt = 0;
