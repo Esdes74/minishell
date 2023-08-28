@@ -74,7 +74,7 @@ void    error(t_error err, char *cmd);
 
 void	quit(void);
 
-int     historic_fct(char *bufff, char *test);
+int     historic_fct(char *bufff, char *test, t_cmd *pip);
 
 char    *verif_read(char *rd_line, char **env, t_cmd *pip);
 

@@ -24,14 +24,12 @@ char    **prep_hd(t_cmd *pip, t_list *spt)
 
     // Fait le malloc afin de créer la structure de hd
     if (compt != 0)
-        pip->hd_history = (char **) malloc(sizeof(char *) * compt);
+        pip->hd_history = (char **) malloc(sizeof(char *) * (compt + 1));
     if (pip->hd_history == NULL)
         return (NULL);
 
     // Remplie `ret` avec les hd
     i = 0;
-    buf = NULL;
-    buff = NULL;
     tmp = spt->head;
     while (i < compt)
     {
@@ -44,7 +42,11 @@ char    **prep_hd(t_cmd *pip, t_list *spt)
             stop = (char *) tmp->next->data_cell->data;
         else
             stop = &(((char *) tmp->data_cell->data)[2]);
+        tmp = tmp->next;
 
+        buf = NULL;
+        buff = NULL;
+        rd_line = NULL;
         // Ici je demande a l'utilisateur de rentrer ses phrases jusqu'a ce que je retrouve le bon mot
         buff = readline("> ");
         while (ft_strncmp(stop, buff, ft_strlen(buff) + 1) != 0)
@@ -71,8 +73,18 @@ char    **prep_hd(t_cmd *pip, t_list *spt)
             }
             buff = readline("> ");
         }
-        pip->hd_history[i] = rd_line;
+        buf = ft_strjoin(buff, "\n");
+        if (buf == NULL)
+            return (error(JOIN, "0"), free(buff), free(rd_line), NULL);
+        free(buff);
+        buff = ft_strjoin(rd_line, buf);
+        if (buff == NULL)
+            return (error(JOIN, "0"), free(rd_line), free(buf), NULL);
+        free(rd_line);
+        free(buf);
+        pip->hd_history[i] = buff;
         i++;
     }
+    pip->hd_history[i] = NULL;
     return (pip->hd_history);
 }
