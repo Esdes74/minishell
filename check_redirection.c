@@ -138,27 +138,26 @@ char    **check_redirection(char **arg, t_list *spt, t_cmd *struc)
     tmp = (char **) malloc(sizeof(char *) * (compt + 1));
     i = 0;
     j = 0;
+    while (arg[i])
+    {
+        ft_printf_fd(2, "arg[%d] = %s\n", i, arg[i]);
+        i++;
+    }
+    i = 0;
     while (arg[i]) // ici on ajoute les chaines de caractère correctes a tmp, on free les redirections car elles ne servent plus et on remet tmp dans arg a la fin
     {
-        // if (arg[i][0] == '<')
-        // {
-        //     if (arg[i][1] == '\0' || (arg[i][1] == '<' && arg[i][2] == '\0'))
-        //     {
-        //         rmindex_list(spt, TRUE, i, DEBUG);
-        //         i++;
-        //     }
-        //     rmindex_list(spt, TRUE, i, DEBUG);
-        // }
-        // else if (arg[i][0] == '>')
-        // {
-        //     if (arg[i][1] == '\0' || (arg[i][1] == '>' && arg[i][2] == '\0'))
-        //     {
-        //         rmindex_list(spt, TRUE, i, DEBUG);
-        //         i++;
-        //     }
-        //     rmindex_list(spt, TRUE, i, DEBUG);
-        // }
-        if (arg[i][0] != '>' && arg[i][0] != '<')
+        ft_printf_fd(2, "arg[%d] = %s\n", i, arg[i]);
+        if (arg[i][0] == '<')
+        {
+            if (arg[i][1] == '\0' || (arg[i][1] == '<' && arg[i][2] == '\0'))
+                i++;
+        }
+        else if (arg[i][0] == '>')
+        {
+            if (arg[i][1] == '\0' || (arg[i][1] == '>' && arg[i][2] == '\0'))
+                i++;
+        }
+        else
             tmp[j++] = arg[i];
         i++;
     }

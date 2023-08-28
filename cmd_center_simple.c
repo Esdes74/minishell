@@ -71,7 +71,7 @@ static int	execute_child(char **environ, char **str)
     // ft_printf_fd(2, "valeur de str[0] %s\n", str[0]);
 	cmd = cmd_build(str[0], environ);
 	if (cmd == NULL)
-		return (anihilation(str), 1);
+		return (free(str), 1);
 	// if (close_all_pipes(pip) == 1)
 	// 	return (free(cmd), anihilation(splitted), 2);
     annihilation(list, free, DEBUG);

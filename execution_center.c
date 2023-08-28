@@ -53,8 +53,11 @@ int execution_center(t_list *spt, char **env, t_cmd *pip)
             }
             cmd_center_simple(exec_cmd, env);
         }
-        add_list(id, list);
-        free(exec_cmd);
+        else
+        {
+            add_list(id, list);
+            free(exec_cmd);
+        }
         i++;
     }
     if (id != 0)

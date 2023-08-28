@@ -51,6 +51,7 @@ int	main(int argc, char **argv, char **env)
 		buff = ft_strjoin(buf, "$ ");
 		free(buf);
 		rd_line = readline(buff);
+		free(buff);
 		if (rd_line == NULL)
 		{
 			free(buff);
@@ -68,7 +69,6 @@ int	main(int argc, char **argv, char **env)
 		// 	free(buff);
 		// 	free(cmd);
 		// }
-		free(buff);
 		free(cmd);
 		historic_fct(bufff, rd_line);
 		free(bufff);
