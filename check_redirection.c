@@ -138,12 +138,6 @@ char    **check_redirection(char **arg, t_list *spt, t_cmd *struc)
     tmp = (char **) malloc(sizeof(char *) * (compt + 1));
     i = 0;
     j = 0;
-    while (arg[i])
-    {
-        ft_printf_fd(2, "arg[%d] = %s\n", i, arg[i]);
-        i++;
-    }
-    i = 0;
     while (arg[i]) // ici on ajoute les chaines de caractère correctes a tmp, on free les redirections car elles ne servent plus et on remet tmp dans arg a la fin
     {
         ft_printf_fd(2, "arg[%d] = %s\n", i, arg[i]);
