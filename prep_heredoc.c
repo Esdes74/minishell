@@ -28,7 +28,7 @@ char    **prep_hd(t_cmd *pip, t_list *spt)
 
     // Fait le malloc afin de créer la structure de hd
     if (compt != 0)
-        pip->hd_history = (char **) malloc(sizeof(char *) * (compt + 1));
+        pip->hd_history = (char **) ft_calloc(compt + 1, sizeof(char *));
     if (pip->hd_history == NULL)
         return (NULL);
 
@@ -72,7 +72,7 @@ char    **prep_hd(t_cmd *pip, t_list *spt)
 
         buf = NULL;
         buff = NULL;
-        rd_line = NULL;
+        rd_line = pip->hd_history[i];
         // Ici je demande a l'utilisateur de rentrer ses phrases jusqu'a ce que je retrouve le bon mot
         buff = readline("> ");
         while (ft_strncmp(stop, buff, ft_strlen(buff) + 1) != 0)
@@ -113,6 +113,7 @@ char    **prep_hd(t_cmd *pip, t_list *spt)
             free(buf);
         }
         // J'ajoute ce mot a l'historique
+        // free(pip->hd_history[i]);
         pip->hd_history[i] = buff;
         i++;
     }
@@ -128,6 +129,7 @@ static int  handle_hist(int compt, t_list *spt, t_cmd *pip)
     int     i;
     int     j;
     int     k;
+    int     test_buff;
     char    *buf;
     char    *buff;
     char    *stop;
@@ -144,6 +146,7 @@ static int  handle_hist(int compt, t_list *spt, t_cmd *pip)
         return (error(SPLIT, "0"), -1);
     i = 0;
     j = 1;
+    test_buff = 0;
     while (i < compt)
     {
         // Recherche des heredoc a faire
@@ -172,7 +175,7 @@ static int  handle_hist(int compt, t_list *spt, t_cmd *pip)
         buff = rdline[j++];
         if (buff == NULL)
             return (i);
-        while (ft_strncmp(stop, buff, ft_strlen(buff) + 1) != 0)
+        while (buff != NULL && ft_strncmp(stop, buff, ft_strlen(buff) + 1) != 0)
         {
             if (rd_line == NULL) // Si c'est la première phrase alors je join un \n
             {
@@ -195,11 +198,9 @@ static int  handle_hist(int compt, t_list *spt, t_cmd *pip)
                 rd_line = buff;
             }
             buff = rdline[j++];
-            if (buff == NULL)
-                return (i);
         }
         // Comme au dessus je join le dernier mot pour l'historique
-        if (rd_line != NULL)
+        if (rd_line != NULL && buff != NULL)
         {
             buf = ft_strjoin(buff, "\n");
             if (buf == NULL)
@@ -212,10 +213,15 @@ static int  handle_hist(int compt, t_list *spt, t_cmd *pip)
             free(buf);
         }
         // Je fais un dup afin de pouvoir ajouter ce que j'ai trouvé a l'historique
+        if (buff == NULL)
+        {
+            test_buff++;
+            buff = rd_line;
+        }
         pip->hd_history[i] = ft_strdup(buff);
         if (pip->hd_history[i] == NULL)
             return (anihilation(pip->hd_history), error(STRDUP, "0"), -1);
         i++;
     }
-    return (i);
+    return (i - test_buff);
 }

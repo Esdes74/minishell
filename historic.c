@@ -27,8 +27,17 @@ History :
 int historic_fct(char *bufff, char *test, t_cmd *pip) // gérer les espace dans l'historique
 {
     int     i;
+    int     flag;
     char    *tmp;
     char    *buf;
+
+    i = 0;
+    flag = 0;
+    while (test[i] != '\n' && test[i] != '\0')
+        i++;
+    if (test[i] == '\n')
+        flag = 1;
+    test[i] = '\0';
 
     if (pip->hd_history != NULL)
     {
@@ -58,7 +67,7 @@ int historic_fct(char *bufff, char *test, t_cmd *pip) // gérer les espace dans 
         add_history(tmp);
     else
     {
-        if (strncmp(test, bufff, ft_strlen(test) + 1) != 0)
+        if (strncmp(test, bufff, ft_strlen(test) + 1) != 0 || flag == 1)
             add_history(tmp);
     }
     return (0);
