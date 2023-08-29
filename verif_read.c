@@ -29,6 +29,6 @@ char *verif_read(char *rd_line, char **env, t_cmd *pip)
     {
         return (NULL);
     }
-	annihilation(spt, free, DEBUG);
+    annihilation(spt, free, DEBUG);
     return (buff);
 }

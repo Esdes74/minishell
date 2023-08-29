@@ -26,6 +26,7 @@ int execution_center(t_list *spt, char **env, t_cmd *pip)
 
     i = 0;
     pip->nb_proc = checking_pipe(spt);
+    pip->nb_pipe = pip->nb_proc - 1;
     if (pip->nb_proc > 1)
         if (prep_pipe(pip) == 1)
             return (1);
@@ -64,10 +65,13 @@ int execution_center(t_list *spt, char **env, t_cmd *pip)
     if (id != 0)
         free(arg_count);
     i = 0;
+    if (pip->nb_pipe > 0)
+    {
+        close_all_pipes(pip);
+    }
 	while (i < pip->nb_proc)
     {
-        if (wait(NULL) == -1)
-            return (1);
+        wait(NULL);
         i++;
     }
     while (list->len > 1)
@@ -96,7 +100,6 @@ static int	prep_pipe(t_cmd *pip)
 	int	i;
 
 	i = 0;
-    pip->nb_pipe = pip->nb_proc - 1;
     pip->pipe = (int **) ft_calloc(pip->nb_pipe, sizeof(int *));
     if (pip->pipe == NULL)
     {
@@ -122,12 +125,14 @@ static int	prep_pipe(t_cmd *pip)
 
 static int  dup_in_cmd(t_cmd *pip, int i)
 {
-    dup2(pip->pipe[i][0], STDIN_FILENO);
+    if (dup2(pip->pipe[i][0], STDIN_FILENO) == -1)
+        return (1);
     return (0);
 }
 
 static int  dup_out_cmd(t_cmd *pip, int i)
 {
-    dup2(pip->pipe[i][1], STDOUT_FILENO);
+    if (dup2(pip->pipe[i][1], STDOUT_FILENO) == -1)
+        return (1);
     return (0);
 }

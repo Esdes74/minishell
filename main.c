@@ -65,8 +65,6 @@ int	main(int argc, char **argv, char **env)
 		historic_fct(bufff, rd_line, &pip);
 		free(bufff);
 		bufff = ft_strdup(rd_line);
-		if (pip.nb_proc > 1)
-			close_all_pipes(&pip);
 	}
 	return (0);
 }
