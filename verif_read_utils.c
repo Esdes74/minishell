@@ -1,4 +1,17 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   verif_read_utils.c                                 :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: eslamber <eslamber@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/08/29 11:08:50 by eslamber          #+#    #+#             */
+/*   Updated: 2023/08/29 11:08:54 by eslamber         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
+
 static t_cell *moving_to_the_needed_cell(int *tab, int i, t_cell *tmp);
 
 int *counting_arg(int count, t_list *spt)
