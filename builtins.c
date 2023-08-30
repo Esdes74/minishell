@@ -1,7 +1,13 @@
 #include "minishell.h"
 
-char    *pwd(void)
+char    *pwd(char **exec_cmd, t_cmd *pip, int i)
 {
+    (void)exec_cmd;
+    if (pip->nb_pipe > 0)
+    {
+        if (dup2(pip->pipe[i][1], STDOUT_FILENO) == -1)
+            return (error(DUP, "0"), NULL);
+    }
     return (getcwd(NULL, 0));
 }
 

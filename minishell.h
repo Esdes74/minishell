@@ -80,7 +80,9 @@ int     historic_fct(char *bufff, char *test, t_cmd *pip);
 char    *verif_read(char *rd_line, char **env, t_cmd *pip);
 
 // Builtins
-char    *pwd(void);
+int search_builtins(char **spt, char **envi, t_cmd *pip, int i);
+
+char    *pwd(char **exec_cmd, t_cmd *pip, int i);
 
 void    env(char **envir);
 

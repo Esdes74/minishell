@@ -39,26 +39,29 @@ int execution_center(t_list *spt, char **env, t_cmd *pip)
         exec_cmd = string_for_cmd_center(arg_count, i, spt);
         if (exec_cmd == NULL)
             return (error(MALLOC, NULL), 1);
-        id = fork();
-        if (id == 0)
+        if (search_builtins(exec_cmd, env, pip, i) == 1)
         {
-            add_list(getpid(), list);
-            exec_cmd = check_redirection(exec_cmd, pip);
-            free(arg_count);
-            if (pip->nb_proc > 1)
+            id = fork();
+            if (id == 0)
             {
-                if (i > 0 && pip->in == FALSE)
-                    dup_in_cmd(pip, i - 1);
-                if (i < pip->nb_pipe && pip->out == FALSE)
-                    dup_out_cmd(pip, i);
-                close_all_pipes(pip);
+                add_list(getpid(), list);
+                exec_cmd = check_redirection(exec_cmd, pip);
+                free(arg_count);
+                if (pip->nb_proc > 1)
+                {
+                    if (i > 0 && pip->in == FALSE)
+                        dup_in_cmd(pip, i - 1);
+                    if (i < pip->nb_pipe && pip->out == FALSE)
+                        dup_out_cmd(pip, i);
+                    close_all_pipes(pip);
+                }
+                cmd_center_simple(exec_cmd, env);
             }
-            cmd_center_simple(exec_cmd, env);
-        }
-        else
-        {
-            add_list(id, list);
-            free(exec_cmd);
+            else
+            {
+                add_list(id, list);
+                free(exec_cmd);
+            }
         }
         i++;
     }
