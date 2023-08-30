@@ -12,15 +12,21 @@
 
 #include "minishell.h"
 
-char    *pwd(char **exec_cmd, t_cmd *pip, int i)
+char    *pwd(t_cmd *pip, int i)
 {
-    (void)exec_cmd;
-    if (pip->nb_pipe > 0)
+    char    *cwd;
+
+    pip->nb_built++;
+    if (pip->nb_pipe > i)
     {
         if (dup2(pip->pipe[i][1], STDOUT_FILENO) == -1)
             return (error(DUP, "0"), NULL);
     }
-    return (getcwd(NULL, 0));
+    cwd = getcwd(NULL, 0);
+    if (cwd == NULL)
+        return (NULL);
+    ft_printf("%s\n", cwd);
+    return (cwd);
 }
 
 void    exitt(void)

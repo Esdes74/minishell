@@ -9,7 +9,7 @@ int search_builtins(char **spt, char **envi, t_cmd *pip, int i)
 
     option = 0;
     if (ft_strlen(spt[0]) == 3 && ft_strncmp(spt[0], "pwd", 3) == 0)
-        return (pwd(spt, pip, i), -1);
+        return (pwd(pip, i), -1);
     else if (ft_strlen(spt[0]) == 4 && ft_strncmp(spt[0], "exit", 4) == 0)
         return (exitt(), -1);
     else if (ft_strlen(spt[0]) == 3 && ft_strncmp(spt[0], "env", 3) == 0)

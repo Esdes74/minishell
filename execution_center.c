@@ -25,6 +25,7 @@ int execution_center(t_list *spt, char **env, t_cmd *pip)
     int     id;
 
     i = 0;
+    pip->nb_built = 0;
     pip->nb_proc = checking_pipe(spt);
     pip->nb_pipe = pip->nb_proc - 1;
     if (pip->nb_proc > 1)
@@ -67,7 +68,7 @@ int execution_center(t_list *spt, char **env, t_cmd *pip)
     }
     if (id != 0)
         free(arg_count);
-    i = 0;
+    i = pip->nb_built;
     if (pip->nb_pipe > 0)
     {
         close_all_pipes(pip);

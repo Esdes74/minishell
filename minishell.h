@@ -58,6 +58,7 @@ typedef struct  t_cmd
     int     nb_pipe;
     int     **pipe;
     int     nb_proc;
+    int     nb_built;
     int     heredoc; // utilisé
     int     ind_hd; // utilisé
     int     *here_pipe; // utilisé
@@ -82,7 +83,7 @@ char    *verif_read(char *rd_line, char **env, t_cmd *pip);
 // Builtins
 int search_builtins(char **spt, char **envi, t_cmd *pip, int i);
 
-char    *pwd(char **exec_cmd, t_cmd *pip, int i);
+char    *pwd(t_cmd *pip, int i);
 
 void    env(char **envir);
 
