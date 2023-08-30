@@ -23,6 +23,8 @@ static int	execute_child(char **environ, char **str);
 
 int cmd_center_simple(char **str, char **env) //j'ai enlever la condtion si env != NULL 
 {
+    if (search_builtins(str, env) == -1)
+        return (exit(EXIT_SUCCESS), 0);
     if (execute_child(env, str) == 1)
         return (1);
     return (0);
