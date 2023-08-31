@@ -19,13 +19,8 @@ char    *pwd(void)
     cmd = getcwd(NULL, 0);
     if (cmd == NULL)
         return (exit(EXIT_FAILURE), cmd);
-    printf("%s\n", cmd);
+    ft_printf("%s\n", cmd);
     return (cmd);
-}
-
-void    exitt(void)
-{
-    quit();
 }
 
 void    env(char **envir)
@@ -34,7 +29,7 @@ void    env(char **envir)
 
     i = 0;
     while (envir[i])
-        ft_printf(envir[i++]);
+        ft_printf("%s\n", envir[i++]);
 }
 
 void    echo(char **arg, int option)
@@ -50,10 +45,4 @@ void    echo(char **arg, int option)
     }
     if (option == 0)
         ft_printf("\n");
-}
-
-void    cd(char *path)
-{
-    if (path != NULL && chdir(path) != 0)
-        ft_printf("-bash: cd: %s: No such file or directory\n");
 }

@@ -53,12 +53,10 @@ typedef enum    e_error{
 
 typedef struct  t_cmd
 {
-    char    *infile;
-    char    *outfile;
     int     nb_pipe;
     int     **pipe;
     int     nb_proc;
-    int     nb_built;
+    int     parent_builtin;
     int     heredoc; // utilisé
     int     ind_hd; // utilisé
     int     *here_pipe; // utilisé
@@ -78,9 +76,11 @@ void	quit(void);
 
 int     historic_fct(char *bufff, char *test, t_cmd *pip);
 
-char    *verif_read(char *rd_line, char **env, t_cmd *pip);
+char    *verif_read(char *rd_line, char ***env, t_cmd *pip);
 
 // Builtins
+int search_parent_builtins(t_cmd *pip, t_list *spt, char ***env);
+
 int     search_builtins(char **spt, char **envi);
 
 char    *pwd(void);
@@ -92,6 +92,8 @@ void    exitt(void);
 void    echo(char **arg, int option);
 
 void    cd(char *path);
+
+int     export(char ***env, char *var_value);
 
 // Fork and pipes
 void    anihilation(char **str);
@@ -115,5 +117,5 @@ char    **check_redirection(char **arg, t_cmd *pip);
 
 char    **prep_hd(t_cmd *pip, t_list *spt);
 
-int     execution_center(t_list *spt, char **env, t_cmd *pip);
+int     execution_center(t_list *spt, char ***env, t_cmd *pip);
 #endif

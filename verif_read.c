@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-char *verif_read(char *rd_line, char **env, t_cmd *pip)
+char *verif_read(char *rd_line, char ***env, t_cmd *pip)
 {
     int     flag;
     char    *buff;

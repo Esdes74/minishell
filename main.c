@@ -24,10 +24,11 @@ int	main(int argc, char **argv, char **env)
 	char	*cmd;
 	(void)	argc;
 	(void)	argv;
-	(void)	env;
 	t_cmd   pip;
 
 	cmd = NULL;
+	if (getenv("PATH") == NULL)
+		return (0);
 	list = (t_list *) malloc(sizeof(t_list));
 	if (list == NULL && cmd == NULL)
 		return (error(MALLOC, NULL), 1);
@@ -58,7 +59,7 @@ int	main(int argc, char **argv, char **env)
 			free(rd_line);
 			return (quit(), 1);
 		}
-		rd_line = verif_read(rd_line, env, &pip);
+		rd_line = verif_read(rd_line, &env, &pip);
 		if (rd_line == NULL)
 			return (1);
 		free(cmd);

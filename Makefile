@@ -47,7 +47,8 @@ SRC := main.c \
 	   execution_center.c \
 	   check_redirection.c \
 	   prep_heredoc.c \
-	   search_builtins.c
+	   search_builtins.c \
+	   builtins_parent.c
 OBJ := $(SRC:%.c=.obj/%.o)
 
 #
