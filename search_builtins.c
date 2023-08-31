@@ -7,6 +7,7 @@ int search_parent_builtins(t_cmd *pip, t_list *spt, char ***env)
 {
     t_cell *tmp;
     char    *str;
+    char    *buf;
 
     tmp = spt->head;
     str = ((char *)(tmp->data_cell->data));
@@ -26,8 +27,18 @@ int search_parent_builtins(t_cmd *pip, t_list *spt, char ***env)
         if (tmp->next == NULL)
             return (1);
         tmp = tmp->next;
-        return (export(env, ((char *)(tmp->data_cell->data))), 1);
+        buf = ft_strdup(((char *)(tmp->data_cell->data)));
+        export(env, buf);
+        return (1);
     }
+    // else if (ft_strlen(str) == 5 && ft_strncmp(str, "unset", 5) == 0)
+    //  {
+    //     pip->parent_builtin = TRUE;
+    //     if (tmp->next == NULL)
+    //         return (1);
+    //     tmp = tmp->next;
+    //     return (unset(env, ((char *)(tmp->data_cell->data))), 1);
+    // }
     return (0);
 }
 

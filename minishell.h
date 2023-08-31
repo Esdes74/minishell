@@ -95,6 +95,8 @@ void    cd(char *path);
 
 int     export(char ***env, char *var_value);
 
+// int     unset(char ***env, char *name_value);
+
 // Fork and pipes
 void    anihilation(char **str);
 

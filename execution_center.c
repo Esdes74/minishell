@@ -26,6 +26,7 @@ int execution_center(t_list *spt, char ***env, t_cmd *pip)
     char    **buf;
 
     i = 0;
+    id = -1;
     pip->parent_builtin = 0;
     pip->nb_proc = checking_pipe(spt);
     pip->nb_pipe = pip->nb_proc - 1;
