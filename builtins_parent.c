@@ -6,7 +6,7 @@
 /*   By: dbaule <dbaule@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/31 10:31:07 by dbaule            #+#    #+#             */
-/*   Updated: 2023/08/31 23:51:53 by dbaule           ###   ########.fr       */
+/*   Updated: 2023/09/01 15:03:55 by dbaule           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,13 +23,12 @@ void    cd(char *path)
         ft_printf("-bash: cd: %s: No such file or directory\n");
 }
 
-int export(char ***env, char *name_value)
+int export(t_cmd *pip, char *name_value)
 {
     char    *var_name;
     int     i;
     int     z;
     char    **new_env;
-    char    **buf;
 
     i = 0;
     if (name_value[i] == '=') // ca doit faire une erreur
@@ -54,70 +53,69 @@ int export(char ***env, char *name_value)
     }
     var_name[i] = '\0';
     i = 0;
-    buf = *env;
-    while (buf[i])
+    while (pip->env[i])
     {
-        if (strncmp(buf[i], var_name, (ft_strlen(var_name))) == 0)
+        if (strncmp(pip->env[i], var_name, (ft_strlen(var_name))) == 0)
         {
             char *buff;
             
             buff = ft_strdup(name_value);
-            free(buf[i]); // je comprend pas pourquoi ça ne marchais pas *(env)[i]
-            buf[i] = buff;
+            free(pip->env[i]);
+            pip->env[i] = buff;
             break ;
         }
         i++;
     }
-    if (buf[i] == NULL)
+    if (pip->env[i] == NULL)
     {
         new_env = malloc(sizeof(char *) * (i + 2));
         if (!new_env)
-            return (1);
+            return (free_all(pip), 1);
         i = 0;
-        while (buf[i])
+        while (pip->env[i])
         {
-            new_env[i] = buf[i];
+            new_env[i] = pip->env[i];
             i++;
         }
         new_env[i] = name_value;
         new_env[i + 1] = NULL;
-        *(env) = new_env;
+        pip->env = new_env;
     }
     return 0;
 }
 
-int unset(char ***env, char *name_value)
+int unset(t_cmd *pip, char *name_value)
 {
     int     i;
-    char    **buf;
     char    **new_env;
     int     trigger;
 
     i = 0;
     trigger = 0;
-    buf = *env;
-    while (buf[i])
+    while (pip->env[i])
+    {
+        if (strncmp(pip->env[i], name_value, (ft_strlen(name_value))) == 0)
+            trigger = 1;
         i++;
+    }
+    if (trigger == 0)
+        return (0);
     new_env = ft_calloc(sizeof(char*), i);
     if (!new_env)
         return(error(MALLOC, '\0'), 1);
     i = 0;
-    while (buf[i])
+    while (pip->env[i])
     {
-        if (strncmp(buf[i], name_value, (ft_strlen(name_value))) == 0)
+        if (strncmp(pip->env[i], name_value, (ft_strlen(name_value))) == 0)
         {
-            trigger = 1;
+            free(pip->env[i]);
             i++;
         }
-        if (!buf[i])
+        if (!pip->env[i])
             break;
-        new_env[i] = ft_strdup(buf[i]);
+        new_env[i] = pip->env[i];
         i++;
     }
-    // new_env[i + 1] = '\0';
-    if (trigger == 1)
-        *(env) = new_env;
-    else
-        anihilation(new_env);
+    pip->env = new_env;
     return (0);
 }

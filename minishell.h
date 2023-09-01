@@ -61,6 +61,7 @@ typedef struct  t_cmd
     int     ind_hd; // utilisé
     int     *here_pipe; // utilisé
     char    **hd_history; // utilisé
+    char    **env;
     t_bool  in; // utilisé
     t_bool  out; // utilisé
 }   t_cmd;
@@ -76,10 +77,12 @@ void	quit(void);
 
 int     historic_fct(char *bufff, char *test, t_cmd *pip);
 
-char    *verif_read(char *rd_line, char ***env, t_cmd *pip);
+char    *verif_read(char *rd_line, t_cmd *pip);
+
+int     cpy_env(char **env, t_cmd *pip);
 
 // Builtins
-int search_parent_builtins(t_cmd *pip, t_list *spt, char ***env);
+int     search_parent_builtins(t_cmd *pip, t_list *spt);
 
 int     search_builtins(char **spt, char **envi);
 
@@ -93,13 +96,18 @@ void    echo(char **arg, int option);
 
 void    cd(char *path);
 
-int     export(char ***env, char *var_value);
+int     export(t_cmd *pip, char *name_value);
 
-int     unset(char ***env, char *name_value);
+int     unset(t_cmd *pip, char *name_value);
 
-// Fork and pipes
+// Free functions
+
 void    anihilation(char **str);
 
+void	free_all(t_cmd *pip);
+
+
+// Fork and pipes
 int     close_all_pipes(t_cmd *pi);
 
 char	*ft_strjoin_pip(char *dest, char *src);
@@ -119,5 +127,5 @@ char    **check_redirection(char **arg, t_cmd *pip);
 
 char    **prep_hd(t_cmd *pip, t_list *spt);
 
-int     execution_center(t_list *spt, char ***env, t_cmd *pip);
+int     execution_center(t_list *spt, t_cmd *pip);
 #endif

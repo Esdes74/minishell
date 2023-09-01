@@ -3,7 +3,7 @@
 static char *determine_echo_or_cd(char **str, int *option);
 static char *return_buf(char **spt);
 
-int search_parent_builtins(t_cmd *pip, t_list *spt, char ***env)
+int search_parent_builtins(t_cmd *pip, t_list *spt)
 {
     t_cell *tmp;
     char    *str;
@@ -28,7 +28,7 @@ int search_parent_builtins(t_cmd *pip, t_list *spt, char ***env)
         while (tmp != NULL)
         {
             buf = ft_strdup(((char *)(tmp->data_cell->data)));
-            export(env, buf);
+            export(pip, buf);
             tmp = tmp->next;
         }
         return (1);
@@ -40,7 +40,7 @@ int search_parent_builtins(t_cmd *pip, t_list *spt, char ***env)
         while (tmp != NULL)
         {
             buf = ft_strdup(((char *)(tmp->data_cell->data)));
-            unset(env, buf);
+            unset(pip, buf);
             tmp = tmp->next;
         }
         return (1);
@@ -69,6 +69,9 @@ int search_builtins(char **spt, char **envi)
         else if (option == 2)
             return (cd(spt[1]), -1);
     }
+    else if ((ft_strlen(spt[0]) == 6 && ft_strncmp(spt[0], "export", 6) == 0) \
+    || (ft_strlen(spt[0]) == 5 && ft_strncmp(spt[0], "unset", 5) == 0))
+        return (-1);
     return (1);
 }
 

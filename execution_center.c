@@ -17,17 +17,15 @@ static int	prep_pipe(t_cmd *pip);
 static int  dup_in_cmd(t_cmd *pip, int i);
 static int dup_out_cmd(t_cmd *pip, int i);
 
-int execution_center(t_list *spt, char ***env, t_cmd *pip)
+int execution_center(t_list *spt, t_cmd *pip)
 {
     char    **exec_cmd;
     int     *arg_count;
     int     i;
     int     id;
-    char    **buf;
 
     i = 0;
     id = -1;
-    buf = NULL;
     pip->parent_builtin = 0;
     pip->nb_proc = checking_pipe(spt);
     pip->nb_pipe = pip->nb_proc - 1;
@@ -39,7 +37,7 @@ int execution_center(t_list *spt, char ***env, t_cmd *pip)
         return (1);
     pip->hd_history = prep_hd(pip, spt);
     if (pip->nb_pipe == 0)
-        search_parent_builtins(pip, spt, env);
+        search_parent_builtins(pip, spt);
     while (i < pip->nb_proc && pip->parent_builtin == FALSE)
     {
         exec_cmd = string_for_cmd_center(arg_count, i, spt);
@@ -59,8 +57,7 @@ int execution_center(t_list *spt, char ***env, t_cmd *pip)
                     dup_out_cmd(pip, i);
                 close_all_pipes(pip);
             }
-            buf = *env;
-            cmd_center_simple(exec_cmd, buf);
+            cmd_center_simple(exec_cmd, pip->env);
         }
         else
         {

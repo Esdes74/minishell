@@ -29,6 +29,8 @@ int	main(int argc, char **argv, char **env)
 	cmd = NULL;
 	if (getenv("PATH") == NULL)
 		return (0);
+	if (cpy_env(env, &pip) == 1)
+		return (error(MALLOC, '\0'), 1);
 	list = (t_list *) malloc(sizeof(t_list));
 	if (list == NULL && cmd == NULL)
 		return (error(MALLOC, NULL), 1);
@@ -59,7 +61,7 @@ int	main(int argc, char **argv, char **env)
 			free(rd_line);
 			return (quit(), 1);
 		}
-		rd_line = verif_read(rd_line, &env, &pip);
+		rd_line = verif_read(rd_line, &pip);
 		if (rd_line == NULL)
 			return (1);
         // printf("get env = %s\n", getenv("SALUT"));

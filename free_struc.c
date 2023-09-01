@@ -41,3 +41,8 @@ int	close_all_pipes(t_cmd *pi)
 	free(pi->pipe);
 	return (0);
 }
+
+void	free_all(t_cmd *pip)
+{
+	anihilation(pip->env);
+}
