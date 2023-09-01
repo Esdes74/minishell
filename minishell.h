@@ -113,6 +113,8 @@ int     close_all_pipes(t_cmd *pi);
 char	*ft_strjoin_pip(char *dest, char *src);
 
 // Commands
+int     check_variables(t_list *spt, char **env);
+
 char	*cmd_build(char *str, char **env);
 
 int     cmd_center_simple(char **str, char **env);
