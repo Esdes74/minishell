@@ -37,7 +37,7 @@ char *verif_read(char *rd_line, t_cmd *pip)
         buff = ft_strjoin(buf, rd_line);
         free(buf);
     }
-    check_variables(spt, env[0]);
+    check_variables(spt, pip->env);
     if (execution_center(spt, pip) == 1)
     {
         return (NULL);
