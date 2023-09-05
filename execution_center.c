@@ -79,7 +79,18 @@ int execution_center(t_list *spt, t_cmd *pip)
         wait(&status);
         i++;
     }
-    printf("%d\n", status);
+    if (WIFEXITED(status))
+    {
+        int exit_status = WEXITSTATUS(status);
+        // Traiter le code de sortie du processus enfant
+        ft_printf_fd(2, "exit_status = %d\n", exit_status);
+    }
+    else if (WIFSIGNALED(status))
+    {
+        int signal_number = WTERMSIG(status);
+        // Traiter le signal qui a terminé le processus enfant
+        ft_printf_fd(2, "signal_number = %d\n", signal_number);
+    }
     while (list->len > 1)
         rmtail_list(list, TRUE, DEBUG);
     return (0);
