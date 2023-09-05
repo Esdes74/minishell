@@ -26,7 +26,7 @@ int execution_center(t_list *spt, t_cmd *pip)
 
     i = 0;
     id = -1;
-    pip->parent_builtin = 0;
+    pip->parent_builtin = FALSE;
     pip->nb_proc = checking_pipe(spt);
     pip->nb_pipe = pip->nb_proc - 1;
     if (pip->nb_proc > 1)
@@ -57,7 +57,7 @@ int execution_center(t_list *spt, t_cmd *pip)
                     dup_out_cmd(pip, i);
                 close_all_pipes(pip);
             }
-            cmd_center_simple(exec_cmd, pip->env);
+            cmd_center_simple(exec_cmd, pip);
         }
         else
         {
@@ -73,11 +73,13 @@ int execution_center(t_list *spt, t_cmd *pip)
     {
         close_all_pipes(pip);
     }
+    int status;
 	while (i < pip->nb_proc)
     {
-        wait(NULL);
+        wait(&status);
         i++;
     }
+    printf("%d\n", status);
     while (list->len > 1)
         rmtail_list(list, TRUE, DEBUG);
     return (0);

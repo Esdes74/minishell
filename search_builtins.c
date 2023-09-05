@@ -8,7 +8,6 @@ int search_parent_builtins(t_cmd *pip, t_list *spt)
     t_cell *tmp;
     char    *str;
     char    *buf;
-    int     i;
 
     tmp = spt->head;
     str = ((char *)(tmp->data_cell->data));
@@ -24,17 +23,9 @@ int search_parent_builtins(t_cmd *pip, t_list *spt)
     }
     else if (ft_strlen(str) == 6 && ft_strncmp(str, "export", 6) == 0)
     {
-        pip->parent_builtin = TRUE;
         if (tmp->next == NULL)
-        {
-            i = 0;
-            while (pip->exp_env[i])
-            {
-                ft_printf("%s\n", pip->exp_env[i]);
-                i++;
-            }
-            return (0);
-        }
+            return (1);
+        pip->parent_builtin = TRUE;
         tmp = tmp->next;
         while (tmp != NULL)
         {
@@ -59,9 +50,10 @@ int search_parent_builtins(t_cmd *pip, t_list *spt)
     return (0);
 }
 
-int search_builtins(char **spt, char **envi)
+int search_builtins(char **spt, t_cmd *pip)
 {
     int     option;
+    int i;
 
     option = 0;
     if (ft_strlen(spt[0]) == 3 && ft_strncmp(spt[0], "pwd", 3) == 0)
@@ -69,7 +61,7 @@ int search_builtins(char **spt, char **envi)
     else if (ft_strlen(spt[0]) == 4 && ft_strncmp(spt[0], "exit", 4) == 0)
         return (exitt(), -1);
     else if (ft_strlen(spt[0]) == 3 && ft_strncmp(spt[0], "env", 3) == 0)
-        return (env(envi), -1);
+        return (env(pip->env), -1);
     else if ((ft_strlen(spt[0]) == 4 && ft_strncmp(spt[0], "echo", 4) == 0) \
     || (ft_strlen(spt[0]) == 2 && ft_strncmp(spt[0], "cd", 2) == 0))
     {
@@ -79,6 +71,16 @@ int search_builtins(char **spt, char **envi)
             return (echo(spt, option), -1);
         else if (option == 2)
             return (cd(spt[1]), -1);
+    }
+    else if ((ft_strlen(spt[0]) == 6 && ft_strncmp(spt[0], "export", 6) == 0) && spt[1] == NULL)
+    {
+        i = 0;
+        while (pip->exp_env[i])
+        {
+            ft_printf("%s\n", pip->exp_env[i]);
+            i++;
+        }
+        return (-1);
     }
     else if ((ft_strlen(spt[0]) == 6 && ft_strncmp(spt[0], "export", 6) == 0) \
     || (ft_strlen(spt[0]) == 5 && ft_strncmp(spt[0], "unset", 5) == 0))

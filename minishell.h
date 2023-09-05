@@ -85,7 +85,7 @@ int     cpy_env(char **env, t_cmd *pip);
 // Builtins
 int     search_parent_builtins(t_cmd *pip, t_list *spt);
 
-int     search_builtins(char **spt, char **envi);
+int     search_builtins(char **spt, t_cmd *pip);
 
 char    *pwd(void);
 
@@ -122,7 +122,7 @@ int     check_variables(t_list *spt, char **env);
 
 char	*cmd_build(char *str, char **env);
 
-int     cmd_center_simple(char **str, char **env);
+int     cmd_center_simple(char **str, t_cmd *pip);
 
 void    parsing(const char *rd_line, int *flag, t_list *spt);
 

@@ -66,7 +66,6 @@ int	main(int argc, char **argv, char **env)
 		rd_line = verif_read(rd_line, &pip);
 		if (rd_line == NULL)
 			return (1);
-        // printf("get env = %s\n", getenv("SALUT"));
 		free(cmd);
 		historic_fct(bufff, rd_line, &pip);
 		free(bufff);
