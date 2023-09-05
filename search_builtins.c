@@ -8,6 +8,7 @@ int search_parent_builtins(t_cmd *pip, t_list *spt)
     t_cell *tmp;
     char    *str;
     char    *buf;
+    int     i;
 
     tmp = spt->head;
     str = ((char *)(tmp->data_cell->data));
@@ -24,6 +25,16 @@ int search_parent_builtins(t_cmd *pip, t_list *spt)
     else if (ft_strlen(str) == 6 && ft_strncmp(str, "export", 6) == 0)
     {
         pip->parent_builtin = TRUE;
+        if (tmp->next == NULL)
+        {
+            i = 0;
+            while (pip->exp_env[i])
+            {
+                ft_printf("%s\n", pip->exp_env[i]);
+                i++;
+            }
+            return (0);
+        }
         tmp = tmp->next;
         while (tmp != NULL)
         {

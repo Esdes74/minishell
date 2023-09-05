@@ -62,6 +62,7 @@ typedef struct  t_cmd
     int     *here_pipe; // utilisé
     char    **hd_history; // utilisé
     char    **env;
+    char    **exp_env;
     t_bool  in; // utilisé
     t_bool  out; // utilisé
 }   t_cmd;
@@ -97,6 +98,10 @@ void    echo(char **arg, int option);
 void    cd(char *path);
 
 int     export(t_cmd *pip, char *name_value);
+
+int     initialize_exp_env(t_cmd *pip, char **env);
+
+int     add_exp_env(t_cmd *pip, char *str);
 
 int     unset(t_cmd *pip, char *name_value);
 

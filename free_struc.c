@@ -45,4 +45,5 @@ int	close_all_pipes(t_cmd *pi)
 void	free_all(t_cmd *pip)
 {
 	anihilation(pip->env);
+	anihilation(pip->exp_env);
 }

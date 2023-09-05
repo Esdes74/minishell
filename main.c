@@ -31,6 +31,8 @@ int	main(int argc, char **argv, char **env)
 		return (0);
 	if (cpy_env(env, &pip) == 1)
 		return (error(MALLOC, '\0'), 1);
+	if (initialize_exp_env(&pip, pip.env) == 1)
+		return (error(MALLOC, 0), 1);
 	list = (t_list *) malloc(sizeof(t_list));
 	if (list == NULL && cmd == NULL)
 		return (error(MALLOC, NULL), 1);
