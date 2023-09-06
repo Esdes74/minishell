@@ -61,7 +61,7 @@ int historic_fct(char *bufff, char *test, t_cmd *pip) // gérer les espace dans 
     }
     else
         tmp = test;
-    if (test[0] == ' ')
+    if (test[0] == ' ' || test[0] == '\0')
         return (0);
     if (bufff == NULL)
         add_history(tmp);
