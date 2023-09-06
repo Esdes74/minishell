@@ -21,6 +21,8 @@ int execution_center(t_list *spt, t_cmd *pip)
 {
     char    **exec_cmd;
     int     *arg_count;
+    int     status;
+    int     exit_status;
     int     i;
     int     id;
 
@@ -73,24 +75,25 @@ int execution_center(t_list *spt, t_cmd *pip)
     {
         close_all_pipes(pip);
     }
-    int status;
+
+
+    // Récupération du code de sortie du programme
 	while (i < pip->nb_proc)
     {
         wait(&status);
         i++;
     }
-    if (WIFEXITED(status))
+    // Si je suis dans une éxécution de builtin alors je ne rentre pas dedans
+    if (pip->builtin == FALSE)
     {
-        int exit_status = WEXITSTATUS(status);
-        // Traiter le code de sortie du processus enfant
-        ft_printf_fd(2, "exit_status = %d\n", exit_status);
+        if (WIFEXITED(status))
+            exit_status = WEXITSTATUS(status);
+        else if (WIFSIGNALED(status))
+            exit_status = WTERMSIG(status);
+        pip->status = exit_status; // Stockage du code de sortie
     }
-    else if (WIFSIGNALED(status))
-    {
-        int signal_number = WTERMSIG(status);
-        // Traiter le signal qui a terminé le processus enfant
-        ft_printf_fd(2, "signal_number = %d\n", signal_number);
-    }
+
+
     while (list->len > 1)
         rmtail_list(list, TRUE, DEBUG);
     return (0);

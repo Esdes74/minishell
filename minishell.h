@@ -57,8 +57,10 @@ typedef struct  t_cmd
     int     **pipe;
     int     nb_proc;
     int     parent_builtin;
+    int     builtin; //utilisé
     int     heredoc; // utilisé
     int     ind_hd; // utilisé
+    int     status; // utilisé
     int     *here_pipe; // utilisé
     char    **hd_history; // utilisé
     char    **env;
@@ -95,7 +97,7 @@ void    exitt(void);
 
 void    echo(char **arg, int option);
 
-void    cd(char *path);
+void    cd(char *path, t_cmd *pip);
 
 int     export(t_cmd *pip, char *name_value);
 
@@ -118,7 +120,7 @@ int     close_all_pipes(t_cmd *pi);
 char	*ft_strjoin_pip(char *dest, char *src);
 
 // Commands
-int     check_variables(t_list *spt, char **env);
+int     check_variables(t_list *spt, t_cmd *pip);
 
 char	*cmd_build(char *str, char **env);
 

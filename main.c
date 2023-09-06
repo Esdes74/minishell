@@ -44,6 +44,7 @@ int	main(int argc, char **argv, char **env)
 	rl_bind_key('\t', rl_complete);
 	bufff = NULL;
 	pip.hd_history = NULL;
+	pip.status = 0;
 	while (1)
 	{
 		if (pip.hd_history != NULL)

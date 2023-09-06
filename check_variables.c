@@ -12,9 +12,9 @@
 
 #include "minishell.h"
 
-static int  replace_variable(char *data, char *sent, t_cell *tmp, char **env);
+static int  replace_variable(char *data, char *sent, t_cell *tmp, t_cmd *pip);
 
-int check_variables(t_list *spt, char **env)
+int check_variables(t_list *spt, t_cmd *pip)
 {
     t_cell  *tmp;
     char    *data;
@@ -35,7 +35,7 @@ int check_variables(t_list *spt, char **env)
                 flag = 1;
             if (flag != 1 && data[i] == '$') // Je ne suis pas dans le mode single quote et je trouve un $
             {
-                if (replace_variable(&data[i], data, tmp, env) == 1) // J'appel la fonction qui le remplace
+                if (replace_variable(&data[i], data, tmp, pip) == 1) // J'appel la fonction qui le remplace
                     return (1);
                 data = (char *) tmp->data_cell->data;
             }
@@ -46,7 +46,7 @@ int check_variables(t_list *spt, char **env)
     return (0);
 }
 
-static int  replace_variable(char *data, char *sent, t_cell *tmp, char **env)
+static int  replace_variable(char *data, char *sent, t_cell *tmp, t_cmd *pip)
 {
     int     i;
     int     j;
@@ -56,47 +56,60 @@ static int  replace_variable(char *data, char *sent, t_cell *tmp, char **env)
     char    *new;
     char    *new_sent;
 
-    // La je trouve la fin du mot qui représente la variable (si c'est $PATH j'arrive après le H)
-    i = 0;
-    while (data[i] && data[i] != ' ' && data[i] != '\n' && data[i] != '\0')
-        i++;
-    len_data = i;
-
-
-    new = (char *) malloc(sizeof(char) * (i + 1)); // Je fais un malloc afin de pouvoir de copier
-    if (new == NULL)
-        return (1);
-    ft_strlcpy(new, &data[1], i); // Je le copie
-    new[i] = '\0';
-
-
-    i = 0;
-    // Je parcours l'environnement pour retrouver la variable en question
-    while (env[i])
+    new = NULL;
+    // Je regarde s'ils'agit de $?
+    if (data[1] == '?')
     {
-        j = 0;
-        while (env[i][j] != '=' && env[i][j] != '\0' && env[i][j] == new[j] \
-        && new[j] != '\0')
-            j++;
-        if (env[i][j] == '=' && new[j] == '\0') // Je l'ai retrouvé alors je break (a remplacer)
-            break ;
-        i++;
+        new = ft_itoa(pip->status);
+        if (new == NULL)
+            return (error(MALLOC, "0"), 1);
+        len_tot = ft_strlen(new) + ft_strlen(sent) - 2;
+        new_sent = (char *) malloc(sizeof(char) * (len_tot + 1));
     }
+    else
+    {
+        // La je trouve la fin du mot qui représente la variable (si c'est $PATH j'arrive après le H)
+        i = 0;
+        while (data[i] && data[i] != ' ' && data[i] != '\n' && data[i] != '\0')
+            i++;
+        len_data = i;
 
 
-    free(new);
-    if (env[i] == NULL) // Si j'ai rien trouvé alors je sors
-        return (0);
-    new = ft_strdup(&env[i][j + 1]); // je dup la valeur de la variable pour pouvoir la manipuler
-    if (new == NULL) // Je teste
-        return (1);
+        new = (char *) malloc(sizeof(char) * (i + 1)); // Je fais un malloc afin de pouvoir le copier
+        if (new == NULL)
+            return (1);
+        ft_strlcpy(new, &data[1], i); // Je le copie
+        new[i] = '\0';
 
 
-    // Je créer la nouvelle phrase qui va acceuillir l'ancienne plus la valeur
-    len_tot = ft_strlen(sent) - len_data + ft_strlen(new);
-    new_sent = (char *) malloc(sizeof(char) * (len_tot + 1));
-    if (new_sent == NULL) // Je test
-        return (free(new), 1);
+        i = 0;
+        // Je parcours l'environnement pour retrouver la variable en question
+        while (pip->env[i])
+        {
+            j = 0;
+            while (pip->env[i][j] != '=' && pip->env[i][j] != '\0' && pip->env[i][j] == new[j] \
+            && new[j] != '\0')
+                j++;
+            if (pip->env[i][j] == '=' && new[j] == '\0') // Je l'ai retrouvé alors je break (a remplacer)
+                break ;
+            i++;
+        }
+
+
+        free(new);
+        if (pip->env[i] == NULL) // Si j'ai rien trouvé alors je sors
+            return (0);
+        new = ft_strdup(&pip->env[i][j + 1]); // je dup la valeur de la variable pour pouvoir la manipuler
+        if (new == NULL) // Je teste
+            return (1);
+
+
+        // Je créer la nouvelle phrase qui va acceuillir l'ancienne plus la valeur
+        len_tot = ft_strlen(sent) - len_data + ft_strlen(new);
+        new_sent = (char *) malloc(sizeof(char) * (len_tot + 1));
+        if (new_sent == NULL) // Je test
+            return (free(new), 1);
+    }
 
 
     // Je met ce qu'il faut dans la nouvelle phrase (l'ancienne plus la valeur)

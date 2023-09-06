@@ -12,7 +12,7 @@
 
 /*
 -   il faut prendre en compte entré et sortie en amont
--   uniquement la string que on lui envoie doit s'executer
+-   uniquement la string qu'on lui envoie doit s'executer
 -   le nombre de pipe et le nombre de processeur sera établis en amont
 -   les dup et la fermeture des pipes en amont
 -      en amont pour le heredoc

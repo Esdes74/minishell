@@ -17,10 +17,16 @@ void    exitt(void)
     quit();
 }
 
-void    cd(char *path)
+void    cd(char *path, t_cmd *pip)
 {
     if (path != NULL && chdir(path) != 0)
+    {
+        pip->status = 1;
         ft_printf("-bash: cd: %s: No such file or directory\n");
+    }
+    else
+        pip->status = 0;
+    pip->builtin = TRUE;
 }
 
 int export(t_cmd *pip, char *name_value)
@@ -31,6 +37,7 @@ int export(t_cmd *pip, char *name_value)
     char    **new_env;
 
     i = 0;
+    pip->status = 1;
     if (name_value[i] == '=') // ca doit faire une erreur
         return (1);
     while (name_value[i] && name_value[i] != '=')
@@ -38,6 +45,8 @@ int export(t_cmd *pip, char *name_value)
     if (name_value[i] == '\0') // a utiliser pour export sans rien
     {
         add_exp_env(pip, name_value);
+        pip->builtin = TRUE;
+        pip->status = 0;
         return (0);
     }
     var_name = malloc(sizeof(char) * (i + 1));
@@ -81,9 +90,11 @@ int export(t_cmd *pip, char *name_value)
         new_env[i] = name_value;
         new_env[i + 1] = NULL;
         pip->env = new_env;
-        // exp_env(pip, NULL); il faudra ettre le add!
+        // exp_env(pip, NULL); il faudra mettre le add!
     }
-    return 0;
+    pip->builtin = TRUE;
+    pip->status = 0;
+    return (0);
 }
 
 int unset(t_cmd *pip, char *name_value)
@@ -94,6 +105,7 @@ int unset(t_cmd *pip, char *name_value)
 
     i = 0;
     trigger = 0;
+    pip->status = 1;
     while (pip->env[i])
     {
         if (strncmp(pip->env[i], name_value, (ft_strlen(name_value))) == 0)
@@ -101,7 +113,11 @@ int unset(t_cmd *pip, char *name_value)
         i++;
     }
     if (trigger == 0)
+    {
+        pip->builtin = TRUE;
+        pip->status = 0;
         return (0);
+    }
     new_env = ft_calloc(sizeof(char*), i);
     if (!new_env)
         return(error(MALLOC, '\0'), 1);
@@ -119,5 +135,7 @@ int unset(t_cmd *pip, char *name_value)
         i++;
     }
     pip->env = new_env;
+    pip->builtin = TRUE;
+    pip->status = 0;
     return (0);
 }
