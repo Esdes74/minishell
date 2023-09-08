@@ -29,6 +29,7 @@ int execution_center(t_list *spt, t_cmd *pip)
     i = 0;
     id = -1;
     pip->parent_builtin = FALSE;
+    pip->builtin = FALSE;
     pip->nb_proc = checking_pipe(spt);
     pip->nb_pipe = pip->nb_proc - 1;
     if (pip->nb_proc > 1)
@@ -78,7 +79,7 @@ int execution_center(t_list *spt, t_cmd *pip)
 
 
     // Récupération du code de sortie du programme
-	while (i < pip->nb_proc)
+	while (i < pip->nb_proc + 1)
     {
         wait(&status);
         i++;
@@ -86,10 +87,10 @@ int execution_center(t_list *spt, t_cmd *pip)
     // Si je suis dans une éxécution de builtin alors je ne rentre pas dedans
     if (pip->builtin == FALSE)
     {
-        if (WIFEXITED(status))
-            exit_status = WEXITSTATUS(status);
-        else if (WIFSIGNALED(status))
+        if (WIFSIGNALED(status))
             exit_status = WTERMSIG(status);
+        else if (WIFEXITED(status))
+            exit_status = WEXITSTATUS(status);
         pip->status = exit_status; // Stockage du code de sortie
     }
 
