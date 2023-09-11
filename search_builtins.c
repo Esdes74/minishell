@@ -54,7 +54,6 @@ int search_parent_builtins(t_cmd *pip, t_list *spt)
 int search_builtins(char **spt, t_cmd *pip)
 {
     int     option;
-    int i;
 
     option = 0;
     if (ft_strlen(spt[0]) == 3 && ft_strncmp(spt[0], "pwd", 3) == 0)
@@ -73,15 +72,7 @@ int search_builtins(char **spt, t_cmd *pip)
             return (cd(spt[1], pip), -1);
     }
     else if ((ft_strlen(spt[0]) == 6 && ft_strncmp(spt[0], "export", 6) == 0) && spt[1] == NULL)
-    {
-        i = 0;
-        while (pip->exp_env[i])
-        {
-            ft_printf("%s\n", pip->exp_env[i]);
-            i++;
-        }
-        return (-1);
-    }
+        return (print_export(pip->exp_env), -1);
     else if ((ft_strlen(spt[0]) == 6 && ft_strncmp(spt[0], "export", 6) == 0) \
     || (ft_strlen(spt[0]) == 5 && ft_strncmp(spt[0], "unset", 5) == 0))
         return (-1);

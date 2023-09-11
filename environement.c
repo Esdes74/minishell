@@ -116,13 +116,13 @@ static int check_if_double(char **env, char *cmp)
 
 static char **ft_cpy_env(char **env)
 {
-    int i;
-    char **buf_env;
+    int     i;
+    char    **buf_env;
 
     i = 0;
     while (env[i])
         i++;
-    buf_env = malloc(sizeof(char *) * (i + 1));
+    buf_env = (char **) malloc(sizeof(char *) * (i + 1));
     i = 0;
     while (env[i])
     {

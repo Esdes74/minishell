@@ -101,6 +101,8 @@ void    cd(char *path, t_cmd *pip);
 
 int     export(t_cmd *pip, char *name_value);
 
+void    print_export(char **exp_env);
+
 int     initialize_exp_env(t_cmd *pip, char **env);
 
 int     add_exp_env(t_cmd *pip, char *str);
