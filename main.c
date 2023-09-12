@@ -62,6 +62,7 @@ int	main(int argc, char **argv, char **env)
 		{
 			free(bufff);
 			free(rd_line);
+			free_all(&pip);
 			return (quit(), 1);
 		}
 		rd_line = verif_read(rd_line, &pip);

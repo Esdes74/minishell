@@ -60,7 +60,8 @@ int execution_center(t_list *spt, t_cmd *pip)
                     dup_out_cmd(pip, i);
                 close_all_pipes(pip);
             }
-            cmd_center_simple(exec_cmd, pip);
+            if (cmd_center_simple(exec_cmd, pip) == -1)
+                return (free(exec_cmd), -1);
         }
         else
         {

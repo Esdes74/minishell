@@ -78,6 +78,8 @@ void    error(t_error err, char *cmd);
 
 void	quit(void);
 
+void    silent_quit(void);
+
 int     historic_fct(char *bufff, char *test, t_cmd *pip);
 
 char    *verif_read(char *rd_line, t_cmd *pip);

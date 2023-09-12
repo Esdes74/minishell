@@ -198,5 +198,14 @@ void    parsing(const char *rd_line, int *flag, t_list *ret)
             error(MALLOC, NULL);
         }
     }
-    free(spt);
+    ft_printf_fd(2, "compt = %d j = %d\n", compt, j);
+    if (compt == 0 && j == 0)
+        anihilation(spt);
+    else if (j == 0)
+    {
+        free(spt[i]);
+        free(spt);
+    }
+    else
+        free(spt);
 }

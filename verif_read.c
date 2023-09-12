@@ -26,7 +26,7 @@ char *verif_read(char *rd_line, t_cmd *pip)
     init_list(spt);
     parsing(rd_line, &flag, spt);
     if (spt->len == 0)
-        return (rd_line);
+        return (annihilation(spt, free, DEBUG), rd_line);
     buff = rd_line;
     while (flag == 1 || flag == 2)
     {
@@ -39,8 +39,11 @@ char *verif_read(char *rd_line, t_cmd *pip)
     }
     if (check_variables(spt, pip) == 1)
         return (NULL);
-    if (execution_center(spt, pip) == 1)
+    flag = execution_center(spt, pip);
+    if (flag == 1)
         return (NULL);
+    else if (flag == -1)
+        return (annihilation(spt, free, DEBUG), silent_quit(), NULL);
     annihilation(spt, free, DEBUG);
     return (buff);
 }

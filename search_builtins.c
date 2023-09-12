@@ -79,7 +79,7 @@ int search_builtins(char **spt, t_cmd *pip)
     return (1);
 }
 
-static char     *determine_echo_or_cd(char **str, int *option)
+static char *determine_echo_or_cd(char **str, int *option)
 {
     if (ft_strlen(str[0]) == 4 && ft_strncmp(str[0], "echo", 4) == 0)
     {

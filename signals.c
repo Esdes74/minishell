@@ -29,10 +29,9 @@ void	signals(void)
 	signal(SCAN, scan_all);
 }
 
-void	quit(void)
+void	silent_quit(void)
 {
-	printf("exit\n");
-	scan_all(CON_C);
+	// scan_all(CON_C);
 	annihilation(list, free, DEBUG);
 	exit(0);
 }
@@ -46,7 +45,6 @@ static void	handle_control_c(int sig)
 	rl_replace_line("", 0); // Effacer la ligne en cours
     rl_point = 0; // Déplacer le curseur au début de la ligne
     rl_redisplay(); // Afficher le prompt
-	printf("\ndébut du scan des processus enfants pour tous les fermer id(%d)\n", getpid());
 	kill(*((pid_t *) list->head->data_cell->data), SCAN);
 	// buf = getcwd(NULL, 0);
 	// if (buf == NULL)
@@ -64,7 +62,6 @@ static void	kill_all(int sig)
 	(void)	sig;
 	t_cell	*tmp;
 
-	printf("Fonction KILL id(%d)\n", getpid());
 	tmp = list->head;
 	while (tmp != NULL && *((pid_t *) tmp->data_cell->data) != getpid())
 		tmp = tmp->next;
@@ -76,7 +73,6 @@ static void	kill_all(int sig)
 		tmp = tmp->next;
 	}
 	annihilation(list, free, DEBUG);
-	printf("exited id(%d)\n", getpid());
 	exit(0);
 }
 
@@ -86,14 +82,12 @@ static void	scan_all(int sig)
 	t_cell	*tmp;
 	int		i;
 
-	printf("Fonction SCAN id(%d)\n", getpid());
 	if (list->len > 1)
 	{
 		i = 0;
 		while (list->len > 0)
 		{
 			tmp = unstack_list(list, DEBUG);
-			printf("tmp = %d\n", *((pid_t *) tmp->data_cell->data));
 			if (i != 0)
 				kill(*((pid_t *) tmp->data_cell->data), KILL_ALL);
 			free(tmp->data_cell->data);

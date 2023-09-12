@@ -46,3 +46,9 @@ void    echo(char **arg, int option)
     if (option == 0)
         ft_printf("\n");
 }
+
+void    quit(void)
+{
+	printf("exit\n");
+    silent_quit();
+}
