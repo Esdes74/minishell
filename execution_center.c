@@ -40,7 +40,8 @@ int execution_center(t_list *spt, t_cmd *pip)
         return (1);
     pip->hd_history = prep_hd(pip, spt);
     if (pip->nb_pipe == 0)
-        search_parent_builtins(pip, spt);
+        if (search_parent_builtins(pip, spt) == -1)
+            return (free(arg_count), -2);
     while (i < pip->nb_proc && pip->parent_builtin == FALSE)
     {
         exec_cmd = string_for_cmd_center(arg_count, i, spt);

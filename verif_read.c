@@ -44,6 +44,8 @@ char *verif_read(char *b, char *rd_line, t_cmd *pip)
         return (NULL);
     else if (flag == -1)
         return (free(b), annihilation(spt, free, DEBUG), silent_quit(), NULL);
+    else if (flag == -2)
+        return (free(b), annihilation(spt, free, DEBUG), exitt(pip), NULL);
     annihilation(spt, free, DEBUG);
     return (buff);
 }

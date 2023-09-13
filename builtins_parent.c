@@ -15,9 +15,10 @@
 static int  unset_env(t_cmd *pip, char *name_value, int len);
 static int  unset_exp_env(t_cmd *pip, char *name_value, int len);
 
-void    exitt(void)
+void    exitt(t_cmd *pip)
 {
-    quit();
+    free_all(pip);
+    silent_quit();
 }
 
 void    cd(char *path, t_cmd *pip)

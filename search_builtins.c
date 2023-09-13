@@ -1,7 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   search_builtins.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: eslamber <eslamber@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/09/13 11:08:50 by eslamber          #+#    #+#             */
+/*   Updated: 2023/08/29 11:08:54 by eslamber         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
-static char *determine_echo_or_cd(char **str, int *option);
-static char *return_buf(char **spt);
+static void determine_echo_or_cd(char **str, int *option);
 
 int search_parent_builtins(t_cmd *pip, t_list *spt)
 {
@@ -13,7 +24,7 @@ int search_parent_builtins(t_cmd *pip, t_list *spt)
     tmp = spt->head;
     str = ((char *)(tmp->data_cell->data));
     if (ft_strlen(str) == 4 && ft_strncmp(str, "exit", 4) == 0)
-        return (pip->parent_builtin = TRUE, exitt(), 1);
+        return (-1);
     else if (ft_strlen(str) == 2 && ft_strncmp(str, "cd", 2) == 0)
     {
         pip->parent_builtin = TRUE;
@@ -58,9 +69,9 @@ int search_builtins(char **spt, t_cmd *pip)
 
     option = 0;
     if (ft_strlen(spt[0]) == 3 && ft_strncmp(spt[0], "pwd", 3) == 0)
-        return (pwd(), -1);
+        return (free(pwd()), -1);
     else if (ft_strlen(spt[0]) == 4 && ft_strncmp(spt[0], "exit", 4) == 0)
-        return (exitt(), -1);
+        return (exitt(pip), -1);
     else if (ft_strlen(spt[0]) == 3 && ft_strncmp(spt[0], "env", 3) == 0)
         return (env(pip->env), -1);
     else if ((ft_strlen(spt[0]) == 4 && ft_strncmp(spt[0], "echo", 4) == 0) \
@@ -80,39 +91,32 @@ int search_builtins(char **spt, t_cmd *pip)
     return (1);
 }
 
-static char *determine_echo_or_cd(char **str, int *option)
+static void determine_echo_or_cd(char **str, int *option)
 {
     if (ft_strlen(str[0]) == 4 && ft_strncmp(str[0], "echo", 4) == 0)
     {
         if (str[1] == NULL)
-            return (return_buf(str));
+            return ;
         else if (ft_strlen(str[1]) == 2 && ft_strncmp(str[1], "-n", 2) == 0)
         {
             *option = 1;
             if (str[2] == NULL)
-                return (return_buf(str));
+                return ;
         }
     }
     else if (ft_strlen(str[0]) == 2 && ft_strncmp(str[0], "cd", 2) == 0)
     {
         *option = 1;
         if (str[1] == NULL)
-            return (return_buf(str));
+            return ;
         *option = 2;
         if (str[2] != NULL) // TODO: Bulle a résoudre
-            return (error(TOO_MANY_ARG, str[0]), return_buf(str));
+        {
+            error(TOO_MANY_ARG, str[0]);
+            return ;
+        }
     }
     else
         *option = 3;
-    return (NULL);
-}
-
-static char *return_buf(char **spt)
-{
-    char *buf;
-
-    buf = ft_calloc(1, 1);
-    if (buf == NULL)
-        return (anihilation(spt), error(MALLOC, NULL), NULL);
-    return (buf);
+    return ;
 }
