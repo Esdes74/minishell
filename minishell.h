@@ -82,7 +82,7 @@ void    silent_quit(void);
 
 int     historic_fct(char *bufff, char *test, t_cmd *pip);
 
-char    *verif_read(char *rd_line, t_cmd *pip);
+char    *verif_read(char *b, char *rd_line, t_cmd *pip);
 
 int     cpy_env(char **env, t_cmd *pip);
 

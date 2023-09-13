@@ -136,8 +136,8 @@ static char **ft_cpy_env(char **env)
 int add_exp_env(t_cmd *pip, char *str)
 {
     int  i;
-    char **new_one;
     char *buf;
+    char **new_one;
 
     buf = malloc(sizeof(char) * (ft_strlen(str) + 12));
     if (!buf)
@@ -171,6 +171,6 @@ int add_exp_env(t_cmd *pip, char *str)
     new_one[i + 1] = NULL;
     anihilation(pip->exp_env);
     pip->exp_env = new_one;
-    initialize_exp_env(pip, pip->exp_env);
+    // initialize_exp_env(pip, pip->exp_env); // PK ? (provoque leaks)
     return (0);
 }

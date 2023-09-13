@@ -65,7 +65,7 @@ int	main(int argc, char **argv, char **env)
 			free_all(&pip);
 			return (quit(), 1);
 		}
-		rd_line = verif_read(rd_line, &pip);
+		rd_line = verif_read(bufff, rd_line, &pip);
 		if (rd_line == NULL)
 			return (1);
 		free(cmd);

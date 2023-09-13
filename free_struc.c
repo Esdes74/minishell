@@ -46,4 +46,6 @@ void	free_all(t_cmd *pip)
 {
 	anihilation(pip->env);
 	anihilation(pip->exp_env);
+	pip->env = NULL;
+	pip->exp_env = NULL;
 }

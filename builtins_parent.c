@@ -49,6 +49,7 @@ int export(t_cmd *pip, char *name_value)
     if (name_value[i] == '\0') // a utiliser pour export sans rien
     {
         add_exp_env(pip, name_value);
+        free(name_value);
         pip->builtin = TRUE;
         pip->status = 0;
         return (0);
@@ -70,11 +71,10 @@ int export(t_cmd *pip, char *name_value)
     while (pip->env[i]) // cherche dans env pour remplacer
     {
         if (strncmp(pip->env[i], var_name, (ft_strlen(var_name))) == 0)
-        {            
-            buff = ft_strdup(name_value);
+        {
             free(pip->env[i]);
-            pip->env[i] = buff;
-            break ;
+            pip->env[i] = name_value;
+            break;
         }
         i++;
     }
@@ -91,6 +91,7 @@ int export(t_cmd *pip, char *name_value)
         }
         new_env[i] = name_value;
         new_env[i + 1] = NULL;
+        free(pip->env);
         pip->env = new_env;
         // exp_env(pip, NULL); il faudra mettre le add!
     }
@@ -103,7 +104,8 @@ int export(t_cmd *pip, char *name_value)
             buff = ft_strdup(name_value);
             free(pip->exp_env[i]);
             pip->exp_env[i] = ft_strjoin("declare -x ", buff);
-            break ;
+            free(buff);
+            break;
         }
         i++;
     }
@@ -111,6 +113,7 @@ int export(t_cmd *pip, char *name_value)
         add_exp_env(pip, name_value);
     pip->builtin = TRUE;
     pip->status = 0;
+    free(var_name);
     return (0);
 }
 
@@ -161,6 +164,7 @@ static int  unset_env(t_cmd *pip, char *name_value, int len)
             new_env[i++] = pip->env[j++];
     }
     new_env[i] = NULL;
+    free(pip->env);
     pip->env = new_env;
     pip->builtin = TRUE;
     pip->status = 0;
@@ -187,6 +191,7 @@ static int  unset_exp_env(t_cmd *pip, char *name_value, int len)
             new_env[i++] = pip->exp_env[j++];
     }
     new_env[i] = NULL;
+    free(pip->exp_env);
     pip->exp_env = new_env;
     pip->builtin = TRUE;
     pip->status = 0;

@@ -44,6 +44,7 @@ int search_parent_builtins(t_cmd *pip, t_list *spt)
         {
             buf = ft_strdup(((char *)(tmp->data_cell->data)));
             unset(pip, buf);
+            free(buf);
             tmp = tmp->next;
         }
         return (1);

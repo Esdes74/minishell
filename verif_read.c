@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-char *verif_read(char *rd_line, t_cmd *pip)
+char *verif_read(char *b, char *rd_line, t_cmd *pip)
 {
     int     flag;
     char    *buff;
@@ -43,7 +43,7 @@ char *verif_read(char *rd_line, t_cmd *pip)
     if (flag == 1)
         return (NULL);
     else if (flag == -1)
-        return (annihilation(spt, free, DEBUG), silent_quit(), NULL);
+        return (free(b), annihilation(spt, free, DEBUG), silent_quit(), NULL);
     annihilation(spt, free, DEBUG);
     return (buff);
 }
