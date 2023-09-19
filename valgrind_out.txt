@@ -1,35 +1,21 @@
-==2198== Memcheck, a memory error detector
-==2198== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==2198== Using Valgrind-3.15.0 and LibVEX; rerun with -h for copyright info
-==2198== Command: ./minishell
-==2198== Parent PID: 2197
-==2198== 
-==2198== error calling PR_SET_PTRACER, vgdb might block
-==2199== 
-==2199== HEAP SUMMARY:
-==2199==     in use at exit: 200,659 bytes in 215 blocks
-==2199==   total heap usage: 516 allocs, 301 frees, 237,189 bytes allocated
-==2199== 
-==2199== LEAK SUMMARY:
-==2199==    definitely lost: 0 bytes in 0 blocks
-==2199==    indirectly lost: 0 bytes in 0 blocks
-==2199==      possibly lost: 0 bytes in 0 blocks
-==2199==    still reachable: 0 bytes in 0 blocks
-==2199==         suppressed: 200,659 bytes in 215 blocks
-==2199== 
-==2199== For lists of detected and suppressed errors, rerun with: -s
-==2199== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
-==2198== 
-==2198== HEAP SUMMARY:
-==2198==     in use at exit: 204,715 bytes in 219 blocks
-==2198==   total heap usage: 525 allocs, 306 frees, 241,425 bytes allocated
-==2198== 
-==2198== LEAK SUMMARY:
-==2198==    definitely lost: 0 bytes in 0 blocks
-==2198==    indirectly lost: 0 bytes in 0 blocks
-==2198==      possibly lost: 0 bytes in 0 blocks
-==2198==    still reachable: 0 bytes in 0 blocks
-==2198==         suppressed: 204,715 bytes in 219 blocks
-==2198== 
-==2198== For lists of detected and suppressed errors, rerun with: -s
-==2198== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 1 from 1)
+==575== Memcheck, a memory error detector
+==575== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==575== Using Valgrind-3.15.0 and LibVEX; rerun with -h for copyright info
+==575== Command: ./minishell
+==575== Parent PID: 574
+==575== 
+==575== error calling PR_SET_PTRACER, vgdb might block
+==575== 
+==575== HEAP SUMMARY:
+==575==     in use at exit: 204,745 bytes in 219 blocks
+==575==   total heap usage: 553 allocs, 334 frees, 242,047 bytes allocated
+==575== 
+==575== LEAK SUMMARY:
+==575==    definitely lost: 0 bytes in 0 blocks
+==575==    indirectly lost: 0 bytes in 0 blocks
+==575==      possibly lost: 0 bytes in 0 blocks
+==575==    still reachable: 0 bytes in 0 blocks
+==575==         suppressed: 204,745 bytes in 219 blocks
+==575== 
+==575== For lists of detected and suppressed errors, rerun with: -s
+==575== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 1 from 1)

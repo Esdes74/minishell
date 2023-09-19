@@ -36,6 +36,7 @@ int	close_all_pipes(t_cmd *pi)
 			return (error(CLOSE, "0"), anihilation((char **) pi->pipe), 1);
 		if (close(pi->pipe[j][1]) == -1)
 			return (error(CLOSE, "0"), anihilation((char **) pi->pipe), 1);
+		free(pi->pipe[j]);
 		j++;
 	}
 	free(pi->pipe);
