@@ -130,7 +130,7 @@ static int	prep_pipe(t_cmd *pip)
     }
 	while (i < pip->nb_pipe)
 	{
-		pip->pipe[i] = (int *) ft_calloc(2, sizeof(int));
+		pip->pipe[i] = (int *)ft_calloc(2, sizeof(int));
 		if (pip->pipe[i] == NULL)
 		{
 			pip->nb_pipe = i;

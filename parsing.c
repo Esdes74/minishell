@@ -37,6 +37,7 @@ void    parsing(const char *rd_line, int *flag, t_list *ret)
     int     save_flag;
     int     *tab;
     char    **spt;
+    int tmp_flag;
 
     i = 0;
     compt = 1;
@@ -69,7 +70,7 @@ void    parsing(const char *rd_line, int *flag, t_list *ret)
             new_flag = 1;
         else if (rd_line[i] == ' ' && *flag == 0 && i > 0)
             compt++;
-        if (rd_line[i] == '|' && rd_line[i - 1] != ' ' && *flag == 0)
+        if (i > 0 && rd_line[i] == '|' && rd_line[i - 1] != ' ' && *flag == 0) // attention changement ! i > 0
             compt++;
         if (rd_line[i] == '|' && rd_line[i + 1] != ' ' && *flag == 0)
             compt++;
@@ -89,8 +90,11 @@ void    parsing(const char *rd_line, int *flag, t_list *ret)
     compt = 0;
     *flag = save_flag;
     new_flag = 0;
+    tmp_flag = 0;
     while (rd_line[i]) // compte le nombre de caractère par arguments
     {
+        if (tmp_flag == 0 && rd_line[i] != ' ')
+            tmp_flag = 1;
         if (rd_line[i] != ' ' && *flag == 3)
             *flag = 0;
         if (rd_line[i] == '"' && *flag == 0)
@@ -113,12 +117,12 @@ void    parsing(const char *rd_line, int *flag, t_list *ret)
         }
         else if (rd_line[i] == '\n' && (*flag == 1 || *flag == 2))
             new_flag = 1;
-        else if (rd_line[i] == ' ' && *flag == 0 && i > 0)
+        else if (rd_line[i] == ' ' && *flag == 0 && tmp_flag == 1) // i > 0
         {
             compt++;
             *flag = 3;
         }
-        if (rd_line[i] == '|' && rd_line[i - 1] != ' ' && *flag == 0)
+        if (i > 0 && rd_line[i] == '|' && rd_line[i - 1] != ' ' && *flag == 0) // i > 0
             compt++;
         if (*flag != 3)
             tab[compt] += 1;
@@ -129,6 +133,8 @@ void    parsing(const char *rd_line, int *flag, t_list *ret)
     i = 0;
     if (*flag != 0 && *flag == save_flag) // permet de compter le \n si jamais on doit en rajouter un a la fin de la chaine pasque l'argument n'est pas finis
         tab[compt] += 1;
+    if (*flag == 3) // s'il n'y a que des espaces, réajuste compt
+        compt--;
     while (i <= compt) // créer les chaines de caractères
     {
         spt[i] = (char *) malloc(sizeof(char) * (tab[i] + 1));
@@ -185,9 +191,9 @@ void    parsing(const char *rd_line, int *flag, t_list *ret)
             j = 0;
             compt++;
         }
-        else if (rd_line[i] == '|' && *flag == 0 \
+        else if (i > 0 && rd_line[i] == '|' && *flag == 0 \
         && (rd_line[i - 1] != ' ' || \
-        (rd_line[i - 1] != ' ' && rd_line[i + 1] != ' ')))
+        (rd_line[i - 1] != ' ' && rd_line[i + 1] != ' '))) // i > 0
         {
             spt[compt][j] = '\0';
             j = 0;
@@ -195,7 +201,7 @@ void    parsing(const char *rd_line, int *flag, t_list *ret)
             spt[compt][j] = '|';
             j++;
         }
-        else if (rd_line[i] == '|' && *flag == 0 && rd_line[i - 1] == ' ')
+        else if (i > 0 && rd_line[i] == '|' && *flag == 0 && rd_line[i - 1] == ' ') // i > 0
         {
             spt[compt][j] = '|';
             j++;
