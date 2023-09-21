@@ -33,7 +33,7 @@ void    parsing(const char *rd_line, int *flag, t_list *ret)
     int     i;
     int     j;
     int     compt;
-    int     tmp_flag;
+    int     new_flag;
     int     save_flag;
     int     *tab;
     char    **spt;
@@ -42,7 +42,7 @@ void    parsing(const char *rd_line, int *flag, t_list *ret)
     compt = 1;
     save_flag = *flag;
     spt = 0;
-    tmp_flag = 0;
+    new_flag = 0;
     while (rd_line[i]) // Compte le nombre d'aguments qu'il y a (le | sont contés comme des arguments a part entière)
     {
         if (rd_line[i] != ' ' && *flag == 3)
@@ -51,22 +51,22 @@ void    parsing(const char *rd_line, int *flag, t_list *ret)
             *flag = 1;
         else if (rd_line[i] == '"' && *flag == 1)
         {
-            if (rd_line[i + 1] != '\0' && rd_line[i + 1] != ' ' && tmp_flag == 1)
+            if (rd_line[i + 1] != '\0' && rd_line[i + 1] != ' ' && new_flag == 1)
                 compt++;
-            tmp_flag = 0;
+            new_flag = 0;
             *flag = 0;
         }
         else if (rd_line[i] == '\'' && *flag == 0)
             *flag = 2;
         else if (rd_line[i] == '\'' && *flag == 2)
         {
-            if (rd_line[i + 1] != '\0' && rd_line[i + 1] != ' ' && tmp_flag == 1)
+            if (rd_line[i + 1] != '\0' && rd_line[i + 1] != ' ' && new_flag == 1)
                 compt++;
-            tmp_flag = 0;
+            new_flag = 0;
             *flag = 0;
         }
         else if (rd_line[i] == '\n' && (*flag == 1 || *flag == 2))
-            tmp_flag = 1;
+            new_flag = 1;
         else if (rd_line[i] == ' ' && *flag == 0 && i > 0)
             compt++;
         if (rd_line[i] == '|' && rd_line[i - 1] != ' ' && *flag == 0)
@@ -88,7 +88,7 @@ void    parsing(const char *rd_line, int *flag, t_list *ret)
     i = 0;
     compt = 0;
     *flag = save_flag;
-    tmp_flag = 0;
+    new_flag = 0;
     while (rd_line[i]) // compte le nombre de caractère par arguments
     {
         if (rd_line[i] != ' ' && *flag == 3)
@@ -97,22 +97,22 @@ void    parsing(const char *rd_line, int *flag, t_list *ret)
             *flag = 1;
         else if (rd_line[i] == '"' && *flag == 1)
         {
-            if (rd_line[i + 1] != '\0' && rd_line[i + 1] != ' ' && tmp_flag == 1)
+            if (rd_line[i + 1] != '\0' && rd_line[i + 1] != ' ' && new_flag == 1)
                 compt++;
-            tmp_flag = 0;
+            new_flag = 0;
             *flag = 0;
         }
         else if (rd_line[i] == '\'' && *flag == 0)
             *flag = 2;
         else if (rd_line[i] == '\'' && *flag == 2)
         {
-            if (rd_line[i + 1] != '\0' && rd_line[i + 1] != ' ' && tmp_flag == 1)
+            if (rd_line[i + 1] != '\0' && rd_line[i + 1] != ' ' && new_flag == 1)
                 compt++;
-            tmp_flag = 0;
+            new_flag = 0;
             *flag = 0;
         }
         else if (rd_line[i] == '\n' && (*flag == 1 || *flag == 2))
-            tmp_flag = 1;
+            new_flag = 1;
         else if (rd_line[i] == ' ' && *flag == 0 && i > 0)
         {
             compt++;
@@ -155,14 +155,14 @@ void    parsing(const char *rd_line, int *flag, t_list *ret)
         {
             *flag = 0;
             spt[compt][j] = '"';
-            if (rd_line[i + 1] == ' ' || (rd_line[i + 1] != '\0' && rd_line[i + 1] != ' ' && tmp_flag == 1))
+            if (rd_line[i + 1] == ' ' || (rd_line[i + 1] != '\0' && rd_line[i + 1] != ' ' && new_flag == 1))
             {
                 spt[compt][j + 1] = '\0';
                 j = 0;
                 i++;
                 compt++;
             }
-            tmp_flag = 0;
+            new_flag = 0;
         }
         else if (rd_line[i] == '\'' && *flag == 0)
             *flag = 2;
@@ -170,14 +170,14 @@ void    parsing(const char *rd_line, int *flag, t_list *ret)
         {
             *flag = 0;
             spt[compt][j] = '\'';
-            if (rd_line[i + 1] == ' ' || (rd_line[i + 1] != '\0' && rd_line[i + 1] != ' ' && tmp_flag == 1))
+            if (rd_line[i + 1] == ' ' || (rd_line[i + 1] != '\0' && rd_line[i + 1] != ' ' && new_flag == 1))
             {
                 spt[compt][j + 1] = '\0';
                 j = 0;
                 i++;
                 compt++;
             }
-            tmp_flag = 0;
+            new_flag = 0;
         }
         else if (rd_line[i] == ' ' && *flag == 0 && i > 0)
         {
@@ -201,7 +201,7 @@ void    parsing(const char *rd_line, int *flag, t_list *ret)
             j++;
         }
         else if (rd_line[i] == '\n' && (*flag == 1 || *flag == 2))
-            tmp_flag = 1;
+            new_flag = 1;
         if (rd_line[i] == '|' && *flag == 0 && rd_line[i + 1] != ' ')
         {
             spt[compt][j] = '\0';
