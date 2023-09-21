@@ -27,12 +27,37 @@ History :
 int historic_fct(char *bufff, char *test, t_cmd *pip) // gérer les espace dans l'historique
 {
     int     i;
+    int     save;
     int     flag;
     char    *tmp;
     char    *buf;
 
     i = 0;
     flag = 0;
+    save = 0;
+    // Cette boucle sert a placer le i derrière la dernière quote afin 
+    // de mettre un \0 et de pouvoir rajouter le hd_history
+    while (test[i] != '\0')
+    {
+        if (test[i] == '"' && flag == 0)
+            flag = 1;
+        else if (test[i] == '"' && flag == 1)
+        {
+            flag = 0;
+            save = i + 1;
+        }
+        else if (test[i] == '\'' && flag == 0)
+            flag = 2;
+        else if (test[i] == '\'' && flag == 2)
+        {
+            flag = 0;
+            save = i + 1;
+        }
+        i++;
+    }
+    if (save != 0)
+        flag = 1;
+    i = save;
     while (test[i] != '\n' && test[i] != '\0')
         i++;
     if (test[i] == '\n')

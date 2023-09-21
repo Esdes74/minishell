@@ -18,6 +18,8 @@ static void	print_format(t_cell *tmp, t_type type)
 		ft_printf("%c", *((char *)tmp->data_cell->data));
 	else if (type == INT)
 		ft_printf("%d", *((int *)tmp->data_cell->data));
+	else if (type == STRING)
+		ft_printf("%s", ((char *)tmp->data_cell->data));
 }
 
 void	print_list(t_list *lst)

@@ -1,21 +1,213 @@
-==575== Memcheck, a memory error detector
-==575== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==575== Using Valgrind-3.15.0 and LibVEX; rerun with -h for copyright info
-==575== Command: ./minishell
-==575== Parent PID: 574
-==575== 
-==575== error calling PR_SET_PTRACER, vgdb might block
-==575== 
-==575== HEAP SUMMARY:
-==575==     in use at exit: 204,745 bytes in 219 blocks
-==575==   total heap usage: 553 allocs, 334 frees, 242,047 bytes allocated
-==575== 
-==575== LEAK SUMMARY:
-==575==    definitely lost: 0 bytes in 0 blocks
-==575==    indirectly lost: 0 bytes in 0 blocks
-==575==      possibly lost: 0 bytes in 0 blocks
-==575==    still reachable: 0 bytes in 0 blocks
-==575==         suppressed: 204,745 bytes in 219 blocks
-==575== 
-==575== For lists of detected and suppressed errors, rerun with: -s
-==575== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 1 from 1)
+==227== Memcheck, a memory error detector
+==227== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==227== Using Valgrind-3.15.0 and LibVEX; rerun with -h for copyright info
+==227== Command: ./minishell
+==227== Parent PID: 226
+==227== 
+==227== error calling PR_SET_PTRACER, vgdb might block
+==228== 
+==228== HEAP SUMMARY:
+==228==     in use at exit: 200,681 bytes in 224 blocks
+==228==   total heap usage: 614 allocs, 390 frees, 234,661 bytes allocated
+==228== 
+==228== 8 bytes in 1 blocks are still reachable in loss record 6 of 64
+==228==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==228==    by 0x10FDE0: ft_calloc (ft_calloc.c:25)
+==228==    by 0x10CBBA: check_heredoc (check_redirection.c:184)
+==228==    by 0x10C146: check_redirection (check_redirection.c:29)
+==228==    by 0x10BD23: execution_center (execution_center.c:54)
+==228==    by 0x10B80A: verif_read (verif_read.c:42)
+==228==    by 0x109735: main (main.c:68)
+==228== 
+==228== 16 bytes in 1 blocks are still reachable in loss record 12 of 64
+==228==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==228==    by 0x10FDE0: ft_calloc (ft_calloc.c:25)
+==228==    by 0x10CED2: prep_hd (prep_heredoc.c:43)
+==228==    by 0x10BC67: execution_center (execution_center.c:41)
+==228==    by 0x10B80A: verif_read (verif_read.c:42)
+==228==    by 0x109735: main (main.c:68)
+==228== 
+==228== 19 bytes in 1 blocks are definitely lost in loss record 13 of 64
+==228==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==228==    by 0x10CCE9: write_hd_to_pip (check_redirection.c:206)
+==228==    by 0x10C79D: check_redirection (check_redirection.c:114)
+==228==    by 0x10BD23: execution_center (execution_center.c:54)
+==228==    by 0x10B80A: verif_read (verif_read.c:42)
+==228==    by 0x109735: main (main.c:68)
+==228== 
+==228== 24 bytes in 1 blocks are still reachable in loss record 17 of 64
+==228==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==228==    by 0x11124B: ft_strjoin (ft_strjoin.c:21)
+==228==    by 0x10D282: prep_hd (prep_heredoc.c:121)
+==228==    by 0x10BC67: execution_center (execution_center.c:41)
+==228==    by 0x10B80A: verif_read (verif_read.c:42)
+==228==    by 0x109735: main (main.c:68)
+==228== 
+==228== 43 bytes in 1 blocks are still reachable in loss record 18 of 64
+==228==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==228==    by 0x11124B: ft_strjoin (ft_strjoin.c:21)
+==228==    by 0x10B7B5: verif_read (verif_read.c:37)
+==228==    by 0x109735: main (main.c:68)
+==228== 
+==228== LEAK SUMMARY:
+==228==    definitely lost: 19 bytes in 1 blocks
+==228==    indirectly lost: 0 bytes in 0 blocks
+==228==      possibly lost: 0 bytes in 0 blocks
+==228==    still reachable: 91 bytes in 4 blocks
+==228==         suppressed: 200,571 bytes in 219 blocks
+==228== 
+==228== For lists of detected and suppressed errors, rerun with: -s
+==228== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 1 from 1)
+==227== Invalid write of size 1
+==227==    at 0x10B184: parsing (parsing.c:160)
+==227==    by 0x10B71E: verif_read (verif_read.c:27)
+==227==    by 0x109735: main (main.c:68)
+==227==  Address 0x4b0d0fe is 0 bytes after a block of size 30 alloc'd
+==227==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==227==    by 0x10AF99: parsing (parsing.c:134)
+==227==    by 0x10B71E: verif_read (verif_read.c:27)
+==227==    by 0x109735: main (main.c:68)
+==227== 
+==227== Invalid read of size 1
+==227==    at 0x10F285: check_variables (check_variables.c:30)
+==227==    by 0x10B7E8: verif_read (verif_read.c:40)
+==227==    by 0x109735: main (main.c:68)
+==227==  Address 0x4b0d0fe is 0 bytes after a block of size 30 alloc'd
+==227==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==227==    by 0x10AF99: parsing (parsing.c:134)
+==227==    by 0x10B71E: verif_read (verif_read.c:27)
+==227==    by 0x109735: main (main.c:68)
+==227== 
+==229== Invalid read of size 1
+==229==    at 0x111951: ft_strlen (ft_putstr_fd.c:20)
+==229==    by 0x11197C: ft_putstr_fd (ft_putstr_fd.c:27)
+==229==    by 0x1109F6: is_format (ft_printf_fd.c:69)
+==229==    by 0x110C7A: ft_printf_fd (ft_printf_fd.c:99)
+==229==    by 0x10A739: cmd_center_simple (cmd_center_simple.c:29)
+==229==    by 0x10BDAA: execution_center (execution_center.c:64)
+==229==    by 0x10B80A: verif_read (verif_read.c:42)
+==229==    by 0x109735: main (main.c:68)
+==229==  Address 0x4b0d0fe is 0 bytes after a block of size 30 alloc'd
+==229==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==229==    by 0x10AF99: parsing (parsing.c:134)
+==229==    by 0x10B71E: verif_read (verif_read.c:27)
+==229==    by 0x109735: main (main.c:68)
+==229== 
+==229== Invalid read of size 1
+==229==    at 0x111648: ft_strlen (ft_strlen.c:20)
+==229==    by 0x10DD4B: determine_echo_or_cd (search_builtins.c:100)
+==229==    by 0x10DB98: search_builtins (search_builtins.c:80)
+==229==    by 0x10A77E: cmd_center_simple (cmd_center_simple.c:31)
+==229==    by 0x10BDAA: execution_center (execution_center.c:64)
+==229==    by 0x10B80A: verif_read (verif_read.c:42)
+==229==    by 0x109735: main (main.c:68)
+==229==  Address 0x4b0d0fe is 0 bytes after a block of size 30 alloc'd
+==229==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==229==    by 0x10AF99: parsing (parsing.c:134)
+==229==    by 0x10B71E: verif_read (verif_read.c:27)
+==229==    by 0x109735: main (main.c:68)
+==229== 
+==229== Invalid read of size 1
+==229==    at 0x110559: ft_printf (ft_printf.c:91)
+==229==    by 0x10A4AE: echo (builtins.c:42)
+==229==    by 0x10DBB8: search_builtins (search_builtins.c:82)
+==229==    by 0x10A77E: cmd_center_simple (cmd_center_simple.c:31)
+==229==    by 0x10BDAA: execution_center (execution_center.c:64)
+==229==    by 0x10B80A: verif_read (verif_read.c:42)
+==229==    by 0x109735: main (main.c:68)
+==229==  Address 0x4b0d0fe is 0 bytes after a block of size 30 alloc'd
+==229==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==229==    by 0x10AF99: parsing (parsing.c:134)
+==229==    by 0x10B71E: verif_read (verif_read.c:27)
+==229==    by 0x109735: main (main.c:68)
+==229== 
+==229== 
+==229== HEAP SUMMARY:
+==229==     in use at exit: 205,117 bytes in 235 blocks
+==229==   total heap usage: 663 allocs, 428 frees, 243,884 bytes allocated
+==229== 
+==229== 6 bytes in 1 blocks are indirectly lost in loss record 2 of 74
+==229==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==229==    by 0x1111D5: ft_strdup (ft_strdup.c:21)
+==229==    by 0x111040: const_new (ft_split.c:70)
+==229==    by 0x111167: ft_split (ft_split.c:103)
+==229==    by 0x10D379: handle_hist (prep_heredoc.c:156)
+==229==    by 0x10CF6D: prep_hd (prep_heredoc.c:54)
+==229==    by 0x10BC67: execution_center (execution_center.c:41)
+==229==    by 0x10B80A: verif_read (verif_read.c:42)
+==229==    by 0x109735: main (main.c:68)
+==229== 
+==229== 8 bytes in 1 blocks are still reachable in loss record 5 of 74
+==229==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==229==    by 0x10FDE0: ft_calloc (ft_calloc.c:25)
+==229==    by 0x10CBBA: check_heredoc (check_redirection.c:184)
+==229==    by 0x10C146: check_redirection (check_redirection.c:29)
+==229==    by 0x10BD23: execution_center (execution_center.c:54)
+==229==    by 0x10B80A: verif_read (verif_read.c:42)
+==229==    by 0x109735: main (main.c:68)
+==229== 
+==229== 13 bytes in 1 blocks are definitely lost in loss record 9 of 74
+==229==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==229==    by 0x10CCE9: write_hd_to_pip (check_redirection.c:206)
+==229==    by 0x10C79D: check_redirection (check_redirection.c:114)
+==229==    by 0x10BD23: execution_center (execution_center.c:54)
+==229==    by 0x10B80A: verif_read (verif_read.c:42)
+==229==    by 0x109735: main (main.c:68)
+==229== 
+==229== 16 bytes in 1 blocks are still reachable in loss record 13 of 74
+==229==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==229==    by 0x10FDE0: ft_calloc (ft_calloc.c:25)
+==229==    by 0x10CED2: prep_hd (prep_heredoc.c:43)
+==229==    by 0x10BC67: execution_center (execution_center.c:41)
+==229==    by 0x10B80A: verif_read (verif_read.c:42)
+==229==    by 0x109735: main (main.c:68)
+==229== 
+==229== 18 bytes in 1 blocks are still reachable in loss record 14 of 74
+==229==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==229==    by 0x1111D5: ft_strdup (ft_strdup.c:21)
+==229==    by 0x10D76A: handle_hist (prep_heredoc.c:233)
+==229==    by 0x10CF6D: prep_hd (prep_heredoc.c:54)
+==229==    by 0x10BC67: execution_center (execution_center.c:41)
+==229==    by 0x10B80A: verif_read (verif_read.c:42)
+==229==    by 0x109735: main (main.c:68)
+==229== 
+==229== 18 bytes in 1 blocks are definitely lost in loss record 15 of 74
+==229==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==229==    by 0x11124B: ft_strjoin (ft_strjoin.c:21)
+==229==    by 0x10D6DF: handle_hist (prep_heredoc.c:221)
+==229==    by 0x10CF6D: prep_hd (prep_heredoc.c:54)
+==229==    by 0x10BC67: execution_center (execution_center.c:41)
+==229==    by 0x10B80A: verif_read (verif_read.c:42)
+==229==    by 0x109735: main (main.c:68)
+==229== 
+==229== 43 bytes in 1 blocks are definitely lost in loss record 21 of 74
+==229==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==229==    by 0x11124B: ft_strjoin (ft_strjoin.c:21)
+==229==    by 0x10B7B5: verif_read (verif_read.c:37)
+==229==    by 0x109735: main (main.c:68)
+==229== 
+==229== 46 (40 direct, 6 indirect) bytes in 1 blocks are definitely lost in loss record 24 of 74
+==229==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==229==    by 0x111D98: ft_calloc_str (ft_calloc_str.c:25)
+==229==    by 0x111127: ft_split (ft_split.c:95)
+==229==    by 0x10D379: handle_hist (prep_heredoc.c:156)
+==229==    by 0x10CF6D: prep_hd (prep_heredoc.c:54)
+==229==    by 0x10BC67: execution_center (execution_center.c:41)
+==229==    by 0x10B80A: verif_read (verif_read.c:42)
+==229==    by 0x109735: main (main.c:68)
+==229== 
+==229== 67 bytes in 1 blocks are definitely lost in loss record 30 of 74
+==229==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==229==    by 0x11124B: ft_strjoin (ft_strjoin.c:21)
+==229==    by 0x10A328: historic_fct (historic.c:84)
+==229==    by 0x109779: main (main.c:72)
+==229== 
+==229== LEAK SUMMARY:
+==229==    definitely lost: 181 bytes in 5 blocks
+==229==    indirectly lost: 6 bytes in 1 blocks
+==229==      possibly lost: 0 bytes in 0 blocks
+==229==    still reachable: 42 bytes in 3 blocks
+==229==         suppressed: 204,888 bytes in 226 blocks
+==229== 
+==229== For lists of detected and suppressed errors, rerun with: -s
+==229== ERROR SUMMARY: 10 errors from 10 contexts (suppressed: 1 from 1)

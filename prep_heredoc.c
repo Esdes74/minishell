@@ -166,7 +166,7 @@ static int  handle_hist(int compt, t_list *spt, t_cmd *pip)
         && ((char *) (tmp->data_cell->data))[1] != '<')
             tmp = tmp->next;
 
-        // Meme chose q'au dessus je récupère le mot stop
+        // Meme chose qu'au dessus je récupère le mot stop
         if (((char *) (tmp->data_cell->data))[2] == '\0')
             stop = (char *) tmp->next->data_cell->data;
         else
