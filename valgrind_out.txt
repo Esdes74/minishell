@@ -1,20 +1,87 @@
-==3396== Memcheck, a memory error detector
-==3396== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==3396== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
-==3396== Command: ./minishell
-==3396== Parent PID: 3395
-==3396== 
-==3396== 
-==3396== HEAP SUMMARY:
-==3396==     in use at exit: 204,270 bytes in 223 blocks
-==3396==   total heap usage: 592 allocs, 369 frees, 256,978 bytes allocated
-==3396== 
-==3396== LEAK SUMMARY:
-==3396==    definitely lost: 0 bytes in 0 blocks
-==3396==    indirectly lost: 0 bytes in 0 blocks
-==3396==      possibly lost: 0 bytes in 0 blocks
-==3396==    still reachable: 0 bytes in 0 blocks
-==3396==         suppressed: 204,270 bytes in 223 blocks
-==3396== 
-==3396== For lists of detected and suppressed errors, rerun with: -s
-==3396== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 1 from 1)
+==977== Memcheck, a memory error detector
+==977== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==977== Using Valgrind-3.15.0 and LibVEX; rerun with -h for copyright info
+==977== Command: ./minishell
+==977== Parent PID: 976
+==977== 
+==977== error calling PR_SET_PTRACER, vgdb might block
+==977== Invalid write of size 1
+==977==    at 0x10B2AA: parsing (parsing.c:180)
+==977==    by 0x10B985: verif_read (verif_read.c:27)
+==977==    by 0x109735: main (main.c:68)
+==977==  Address 0x4b0b937 is 0 bytes after a block of size 7 alloc'd
+==977==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==977==    by 0x10B15B: parsing (parsing.c:159)
+==977==    by 0x10B985: verif_read (verif_read.c:27)
+==977==    by 0x109735: main (main.c:68)
+==977== 
+==977== Conditional jump or move depends on uninitialised value(s)
+==977==    at 0x10F546: check_variables (check_variables.c:30)
+==977==    by 0x10BA4F: verif_read (verif_read.c:40)
+==977==    by 0x109735: main (main.c:68)
+==977== 
+==977== Conditional jump or move depends on uninitialised value(s)
+==977==    at 0x10D704: handle_hist (prep_heredoc.c:184)
+==977==    by 0x10D1D4: prep_hd (prep_heredoc.c:54)
+==977==    by 0x10BEA4: execution_center (execution_center.c:38)
+==977==    by 0x10BA71: verif_read (verif_read.c:42)
+==977==    by 0x109735: main (main.c:68)
+==977== 
+==977== Conditional jump or move depends on uninitialised value(s)
+==977==    at 0x10D718: handle_hist (prep_heredoc.c:184)
+==977==    by 0x10D1D4: prep_hd (prep_heredoc.c:54)
+==977==    by 0x10BEA4: execution_center (execution_center.c:38)
+==977==    by 0x10BA71: verif_read (verif_read.c:42)
+==977==    by 0x109735: main (main.c:68)
+==977== 
+==977== 
+==977== HEAP SUMMARY:
+==977==     in use at exit: 205,174 bytes in 236 blocks
+==977==   total heap usage: 650 allocs, 414 frees, 251,937 bytes allocated
+==977== 
+==977== 12 bytes in 2 blocks are indirectly lost in loss record 5 of 69
+==977==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==977==    by 0x11158E: ft_strdup (ft_strdup.c:21)
+==977==    by 0x1113F9: const_new (ft_split.c:70)
+==977==    by 0x111520: ft_split (ft_split.c:103)
+==977==    by 0x10D5F1: handle_hist (prep_heredoc.c:158)
+==977==    by 0x10D1D4: prep_hd (prep_heredoc.c:54)
+==977==    by 0x10BEA4: execution_center (execution_center.c:38)
+==977==    by 0x10BA71: verif_read (verif_read.c:42)
+==977==    by 0x109735: main (main.c:68)
+==977== 
+==977== 36 bytes in 2 blocks are definitely lost in loss record 15 of 69
+==977==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==977==    by 0x111604: ft_strjoin (ft_strjoin.c:21)
+==977==    by 0x10D985: handle_hist (prep_heredoc.c:226)
+==977==    by 0x10D1D4: prep_hd (prep_heredoc.c:54)
+==977==    by 0x10BEA4: execution_center (execution_center.c:38)
+==977==    by 0x10BA71: verif_read (verif_read.c:42)
+==977==    by 0x109735: main (main.c:68)
+==977== 
+==977== 92 (80 direct, 12 indirect) bytes in 2 blocks are definitely lost in loss record 26 of 69
+==977==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==977==    by 0x112054: ft_calloc_str (ft_calloc_str.c:25)
+==977==    by 0x1114E0: ft_split (ft_split.c:95)
+==977==    by 0x10D5F1: handle_hist (prep_heredoc.c:158)
+==977==    by 0x10D1D4: prep_hd (prep_heredoc.c:54)
+==977==    by 0x10BEA4: execution_center (execution_center.c:38)
+==977==    by 0x10BA71: verif_read (verif_read.c:42)
+==977==    by 0x109735: main (main.c:68)
+==977== 
+==977== 93 bytes in 3 blocks are definitely lost in loss record 27 of 69
+==977==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==977==    by 0x111604: ft_strjoin (ft_strjoin.c:21)
+==977==    by 0x10A3A9: historic_fct (historic.c:89)
+==977==    by 0x109779: main (main.c:72)
+==977== 
+==977== LEAK SUMMARY:
+==977==    definitely lost: 209 bytes in 7 blocks
+==977==    indirectly lost: 12 bytes in 2 blocks
+==977==      possibly lost: 0 bytes in 0 blocks
+==977==    still reachable: 0 bytes in 0 blocks
+==977==         suppressed: 204,953 bytes in 227 blocks
+==977== 
+==977== Use --track-origins=yes to see where uninitialised values come from
+==977== For lists of detected and suppressed errors, rerun with: -s
+==977== ERROR SUMMARY: 11 errors from 7 contexts (suppressed: 1 from 1)

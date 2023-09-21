@@ -148,12 +148,17 @@ static int  handle_hist(int compt, t_list *spt, t_cmd *pip)
     char    *rd_line;
     char    **rdline;
     t_cell  *tmp;
+    t_cell  *unt_lst;
 
     i = 0;
     tmp = spt->head;
     // Je split la fin afin d'avoir tous l'hitorique mot par mot pour 
     // pouvoir réutiliser l'algo d'au dessus sans me casser la tete
-    rdline = ft_split((char *) spt->tail->data_cell->data, '\n');
+    unt_lst = untail_list(spt, DEBUG);
+    rdline = ft_split((char *) unt_lst->data_cell->data, '\n');
+    free(unt_lst->data_cell->data);
+    free(unt_lst->data_cell);
+    free(unt_lst);
     if (rdline == NULL)
         return (error(SPLIT, "0"), -1);
     i = 0;

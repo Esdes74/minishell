@@ -33,11 +33,11 @@ void    parsing(const char *rd_line, int *flag, t_list *ret)
     int     i;
     int     j;
     int     compt;
+    int     tmp_flag;
     int     new_flag;
     int     save_flag;
     int     *tab;
     char    **spt;
-    int tmp_flag;
 
     i = 0;
     compt = 1;
@@ -48,7 +48,16 @@ void    parsing(const char *rd_line, int *flag, t_list *ret)
     {
         if (rd_line[i] != ' ' && *flag == 3)
             *flag = 0;
-        if (rd_line[i] == '"' && *flag == 0)
+        if (*flag == 4 && rd_line[i] == '\n')
+        {
+            compt++;
+            *flag = 0;
+        }
+        if (*flag == 4 && rd_line[i] == ' ')
+            *flag = 0;
+        if ((rd_line[i] == '<' || rd_line[i] == '>') && *flag == 0)
+            *flag = 4;
+        else if (rd_line[i] == '"' && *flag == 0)
             *flag = 1;
         else if (rd_line[i] == '"' && *flag == 1)
         {
@@ -97,7 +106,17 @@ void    parsing(const char *rd_line, int *flag, t_list *ret)
             tmp_flag = 1;
         if (rd_line[i] != ' ' && *flag == 3)
             *flag = 0;
-        if (rd_line[i] == '"' && *flag == 0)
+        if (*flag == 4 && rd_line[i] == '\n')
+        {
+            compt++;
+            tab[compt] -= 1;
+            *flag = 0;
+        }
+        if (*flag == 4 && rd_line[i] == ' ')
+            *flag = 0;
+        if ((rd_line[i] == '<' || rd_line[i] == '>') && *flag == 0)
+            *flag = 4;
+        else if (rd_line[i] == '"' && *flag == 0)
             *flag = 1;
         else if (rd_line[i] == '"' && *flag == 1)
         {
@@ -151,8 +170,19 @@ void    parsing(const char *rd_line, int *flag, t_list *ret)
     compt = 0;
     *flag = save_flag;
     j = 0;
+    tmp_flag = 0;
     while (rd_line[i]) // remplis les chaines de caractères
     {
+        if ((rd_line[i] == '<' || rd_line[i] == '>') && tmp_flag == 0)
+            tmp_flag = 1;
+        else if (rd_line[i] == '\n' && tmp_flag == 1)
+        {
+            spt[compt][j + 1] = '\0';
+            j = 0;
+            i++;
+            compt++;
+            tmp_flag = 0;
+        }
         if (rd_line[i] != ' ' && *flag == 3)
             *flag = 0;
         if (rd_line[i] == '"' && *flag == 0)

@@ -35,10 +35,10 @@ int execution_center(t_list *spt, t_cmd *pip)
     if (pip->nb_proc > 1)
         if (prep_pipe(pip) == 1)
             return (1);
+    pip->hd_history = prep_hd(pip, spt);
     arg_count = counting_arg(pip->nb_proc, spt);
     if (arg_count == NULL)
         return (1);
-    pip->hd_history = prep_hd(pip, spt);
     if (pip->nb_pipe == 0)
         if (search_parent_builtins(pip, spt) == -1)
             return (free(arg_count), -2);
