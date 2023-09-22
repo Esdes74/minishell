@@ -46,6 +46,8 @@ void    parsing(const char *rd_line, int *flag, t_list *ret)
     new_flag = 0;
     while (rd_line[i]) // Compte le nombre d'aguments qu'il y a (le | sont contés comme des arguments a part entière)
     {
+        if (rd_line[i] == '\n' && *flag == 0)
+            break;
         if (rd_line[i] != ' ' && *flag == 3)
             *flag = 0;
         if (*flag == 4 && rd_line[i] == '\n')
@@ -102,12 +104,15 @@ void    parsing(const char *rd_line, int *flag, t_list *ret)
     tmp_flag = 0;
     while (rd_line[i]) // compte le nombre de caractère par arguments
     {
+        if (rd_line[i] == '\n' && *flag == 0)
+            *flag = 5;
         if (tmp_flag == 0 && rd_line[i] != ' ')
             tmp_flag = 1;
         if (rd_line[i] != ' ' && *flag == 3)
             *flag = 0;
         if (*flag == 4 && rd_line[i] == '\n')
         {
+            tab[compt] += 1;
             compt++;
             tab[compt] -= 1;
             *flag = 0;
@@ -173,9 +178,20 @@ void    parsing(const char *rd_line, int *flag, t_list *ret)
     tmp_flag = 0;
     while (rd_line[i]) // remplis les chaines de caractères
     {
-        if ((rd_line[i] == '<' || rd_line[i] == '>') && tmp_flag == 0)
+        if (rd_line[i] == '\n' && *flag == 0)
+        {
+            ft_printf_fd(2, "compt = %d\nj = %d\n", compt, j);
+            tmp_flag = -1;
+            *flag = 5;
+            spt[compt][j] = '\n';
+            spt[compt][j + 1] = '\0';
+            compt++;
+            j = 0;
+            i++;
+        }
+        if ((rd_line[i] == '<' || rd_line[i] == '>') && tmp_flag == 0 && *flag != 5)
             tmp_flag = 1;
-        else if (rd_line[i] == '\n' && tmp_flag == 1)
+        else if (rd_line[i] == '\n' && tmp_flag == 1 && *flag != 5)
         {
             spt[compt][j + 1] = '\0';
             j = 0;
@@ -246,7 +262,7 @@ void    parsing(const char *rd_line, int *flag, t_list *ret)
         }
         if (rd_line[i] == ' ' && *flag == 0)
             *flag = 3;
-        if ((*flag != 3 && rd_line[i] != '|') || (*flag != 0 && rd_line[i] == '|'))
+        if ((*flag != 3 && rd_line[i] != '|') || (*flag != 0 && rd_line[i] == '|') || *flag == 5)
         {
             spt[compt][j] = rd_line[i];
             j++;

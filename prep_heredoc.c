@@ -141,6 +141,7 @@ static int  handle_hist(int compt, t_list *spt, t_cmd *pip)
     int     i;
     int     j;
     int     k;
+    // int     flag;
     int     test_buff;
     char    *buf;
     char    *buff;
@@ -148,7 +149,64 @@ static int  handle_hist(int compt, t_list *spt, t_cmd *pip)
     char    *rd_line;
     char    **rdline;
     t_cell  *tmp;
+    // t_cell  *tmp_unt_lst;
     t_cell  *unt_lst;
+
+
+// /mnt/c/Users/estel/Desktop/Dossier/Cours/42/minishell$ cat <<test <<stop <<test2 "bonjour
+// dfg
+// dfgd
+// dfs
+// "
+// sdfdsfds
+//     sdfdsfds
+// dfds        
+// test
+// dsfsdf
+// stop
+// dsfd
+// gfdf
+// dsfsd
+// test2
+
+
+// |lst| -----> |cmd| -> |<<stop| -> |arg| -> |...| -> |...| -> |...| -> |...| -> 0
+//             tmp ->  |...|                               tmp_unt_lst
+//  tmp   |cat| |<<stop| |".....\n......"| |'............'| |test\n| -> 0
+//  tmp_unt_lst |dfgdfgdf\ndfgdf\n| |d| |sfgdfgd\nstop| -> 0
+//     cat <<stop "bonjour" 'salut' test
+
+//     flag = 0;
+//     tmp_unt_lst = spt->head;
+//     while (tmp_unt_lst && flag != 3)
+//     {
+//         i = 0;
+//         rd_line = (char *) tmp_unt_lst->data_cell->data;
+//         while (flag != 3 && rd_line[i])
+//         {
+//             if (rd_line[i] == '"' && flag == 0)
+//                 flag = 1;
+//             else if (rd_line[i] == '"' && flag == 1)
+//                 flag = 0;
+//             if (rd_line[i] == '\'' && flag == 0)
+//                 flag = 2;
+//             else if (rd_line[i] == '\'' && flag == 2)
+//                 flag = 0;
+//             else if (rd_line[i] == '\n' && flag == 0)
+//                 flag = 3;
+//             i++;
+//         }
+//         tmp_unt_lst = tmp_unt_lst->next;
+//     }
+
+//     tmp_unt_lst = tmp_unt_lst->prev;
+//     while (spt->tail != tmp_unt_lst)
+//     { sdhfgudsfghuds djfhgvdfgdhyjuks
+//         tmp = untail_list(spt, DEBUG);
+//         stacking_list(tmp->data_cell->data, tmp->data_cell->type_data, DEBUG);
+//         free(tmp->data_cell);
+//         free(tmp);
+//     }
 
     i = 0;
     tmp = spt->head;
