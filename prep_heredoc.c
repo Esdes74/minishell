@@ -51,7 +51,7 @@ char    **prep_hd(t_cmd *pip, t_list *spt)
     && ((char *) spt->tail->data_cell->data)[i] != '\0')
         i++;
     if (((char *) spt->tail->data_cell->data)[i] == '\n')
-        i = handle_hist(compt, spt, pip);
+        i = handle_hist(compt, spt, pip); // c'est ici notre problème !
     else
         i = 0;
     // i est initialisé par la fonction handle_hist pour savoir par la suite 
@@ -219,8 +219,7 @@ static int  handle_hist(int compt, t_list *spt, t_cmd *pip)
     free(unt_lst);
     if (rdline == NULL)
         return (error(SPLIT, "0"), -1);
-    i = 0;
-    j = 1;
+    j = 0;
     test_buff = 0;
     while (i < compt)
     {
@@ -238,8 +237,10 @@ static int  handle_hist(int compt, t_list *spt, t_cmd *pip)
 
         // Meme chose qu'au dessus je met un \0 pour supprimer les autres 
         // mots de l'hitorique
+
+
         k = 0;
-        while (stop[k] != '\n' && stop[k] != '\0')
+        while (stop[k] != '\n' && stop[k] != '\0') //stop[k] != '\n' &&
             k++;
         stop[k] = '\0';
 
@@ -247,10 +248,13 @@ static int  handle_hist(int compt, t_list *spt, t_cmd *pip)
         buff = NULL;
         rd_line = NULL;
         // Ici je récupère les phrases jusqu'a ce que je retrouve le bon mot
+
+
+
         buff = rdline[j++];
         if (buff == NULL)
             return (i);
-        while (buff != NULL && ft_strncmp(stop, buff, ft_strlen(buff) + 1) != 0)
+        while (ft_strncmp(stop, buff, ft_strlen(buff) + 1) != 0)
         {
             if (rd_line == NULL) // Si c'est la première phrase alors je join un \n
             {

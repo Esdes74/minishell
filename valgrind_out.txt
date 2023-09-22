@@ -1,7 +1,6 @@
-==1063== Memcheck, a memory error detector
-==1063== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==1063== Using Valgrind-3.15.0 and LibVEX; rerun with -h for copyright info
-==1063== Command: ./minishell
-==1063== Parent PID: 1062
-==1063== 
-==1063== error calling PR_SET_PTRACER, vgdb might block
+==9018== Memcheck, a memory error detector
+==9018== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==9018== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
+==9018== Command: ./minishell
+==9018== Parent PID: 9017
+==9018== 

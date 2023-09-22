@@ -180,7 +180,7 @@ void    parsing(const char *rd_line, int *flag, t_list *ret)
     {
         if (rd_line[i] == '\n' && *flag == 0)
         {
-            ft_printf_fd(2, "compt = %d\nj = %d\n", compt, j);
+            // ft_printf_fd(2, "compt = %d\nj = %d\n", compt, j);
             tmp_flag = -1;
             *flag = 5;
             spt[compt][j] = '\n';
