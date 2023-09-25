@@ -35,12 +35,35 @@ void    env(char **envir)
 void    echo(char **arg, int option)
 {
     int i;
+    int j;
+    int flag;
 
+    flag = 0;
     i = 1 + option;
     while (arg[i])
     {
-        ft_printf(arg[i]);
-        ft_printf(" ");
+        j = 1;
+        while (arg[i][j] && arg[i][j] != '"' && arg[i][j] != '\'')
+            j++;
+        if (arg[i][j] == '"' || arg[i][j] == '\'')
+            arg[i][j] = '\0';
+        if (arg[i][0] == '"' || arg[i][0] == '\'')
+            ft_printf(&arg[i][1]);
+        else
+            ft_printf(arg[i]);
+        if ((arg[i][0] == '"' || arg[i][0] == '\'') && flag == 0)
+        {
+            flag = 1;
+            j = 0;
+            while (arg[i][j] != '\0' && arg[i][j] != '\n')
+                j++;
+            if (arg[i][j] != '\n')
+                ft_printf("\n");
+        }
+        else if ((arg[i][0] == '"' || arg[i][0] == '\'') && flag == 1)
+            flag = 0;
+        if (flag == 0)
+            ft_printf(" ");
         i++;
     }
     if (option == 0)
