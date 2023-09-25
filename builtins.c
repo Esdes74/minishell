@@ -38,32 +38,52 @@ void    echo(char **arg, int option)
     int j;
     int flag;
 
-    flag = 0;
     i = 1 + option;
     while (arg[i])
     {
         j = 1;
         while (arg[i][j] && arg[i][j] != '"' && arg[i][j] != '\'')
             j++;
-        if (arg[i][j] == '"' || arg[i][j] == '\'')
-            arg[i][j] = '\0';
-        if (arg[i][0] == '"' || arg[i][0] == '\'')
-            ft_printf(&arg[i][1]);
-        else
-            ft_printf(arg[i]);
-        if ((arg[i][0] == '"' || arg[i][0] == '\'') && flag == 0)
+        if ((arg[i][j] == '"' || arg[i][j] == '\'') && arg[i][j + 1] != '\0')
         {
-            flag = 1;
-            j = 0;
-            while (arg[i][j] != '\0' && arg[i][j] != '\n')
+            j = 1;
+            while (arg[i][j])
+            {
+                if (arg[i][j] != '"' && arg[i][j] != '\'')
+                {
+                    flag = 0;
+                    ft_printf("%c", arg[i][j]);
+                }
+                else if ((arg[i][j] == '"' || arg[i][j] == '\'') && flag == 0)
+                {
+                    flag = 1;
+                    ft_printf(" ");
+                }
                 j++;
-            if (arg[i][j] != '\n')
-                ft_printf("\n");
+            }
         }
-        else if ((arg[i][0] == '"' || arg[i][0] == '\'') && flag == 1)
+        else
+        {
             flag = 0;
-        if (flag == 0)
-            ft_printf(" ");
+            arg[i][j] = '\0';
+            if (arg[i][0] == '"' || arg[i][0] == '\'')
+                ft_printf(&arg[i][1]);
+            else
+                ft_printf(arg[i]);
+            if ((arg[i][0] == '"' || arg[i][0] == '\'') && flag == 0)
+            {
+                flag = 1;
+                j = 0;
+                while (arg[i][j] != '\0' && arg[i][j] != '\n')
+                    j++;
+                if (arg[i][j] != '\n' && arg[i + 1] != NULL)
+                    ft_printf("\n");
+            }
+            else if ((arg[i][0] == '"' || arg[i][0] == '\'') && flag == 1)
+                flag = 0;
+            if (flag == 0)
+                ft_printf(" ");
+        }
         i++;
     }
     if (option == 0)
