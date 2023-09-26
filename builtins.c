@@ -40,6 +40,7 @@ void    echo(char **arg, int option)
 
     flag = 0;
     i = 1 + option;
+    flag = 0;
     while (arg[i])
     {
         j = 1;
