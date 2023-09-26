@@ -101,7 +101,7 @@ void    parsing(const char *rd_line, int *flag, t_list *ret)
         i++;
     }
     // Créer le tableau de chaine de caractères et le tableau permettant de compter le nombre de caractères dans chaque arguments
-    if (*flag == 3 && rd_line[i] == '\0')
+    if (*flag == 3)
             compt--;
     spt = (char **) malloc(sizeof(char *) * (compt + 1));
     if (spt == NULL)
@@ -117,13 +117,13 @@ void    parsing(const char *rd_line, int *flag, t_list *ret)
     tmp_flag = 0;
     while (rd_line[i]) // compte le nombre de caractère par arguments
     {
-        if (rd_line[i] == '\n' && *flag == 0)
+        if (rd_line[i] == '\n' && (*flag == 0 || *flag == 3))
             *flag = 5;
         if (tmp_flag == 0 && rd_line[i] != ' ')
             tmp_flag = 1;
         if (rd_line[i] != ' ' && *flag == 3)
             *flag = 0;
-        if (*flag == 4 && rd_line[i] == '\n')
+        if (*flag == 4 && rd_line[i] == '\n') // si pas d'espace exemple : cat <<test\n il reste en flag 4 et aucun prob, si espace avant test ou après test passe en 5 et segfault
         {
             tab[compt] += 1;
             compt++;
@@ -168,10 +168,11 @@ void    parsing(const char *rd_line, int *flag, t_list *ret)
         i++;
     }
     i = 0;
+    if (*flag == 3)
+        compt--;
+    printf("compt = %d\n", compt);
     if (*flag != 0 && *flag == save_flag) // permet de compter le \n si jamais on doit en rajouter un a la fin de la chaine pasque l'argument n'est pas finis
         tab[compt] += 1;
-    if (*flag == 3) // s'il n'y a que des espaces, réajuste compt
-        compt--;
     while (i <= compt) // créer les chaines de caractères
     {
         spt[i] = (char *) malloc(sizeof(char) * (tab[i] + 1));
@@ -183,8 +184,6 @@ void    parsing(const char *rd_line, int *flag, t_list *ret)
         }
         i++;
     }
-    printf("2ieme boucle : %d\n", compt);
-
     free(tab);
     i = 0;
     compt = 0;
@@ -280,14 +279,19 @@ void    parsing(const char *rd_line, int *flag, t_list *ret)
         if ((*flag != 3 && rd_line[i] != '|') || (*flag != 0 && rd_line[i] == '|') || *flag == 5)
         {
             spt[compt][j] = rd_line[i];
+            printf("dans 3 : spt[%d][%d] = %c\n", compt, j ,spt[compt][j]);
             j++;
         }
+
         i++;
     }
-    printf("3ieme : %d\n", compt);
-    if (*flag != 0 && *flag == save_flag) // Rajoute le \n si c'est un rappel de la fonction et qu'on est toujours pas sortie
-        spt[compt][j++] = '\n';
-    spt[compt][j] = '\0';
+    printf("troisieme boucle : compt = %d, j = %d\n", compt, j);
+    if (*flag != 3)
+    {
+        if (*flag != 0 && *flag == save_flag) // Rajoute le \n si c'est un rappel de la fonction et qu'on est toujours pas sortie
+            spt[compt][j++] = '\n';
+        spt[compt][j] = '\0';
+    }
     i = 0;
     while (spt[i] && spt[i][0] != '\0') // ajoute les arguments a la liste
     {
