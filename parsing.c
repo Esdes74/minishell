@@ -174,7 +174,6 @@ void    parsing(const char *rd_line, int *flag, t_list *ret)
     i = 0;
     if (*flag == 3)
         compt--;
-    printf("compt = %d\n", compt);
     if (*flag != 0 && *flag == save_flag) // permet de compter le \n si jamais on doit en rajouter un a la fin de la chaine pasque l'argument n'est pas finis
         tab[compt] += 1;
     while (i <= compt) // créer les chaines de caractères
@@ -196,19 +195,22 @@ void    parsing(const char *rd_line, int *flag, t_list *ret)
     tmp_flag = 0;
     while (rd_line[i]) // remplis les chaines de caractères
     {
-        if (rd_line[i] == '\n' && *flag == 0)
+        if (rd_line[i] == '\n' && (*flag == 0 || *flag == 3))
         {
             // ft_printf_fd(2, "compt = %d\nj = %d\n", compt, j);
             tmp_flag = -1;
             *flag = 5;
             spt[compt][j] = '\n';
             spt[compt][j + 1] = '\0';
-            compt++;
+            if (i > 0 && rd_line[i - 1] != ' ')
+                compt++;
             j = 0;
             i++;
         }
         if ((rd_line[i] == '<' || rd_line[i] == '>') && tmp_flag == 0 && *flag != 5)
             tmp_flag = 1;
+        else if (tmp_flag == 1 && (rd_line[i] == ' '))
+            tmp_flag = 0;
         else if (rd_line[i] == '\n' && tmp_flag == 1 && *flag != 5)
         {
             spt[compt][j + 1] = '\0';
@@ -283,13 +285,10 @@ void    parsing(const char *rd_line, int *flag, t_list *ret)
         if ((*flag != 3 && rd_line[i] != '|') || (*flag != 0 && rd_line[i] == '|') || *flag == 5)
         {
             spt[compt][j] = rd_line[i];
-            printf("dans 3 : spt[%d][%d] = %c\n", compt, j ,spt[compt][j]);
             j++;
         }
-
         i++;
     }
-    printf("troisieme boucle : compt = %d, j = %d\n", compt, j);
     if (*flag != 3)
     {
         if (*flag != 0 && *flag == save_flag) // Rajoute le \n si c'est un rappel de la fonction et qu'on est toujours pas sortie

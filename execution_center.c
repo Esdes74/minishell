@@ -52,6 +52,8 @@ int execution_center(t_list *spt, t_cmd *pip)
         {
             add_list(getpid(), list);
             exec_cmd = check_redirection(exec_cmd, pip);
+            if (exec_cmd == NULL)
+                return (free(exec_cmd), free_all(pip),-1);
             free(arg_count);
             if (pip->nb_proc > 1)
             {

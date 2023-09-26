@@ -194,7 +194,7 @@ static int  handle_hist(int compt, t_list *spt, t_cmd *pip)
         buff = rdline[j++];
         if (buff == NULL)
             return (i);
-        while (ft_strncmp(stop, buff, ft_strlen(buff) + 1) != 0)
+        while (buff && ft_strncmp(stop, buff, ft_strlen(buff) + 1) != 0)
         {
             if (rd_line == NULL) // Si c'est la première phrase alors je join un \n
             {
