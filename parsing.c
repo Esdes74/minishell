@@ -61,10 +61,7 @@ void    parsing(const char *rd_line, int *flag, t_list *ret)
             break;
         }
         if (*flag == 4 && rd_line[i] == ' ')
-        {
             *flag = 0;
-            tmp_flag = 0;
-        }
         if ((rd_line[i] == '<' || rd_line[i] == '>') && *flag == 0)
             *flag = 4;
         else if (rd_line[i] == '"' && *flag == 0)
@@ -115,10 +112,17 @@ void    parsing(const char *rd_line, int *flag, t_list *ret)
     *flag = save_flag;
     new_flag = 0;
     tmp_flag = 0;
+    int turbo_flag = 0;
     while (rd_line[i]) // compte le nombre de caractère par arguments
     {
-        if (rd_line[i] == '\n' && (*flag == 0 || *flag == 3))
+        if (rd_line[i] == '\n' && (*flag == 0 || *flag == 3) && turbo_flag == 0)
+        {
             *flag = 5;
+            turbo_flag = 1;
+            tab[compt] += 1;
+            compt++;
+            tab[compt] -= 1;
+        }
         if (tmp_flag == 0 && rd_line[i] != ' ')
             tmp_flag = 1;
         if (rd_line[i] != ' ' && *flag == 3)
