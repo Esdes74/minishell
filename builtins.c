@@ -38,6 +38,7 @@ void    echo(char **arg, int option)
     int j;
     int flag;
 
+    flag = 0;
     i = 1 + option;
     while (arg[i])
     {
@@ -46,7 +47,10 @@ void    echo(char **arg, int option)
             j++;
         if ((arg[i][j] == '"' || arg[i][j] == '\'') && arg[i][j + 1] != '\0')
         {
-            j = 1;
+            if (arg[i][0] == '"' || arg[i][0] == '\'')
+                j = 1;
+            else
+                j = 0;
             while (arg[i][j])
             {
                 if (arg[i][j] != '"' && arg[i][j] != '\'')

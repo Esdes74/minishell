@@ -72,6 +72,7 @@ int	main(int argc, char **argv, char **env)
 		historic_fct(bufff, rd_line, &pip);
 		free(bufff);
 		bufff = ft_strdup(rd_line);
+		free(rd_line);
 	}
 	return (0);
 }
