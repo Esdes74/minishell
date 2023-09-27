@@ -36,12 +36,12 @@ char    **check_redirection(char **arg, t_cmd *struc)
             if (arg[i][1] == '\0')
             {
                 if (arg[i + 1] == NULL)
-                    return (error(TOKEN, "0"), NULL);
+                    return (anihilation(arg), error(TOKEN, "0"), NULL);
                 file = open(arg[i + 1], O_RDONLY);
                 if (file == -1)
-                    return (error(OPEN, "0"), NULL);
+                    return (anihilation(arg), error(OPEN, "0"), NULL);
                 else if (dup2(file, STDIN_FILENO) == -1)
-                    return (close(file), error(DUP, "0"), NULL);
+                    return (anihilation(arg), close(file), error(DUP, "0"), NULL);
                 close(file);
                 i++;
             }
@@ -51,9 +51,9 @@ char    **check_redirection(char **arg, t_cmd *struc)
             {
                 file = open(&arg[i][1], O_RDONLY);
                 if (file == -1)
-                    return (error(OPEN, "0"), NULL);
+                    return (anihilation(arg), error(OPEN, "0"), NULL);
                 else if (dup2(file, STDIN_FILENO) == -1)
-                    return (close(file), error(DUP, "0"), NULL);
+                    return (anihilation(arg), close(file), error(DUP, "0"), NULL);
                 close(file);
             }
         }
@@ -63,12 +63,12 @@ char    **check_redirection(char **arg, t_cmd *struc)
             if (arg[i][1] == '\0')
             {
                 if (arg[i + 1] == NULL)
-                    return (error(TOKEN, "0"), NULL);
+                    return (anihilation(arg), error(TOKEN, "0"), NULL);
                 file = open(arg[i + 1], O_CREAT | O_RDWR | O_TRUNC, 0644);
                 if (file == -1)
-                    return (error(OPEN, "0"), NULL);
+                    return (anihilation(arg), error(OPEN, "0"), NULL);
                 else if (dup2(file, STDOUT_FILENO) == -1)
-                    return (close(file), error(DUP, "0"), NULL);
+                    return (anihilation(arg), close(file), error(DUP, "0"), NULL);
                 close(file);
                 i++;
             }
@@ -77,12 +77,12 @@ char    **check_redirection(char **arg, t_cmd *struc)
                 if (arg[i][2] == '\0')
                 {
                     if (arg[i + 1] == NULL)
-                        return (error(TOKEN, "0"), NULL);
+                        return (anihilation(arg), error(TOKEN, "0"), NULL);
                     file = open(arg[i + 1], O_CREAT | O_RDWR | O_APPEND, 0644);
                     if (file == -1)
-                        return (error(OPEN, "0"), NULL);
+                        return (anihilation(arg), error(OPEN, "0"), NULL);
                     else if (dup2(file, STDOUT_FILENO) == -1)
-                        return (close(file), error(DUP, "0"), NULL);
+                        return (anihilation(arg), close(file), error(DUP, "0"), NULL);
                     close(file);
                     i++;
                 }
@@ -90,9 +90,9 @@ char    **check_redirection(char **arg, t_cmd *struc)
                 {
                     file = open(&arg[i][2], O_CREAT | O_RDWR | O_APPEND, 0644);
                     if (file == -1)
-                        return (error(OPEN, "0"), NULL);
+                        return (anihilation(arg), error(OPEN, "0"), NULL);
                     else if (dup2(file, STDOUT_FILENO) == -1)
-                        return (close(file), error(DUP, "0"), NULL);
+                        return (anihilation(arg), close(file), error(DUP, "0"), NULL);
                     close(file);
                 }
             }
@@ -100,9 +100,9 @@ char    **check_redirection(char **arg, t_cmd *struc)
             {
                 file = open(&arg[i][1], O_CREAT | O_RDWR | O_TRUNC, 0644);
                 if (file == -1)
-                    return (error(OPEN, "0"), NULL);
+                    return (anihilation(arg), error(OPEN, "0"), NULL);
                 else if (dup2(file, STDOUT_FILENO) == -1)
-                    return (close(file), error(DUP, "0"), NULL);
+                    return (anihilation(arg), close(file), error(DUP, "0"), NULL);
                 close(file);
             }
         }
@@ -112,7 +112,7 @@ char    **check_redirection(char **arg, t_cmd *struc)
         return (arg);
     if (struc->heredoc == 1)
         if (write_hd_to_pip(struc) == 1)
-            return (NULL);
+            return (anihilation(arg), NULL);
     i = 0;
     compt = 0;
     while (arg[i]) // compte le nombre de redirection pour refaire un tableau de chaines de caractères
@@ -151,7 +151,7 @@ char    **check_redirection(char **arg, t_cmd *struc)
             tmp[j++] = arg[i];
         i++;
     }
-    free(arg);
+    anihilation(arg);
     arg = tmp;
     arg[j] = NULL;
     return (arg);
@@ -181,7 +181,7 @@ static int  check_heredoc(char **arg, t_cmd *struc)
     }
     if (struc->heredoc == 0)
         return (0);
-    struc->here_pipe = (int *) ft_calloc(2, sizeof(int));
+    struc->here_pipe = (int *)ft_calloc(2, sizeof(int));
     if (struc->here_pipe != NULL && pipe(struc->here_pipe) == -1) // création du pipe pour le heredoc
         return (error(PIPE, "0"), 1);
     else if (struc->here_pipe == NULL)
@@ -211,12 +211,13 @@ static int  write_hd_to_pip(t_cmd *struc)
         tmp[i] = struc->hd_history[struc->ind_hd][i];
     tmp[i] = '\0';
     if (write(struc->here_pipe[1], tmp, ft_strlen(tmp)) == -1)
-        return (error(WRITE, "0"), 1);
+        return (free(tmp), error(WRITE, "0"), 1);
     if (close(struc->here_pipe[1]) == -1)
-        return (error(CLOSE, "0"), 1);
+        return (free(tmp), error(CLOSE, "0"), 1);
     if (dup2(struc->here_pipe[0], STDIN_FILENO) == -1)
-        return (error(DUP, "0"), 1);
+        return (free(tmp), error(DUP, "0"), 1);
     if (close(struc->here_pipe[0]) == -1)
-        return (error(CLOSE, "0"), 1);
+        return (free(tmp), error(CLOSE, "0"), 1);
+    free(tmp);
     return (0);
 }

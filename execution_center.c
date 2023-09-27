@@ -44,17 +44,18 @@ int execution_center(t_list *spt, t_cmd *pip)
             return (free(arg_count), -2);
     while (i < pip->nb_proc && pip->parent_builtin == FALSE)
     {
-        exec_cmd = string_for_cmd_center(arg_count, i, spt);
-        if (exec_cmd == NULL)
-            return (error(MALLOC, NULL), 1);
         id = fork();
         if (id == 0)
         {
+            exec_cmd = string_for_cmd_center(arg_count, i, spt);
+            free(arg_count);
+            annihilation(spt, free, DEBUG);
+            if (exec_cmd == NULL)
+                return (error(MALLOC, NULL), 1);
             add_list(getpid(), list);
             exec_cmd = check_redirection(exec_cmd, pip);
             if (exec_cmd == NULL)
-                return (free(exec_cmd), free_all(pip),-1);
-            free(arg_count);
+                return (-1);
             if (pip->nb_proc > 1)
             {
                 if (i > 0 && pip->in == FALSE)
@@ -63,14 +64,16 @@ int execution_center(t_list *spt, t_cmd *pip)
                     dup_out_cmd(pip, i);
                 close_all_pipes(pip);
             }
-            if (cmd_center_simple(exec_cmd, pip) == -1)
-                return (free(exec_cmd), -1);
+            if (pip->here_pipe)
+            {
+                free(pip->here_pipe);
+                anihilation(pip->hd_history);
+            }
+            if (cmd_center_simple(exec_cmd, pip) == 1)
+                return (anihilation(exec_cmd), -1);
         }
         else
-        {
             add_list(id, list);
-            free(exec_cmd);
-        }
         i++;
     }
     if (id != 0)

@@ -43,7 +43,7 @@ char	*cmd_build(char *str, char **env)
 		return (perror("Error"), NULL);
 	cmd = search_command(str, cmd);
 	if (cmd == NULL)
-		return (error(CMD, str), NULL);
+		return (error(CMD, str), NULL); //annihilation(list, free, DEBUG),
 	return (cmd);
 }
 

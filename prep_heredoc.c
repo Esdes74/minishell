@@ -126,7 +126,8 @@ char    **prep_hd(t_cmd *pip, t_list *spt)
         }
         // J'ajoute ce mot a l'historique
         // free(pip->hd_history[i]);
-        pip->hd_history[i] = buff;
+        pip->hd_history[i] = ft_strdup(buff);
+        free(buff);
         i++;
     }
     // Je ferme la fin de l'historique et met a -1 l'ind pour l'utilisation 

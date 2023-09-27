@@ -68,7 +68,7 @@ int search_builtins(char **spt, t_cmd *pip)
     int     option;
 
     option = 0;
-    if (!spt)
+    if (!spt[0])
         return (-1);
     if (ft_strlen(spt[0]) == 3 && ft_strncmp(spt[0], "pwd", 3) == 0)
         return (free(pwd()), -1);

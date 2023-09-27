@@ -26,9 +26,9 @@ static int	execute_child(char **environ, char **str, t_cmd *pip);
 int cmd_center_simple(char **str, t_cmd *pip) //j'ai enlever la condtion si env != NULL 
 {
     if (search_builtins(str, pip) == -1)
-        return (free_all(pip), -1);
+        return (1);
     if (execute_child(pip->env, str, pip) == 1)
-        return (-1); // changement de 1 à -1
+        return (1); // changement de 1 à -1
     return (0);
 }
 
@@ -39,17 +39,20 @@ static int	execute_child(char **environ, char **str, t_cmd *pip)
     char    *new_str;
 
     new_str = check_quote(str[0]);
-    free(str[0]);
-    str[0] = new_str;
+	if (strncmp(new_str, str[0], ft_strlen(str[0])) != 0)
+	{
+    	free(str[0]);
+    	str[0] = new_str;
+	}
 	cmd = cmd_build(str[0], environ);
 	if (cmd == NULL)
     {
         false_cmd = ft_calloc(1, 1);
         if (!false_cmd)
-            return (free(str), 1);
+            return (anihilation(str), free_all(pip), 1);
         if (write(STDOUT_FILENO, false_cmd, 1) == -1)
-            return (free (false_cmd), free(str), free_all(pip), 1);
-		return (free(str), free(false_cmd), free_all(pip), exit(EXIT_FAILURE), 1);
+            return (free (false_cmd), anihilation(str), free_all(pip), 1);
+		return (free(false_cmd), 1); // anihilation(str), free(false_cmd)
     }
     annihilation(list, free, DEBUG);
 	execve(cmd, str, environ);

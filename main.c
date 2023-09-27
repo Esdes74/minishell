@@ -27,6 +27,7 @@ int	main(int argc, char **argv, char **env)
 	t_cmd   pip;
 
 	cmd = NULL;
+	pip.here_pipe = NULL;
 	if (getenv("PATH") == NULL)
 		return (0);
 	if (cpy_env(env, &pip) == 1)
@@ -67,7 +68,12 @@ int	main(int argc, char **argv, char **env)
 		}
 		rd_line = verif_read(bufff, rd_line, &pip);
 		if (rd_line == NULL)
+		{
+			free(bufff);
+			free_all(&pip);
+			annihilation(list, free, DEBUG);
 			return (1);
+		}
 		free(cmd);
 		historic_fct(bufff, rd_line, &pip);
 		free(bufff);

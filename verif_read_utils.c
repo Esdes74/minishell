@@ -60,7 +60,7 @@ char    **string_for_cmd_center(int *tab, int i, t_list *spt)
         buf = (char *)tmp->data_cell->data;
         if (buf[0] == '|')
             tmp = tmp->next;
-        for_cmd[j] = (char *)tmp->data_cell->data;
+        for_cmd[j] = ft_strdup((char *)tmp->data_cell->data);
         if (!for_cmd[j])
             return (anihilation(for_cmd), NULL);
         j++;
