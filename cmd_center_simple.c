@@ -35,7 +35,7 @@ int cmd_center_simple(char **str, t_cmd *pip) //j'ai enlever la condtion si env 
 static int	execute_child(char **environ, char **str, t_cmd *pip)
 {
 	char	*cmd;
-    char    *false_cmd;
+    // char    *false_cmd;
     char    *new_str;
 
     new_str = check_quote(str[0]);
@@ -47,12 +47,13 @@ static int	execute_child(char **environ, char **str, t_cmd *pip)
 	cmd = cmd_build(str[0], environ);
 	if (cmd == NULL)
     {
-        false_cmd = ft_calloc(1, 1);
-        if (!false_cmd)
-            return (anihilation(str), free_all(pip), 1);
-        if (write(STDOUT_FILENO, false_cmd, 1) == -1)
-            return (free (false_cmd), anihilation(str), free_all(pip), 1);
-		return (free(false_cmd), 1); // anihilation(str), free(false_cmd)
+        // false_cmd = ft_calloc(1, 1);
+        // if (!false_cmd)
+        //     return (anihilation(str), free_all(pip), 1);
+        // if (write(STDOUT_FILENO, false_cmd, 1) == -1)
+        //     return (free (false_cmd), 1);
+		
+		return (1); // anihilation(str), free(false_cmd)
     }
     annihilation(list, free, DEBUG);
 	execve(cmd, str, environ);
