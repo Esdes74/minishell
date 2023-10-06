@@ -57,4 +57,6 @@ static void    error_bis(t_error err, char *cmd)
         ft_printf_fd(ERR, "Error : Problem with ft_strdup function\n");
     else if (err == WRITE)
         ft_printf_fd(ERR, "Error : Problem with write function\n");
+    else if (err == SYNTAX)
+        ft_printf_fd(ERR, "Error : Syntax error near unexpected token %s\n", cmd);
 }

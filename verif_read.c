@@ -12,6 +12,8 @@
 
 #include "minishell.h"
 
+static int check_arg(t_list *spt);
+
 char *verif_read(char *b, char *rd_line, t_cmd *pip)
 {
     int     flag;
@@ -37,6 +39,8 @@ char *verif_read(char *b, char *rd_line, t_cmd *pip)
         buff = ft_strjoin(buf, rd_line);
         free(buf);
     }
+    if (check_arg(spt) == 1)
+        return(free(b), annihilation(spt, free, DEBUG), buff);
     if (check_variables(spt, pip) == 1)
         return (NULL);
     flag = execution_center(spt, pip);
@@ -48,4 +52,18 @@ char *verif_read(char *b, char *rd_line, t_cmd *pip)
         return (free(b), annihilation(spt, free, DEBUG), exitt(pip), NULL);
     annihilation(spt, free, DEBUG);
     return (buff);
+}
+
+static int check_arg(t_list *spt)
+{
+    t_cell *tmp;
+
+    tmp = spt->head;
+    while (tmp != NULL)
+    {
+        if (tmp->next != NULL && ((char *)tmp->data_cell->data)[0] ==  '|' && ((char *)tmp->next->data_cell->data)[0] == '|')
+            return (error(SYNTAX, "'|'"), 1);
+        tmp = tmp->next;
+    }
+    return (0);
 }
