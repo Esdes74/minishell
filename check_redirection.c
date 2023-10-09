@@ -140,18 +140,27 @@ char    **check_redirection(char **arg, t_cmd *struc)
         if (arg[i][0] == '<')
         {
             if (arg[i][1] == '\0' || (arg[i][1] == '<' && arg[i][2] == '\0'))
+            {
+                free(arg[i]);
                 i++;
+            }
+            free(arg[i]);
         }
         else if (arg[i][0] == '>')
         {
             if (arg[i][1] == '\0' || (arg[i][1] == '>' && arg[i][2] == '\0'))
+            {
+                free(arg[i]);
                 i++;
+            }
+            free(arg[i]);
         }
         else
             tmp[j++] = arg[i];
         i++;
     }
-    anihilation(arg);
+    // anihilation(arg);
+    free(arg);
     arg = tmp;
     arg[j] = NULL;
     return (arg);

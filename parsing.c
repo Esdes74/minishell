@@ -47,15 +47,20 @@ void    parsing(const char *rd_line, int *flag, t_list *ret)
     tmp_flag = 0;
     while (rd_line[i]) // Compte le nombre d'aguments qu'il y a (le | sont contés comme des arguments a part entière)
     {
-        // if (rd_line[i] == '|')
-        //     compt--;
-        while(rd_line[i++] == '|' && (*flag == 0 || *flag == 3))
-            compt++;
+        while(rd_line[i] == '|' && (*flag == 0 || *flag == 3))
+        {
+            if (i > 0 && rd_line[i - 1] != ' ')
+                compt++;
+            *flag = 0;
+            i++;
+        }
         if(rd_line[i] == '\0')
         {
             *flag = 3;
             break;
         }
+        if (i > 0 && rd_line[i] != ' ' && rd_line[i - 1] == '|' && (*flag == 0 || *flag == 3))
+            compt++;
         if (rd_line[i] == '\n' && *flag == 0)
             break;
         if (rd_line[i] != ' ' && *flag == 3)
@@ -93,16 +98,8 @@ void    parsing(const char *rd_line, int *flag, t_list *ret)
         }
         else if (rd_line[i] == '\n' && (*flag == 1 || *flag == 2))
             new_flag = 1;
-        else if (i > 0 && rd_line[i] == ' ' && rd_line[i - 1] != '|' && *flag == 0 && tmp_flag == 1)
-        {
+        else if (i > 0 && rd_line[i] == ' ' && *flag == 0 && tmp_flag == 1)
             compt++;
-            tmp_flag = 0;
-
-        }
-        // if (i > 0 && rd_line[i] == '|' && rd_line[i - 1] != ' ' && *flag == 0) // attention changement ! i > 0
-        //     compt++;
-        // if (rd_line[i] == '|' && rd_line[i + 1] != ' ' && *flag == 0)
-        //     compt++;
         if (rd_line[i] == ' ' && *flag == 0)
             *flag = 3;
         i++;
@@ -110,7 +107,6 @@ void    parsing(const char *rd_line, int *flag, t_list *ret)
     // Créer le tableau de chaine de caractères et le tableau permettant de compter le nombre de caractères dans chaque arguments
     if (*flag == 3)
             compt--;
-    printf ("%d compt de première boucle\n", compt);
     spt = (char **) malloc(sizeof(char *) * (compt + 1));
     if (spt == NULL)
         return (error(MALLOC, NULL), annihilation(ret, free, DEBUG));
@@ -126,6 +122,21 @@ void    parsing(const char *rd_line, int *flag, t_list *ret)
     int turbo_flag = 0;
     while (rd_line[i]) // compte le nombre de caractère par arguments
     {
+        while (rd_line[i] == '|' && (*flag == 0 || *flag == 3))
+        {
+            if (i > 0 && rd_line[i - 1] != ' ')
+                compt++;
+            *flag = 0;
+            tab[compt] += 1;
+            i++;
+        }
+        if (rd_line[i] == '\0')
+        {
+            *flag = 3;
+            break;
+        }
+        if (i > 0 && rd_line[i] != ' ' && rd_line[i - 1] == '|' && (*flag == 0 || *flag == 3))
+            compt++;
         if (rd_line[i] == '\n' && (*flag == 0 || *flag == 3) && turbo_flag == 0)
         {
             *flag = 5;
@@ -174,23 +185,17 @@ void    parsing(const char *rd_line, int *flag, t_list *ret)
             compt++;
             *flag = 3;
         }
-        if (i > 0 && rd_line[i] == '|' && rd_line[i - 1] != ' ' && rd_line[i - 1] != '|' && *flag == 0) // i > 0
-            compt++;
         if (*flag != 3)
             tab[compt] += 1;
-        if (rd_line[i] == '|' && rd_line[i + 1] != ' ' && *flag == 0)
-            compt++;
         i++;
     }
     i = 0;
     if (*flag == 3)
         compt--;
-    printf ("%d compt de deuxième boucle\n", compt);
     if (*flag != 0 && *flag == save_flag) // permet de compter le \n si jamais on doit en rajouter un a la fin de la chaine pasque l'argument n'est pas finis
         tab[compt] += 1;
     while (i <= compt) // créer les chaines de caractères
     {
-        printf("tab[%d] = %d\n", i, tab[i]);
         spt[i] = (char *) malloc(sizeof(char) * (tab[i] + 1));
         if (spt[i] == NULL)
         {
@@ -210,7 +215,7 @@ void    parsing(const char *rd_line, int *flag, t_list *ret)
     {
         if (i > 0 && rd_line[i] == '|' && rd_line[i - 1] != ' ')
             spt[compt++][j] = '\0';
-        while(rd_line[i] == '|')
+        while(rd_line[i] == '|' && (*flag == 0 || *flag == 3))
         {
             spt[compt][0] = '|';
             spt[compt][1] = '\0';
@@ -220,7 +225,6 @@ void    parsing(const char *rd_line, int *flag, t_list *ret)
         }
         if (rd_line[i] == '\n' && (*flag == 0 || *flag == 3))
         {
-            // ft_printf_fd(2, "compt = %d\nj = %d\n", compt, j);
             tmp_flag = -1;
             *flag = 5;
             spt[compt][j] = '\n';
@@ -280,34 +284,8 @@ void    parsing(const char *rd_line, int *flag, t_list *ret)
             j = 0;
             compt++;
         }
-        // else if (i > 0 && rd_line[i] == '|' && rd_line[i - 1] == '|')
-        // {
-        //     spt[compt][j] = '|';
-        //     spt[compt][j + 1] = '\0';
-        //     j = 0;
-        //     compt++;
-        // }
-        // else if (i > 0 && rd_line[i] == '|' && *flag == 0 && rd_line[i - 1] != '|' && rd_line[i + 1] != '|'\    && (rd_line[i - 1] != ' ' || \     (rd_line[i - 1] != ' ' && rd_line[i + 1] != ' '))) // i > 0
-        // {
-        //     spt[compt][j] = '\0';
-        //     j = 0;
-        //     compt++;
-        //     spt[compt][j] = '|';
-        //     j++;
-        // }
-        // else if (i > 0 && rd_line[i] == '|' && *flag == 0 && rd_line[i - 1] == ' ') // i > 0
-        // {
-        //     spt[compt][j] = '|';
-        //     j++;
-        // }
         else if (rd_line[i] == '\n' && (*flag == 1 || *flag == 2))
             new_flag = 1;
-        // if (rd_line[i] == '|' && *flag == 0 && rd_line[i + 1] != ' ')
-        // {
-        //     spt[compt][j] = '\0';
-        //     j = 0;
-        //     compt++;
-        // }
         if (rd_line[i] == ' ' && *flag == 0)
             *flag = 3;
         if ((*flag != 3 && rd_line[i] != '|') || (*flag != 0 && rd_line[i] == '|') || *flag == 5)
@@ -317,15 +295,6 @@ void    parsing(const char *rd_line, int *flag, t_list *ret)
         }
         i++;
     }
-    printf ("%d compt de troisème boucle\n", compt);
-    i = 0;
-    while (spt[i])
-    {
-        printf("%c c'est la valeur de spt[%d]\n", spt[i][0], i);
-        i++;
-    }
-    printf("%s c'est la valeur de spt[%d]\n", spt[i], i);
-
 
 
 
@@ -348,13 +317,4 @@ void    parsing(const char *rd_line, int *flag, t_list *ret)
         free(spt[compt]);
     free(spt[i]);
     free(spt);
-    // if (compt == 0 && j == 0)
-    //     anihilation(spt);
-    // else if (j == 0)
-    // {
-    //     free(spt[compt]);
-    //     free(spt);
-    // }
-    // else
-    //     free(spt);
 }

@@ -40,14 +40,14 @@ char *verif_read(char *b, char *rd_line, t_cmd *pip)
         free(buf);
     }
     if (check_arg(spt) == 1)
-        return(free(b), annihilation(spt, free, DEBUG), buff);
+        return(annihilation(spt, free, DEBUG), buff);
     if (check_variables(spt, pip) == 1)
         return (NULL);
     flag = execution_center(spt, pip);
     if (flag == 1)
         return (free(b), NULL);
     else if (flag == -1)
-        return (NULL);
+        return (free(buff), NULL);
     else if (flag == -2)
         return (free(b), annihilation(spt, free, DEBUG), exitt(pip), NULL);
     annihilation(spt, free, DEBUG);
