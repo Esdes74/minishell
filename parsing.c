@@ -62,7 +62,10 @@ void    parsing(const char *rd_line, int *flag, t_list *ret)
         if (i > 0 && rd_line[i] != ' ' && rd_line[i - 1] == '|' && (*flag == 0 || *flag == 3))
             compt++;
         if (rd_line[i] == '\n' && *flag == 0)
+        {
+            compt++;
             break;
+        }
         if ((rd_line[i] != ' ' && *flag == 3) || (i > 0 && rd_line[i] == ' ' && rd_line[i - 1] == '|'))
             *flag = 0;
         if (tmp_flag == 0 && rd_line[i] != ' ')

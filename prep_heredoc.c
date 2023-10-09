@@ -239,9 +239,11 @@ static int  handle_hist(int compt, t_list *spt, t_cmd *pip)
             buff = rd_line;
         }
         pip->hd_history[i] = ft_strdup(buff);
+        free(buff);
         if (pip->hd_history[i] == NULL)
             return (anihilation(pip->hd_history), error(STRDUP, "0"), -1);
         i++;
     }
+    free(rdline);
     return (i - test_buff);
 }

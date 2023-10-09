@@ -95,5 +95,6 @@ int historic_fct(char *bufff, char *test, t_cmd *pip) // gérer les espace dans 
         if (strncmp(test, bufff, ft_strlen(test) + 1) != 0 || flag == 1)
             add_history(tmp);
     }
+    free(tmp);
     return (0);
 }
