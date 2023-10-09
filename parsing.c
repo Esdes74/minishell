@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eslambert <eslamber@student.42.fr>         +#+  +:+       +#+        */
+/*   By: dbaule <dbaule@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/20 15:16:22 by eslamber          #+#    #+#             */
-/*   Updated: 2023/07/21 09:54:05 by eslamber         ###   ########.fr       */
+/*   Updated: 2023/10/09 11:54:39 by dbaule           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ void    parsing(const char *rd_line, int *flag, t_list *ret)
             compt++;
         if (rd_line[i] == '\n' && *flag == 0)
             break;
-        if (rd_line[i] != ' ' && *flag == 3)
+        if ((rd_line[i] != ' ' && *flag == 3) || (i > 0 && rd_line[i] == ' ' && rd_line[i - 1] == '|'))
             *flag = 0;
         if (tmp_flag == 0 && rd_line[i] != ' ')
             tmp_flag = 1;
