@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   verif_read.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eslamber <eslamber@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dbaule <dbaule@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 11:08:50 by eslamber          #+#    #+#             */
-/*   Updated: 2023/08/29 11:08:54 by eslamber         ###   ########.fr       */
+/*   Updated: 2023/10/09 11:48:07 by dbaule           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ char *verif_read(char *b, char *rd_line, t_cmd *pip)
         free(buf);
     }
     if (check_arg(spt) == 1)
-        return(free(b), annihilation(spt, free, DEBUG), buff);
+        return(annihilation(spt, free, DEBUG), buff);
     if (check_variables(spt, pip) == 1)
         return (NULL);
     flag = execution_center(spt, pip);
