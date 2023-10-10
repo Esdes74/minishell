@@ -60,10 +60,7 @@ void    echo(char **arg, int option)
                     ft_printf("%c", arg[i][j]);
                 }
                 else if ((arg[i][j] == '"' || arg[i][j] == '\'') && flag == 0)
-                {
                     flag = 1;
-                    ft_printf(" ");
-                }
                 j++;
             }
         }
@@ -86,7 +83,7 @@ void    echo(char **arg, int option)
             }
             else if ((arg[i][0] == '"' || arg[i][0] == '\'') && flag == 1)
                 flag = 0;
-            if (flag == 0)
+            if (arg[i + 1] && flag == 0)
                 ft_printf(" ");
         }
         i++;
