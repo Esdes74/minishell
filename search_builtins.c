@@ -16,6 +16,7 @@ static void determine_echo_or_cd(char **str, int *option);
 
 int search_parent_builtins(t_cmd *pip, t_list *spt)
 {
+    int     ret;
     t_cell *tmp;
     char    *str;
     char    *buf;
@@ -42,7 +43,11 @@ int search_parent_builtins(t_cmd *pip, t_list *spt)
         while (tmp != NULL)
         {
             buf = ft_strdup(((char *)(tmp->data_cell->data)));
-            export(pip, buf);
+            ret = export(pip, buf);
+            if (ret == 1)
+                return (free(buf), -1);
+            else if (ret == 2)
+                return (-1);
             tmp = tmp->next;
         }
         return (1);
@@ -54,7 +59,8 @@ int search_parent_builtins(t_cmd *pip, t_list *spt)
         while (tmp != NULL)
         {
             buf = ft_strdup(((char *)(tmp->data_cell->data)));
-            unset(pip, buf);
+            if (unset(pip, buf) == 1)
+                return (free(buf), -1);
             free(buf);
             tmp = tmp->next;
         }

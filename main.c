@@ -39,7 +39,7 @@ int	main(int argc, char **argv, char **env)
 		return (error(MALLOC, NULL), 1);
 	init_list(list);
 	if (add_list(getpid(), list) == 1)
-		return (error(ADD_LIST, NULL), 1);
+		return (free_all(&pip), 1);
 	signals();
 	using_history();
 	rl_bind_key('\t', rl_complete);

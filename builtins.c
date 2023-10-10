@@ -18,7 +18,7 @@ char    *pwd(void)
 
     cmd = getcwd(NULL, 0);
     if (cmd == NULL)
-        return (exit(EXIT_FAILURE), cmd);
+        return (NULL);
     ft_printf("%s\n", cmd);
     return (cmd);
 }

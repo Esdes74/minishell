@@ -44,12 +44,13 @@ int export(t_cmd *pip, char *name_value)
     i = 0;
     pip->status = 1;
     if (name_value[i] == '=') // ca doit faire une erreur
-        return (1);
+        return (ft_printf_fd(2, "Error : '%s' not a valid identifier\n"), 1);
     while (name_value[i] && name_value[i] != '=')
         i++;
     if (name_value[i] == '\0') // a utiliser pour export sans rien
     {
-        add_exp_env(pip, name_value);
+        if (add_exp_env(pip, name_value) == 1)
+            return (1);
         free(name_value);
         pip->builtin = TRUE;
         pip->status = 0;
@@ -57,9 +58,7 @@ int export(t_cmd *pip, char *name_value)
     }
     var_name = malloc(sizeof(char) * (i + 1));
     if (!var_name)
-    {
-        return (1);
-    }
+        return (error(MALLOC, "0"), 1);
     z = i;
     i = 0;
     while (i < z)
@@ -83,7 +82,7 @@ int export(t_cmd *pip, char *name_value)
     {
         new_env = malloc(sizeof(char *) * (i + 2));
         if (!new_env)
-            return (free_all(pip), 1);
+            return (error(MALLOC, "0"), free(var_name), 1);
         i = 0;
         while (pip->env[i])
         {
@@ -94,7 +93,6 @@ int export(t_cmd *pip, char *name_value)
         new_env[i + 1] = NULL;
         free(pip->env);
         pip->env = new_env;
-        // exp_env(pip, NULL); il faudra mettre le add!
     }
     i = 0;
     while (pip->exp_env[i]) // cherche dans exp_env pour remplacer
@@ -103,15 +101,20 @@ int export(t_cmd *pip, char *name_value)
         (ft_strlen(var_name))) == 0)
         {            
             buff = ft_strdup(name_value);
+            if (!buff)
+                return (free(var_name), 2);
             free(pip->exp_env[i]);
             pip->exp_env[i] = ft_strjoin("declare -x ", buff);
+            if (!pip->exp_env[i])
+                return (free(buff), free(var_name), 2);
             free(buff);
             break;
         }
         i++;
     }
     if (pip->exp_env[i] == NULL) // Ajoute dans exp_env si rien trouvé
-        add_exp_env(pip, name_value);
+        if (add_exp_env(pip, name_value) == 1)
+            return (free(var_name), 2);
     pip->builtin = TRUE;
     pip->status = 0;
     free(var_name);
@@ -141,8 +144,10 @@ int unset(t_cmd *pip, char *name_value)
         return (0);
     }
     else
-        unset_env(pip, name_value, i);
-    unset_exp_env(pip, name_value, i);
+        if (unset_env(pip, name_value, i) == 1)
+            return (1);
+    if (unset_exp_env(pip, name_value, i) == 1)
+        return (1);
     return (0);
 }
 
@@ -186,7 +191,7 @@ static int  unset_exp_env(t_cmd *pip, char *name_value, int len)
     while (pip->exp_env[j])
     {
         if (strncmp(pip->exp_env[j] + 11, name_value, \
-        (ft_strlen(name_value))) == 0)
+            (ft_strlen(name_value))) == 0)
             free(pip->exp_env[j++]);
         else
             new_env[i++] = pip->exp_env[j++];
