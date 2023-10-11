@@ -47,7 +47,7 @@ int search_parent_builtins(t_cmd *pip, t_list *spt)
             if (ret == 1)
                 return (free(buf), pip->status = 1, 1); 
             else if (ret == 2)
-                return (free(buf), -1);
+                return (free(buf), 1); //pip->status = 2,
             tmp = tmp->next;
         }
         return (-1);
@@ -64,7 +64,7 @@ int search_parent_builtins(t_cmd *pip, t_list *spt)
             free(buf);
             tmp = tmp->next;
         }
-        return (-1);
+        return (1);
     }
     return (-2);
 }

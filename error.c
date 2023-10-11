@@ -44,7 +44,7 @@ static void    error_bis(t_error err, char *cmd)
     if (err == EXEC)
         ft_printf_fd(ERR, "Error : Problem with the execve function\n");
     else if (err == TOO_MANY_ARG)
-        ft_printf_fd(ERR, "%s: too many arguments\n", cmd);
+        ft_printf_fd(ERR, "Error : %s: too many arguments\n", cmd);
     else if (err == CLOSE)
         ft_printf_fd(ERR, "Error : Problem with clausing function\n");
     else if (err == TOKEN)
@@ -59,4 +59,6 @@ static void    error_bis(t_error err, char *cmd)
         ft_printf_fd(ERR, "Error : Problem with write function\n");
     else if (err == SYNTAX)
         ft_printf_fd(ERR, "Error : Syntax error near unexpected token %s\n", cmd);
+    else if (err == NUM_ARG)
+        ft_printf_fd(ERR, "Error : numeric argument required\n");
 }

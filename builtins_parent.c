@@ -22,7 +22,7 @@ unsigned char    intermediate_exit(t_cmd *pip, t_list *tmp)
     int     i;
 
     if (tmp->len > 2)
-        return(error(TOO_MANY_ARG, "exit"), 1);
+        return(error(TOO_MANY_ARG, "exit"), exitt(pip, 1));
     if (tmp->len == 1)
         return (exitt(pip, 0));
     else if (tmp->len == 2)
@@ -36,7 +36,7 @@ unsigned char    intermediate_exit(t_cmd *pip, t_list *tmp)
         {
             if (!ft_isdigit(new_tmp[i]))
                 if (i > 0 || (i == 0 && new_tmp[i] != '-' && new_tmp[i] != '+'))
-                    return (exitt(pip, 0));
+                    return (error(NUM_ARG, "0"), exitt(pip, 2));
             i++;
         }
         ret_value = ft_atoi(new_tmp);
@@ -46,13 +46,16 @@ unsigned char    intermediate_exit(t_cmd *pip, t_list *tmp)
 
 unsigned char    exitt(t_cmd *pip, unsigned char ret_value)
 {
-    free_all(pip);
-    silent_quit();
+    // ft_printf_fd(1, "exit\n");
+    // free_all(pip);
+    pip->status = (int)ret_value;
+    // silent_quit();
     return(ret_value);
 }
 
 void    cd(char *path, t_cmd *pip, t_list *spt)
 {
+    ft_printf_fd(2, "path = %s\n", path);
     if (spt->len <= 2 && path != NULL && chdir(path) != 0)
     {
         pip->status = 1;
@@ -79,12 +82,14 @@ int export(t_cmd *pip, char *name_value)
 
     i = 0;
     pip->status = 1;
+    if (!ft_isalpha(name_value[0]))
+        return (ft_printf_fd(2, "Error : not a valid identifier\n"), 2);
     if (name_value[i] == '=') // ca doit faire une erreur
-        return (ft_printf_fd(2, "not a valid identifier\n"), 2);
+        return (ft_printf_fd(2, "Error : not a valid identifier\n"), 2);
     while (name_value[i] && name_value[i] != '=')
     {
         if (name_value[i] == '-' || name_value[i] == '+')
-            return(ft_printf_fd(2, " not a valid identifier\n"), 2);
+            return(ft_printf_fd(2, "Error : not a valid identifier\n"), 2);
         i++;
     }
     if (name_value[i] == '\0') // a utiliser pour export sans rien

@@ -50,6 +50,7 @@ typedef enum    e_error{
     STRDUP,
     WRITE,
     SYNTAX,
+    NUM_ARG,
 }   t_error;
 
 typedef struct  t_cmd
