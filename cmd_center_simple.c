@@ -55,6 +55,7 @@ static int	execute_child(char **environ, char **str, t_cmd *pip)
 		
 		return (1); // anihilation(str), free(false_cmd)
     }
+	ft_printf_fd(2, "string = %s\n", str);
     annihilation(list, free, DEBUG);
 	execve(cmd, str, environ);
 	error(EXEC, "0");

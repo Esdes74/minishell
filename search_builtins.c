@@ -79,7 +79,7 @@ int search_builtins(char **spt, t_cmd *pip)
     if (ft_strlen(spt[0]) == 3 && ft_strncmp(spt[0], "pwd", 3) == 0)
         return (free(pwd()), 1);
     else if (ft_strlen(spt[0]) == 4 && ft_strncmp(spt[0], "exit", 4) == 0)
-        return (exitt(pip, NULL), 1);
+        return (exitt(pip, NULL, FALSE), 1);
     else if (ft_strlen(spt[0]) == 3 && ft_strncmp(spt[0], "env", 3) == 0)
         return (env(pip->env), 1);
     else if ((ft_strlen(spt[0]) == 4 && ft_strncmp(spt[0], "echo", 4) == 0) \

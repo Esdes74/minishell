@@ -49,7 +49,7 @@ char *verif_read(char *b, char *rd_line, t_cmd *pip)
     else if (flag == -1)
         return (free(buff), NULL);
     else if (flag == -2)
-        return (free(b), annihilation(spt, free, DEBUG), exitt(pip, spt), NULL);
+        return (free(b), annihilation(spt, free, DEBUG), exitt(pip, spt, TRUE), NULL);
     annihilation(spt, free, DEBUG);
     return (buff);
 }

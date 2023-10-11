@@ -15,13 +15,13 @@
 static int  unset_env(t_cmd *pip, char *name_value, int len);
 static int  unset_exp_env(t_cmd *pip, char *name_value, int len);
 
-int    exitt(t_cmd *pip, t_list *tmp)
+int    exitt(t_cmd *pip, t_list *tmp, t_bool ret_value)
 {
     if (tmp->len > 1)
         return(error(TOO_MANY_ARG, "exit"), 1);
     free_all(pip);
     silent_quit();
-    return(0);
+    return((int) ret_value);
 }
 
 void    cd(char *path, t_cmd *pip, t_list *spt)
