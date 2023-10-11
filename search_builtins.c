@@ -25,14 +25,14 @@ int search_parent_builtins(t_cmd *pip, t_list *spt)
     tmp = spt->head;
     str = ((char *)(tmp->data_cell->data));
     if (ft_strlen(str) == 4 && ft_strncmp(str, "exit", 4) == 0)
-        return (-1);
+            return (-1);
     else if (ft_strlen(str) == 2 && ft_strncmp(str, "cd", 2) == 0)
     {
         pip->parent_builtin = TRUE;
         if (tmp->next == NULL)
             return (1);
         tmp = tmp->next;
-        return (cd(((char *)(tmp->data_cell->data)), pip), 1);
+        return (cd(((char *)(tmp->data_cell->data)), pip, spt), 1);
     }
     else if (ft_strlen(str) == 6 && ft_strncmp(str, "export", 6) == 0)
     {
@@ -45,9 +45,9 @@ int search_parent_builtins(t_cmd *pip, t_list *spt)
             buf = ft_strdup(((char *)(tmp->data_cell->data)));
             ret = export(pip, buf);
             if (ret == 1)
-                return (free(buf), -1);
+                return (free(buf), -1); 
             else if (ret == 2)
-                return (-1);
+                return (free(buf), 1);
             tmp = tmp->next;
         }
         return (1);
@@ -79,7 +79,7 @@ int search_builtins(char **spt, t_cmd *pip)
     if (ft_strlen(spt[0]) == 3 && ft_strncmp(spt[0], "pwd", 3) == 0)
         return (free(pwd()), 1);
     else if (ft_strlen(spt[0]) == 4 && ft_strncmp(spt[0], "exit", 4) == 0)
-        return (exitt(pip), 1);
+        return (exitt(pip, NULL), 1);
     else if (ft_strlen(spt[0]) == 3 && ft_strncmp(spt[0], "env", 3) == 0)
         return (env(pip->env), 1);
     else if ((ft_strlen(spt[0]) == 4 && ft_strncmp(spt[0], "echo", 4) == 0) \
@@ -89,7 +89,7 @@ int search_builtins(char **spt, t_cmd *pip)
         if (option == 0 || option == 1)
             return (echo(spt, option), 1);
         else if (option == 2)
-            return (cd(spt[1], pip), 1);
+            return (cd(spt[1], pip, NULL), -1);
     }
     else if ((ft_strlen(spt[0]) == 6 && ft_strncmp(spt[0], "export", 6) == 0) && spt[1] == NULL)
         return (print_export(pip->exp_env), 1);

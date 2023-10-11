@@ -96,11 +96,11 @@ char    *pwd(void);
 
 void    env(char **envir);
 
-void    exitt(t_cmd *pip);
+int    exitt(t_cmd *pip, t_list *tmp);
 
 void    echo(char **arg, int option);
 
-void    cd(char *path, t_cmd *pip);
+void    cd(char *path, t_cmd *pip, t_list *spt);
 
 int     export(t_cmd *pip, char *name_value);
 

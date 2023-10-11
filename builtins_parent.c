@@ -15,21 +15,30 @@
 static int  unset_env(t_cmd *pip, char *name_value, int len);
 static int  unset_exp_env(t_cmd *pip, char *name_value, int len);
 
-void    exitt(t_cmd *pip)
+int    exitt(t_cmd *pip, t_list *tmp)
 {
+    if (tmp->len > 1)
+        return(error(TOO_MANY_ARG, "exit"), 1);
     free_all(pip);
     silent_quit();
+    return(0);
 }
 
-void    cd(char *path, t_cmd *pip)
+void    cd(char *path, t_cmd *pip, t_list *spt)
 {
-    if (path != NULL && chdir(path) != 0)
+    if (spt->len <= 2 && path != NULL && chdir(path) != 0)
     {
         pip->status = 1;
-        ft_printf("-bash: cd: %s: No such file or directory\n");
+        ft_printf_fd(2, "-bash: cd: %s: No such file or directory\n");
+        return ;
     }
-    else
-        pip->status = 0;
+    else if (spt->len > 2)
+    {
+        error(TOO_MANY_ARG, "cd");
+        pip->status = 1;
+        return ;
+    }
+    pip->status = 0;
     pip->builtin = TRUE;
 }
 
@@ -44,9 +53,13 @@ int export(t_cmd *pip, char *name_value)
     i = 0;
     pip->status = 1;
     if (name_value[i] == '=') // ca doit faire une erreur
-        return (ft_printf_fd(2, "Error : '%s' not a valid identifier\n"), 1);
+        return (ft_printf_fd(2, "not a valid identifier\n"), 2);
     while (name_value[i] && name_value[i] != '=')
+    {
+        if (name_value[i] == '-' || name_value[i] == '+')
+            return(ft_printf_fd(2, " not a valid identifier\n"), 2);
         i++;
+    }
     if (name_value[i] == '\0') // a utiliser pour export sans rien
     {
         if (add_exp_env(pip, name_value) == 1)
