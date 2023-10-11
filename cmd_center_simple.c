@@ -25,7 +25,7 @@ static int	execute_child(char **environ, char **str, t_cmd *pip);
 
 int cmd_center_simple(char **str, t_cmd *pip) //j'ai enlever la condtion si env != NULL 
 {
-    if (search_builtins(str, pip) == -1)
+    if (search_builtins(str, pip) == 1)
         return (1);
     if (execute_child(pip->env, str, pip) == 1)
         return (1); // changement de 1 à -1
