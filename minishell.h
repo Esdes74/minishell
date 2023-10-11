@@ -96,7 +96,7 @@ char    *pwd(void);
 
 void    env(char **envir);
 
-void    exitt(t_cmd *pip);
+int    exitt(t_cmd *pip, t_list *tmp);
 
 void    echo(char **arg, int option);
 

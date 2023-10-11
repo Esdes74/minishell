@@ -15,8 +15,10 @@
 static int  unset_env(t_cmd *pip, char *name_value, int len);
 static int  unset_exp_env(t_cmd *pip, char *name_value, int len);
 
-void    exitt(t_cmd *pip)
+int    exitt(t_cmd *pip, t_list *tmp)
 {
+    if (tmp->len > 1)
+        return(error(TOO_MANY_ARG, "exit"), 1);
     free_all(pip);
     silent_quit();
 }
@@ -50,9 +52,13 @@ int export(t_cmd *pip, char *name_value)
     i = 0;
     pip->status = 1;
     if (name_value[i] == '=') // ca doit faire une erreur
-        return (ft_printf_fd(2, "Error : '%s' not a valid identifier\n"), 1);
+        return (ft_printf_fd(2, "not a valid identifier\n"), 2);
     while (name_value[i] && name_value[i] != '=')
+    {
+        if (name_value[i] == '-' || name_value[i] == '+')
+            return(ft_printf_fd(2, " not a valid identifier\n"), 2);
         i++;
+    }
     if (name_value[i] == '\0') // a utiliser pour export sans rien
     {
         if (add_exp_env(pip, name_value) == 1)

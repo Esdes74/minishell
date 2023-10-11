@@ -25,7 +25,7 @@ int search_parent_builtins(t_cmd *pip, t_list *spt)
     tmp = spt->head;
     str = ((char *)(tmp->data_cell->data));
     if (ft_strlen(str) == 4 && ft_strncmp(str, "exit", 4) == 0)
-        return (-1);
+            return (-1);
     else if (ft_strlen(str) == 2 && ft_strncmp(str, "cd", 2) == 0)
     {
         pip->parent_builtin = TRUE;
@@ -45,9 +45,9 @@ int search_parent_builtins(t_cmd *pip, t_list *spt)
             buf = ft_strdup(((char *)(tmp->data_cell->data)));
             ret = export(pip, buf);
             if (ret == 1)
-                return (free(buf), -1);
+                return (free(buf), -1); 
             else if (ret == 2)
-                return (-1);
+                return (free(buf), 1);
             tmp = tmp->next;
         }
         return (1);
