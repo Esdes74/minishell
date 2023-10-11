@@ -21,6 +21,7 @@ int    exitt(t_cmd *pip, t_list *tmp)
         return(error(TOO_MANY_ARG, "exit"), 1);
     free_all(pip);
     silent_quit();
+    return(0);
 }
 
 void    cd(char *path, t_cmd *pip, t_list *spt)
