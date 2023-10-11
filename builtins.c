@@ -37,10 +37,11 @@ void    echo(char **arg, int option)
     int i;
     int j;
     int flag;
+    int type_flag;
 
     flag = 0;
+    type_flag = 0;
     i = 1 + option;
-    flag = 0;
     while (arg[i])
     {
         j = 1;
@@ -48,21 +49,54 @@ void    echo(char **arg, int option)
             j++;
         if ((arg[i][j] == '"' || arg[i][j] == '\'') && arg[i][j + 1] != '\0')
         {
-            if (arg[i][0] == '"' || arg[i][0] == '\'')
+            if (arg[i][0] == '"')
+            {
+                type_flag = 1;
                 j = 1;
+            }
+            else if (arg[i][0] == '\'')
+            {
+                type_flag = 2;
+                j = 1;
+            }
             else
                 j = 0;
-            while (arg[i][j])
-            {
-                if (arg[i][j] != '"' && arg[i][j] != '\'')
+            if (type_flag == 1)
+                while (arg[i][j])
                 {
-                    flag = 0;
-                    ft_printf("%c", arg[i][j]);
+                    if (arg[i][j] != '"')
+                    {
+                        flag = 0;
+                        ft_printf("%c", arg[i][j]);
+                    }
+                    else if (arg[i][j] == '"' && flag == 0)
+                        flag = 1;
+                    j++;
                 }
-                else if ((arg[i][j] == '"' || arg[i][j] == '\'') && flag == 0)
-                    flag = 1;
-                j++;
-            }
+            else if (type_flag == 2)
+                while (arg[i][j])
+                {
+                    if (arg[i][j] != '\'')
+                    {
+                        flag = 0;
+                        ft_printf("%c", arg[i][j]);
+                    }
+                    else if (arg[i][j] == '\'' && flag == 0)
+                        flag = 1;
+                    j++;
+                }
+            else
+                while (arg[i][j])
+                {
+                    if (arg[i][j] != '"' && arg[i][j] != '\'')
+                    {
+                        flag = 0;
+                        ft_printf("%c", arg[i][j]);
+                    }
+                    else if (arg[i][j] == '\'' && flag == 0)
+                        flag = 1;
+                    j++;
+                }
         }
         else
         {

@@ -75,28 +75,28 @@ int search_builtins(char **spt, t_cmd *pip)
 
     option = 0;
     if (spt == NULL || !spt[0])
-        return (-1);
+        return (1);
     if (ft_strlen(spt[0]) == 3 && ft_strncmp(spt[0], "pwd", 3) == 0)
-        return (free(pwd()), -1);
+        return (free(pwd()), 1);
     else if (ft_strlen(spt[0]) == 4 && ft_strncmp(spt[0], "exit", 4) == 0)
-        return (exitt(pip), -1);
+        return (exitt(pip), 1);
     else if (ft_strlen(spt[0]) == 3 && ft_strncmp(spt[0], "env", 3) == 0)
-        return (env(pip->env), -1);
+        return (env(pip->env), 1);
     else if ((ft_strlen(spt[0]) == 4 && ft_strncmp(spt[0], "echo", 4) == 0) \
     || (ft_strlen(spt[0]) == 2 && ft_strncmp(spt[0], "cd", 2) == 0))
     {
         determine_echo_or_cd(spt, &option);
         if (option == 0 || option == 1)
-            return (echo(spt, option), -1);
+            return (echo(spt, option), 1);
         else if (option == 2)
             return (cd(spt[1], pip, NULL), -1);
     }
     else if ((ft_strlen(spt[0]) == 6 && ft_strncmp(spt[0], "export", 6) == 0) && spt[1] == NULL)
-        return (print_export(pip->exp_env), -1);
+        return (print_export(pip->exp_env), 1);
     else if ((ft_strlen(spt[0]) == 6 && ft_strncmp(spt[0], "export", 6) == 0) \
     || (ft_strlen(spt[0]) == 5 && ft_strncmp(spt[0], "unset", 5) == 0))
-        return (-1);
-    return (1);
+        return (1);
+    return (0);
 }
 
 static void determine_echo_or_cd(char **str, int *option)

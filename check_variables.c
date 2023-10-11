@@ -78,7 +78,10 @@ static int  replace_variable(char *data, char *sent, t_cell *tmp, t_cmd *pip)
         new = (char *) malloc(sizeof(char) * (i + 1)); // Je fais un malloc afin de pouvoir le copier
         if (new == NULL)
             return (1);
-        ft_strlcpy(new, &data[1], i); // Je le copie
+        if (data[0] == '$')
+            ft_strlcpy(new, &data[1], i); // Je le copie
+        else if (data[0] == '"' && data[1] == '$')
+            ft_strlcpy(new, &data[2], i); // Je le copie
         new[i] = '\0';
 
 
@@ -87,10 +90,10 @@ static int  replace_variable(char *data, char *sent, t_cell *tmp, t_cmd *pip)
         while (pip->env[i])
         {
             j = 0;
-            while (pip->env[i][j] != '=' && pip->env[i][j] != '\0' && pip->env[i][j] == new[j] \
-            && new[j] != '\0')
+            while (pip->env[i][j] != '=' && pip->env[i][j] != '\0' && (new[j] != '"' || 
+            (pip->env[i][j] == new[j] && new[j] != '\0')))
                 j++;
-            if (pip->env[i][j] == '=' && new[j] == '\0') // Je l'ai retrouvé alors je break (a remplacer)
+            if (pip->env[i][j] == '=' && (new[j] == '\0' || new[j] == '"')) // Je l'ai retrouvé alors je break (a remplacer)
                 break ;
             i++;
         }
