@@ -318,6 +318,7 @@ void    parsing(const char *rd_line, int *flag, t_list *ret)
     }
     if (j == 0)
         free(spt[compt]);
-    free(spt[i]);
+    if (i != compt)
+        free(spt[i]);
     free(spt);
 }
