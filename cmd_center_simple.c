@@ -20,49 +20,46 @@
 
 #include "minishell.h"
 
-static char	*check_quote(char *str);
 static int	execute_child(char **environ, char **str, t_cmd *pip);
 
 int cmd_center_simple(char **str, t_cmd *pip) //j'ai enlever la condtion si env != NULL 
 {
-    if (search_builtins(str, pip) == 1)
-        return (1);
+	int	ret;
+
+	ret = search_builtins(str, pip);
+    if (ret != -1)
+        return (ret);
     if (execute_child(pip->env, str, pip) == 1)
         return (1); // changement de 1 à -1
-    return (0);
+    return (-1);
 }
 
 static int	execute_child(char **environ, char **str, t_cmd *pip)
 {
+	int		i;
 	char	*cmd;
-    // char    *false_cmd;
     char    *new_str;
 
-    new_str = check_quote(str[0]);
-	if (strncmp(new_str, str[0], ft_strlen(str[0])) != 0)
+
+	i = 0;
+	while (str[i])
 	{
-    	free(str[0]);
-    	str[0] = new_str;
+		new_str = check_quote(str[i]);
+		if (str[i] != new_str)
+			free(str[i]);
+		str[i] = new_str;
+		i++;
 	}
 	cmd = cmd_build(str[0], environ);
 	if (cmd == NULL)
-    {
-        // false_cmd = ft_calloc(1, 1);
-        // if (!false_cmd)
-        //     return (anihilation(str), free_all(pip), 1);
-        // if (write(STDOUT_FILENO, false_cmd, 1) == -1)
-        //     return (free (false_cmd), 1);
-		
 		return (1); // anihilation(str), free(false_cmd)
-    }
-	ft_printf_fd(2, "string = %s\n", str);
     annihilation(list, free, DEBUG);
 	execve(cmd, str, environ);
 	error(EXEC, "0");
 	return (free(cmd), anihilation(str), free_all(pip), 1);
 }
 
-static char	*check_quote(char *str)
+char	*check_quote(char *str)
 {
 	int	i;
 	int j;

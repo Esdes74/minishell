@@ -15,13 +15,40 @@
 static int  unset_env(t_cmd *pip, char *name_value, int len);
 static int  unset_exp_env(t_cmd *pip, char *name_value, int len);
 
-int    exitt(t_cmd *pip, t_list *tmp, t_bool ret_value)
+unsigned char    intermediate_exit(t_cmd *pip, t_list *tmp)
 {
-    if (tmp->len > 1)
+    char    *new_tmp;
+    int     ret_value;
+    int     i;
+
+    if (tmp->len > 2)
         return(error(TOO_MANY_ARG, "exit"), 1);
+    if (tmp->len == 1)
+        return (exitt(pip, 0));
+    else if (tmp->len == 2)
+    {
+        new_tmp = check_quote((char *) tmp->head->next->data_cell->data);
+        if (new_tmp != tmp->head->next->data_cell->data)
+            free(tmp->head->next->data_cell->data);
+        tmp->head->next->data_cell->data = new_tmp;
+        i = 0;
+        while (new_tmp[i])
+        {
+            if (!ft_isdigit(new_tmp[i]))
+                if (i > 0 || (i == 0 && new_tmp[i] != '-' && new_tmp[i] != '+'))
+                    return (exitt(pip, 0));
+            i++;
+        }
+        ret_value = ft_atoi(new_tmp);
+    }
+    return (exitt(pip, (unsigned char) ret_value));
+}
+
+unsigned char    exitt(t_cmd *pip, unsigned char ret_value)
+{
     free_all(pip);
     silent_quit();
-    return((int) ret_value);
+    return(ret_value);
 }
 
 void    cd(char *path, t_cmd *pip, t_list *spt)

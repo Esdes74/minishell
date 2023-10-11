@@ -44,12 +44,12 @@ char *verif_read(char *b, char *rd_line, t_cmd *pip)
     if (check_variables(spt, pip) == 1)
         return (NULL);
     flag = execution_center(spt, pip);
-    if (flag == 1)
+    if (flag == -2)
         return (free(b), NULL);
     else if (flag == -1)
         return (free(buff), NULL);
-    else if (flag == -2)
-        return (free(b), annihilation(spt, free, DEBUG), exitt(pip, spt, TRUE), NULL);
+    else if (flag >= 0)
+        return (free(b), annihilation(spt, free, DEBUG), exitt(pip, TRUE), NULL);
     annihilation(spt, free, DEBUG);
     return (buff);
 }

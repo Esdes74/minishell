@@ -25,19 +25,19 @@ int search_parent_builtins(t_cmd *pip, t_list *spt)
     tmp = spt->head;
     str = ((char *)(tmp->data_cell->data));
     if (ft_strlen(str) == 4 && ft_strncmp(str, "exit", 4) == 0)
-            return (-1);
+            return ((int) intermediate_exit(pip, spt));
     else if (ft_strlen(str) == 2 && ft_strncmp(str, "cd", 2) == 0)
     {
         pip->parent_builtin = TRUE;
         if (tmp->next == NULL)
-            return (1);
+            return (-1);
         tmp = tmp->next;
         return (cd(((char *)(tmp->data_cell->data)), pip, spt), 1);
     }
     else if (ft_strlen(str) == 6 && ft_strncmp(str, "export", 6) == 0)
     {
         if (tmp->next == NULL)
-            return (1);
+            return (-1);
         pip->parent_builtin = TRUE;
         tmp = tmp->next;
         while (tmp != NULL)
@@ -45,12 +45,12 @@ int search_parent_builtins(t_cmd *pip, t_list *spt)
             buf = ft_strdup(((char *)(tmp->data_cell->data)));
             ret = export(pip, buf);
             if (ret == 1)
-                return (free(buf), -1); 
+                return (free(buf), pip->status = 1, 1); 
             else if (ret == 2)
-                return (free(buf), 1);
+                return (free(buf), -1);
             tmp = tmp->next;
         }
-        return (1);
+        return (-1);
     }
     else if (ft_strlen(str) == 5 && ft_strncmp(str, "unset", 5) == 0)
     {
@@ -60,13 +60,13 @@ int search_parent_builtins(t_cmd *pip, t_list *spt)
         {
             buf = ft_strdup(((char *)(tmp->data_cell->data)));
             if (unset(pip, buf) == 1)
-                return (free(buf), -1);
+                return (free(buf), pip->status = 1, 1);
             free(buf);
             tmp = tmp->next;
         }
-        return (1);
+        return (-1);
     }
-    return (0);
+    return (-2);
 }
 
 int search_builtins(char **spt, t_cmd *pip)
@@ -79,7 +79,7 @@ int search_builtins(char **spt, t_cmd *pip)
     if (ft_strlen(spt[0]) == 3 && ft_strncmp(spt[0], "pwd", 3) == 0)
         return (free(pwd()), 1);
     else if (ft_strlen(spt[0]) == 4 && ft_strncmp(spt[0], "exit", 4) == 0)
-        return (exitt(pip, NULL, FALSE), 1);
+        return ((int) intermediate_exit(pip, NULL));
     else if (ft_strlen(spt[0]) == 3 && ft_strncmp(spt[0], "env", 3) == 0)
         return (env(pip->env), 1);
     else if ((ft_strlen(spt[0]) == 4 && ft_strncmp(spt[0], "echo", 4) == 0) \
@@ -96,7 +96,7 @@ int search_builtins(char **spt, t_cmd *pip)
     else if ((ft_strlen(spt[0]) == 6 && ft_strncmp(spt[0], "export", 6) == 0) \
     || (ft_strlen(spt[0]) == 5 && ft_strncmp(spt[0], "unset", 5) == 0))
         return (1);
-    return (0);
+    return (-1);
 }
 
 static void determine_echo_or_cd(char **str, int *option)

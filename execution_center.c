@@ -34,14 +34,17 @@ int execution_center(t_list *spt, t_cmd *pip)
     pip->nb_pipe = pip->nb_proc - 1;
     if (pip->nb_proc > 1)
         if (prep_pipe(pip) == 1)
-            return (1);
+            return (-2);
     pip->hd_history = prep_hd(pip, spt);
     arg_count = counting_arg(pip->nb_proc, spt);
     if (arg_count == NULL)
-        return (1);
+        return (-2);
     if (pip->nb_pipe == 0)
-        if (search_parent_builtins(pip, spt) == -1)
-            return (free(arg_count), -2);
+    {
+        exit_status = search_parent_builtins(pip, spt);
+        if (exit_status >= 0)
+            return (free(arg_count), exit_status);
+    }
     while (i < pip->nb_proc && pip->parent_builtin == FALSE)
     {
         id = fork();
@@ -51,7 +54,7 @@ int execution_center(t_list *spt, t_cmd *pip)
             free(arg_count);
             annihilation(spt, free, DEBUG);
             if (exec_cmd == NULL)
-                return (error(MALLOC, NULL), 1);
+                return (error(MALLOC, NULL), -2);
             add_list(getpid(), list);
             exec_cmd = check_redirection(exec_cmd, pip);
             if (exec_cmd == NULL)
@@ -69,8 +72,9 @@ int execution_center(t_list *spt, t_cmd *pip)
                 free(pip->here_pipe);
                 anihilation(pip->hd_history);
             }
-            if (cmd_center_simple(exec_cmd, pip) == 1)
-                return (anihilation(exec_cmd), -1);
+            exit_status = cmd_center_simple(exec_cmd, pip);
+            if (exit_status != -1)
+                return (anihilation(exec_cmd), exit_status);
         }
         else
             add_list(id, list);

@@ -71,75 +71,79 @@ typedef struct  t_cmd
 }   t_cmd;
 
 // Générals
-void	signals(void);
+void	        signals(void);
 
-int     add_list(pid_t data, t_list *list);
+int             add_list(pid_t data, t_list *list);
 
-void    error(t_error err, char *cmd);
+void            error(t_error err, char *cmd);
 
-void	quit(void);
+void	        quit(void);
 
-void    silent_quit(void);
+void            silent_quit(void);
 
-int     historic_fct(char *bufff, char *test, t_cmd *pip);
+int             historic_fct(char *bufff, char *test, t_cmd *pip);
 
-char    *verif_read(char *b, char *rd_line, t_cmd *pip);
+char            *verif_read(char *b, char *rd_line, t_cmd *pip);
 
-int     cpy_env(char **env, t_cmd *pip);
+int             cpy_env(char **env, t_cmd *pip);
 
 // Builtins
-int     search_parent_builtins(t_cmd *pip, t_list *spt);
+int             search_parent_builtins(t_cmd *pip, t_list *spt);
 
-int     search_builtins(char **spt, t_cmd *pip);
+int             search_builtins(char **spt, t_cmd *pip);
 
-char    *pwd(void);
+char            *pwd(void);
 
-void    env(char **envir);
+void            env(char **envir);
 
-int     exitt(t_cmd *pip, t_list *tmp, t_bool ret_value);
+unsigned char   intermediate_exit(t_cmd *pip, t_list *tmp);
 
-void    echo(char **arg, int option);
+unsigned char   exitt(t_cmd *pip, unsigned char ret_value);
 
-void    cd(char *path, t_cmd *pip, t_list *spt);
+void            echo(char **arg, int option);
 
-int     export(t_cmd *pip, char *name_value);
+void            cd(char *path, t_cmd *pip, t_list *spt);
 
-void    print_export(char **exp_env);
+int             export(t_cmd *pip, char *name_value);
 
-int     initialize_exp_env(t_cmd *pip, char **env);
+void            print_export(char **exp_env);
 
-int     add_exp_env(t_cmd *pip, char *str);
+int             initialize_exp_env(t_cmd *pip, char **env);
 
-int     unset(t_cmd *pip, char *name_value);
+int             add_exp_env(t_cmd *pip, char *str);
+
+int             unset(t_cmd *pip, char *name_value);
 
 // Free functions
 
-void    anihilation(char **str);
+void            anihilation(char **str);
 
-void	free_all(t_cmd *pip);
+void	        free_all(t_cmd *pip);
 
 
 // Fork and pipes
-int     close_all_pipes(t_cmd *pi);
+int             close_all_pipes(t_cmd *pi);
 
-char	*ft_strjoin_pip(char *dest, char *src);
+char	        *ft_strjoin_pip(char *dest, char *src);
 
 // Commands
-int     check_variables(t_list *spt, t_cmd *pip);
+int             check_variables(t_list *spt, t_cmd *pip);
 
-char	*cmd_build(char *str, char **env);
+char	        *cmd_build(char *str, char **env);
 
-int     cmd_center_simple(char **str, t_cmd *pip);
+int             cmd_center_simple(char **str, t_cmd *pip);
 
-void    parsing(const char *rd_line, int *flag, t_list *spt);
+void            parsing(const char *rd_line, int *flag, t_list *spt);
 
-int     *counting_arg(int count, t_list *spt);
+int             *counting_arg(int count, t_list *spt);
 
-char    **string_for_cmd_center(int *tab, int i, t_list *spt);
+char            **string_for_cmd_center(int *tab, int i, t_list *spt);
 
-char    **check_redirection(char **arg, t_cmd *pip);
+char            **check_redirection(char **arg, t_cmd *pip);
 
-char    **prep_hd(t_cmd *pip, t_list *spt);
+char            **prep_hd(t_cmd *pip, t_list *spt);
 
-int     execution_center(t_list *spt, t_cmd *pip);
+int             execution_center(t_list *spt, t_cmd *pip);
+
+char	        *check_quote(char *str);
 #endif
