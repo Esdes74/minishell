@@ -72,7 +72,7 @@ int	main(int argc, char **argv, char **env)
 			free(bufff);
 			free_all(&pip);
 			annihilation(list, free, DEBUG);
-			return (1);
+			return (pip.status);
 		}
 		free(cmd);
 		historic_fct(bufff, rd_line, &pip);

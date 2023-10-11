@@ -21,15 +21,21 @@ void    exitt(t_cmd *pip)
     silent_quit();
 }
 
-void    cd(char *path, t_cmd *pip)
+void    cd(char *path, t_cmd *pip, t_list *spt)
 {
-    if (path != NULL && chdir(path) != 0)
+    if (spt->len <= 2 && path != NULL && chdir(path) != 0)
     {
         pip->status = 1;
-        ft_printf("-bash: cd: %s: No such file or directory\n");
+        ft_printf_fd(2, "-bash: cd: %s: No such file or directory\n");
+        return ;
     }
-    else
-        pip->status = 0;
+    else if (spt->len > 2)
+    {
+        error(TOO_MANY_ARG, "cd");
+        pip->status = 1;
+        return ;
+    }
+    pip->status = 0;
     pip->builtin = TRUE;
 }
 
