@@ -107,7 +107,7 @@ static int  replace_variable(char *data, char *sent, t_cell *tmp, t_cmd *pip)
         // ft_printf_fd(2, "j = |%d|, i = |%d|, len_data = |%d|, sent = |%s|, new = |%s|\n", j, i, len_data, sent, new);
         free(new);
         if (pip->env[i] == NULL) // Si j'ai rien trouvé alors je sors
-            return (2); // todo: il faut gérer ce retour pour pouvoir supprimer la cellule qu'il y a en trop
+            return (2); // todo: il faut gérer ce retour, a savoir remplacer dans la phrase par rien donc comment faire ?
         new = ft_strdup(&pip->env[i][j + 1]); // je dup la valeur de la variable pour pouvoir la manipuler
         if (new == NULL) // Je teste
             return (1);
