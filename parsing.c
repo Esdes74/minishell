@@ -47,7 +47,7 @@ void    parsing(const char *rd_line, int *flag, t_list *ret)
     tmp_flag = 0;
     while (rd_line[i]) // Compte le nombre d'aguments qu'il y a (le | sont contés comme des arguments a part entière)
     {
-        while(rd_line[i] == '|' && (*flag == 0 || *flag == 3))
+        while(rd_line[i] == '|' && (*flag == 0 || *flag == 3 || *flag == 4))
         {
             if (i > 0 && rd_line[i - 1] != ' ')
                 compt++;
@@ -110,7 +110,7 @@ void    parsing(const char *rd_line, int *flag, t_list *ret)
     // Créer le tableau de chaine de caractères et le tableau permettant de compter le nombre de caractères dans chaque arguments
     if (*flag == 3)
             compt--;
-    // ft_printf_fd(2, "première boucle = %d\n", compt);
+    // ft_printf_fd(2, "première boucle = %d, flag = %d\n", compt, *flag);
     spt = (char **) malloc(sizeof(char *) * (compt + 1));
     if (spt == NULL)
         return (error(MALLOC, NULL), annihilation(ret, free, DEBUG));
@@ -126,7 +126,7 @@ void    parsing(const char *rd_line, int *flag, t_list *ret)
     int turbo_flag = 0;
     while (rd_line[i]) // compte le nombre de caractère par arguments
     {
-        while (rd_line[i] == '|' && (*flag == 0 || *flag == 3))
+        while (rd_line[i] == '|' && (*flag == 0 || *flag == 3 ||*flag == 4))
         {
             if (i > 0 && rd_line[i - 1] != ' ')
                 compt++;
@@ -220,7 +220,7 @@ void    parsing(const char *rd_line, int *flag, t_list *ret)
     {
         if (i > 0 && rd_line[i] == '|' && rd_line[i - 1] != ' ' && (*flag == 0 || *flag == 2))
             spt[compt++][j] = '\0';
-        while(rd_line[i] == '|' && (*flag == 0 || *flag == 3))
+        while(rd_line[i] == '|' && (*flag == 0 || *flag == 3 || *flag == 4))
         {
             spt[compt][0] = '|';
             spt[compt][1] = '\0';

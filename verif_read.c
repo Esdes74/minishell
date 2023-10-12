@@ -56,13 +56,29 @@ char *verif_read(char *b, char *rd_line, t_cmd *pip)
 
 static int check_arg(t_list *spt)
 {
-    t_cell *tmp;
+    char    *str;
+    t_cell  *tmp;
 
     tmp = spt->head;
     while (tmp != NULL)
     {
-        if (tmp->next != NULL && ((char *)tmp->data_cell->data)[0] ==  '|' && ((char *)tmp->next->data_cell->data)[0] == '|')
+        str = (char *)tmp->data_cell->data;
+        if (tmp->next != NULL && str[0] ==  '|' && ((char *)tmp->next->data_cell->data)[0] == '|')
             return (error(SYNTAX, "'|'"), 1);
+        if (str[0] == '<')
+        {
+            if (str[1] == '\0' && tmp->next == NULL)
+                return (error(SYNTAX, "'newline'"), 1);
+            else if (str[1] == '<' && str[2] == '\0' && tmp->next == NULL)
+                return (error(SYNTAX, "'newline'"), 1);
+        }
+        else if (str[0] == '>')
+        {
+            if (str[1] == '\0' && tmp->next == NULL)
+                return (error(SYNTAX, "'newline'"), 1);
+            else if (str[1] == '>' && str[2] == '\0' && tmp->next == NULL)
+                return (error(SYNTAX, "'newline'"), 1);
+        }
         tmp = tmp->next;
     }
     return (0);

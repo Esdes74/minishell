@@ -21,6 +21,7 @@ int execution_center(t_list *spt, t_cmd *pip)
 {
     char    **exec_cmd;
     int     *arg_count;
+    int     flag_status;
     int     status;
     int     exit_status;
     int     i;
@@ -86,13 +87,15 @@ int execution_center(t_list *spt, t_cmd *pip)
 
 
     // Récupération du code de sortie du programme
+    flag_status = 0;
 	while (i < pip->nb_proc + 1)
     {
+        flag_status = 1;
         wait(&status);
         i++;
     }
     // Si je suis dans une éxécution de builtin alors je ne rentre pas dedans
-    if (pip->builtin == FALSE)
+    if (pip->builtin == FALSE && flag_status == 1)
     {
         if (WIFSIGNALED(status))
             exit_status = WTERMSIG(status);
