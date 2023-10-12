@@ -55,7 +55,6 @@ unsigned char    exitt(t_cmd *pip, unsigned char ret_value)
 
 void    cd(char *path, t_cmd *pip, t_list *spt)
 {
-    ft_printf_fd(2, "path = %s\n", path);
     if (spt->len <= 2 && path != NULL && chdir(path) != 0)
     {
         pip->status = 1;
@@ -83,13 +82,13 @@ int export(t_cmd *pip, char *name_value)
     i = 0;
     pip->status = 1;
     if (!ft_isalpha(name_value[0]))
-        return (ft_printf_fd(2, "Error : not a valid identifier\n"), 2);
+        return (ft_printf_fd(2, "Error : not a valid identifier\n"), 1);
     if (name_value[i] == '=') // ca doit faire une erreur
-        return (ft_printf_fd(2, "Error : not a valid identifier\n"), 2);
+        return (ft_printf_fd(2, "Error : not a valid identifier\n"), 1);
     while (name_value[i] && name_value[i] != '=')
     {
         if (name_value[i] == '-' || name_value[i] == '+')
-            return(ft_printf_fd(2, "Error : not a valid identifier\n"), 2);
+            return(ft_printf_fd(2, "Error : not a valid identifier\n"), 1);
         i++;
     }
     if (name_value[i] == '\0') // a utiliser pour export sans rien

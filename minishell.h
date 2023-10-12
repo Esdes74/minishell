@@ -55,20 +55,20 @@ typedef enum    e_error{
 
 typedef struct  t_cmd
 {
-    int     nb_pipe;
-    int     **pipe;
-    int     nb_proc;
-    int     parent_builtin;
-    int     builtin; //utilisé
-    int     heredoc; // utilisé
-    int     ind_hd; // utilisé
-    int     status; // utilisé
-    int     *here_pipe; // utilisé
-    char    **hd_history; // utilisé
-    char    **env;
-    char    **exp_env;
-    t_bool  in; // utilisé
-    t_bool  out; // utilisé
+    int             nb_pipe;
+    int             **pipe;
+    int             nb_proc;
+    int             parent_builtin;
+    int             builtin; //utilisé
+    int             heredoc; // utilisé
+    int             ind_hd; // utilisé
+    unsigned char   status; // utilisé
+    int             *here_pipe; // utilisé
+    char            **hd_history; // utilisé
+    char            **env;
+    char            **exp_env;
+    t_bool          in; // utilisé
+    t_bool          out; // utilisé
 }   t_cmd;
 
 // Générals

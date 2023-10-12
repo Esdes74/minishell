@@ -35,7 +35,7 @@ int check_variables(t_list *spt, t_cmd *pip)
                 flag = 1;
             if (flag != 1 && data[i] == '$') // Je ne suis pas dans le mode single quote et je trouve un $
             {
-                if (replace_variable(&data[i], data, tmp, pip) == 1) // J'appel la fonction qui le remplace
+                if (data[i + 1] != '\0' && replace_variable(&data[i], data, tmp, pip) == 1) // J'appel la fonction qui le remplace
                     return (1);
                 data = (char *) tmp->data_cell->data;
             }

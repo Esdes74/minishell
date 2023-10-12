@@ -110,6 +110,7 @@ void    parsing(const char *rd_line, int *flag, t_list *ret)
     // Créer le tableau de chaine de caractères et le tableau permettant de compter le nombre de caractères dans chaque arguments
     if (*flag == 3)
             compt--;
+    // ft_printf_fd(2, "première boucle = %d\n", compt);
     spt = (char **) malloc(sizeof(char *) * (compt + 1));
     if (spt == NULL)
         return (error(MALLOC, NULL), annihilation(ret, free, DEBUG));
@@ -195,6 +196,7 @@ void    parsing(const char *rd_line, int *flag, t_list *ret)
     i = 0;
     if (*flag == 3)
         compt--;
+    // ft_printf_fd(2, "seconde boucle = %d\n", compt);
     if (*flag != 0 && *flag == save_flag) // permet de compter le \n si jamais on doit en rajouter un a la fin de la chaine pasque l'argument n'est pas finis
         tab[compt] += 1;
     while (i <= compt) // créer les chaines de caractères

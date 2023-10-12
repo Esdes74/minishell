@@ -71,7 +71,8 @@ int	main(int argc, char **argv, char **env)
 		{
 			free(bufff);
 			free_all(&pip);
-			annihilation(list, free, DEBUG);
+			if (pip.status != 126)
+				annihilation(list, free, DEBUG);
 			return (pip.status);
 		}
 		free(cmd);
