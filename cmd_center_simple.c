@@ -63,8 +63,11 @@ static int	execute_child(char **environ, char **str, t_cmd *pip)
 		free(cmd);
 		return (1);
 	}
+	else if (dir != NULL)
+		error(DIREC, cmd);
+	else
+		error(EXEC, "0");
 	closedir(dir);
-	error(EXEC, "0");
 	free(cmd);
 	pip->status = 126;
 	return (1);//anihilation(str), free_all(pip), 1);

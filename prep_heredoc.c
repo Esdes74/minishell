@@ -68,7 +68,7 @@ char    **prep_hd(t_cmd *pip, t_list *spt)
             tmp = tmp->next;
 
         // Récupération du mot qui stop le heredoc en cours
-        if (tmp->next == NULL)
+        if (((char *) (tmp->data_cell->data))[2] == '\0' && tmp->next == NULL)
             return (error(SYNTAX, "'newline'"), free(pip->hd_history), pip->status = 1, NULL);
         if (((char *) (tmp->data_cell->data))[2] == '\0')
             stop = (char *) tmp->next->data_cell->data;

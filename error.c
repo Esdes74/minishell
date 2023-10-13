@@ -61,4 +61,6 @@ static void    error_bis(t_error err, char *cmd)
         ft_printf_fd(ERR, "Error : Syntax error near unexpected token %s\n", cmd);
     else if (err == NUM_ARG)
         ft_printf_fd(ERR, "Error : numeric argument required\n");
+    else if (err == DIREC)
+        ft_printf_fd(ERR, "Error : %s: is a directory\n", cmd);
 }
