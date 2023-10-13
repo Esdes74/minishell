@@ -23,6 +23,8 @@ int search_parent_builtins(t_cmd *pip, t_list *spt)
 
     pip->builtin = FALSE;
     tmp = spt->head;
+    if (tmp == NULL)
+        return (1);
     str = ((char *)(tmp->data_cell->data));
     if (ft_strlen(str) == 4 && ft_strncmp(str, "exit", 4) == 0)
             return (pip->status = intermediate_exit(pip, spt), -1);

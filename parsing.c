@@ -218,7 +218,7 @@ void    parsing(const char *rd_line, int *flag, t_list *ret)
     tmp_flag = 0;
     while (rd_line[i]) // remplis les chaines de caractères
     {
-        if (i > 0 && rd_line[i] == '|' && rd_line[i - 1] != ' ' && (*flag == 0 || *flag == 2))
+        if (i > 0 && rd_line[i] == '|' && rd_line[i - 1] != ' ' && (*flag == 0 || *flag == 3 || *flag == 4))
             spt[compt++][j] = '\0';
         while(rd_line[i] == '|' && (*flag == 0 || *flag == 3 || *flag == 4))
         {

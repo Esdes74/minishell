@@ -46,6 +46,7 @@ int	main(int argc, char **argv, char **env)
 	bufff = NULL;
 	pip.hd_history = NULL;
 	pip.status = 0;
+	pip.ani_flag = 0;
 	while (1)
 	{
 		if (pip.hd_history != NULL)
@@ -71,7 +72,7 @@ int	main(int argc, char **argv, char **env)
 		{
 			free(bufff);
 			free_all(&pip);
-			if (pip.status != 126)
+			if (pip.ani_flag == 0)
 				annihilation(list, free, DEBUG);
 			return (pip.status);
 		}

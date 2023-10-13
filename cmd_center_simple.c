@@ -36,6 +36,7 @@ static int	execute_child(char **environ, char **str, t_cmd *pip)
 	int		i;
 	char	*cmd;
     char    *new_str;
+	DIR		*dir;
 
 
 	i = 0;
@@ -53,7 +54,18 @@ static int	execute_child(char **environ, char **str, t_cmd *pip)
     annihilation(list, free, DEBUG);
 	pip->status = 0;
 	execve(cmd, str, environ);
+	pip->ani_flag = 1;
+	dir = opendir(cmd);
+	if (dir == NULL && access(cmd, F_OK | X_OK) != -1)
+	{
+		ft_printf_fd(2, "Error : invalid permission\n");
+		pip->status = 0;
+		free(cmd);
+		return (1);
+	}
+	closedir(dir);
 	error(EXEC, "0");
+	free(cmd);
 	pip->status = 126;
 	return (1);//anihilation(str), free_all(pip), 1);
 }

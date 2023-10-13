@@ -48,6 +48,35 @@ int check_variables(t_list *spt, t_cmd *pip)
         }
         tmp = tmp->next;
     }
+
+    // supression des vides
+    t_cell  *freed;
+
+    tmp = spt->head;
+    while (tmp)
+    {
+        freed = NULL;
+        if (((char *) tmp->data_cell->data)[0] == '\0')
+        {
+            freed = tmp;
+            if (tmp->next != NULL)
+                tmp->next->prev = tmp->prev;
+            if (tmp->prev != NULL)
+                tmp->prev->next = tmp->next;
+            if (tmp == spt->head)
+                spt->head = tmp->next;
+            if (tmp == spt->tail)
+                spt->tail = tmp->prev;
+            spt->len--;
+        }
+        tmp = tmp->next;
+        if (freed != NULL)
+        {
+            free(freed->data_cell->data);
+            free(freed->data_cell);
+            free(freed);
+        }
+    }
     return (0);
 }
 
@@ -107,7 +136,11 @@ static int  replace_variable(char *data, char *sent, t_cell *tmp, t_cmd *pip)
         // ft_printf_fd(2, "j = |%d|, i = |%d|, len_data = |%d|, sent = |%s|, new = |%s|\n", j, i, len_data, sent, new);
         free(new);
         if (pip->env[i] == NULL) // Si j'ai rien trouvé alors je sors
+        {
+            if (((char *) tmp->data_cell->data)[0] == '$')
+                ((char *) tmp->data_cell->data)[0] = '\0';
             return (2); // todo: il faut gérer ce retour, a savoir remplacer dans la phrase par rien donc comment faire ?
+        }
         new = ft_strdup(&pip->env[i][j + 1]); // je dup la valeur de la variable pour pouvoir la manipuler
         if (new == NULL) // Je teste
             return (1);

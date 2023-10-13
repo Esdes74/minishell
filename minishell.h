@@ -20,6 +20,7 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <sys/wait.h>
+# include <dirent.h>
 
 # include "libft/libft.h"
 
@@ -56,14 +57,15 @@ typedef enum    e_error{
 typedef struct  t_cmd
 {
     int             nb_pipe;
-    int             **pipe;
     int             nb_proc;
     int             parent_builtin;
     int             builtin; //utilisé
     int             heredoc; // utilisé
     int             ind_hd; // utilisé
+    int             ani_flag; // utilisé
     unsigned char   status; // utilisé
     int             *here_pipe; // utilisé
+    int             **pipe;
     char            **hd_history; // utilisé
     char            **env;
     char            **exp_env;
