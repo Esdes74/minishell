@@ -139,26 +139,28 @@ int export(t_cmd *pip, char *name_value)
         pip->env = new_env;
     }
     i = 0;
-    while (pip->exp_env[i]) // cherche dans exp_env pour remplacer
+    if (pip->exp_env != NULL)
     {
-        if (strncmp(pip->exp_env[i] + 11, var_name, \
-        (ft_strlen(var_name))) == 0)
-        {            
-            buff = ft_strdup(name_value);
-            if (!buff)
-                return (free(var_name), 2);
-            free(pip->exp_env[i]);
-            pip->exp_env[i] = ft_strjoin("declare -x ", buff);
-            if (!pip->exp_env[i])
-                return (free(buff), free(var_name), 2);
-            free(buff);
-            break;
+        while (pip->exp_env[i]) // cherche dans exp_env pour remplacer
+        {
+            if (strncmp(pip->exp_env[i] + 11, var_name, (ft_strlen(var_name))) == 0)
+            {            
+                buff = ft_strdup(name_value);
+                if (!buff)
+                    return (free(var_name), 2);
+                free(pip->exp_env[i]);
+                pip->exp_env[i] = ft_strjoin("declare -x ", buff);
+                if (!pip->exp_env[i])
+                    return (free(buff), free(var_name), 2);
+                free(buff);
+                break;
+            }
+            i++;
         }
-        i++;
+        if (pip->exp_env[i] == NULL) // Ajoute dans exp_env si rien trouvé
+            if (add_exp_env(pip, name_value) == 1)
+                return (free(var_name), 2);
     }
-    if (pip->exp_env[i] == NULL) // Ajoute dans exp_env si rien trouvé
-        if (add_exp_env(pip, name_value) == 1)
-            return (free(var_name), 2);
     pip->builtin = TRUE;
     pip->status = 0;
     free(var_name);

@@ -17,6 +17,10 @@ static char **ft_cpy_env(char **env);
 int cpy_env(char **env, t_cmd *pip)
 {
     int i;
+    // int z;
+    // int for_sh;
+    // char    *sh_lvl;
+    // char    *buf;
     
     i = 0;
     while (env[i])
@@ -29,10 +33,37 @@ int cpy_env(char **env, t_cmd *pip)
     {
         pip->env[i] = ft_strdup(env[i]);
         if (pip->env[i] == NULL)
-            return (error(MALLOC, 0), free(pip->env), 1);
+            return (error(MALLOC, 0), pip->env = '\0', anihilation(pip->env), 1);
         i++;
     }
     pip->env[i] = NULL;
+    i = 0;
+    // met le SHLVL à 2 fait bugger le tester
+
+
+    // while (pip->env[i]) 
+    // {
+    //     if (strncmp(pip->env[i], "SHLVL=", 6) == 0)
+    //     {
+    //         z = 0;
+    //         while ((pip->env[i][z] >= 'A' && pip->env[i][z] <= 'Z') || pip->env[i][z] == '=')
+    //             z++;
+    //         for_sh = ft_atoi(&pip->env[i][z]);
+    //         for_sh++;
+    //         sh_lvl = ft_itoa(for_sh);
+    //         if (!sh_lvl)
+    //             return (anihilation(pip->env), error(MALLOC, 0), 1);
+    //         buf = malloc(sizeof(char) * (ft_strlen(sh_lvl) + 7));
+    //         if (!buf)
+    //             return (anihilation(pip->env), 1);
+    //         ft_strlcpy(buf, "SHLVL=", 7);
+    //         ft_strlcat(buf, sh_lvl, ft_strlen(sh_lvl) + 7);
+    //         free(sh_lvl);
+    //         if (export(pip, buf) == 1)
+    //             return (anihilation(pip->env), 1);
+    //     }
+    //     i++;
+    // }
     return (0);
 }
 

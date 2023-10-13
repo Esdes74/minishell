@@ -28,6 +28,7 @@ int	main(int argc, char **argv, char **env)
 
 	cmd = NULL;
 	pip.here_pipe = NULL;
+	pip.exp_env = NULL;
 	if (getenv("PATH") == NULL)
 		return (0);
 	if (cpy_env(env, &pip) == 1)
