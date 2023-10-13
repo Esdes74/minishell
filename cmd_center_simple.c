@@ -53,7 +53,7 @@ static int	execute_child(char **environ, char **str, t_cmd *pip)
 		return (pip->status = 127, 1); // anihilation(str), free(false_cmd)
     annihilation(list, free, DEBUG);
 	pip->status = 0;
-	execve(cmd, str, environ);
+	execve(cmd, str, pip->env);
 	pip->ani_flag = 1;
 	dir = opendir(cmd);
 	if (dir == NULL && access(cmd, F_OK | X_OK) != -1)

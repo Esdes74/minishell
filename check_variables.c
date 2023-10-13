@@ -159,7 +159,7 @@ static int  replace_variable(char *data, char *sent, t_cell *tmp, t_cmd *pip)
     j = 0;
     len_data = 0;
     flag = 0;
-    ft_printf_fd(2, "len_tot = |%d|, sent = |%s|, new = |%s|\n", len_tot, sent, new);
+    // ft_printf_fd(2, "len_tot = |%d|, sent = |%s|, new = |%s|\n", len_tot, sent, new);
     while (i < len_tot)
     {
         if (flag == 0 && sent[j] == '\'')
@@ -167,8 +167,11 @@ static int  replace_variable(char *data, char *sent, t_cell *tmp, t_cmd *pip)
         else if (flag == 0 && sent[j] == '$')
         {
             flag = 2;
-            while (sent[j] != '\0' && sent[j] != ' ')
-                j++;
+            if (sent[j + 1] == '?')
+                j += 2;
+            else
+                while (sent[j] != '\0' && sent[j] != ' ')
+                    j++;
         }
         else if (flag == 1 && sent[j] == '\'')
             flag = 0;
@@ -177,13 +180,16 @@ static int  replace_variable(char *data, char *sent, t_cell *tmp, t_cmd *pip)
             if (new[len_data] != '\0')
                 new_sent[i] = new[len_data++];
             else
+            {
+                i--;
                 flag = -1;
+            }
         }
         else
             new_sent[i] = sent[j++];
         i++;
     }
-    ft_printf_fd(2, "new_sent = %s\n", new_sent);
+    // ft_printf_fd(2, "i = %d, j = %d, new_sent = %s\n", i, j, new_sent);
     new_sent[i] = '\0';
     free(sent);
     free(new);
