@@ -6,7 +6,7 @@
 /*   By: eslamber <eslamber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 21:29:25 by dbaule            #+#    #+#             */
-/*   Updated: 2023/10/16 12:01:53 by eslamber         ###   ########.fr       */
+/*   Updated: 2023/10/16 14:48:16 by eslamber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,6 @@ int execution_center(t_list *spt, t_cmd *pip)
             annihilation(spt, free, DEBUG);
             if (exec_cmd == NULL)
                 return (error(MALLOC, NULL), 1);
-            add_list(getpid(), list);
             exec_cmd = check_redirection(exec_cmd, pip);
             if (exec_cmd == NULL)
                 return (-1);
@@ -73,8 +72,6 @@ int execution_center(t_list *spt, t_cmd *pip)
             if (cmd_center_simple(exec_cmd, pip) == 1)
                 return (anihilation(exec_cmd), -1);
         }
-        else
-            add_list(id, list);
         i++;
     }
     if (id != 0)
@@ -101,12 +98,10 @@ int execution_center(t_list *spt, t_cmd *pip)
             exit_status = WTERMSIG(status);
         else if (WIFEXITED(status))
             exit_status = WEXITSTATUS(status);
-        pip->status = exit_status; // Stockage du code de sortie
+        status = exit_status; // Stockage du code de sortie
     }
 
 
-    while (list->len > 1)
-        rmtail_list(list, TRUE, DEBUG);
     return (0);
 }
 

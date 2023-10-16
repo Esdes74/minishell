@@ -6,15 +6,15 @@
 /*   By: eslamber <eslamber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 16:50:47 by eslamber          #+#    #+#             */
-/*   Updated: 2023/07/05 12:07:29 by eslamber         ###   ########.fr       */
+/*   Updated: 2023/10/16 14:46:16 by eslamber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 static void	handle_control_c(int sig);
-static void	kill_all(int sig);
-static void	scan_all(int sig);
+// static void	kill_all(int sig);
+// static void	scan_all(int sig);
 
 void	signals(void)
 {
@@ -25,14 +25,13 @@ void	signals(void)
     sigemptyset(&sa.sa_mask);
     sigaction(CON_C, &sa, NULL);
 	// signal(CON_C, handle_control_c);
-	signal(KILL_ALL, kill_all);
-	signal(SCAN, scan_all);
+	// signal(KILL_ALL, kill_all);
+	// signal(SCAN, scan_all);
 }
 
 void	silent_quit(void)
 {
 	// scan_all(CON_C);
-	annihilation(list, free, DEBUG);
 	exit(0);
 }
 
@@ -45,7 +44,7 @@ static void	handle_control_c(int sig)
 	rl_replace_line("", 0); // Effacer la ligne en cours
     rl_point = 0; // Déplacer le curseur au début de la ligne
     rl_redisplay(); // Afficher le prompt
-	kill(*((pid_t *) list->head->data_cell->data), SCAN);
+	// kill(*((pid_t *) list->head->data_cell->data), SCAN);
 	// buf = getcwd(NULL, 0);
 	// if (buf == NULL)
 	// 	exitt();
@@ -57,45 +56,45 @@ static void	handle_control_c(int sig)
 	// free(buff);
 }
 
-static void	kill_all(int sig)
-{
-	(void)	sig;
-	t_cell	*tmp;
+// static void	kill_all(int sig)
+// {
+// 	(void)	sig;
+// 	t_cell	*tmp;
 
-	tmp = list->head;
-	while (tmp != NULL && *((pid_t *) tmp->data_cell->data) != getpid())
-		tmp = tmp->next;
-	if (tmp != NULL)
-		tmp = tmp->next;
-	while (tmp != NULL)
-	{
-		kill(*((pid_t *) tmp->data_cell->data), KILL_ALL);
-		tmp = tmp->next;
-	}
-	annihilation(list, free, DEBUG);
-	exit(0);
-}
+// 	tmp = list->head;
+// 	while (tmp != NULL && *((pid_t *) tmp->data_cell->data) != getpid())
+// 		tmp = tmp->next;
+// 	if (tmp != NULL)
+// 		tmp = tmp->next;
+// 	while (tmp != NULL)
+// 	{
+// 		kill(*((pid_t *) tmp->data_cell->data), KILL_ALL);
+// 		tmp = tmp->next;
+// 	}
+// 	annihilation(list, free, DEBUG);
+// 	exit(0);
+// }
 
-static void	scan_all(int sig)
-{
-	(void)	sig;
-	t_cell	*tmp;
-	int		i;
+// static void	scan_all(int sig)
+// {
+// 	(void)	sig;
+// 	t_cell	*tmp;
+// 	int		i;
 
-	if (list->len > 1)
-	{
-		i = 0;
-		while (list->len > 0)
-		{
-			tmp = unstack_list(list, DEBUG);
-			if (i != 0)
-				kill(*((pid_t *) tmp->data_cell->data), KILL_ALL);
-			free(tmp->data_cell->data);
-			free(tmp->data_cell);
-			free(tmp);
-			i++;
-		}
-		if (add_list(getpid(), list) == 1)
-			return (error(ADD_LIST, NULL));
-	}
-}
+// 	if (list->len > 1)
+// 	{
+// 		i = 0;
+// 		while (list->len > 0)
+// 		{
+// 			tmp = unstack_list(list, DEBUG);
+// 			if (i != 0)
+// 				kill(*((pid_t *) tmp->data_cell->data), KILL_ALL);
+// 			free(tmp->data_cell->data);
+// 			free(tmp->data_cell);
+// 			free(tmp);
+// 			i++;
+// 		}
+// 		if (add_list(getpid(), list) == 1)
+// 			return (error(ADD_LIST, NULL));
+// 	}
+// }

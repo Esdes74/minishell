@@ -6,13 +6,13 @@
 /*   By: eslamber <eslamber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 14:04:59 by eslamber          #+#    #+#             */
-/*   Updated: 2023/10/16 11:53:01 by eslamber         ###   ########.fr       */
+/*   Updated: 2023/10/16 14:45:02 by eslamber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_list	*list;
+int	status;
 
 int	main(int argc, char **argv, char **env)
 {
@@ -35,18 +35,12 @@ int	main(int argc, char **argv, char **env)
 		return (error(MALLOC, '\0'), 1);
 	if (initialize_exp_env(&pip, pip.env) == 1)
 		return (error(MALLOC, 0), 1);
-	list = (t_list *) malloc(sizeof(t_list));
-	if (list == NULL && cmd == NULL)
-		return (error(MALLOC, NULL), 1);
-	init_list(list);
-	if (add_list(getpid(), list) == 1)
-		return (free_all(&pip), 1);
 	signals();
 	using_history();
 	rl_bind_key('\t', rl_complete);
 	bufff = NULL;
 	pip.hd_history = NULL;
-	pip.status = 0;
+	status = 0;
 	pip.ani_flag = 0;
 	while (1)
 	{
@@ -73,9 +67,7 @@ int	main(int argc, char **argv, char **env)
 		{
 			free(bufff);
 			free_all(&pip);
-			if (pip.ani_flag == 0)
-				annihilation(list, free, DEBUG);
-			return (pip.status);
+			return (status);
 		}
 		free(cmd);
 		historic_fct(bufff, rd_line, &pip);

@@ -6,7 +6,7 @@
 /*   By: eslamber <eslamber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 15:35:11 by eslamber          #+#    #+#             */
-/*   Updated: 2023/07/05 11:52:30 by eslamber         ###   ########.fr       */
+/*   Updated: 2023/10/16 14:57:59 by eslamber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@
 # define CON_C SIGINT
 # define DEBUG 1
 
-extern t_list  *list;
+extern int  status;
 
 typedef enum    e_error{
     ADD_LIST,
@@ -64,7 +64,6 @@ typedef struct  t_cmd
     int             heredoc; // utilisé
     int             ind_hd; // utilisé
     int             ani_flag; // utilisé
-    unsigned char   status; // utilisé
     int             *here_pipe; // utilisé
     int             **pipe;
     char            **hd_history; // utilisé
@@ -100,9 +99,9 @@ char            *pwd(void);
 
 void            env(char **envir);
 
-unsigned char   intermediate_exit(t_cmd *pip, t_list *tmp);
+unsigned char   intermediate_exit(t_list *tmp);
 
-unsigned char   exitt(t_cmd *pip, unsigned char ret_value);
+unsigned char   exitt(unsigned char ret_value);
 
 void            echo(char **arg, int option);
 

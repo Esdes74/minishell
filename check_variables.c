@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   check_redirection.c                                :+:      :+:    :+:   */
+/*   check_variables.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: eslamber <eslamber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 11:08:50 by eslamber          #+#    #+#             */
-/*   Updated: 2023/08/29 11:08:54 by eslamber         ###   ########.fr       */
+/*   Updated: 2023/10/16 14:58:35 by eslamber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ static int  replace_variable(char *data, char *sent, t_cell *tmp, t_cmd *pip)
     // Je regarde s'ils'agit de $?
     if (data[1] == '?')
     {
-        new = ft_itoa(pip->status);
+        new = ft_itoa(status);
         if (new == NULL)
             return (error(MALLOC, "0"), 1);
         len_tot = ft_strlen(new) + ft_strlen(sent) - 2;

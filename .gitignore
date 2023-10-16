@@ -6,3 +6,4 @@ valgrind_out.txt
 tester
 minishell_tester
 minishell-tester
+run.sh
