@@ -20,6 +20,9 @@ char *verif_read(char *b, char *rd_line, t_cmd *pip)
     char    *buff;
     char    *buf;
     t_list  *spt;
+    size_t i;
+    t_cell  *tmp;
+    char *new_str;
 
     flag = 0;
     spt = (t_list *) malloc(sizeof(t_list));
@@ -43,6 +46,19 @@ char *verif_read(char *b, char *rd_line, t_cmd *pip)
         return(annihilation(spt, free, DEBUG), buff);
     if (check_variables(spt, pip) == 1)
         return (NULL);
+    i = 0;
+    tmp = spt->head;
+    while (i < spt->len)
+    {
+        new_str = check_quote(tmp->data_cell->data);
+        if (new_str == NULL)
+            return (NULL);
+        if (tmp->data_cell->data != new_str)
+            free (tmp->data_cell->data);
+        tmp->data_cell->data = new_str;
+        tmp = tmp->next;
+        i++;
+    }
     flag = execution_center(spt, pip);
     if (flag == 1)
         return (free(b), NULL);

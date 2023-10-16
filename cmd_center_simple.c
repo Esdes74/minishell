@@ -33,21 +33,21 @@ int cmd_center_simple(char **str, t_cmd *pip) //j'ai enlever la condtion si env 
 
 static int	execute_child(char **environ, char **str, t_cmd *pip)
 {
-	int		i;
+	// int		i;
 	char	*cmd;
-    char    *new_str;
+    // char    *new_str;
 	DIR		*dir;
 
 
-	i = 0;
-	while (str[i])
-	{
-		new_str = check_quote(str[i]);
-		if (str[i] != new_str)
-			free(str[i]);
-		str[i] = new_str;
-		i++;
-	}
+	// i = 0;
+	// while (str[i])
+	// {
+	// 	new_str = check_quote(str[i]);
+	// 	if (str[i] != new_str)
+	// 		free(str[i]);
+	// 	str[i] = new_str;
+	// 	i++;
+	// }
 	cmd = cmd_build(str[0], environ);
 	if (cmd == NULL)
 		return (pip->status = 127, 1); // anihilation(str), free(false_cmd)

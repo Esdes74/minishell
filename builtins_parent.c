@@ -27,10 +27,10 @@ unsigned char    intermediate_exit(t_cmd *pip, t_list *tmp)
         return (exitt(pip, 0));
     else if (tmp->len == 2)
     {
-        new_tmp = check_quote((char *) tmp->head->next->data_cell->data);
-        if (new_tmp != tmp->head->next->data_cell->data)
-            free(tmp->head->next->data_cell->data);
-        tmp->head->next->data_cell->data = new_tmp;
+        // new_tmp = check_quote((char *) tmp->head->next->data_cell->data);
+        // if (new_tmp != tmp->head->next->data_cell->data)
+        //     free(tmp->head->next->data_cell->data);
+        new_tmp = tmp->head->next->data_cell->data;
         i = 0;
         while (new_tmp[i])
         {
