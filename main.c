@@ -6,7 +6,7 @@
 /*   By: eslamber <eslamber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 14:04:59 by eslamber          #+#    #+#             */
-/*   Updated: 2023/07/05 14:03:50 by eslamber         ###   ########.fr       */
+/*   Updated: 2023/10/16 11:50:40 by eslamber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ int	main(int argc, char **argv, char **env)
 	(void)	argv;
 	t_cmd   pip;
 
+// test
 	cmd = NULL;
 	pip.here_pipe = NULL;
 	pip.exp_env = NULL;
