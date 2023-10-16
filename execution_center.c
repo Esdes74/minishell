@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution_center.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dbaule <dbaule@student.42.fr>              +#+  +:+       +#+        */
+/*   By: eslamber <eslamber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 21:29:25 by dbaule            #+#    #+#             */
-/*   Updated: 2023/08/03 17:30:00 by dbaule           ###   ########.fr       */
+/*   Updated: 2023/10/16 12:01:53 by eslamber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,10 @@ static int dup_out_cmd(t_cmd *pip, int i);
 
 int execution_center(t_list *spt, t_cmd *pip)
 {
+    t_cell  *tmp;
+    size_t  len;
     char    **exec_cmd;
+    char    *new_str;
     int     *arg_count;
     int     flag_status;
     int     status;
