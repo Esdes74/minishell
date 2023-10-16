@@ -19,10 +19,7 @@ static int dup_out_cmd(t_cmd *pip, int i);
 
 int execution_center(t_list *spt, t_cmd *pip)
 {
-    t_cell  *tmp;
-    size_t  len;
     char    **exec_cmd;
-    char    *new_str;
     int     *arg_count;
     int     flag_status;
     int     status;
