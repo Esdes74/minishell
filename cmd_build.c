@@ -6,7 +6,7 @@
 /*   By: eslamber <eslamber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/17 09:13:17 by dbaule            #+#    #+#             */
-/*   Updated: 2023/10/16 14:25:30 by eslamber         ###   ########.fr       */
+/*   Updated: 2023/10/16 16:06:18 by eslamber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,15 @@ static char	*check_slash(char *cmd, char *str)
 		if (cmd == NULL)
 			return (perror("Error"), NULL);
 		if (access(cmd, F_OK | X_OK) == -1)
+		{
+			if (cmd[0] == '.' && cmd[1] == '/')
+			{
+				if (access(cmd, F_OK) == -1)
+					return (error(FILES, "0"), free(cmd), NULL);
+				return (error(PERM, "0"), free(cmd), NULL);
+			}
 			return (error(CMD, str), free(cmd), NULL);
+		}
 		return (cmd);
 	}
 	return (cmd);

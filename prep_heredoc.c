@@ -6,7 +6,7 @@
 /*   By: eslamber <eslamber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 11:08:50 by eslamber          #+#    #+#             */
-/*   Updated: 2023/10/16 14:49:57 by eslamber         ###   ########.fr       */
+/*   Updated: 2023/10/16 15:32:36 by eslamber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ char    **prep_hd(t_cmd *pip, t_list *spt)
 
         // Récupération du mot qui stop le heredoc en cours
         if (((char *) (tmp->data_cell->data))[2] == '\0' && tmp->next == NULL)
-            return (error(SYNTAX, "'newline'"), free(pip->hd_history), status = 1, NULL);
+            return (error(SYNTAX, "'newline'"), free(pip->hd_history), NULL);
         if (((char *) (tmp->data_cell->data))[2] == '\0')
             stop = (char *) tmp->next->data_cell->data;
         else

@@ -6,7 +6,7 @@
 /*   By: eslamber <eslamber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 15:35:11 by eslamber          #+#    #+#             */
-/*   Updated: 2023/10/16 14:57:59 by eslamber         ###   ########.fr       */
+/*   Updated: 2023/10/16 16:06:06 by eslamber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,9 @@
 # define QUIT -1
 # define CON_C SIGINT
 # define DEBUG 1
+#define ERR STDERR_FILENO
 
-extern int  status;
+extern unsigned char    status;
 
 typedef enum    e_error{
     ADD_LIST,
@@ -53,6 +54,8 @@ typedef enum    e_error{
     SYNTAX,
     NUM_ARG,
     DIREC,
+    PERM,
+    FILES,
 }   t_error;
 
 typedef struct  t_cmd

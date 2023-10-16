@@ -6,7 +6,7 @@
 /*   By: eslamber <eslamber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 21:29:25 by dbaule            #+#    #+#             */
-/*   Updated: 2023/10/16 14:48:16 by eslamber         ###   ########.fr       */
+/*   Updated: 2023/10/16 15:37:12 by eslamber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int execution_center(t_list *spt, t_cmd *pip)
     char    **exec_cmd;
     int     *arg_count;
     int     flag_status;
-    int     status;
+    int     statut;
     int     exit_status;
     int     i;
     int     id;
@@ -88,16 +88,16 @@ int execution_center(t_list *spt, t_cmd *pip)
 	while (i < pip->nb_proc + 1)
     {
         flag_status = 1;
-        wait(&status);
+        wait(&statut);
         i++;
     }
     // Si je suis dans une éxécution de builtin alors je ne rentre pas dedans
     if (pip->builtin == FALSE && flag_status == 1)
     {
-        if (WIFSIGNALED(status))
-            exit_status = WTERMSIG(status);
+        if (WIFSIGNALED(statut))
+            exit_status = WTERMSIG(statut);
         else if (WIFEXITED(status))
-            exit_status = WEXITSTATUS(status);
+            exit_status = WEXITSTATUS(statut);
         status = exit_status; // Stockage du code de sortie
     }
 

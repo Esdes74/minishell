@@ -6,7 +6,7 @@
 /*   By: eslamber <eslamber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/31 10:31:07 by dbaule            #+#    #+#             */
-/*   Updated: 2023/10/16 14:57:47 by eslamber         ###   ########.fr       */
+/*   Updated: 2023/10/16 16:14:09 by eslamber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ unsigned char    intermediate_exit(t_list *tmp)
         new_tmp = check_quote((char *) tmp->head->next->data_cell->data);
         if (new_tmp != tmp->head->next->data_cell->data)
             free(tmp->head->next->data_cell->data);
-        new_tmp = tmp->head->next->data_cell->data;
+        tmp->head->next->data_cell->data = new_tmp;
         i = 0;
         while (new_tmp[i])
         {
@@ -57,17 +57,14 @@ void    cd(char *path, t_cmd *pip, t_list *spt)
 {
     if (spt->len <= 2 && path != NULL && chdir(path) != 0)
     {
-        status = 1;
         ft_printf_fd(2, "-bash: cd: %s: No such file or directory\n");
         return ;
     }
     else if (spt->len > 2)
     {
         error(TOO_MANY_ARG, "cd");
-        status = 1;
         return ;
     }
-    status = 0;
     pip->builtin = TRUE;
 }
 
@@ -80,7 +77,6 @@ int export(t_cmd *pip, char *name_value)
     char    **new_env;
 
     i = 0;
-    status = 1;
     if (!ft_isalpha(name_value[0]))
         return (ft_printf_fd(2, "Error : not a valid identifier\n"), 1);
     if (name_value[i] == '=') // ca doit faire une erreur
@@ -97,7 +93,6 @@ int export(t_cmd *pip, char *name_value)
             return (1);
         free(name_value);
         pip->builtin = TRUE;
-        status = 0;
         return (0);
     }
     var_name = malloc(sizeof(char) * (i + 1));
@@ -162,7 +157,6 @@ int export(t_cmd *pip, char *name_value)
                 return (free(var_name), 2);
     }
     pip->builtin = TRUE;
-    status = 0;
     free(var_name);
     return (0);
 }
@@ -174,7 +168,6 @@ int unset(t_cmd *pip, char *name_value)
 
     i = 0;
     trigger = 0;
-    status = 1;
     while (pip->env[i])
         if (strncmp(pip->env[i++], name_value, (ft_strlen(name_value))) == 0)
             trigger++;
@@ -186,7 +179,6 @@ int unset(t_cmd *pip, char *name_value)
     if (trigger == 0)
     {
         pip->builtin = TRUE;
-        status = 0;
         return (0);
     }
     else
@@ -219,7 +211,6 @@ static int  unset_env(t_cmd *pip, char *name_value, int len)
     free(pip->env);
     pip->env = new_env;
     pip->builtin = TRUE;
-    status = 0;
     return (0);
 }
 
@@ -246,7 +237,6 @@ static int  unset_exp_env(t_cmd *pip, char *name_value, int len)
     free(pip->exp_env);
     pip->exp_env = new_env;
     pip->builtin = TRUE;
-    status = 0;
     return (0);
 }
 

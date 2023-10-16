@@ -6,7 +6,7 @@
 /*   By: eslamber <eslamber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/04 15:17:58 by eslamber          #+#    #+#             */
-/*   Updated: 2023/10/16 14:47:20 by eslamber         ###   ########.fr       */
+/*   Updated: 2023/10/16 15:30:55 by eslamber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,16 +50,14 @@ static int	execute_child(char **environ, char **str, t_cmd *pip)
 	}
 	cmd = cmd_build(str[0], environ);
 	if (cmd == NULL)
-		return (status = 127, 1); // anihilation(str), free(false_cmd)
+		return (1); // anihilation(str), free(false_cmd)
     // annihilation(list, free, DEBUG);
-	status = 0;
 	execve(cmd, str, pip->env);
 	pip->ani_flag = 1;
 	dir = opendir(cmd);
 	if (dir == NULL && access(cmd, F_OK | X_OK) != -1)
 	{
 		ft_printf_fd(2, "Error : invalid permission\n");
-		status = 0;
 		free(cmd);
 		return (1);
 	}
@@ -69,7 +67,6 @@ static int	execute_child(char **environ, char **str, t_cmd *pip)
 		error(EXEC, "0");
 	closedir(dir);
 	free(cmd);
-	status = 126;
 	return (1);//anihilation(str), free_all(pip), 1);
 }
 

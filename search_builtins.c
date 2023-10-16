@@ -6,7 +6,7 @@
 /*   By: eslamber <eslamber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/13 11:08:50 by eslamber          #+#    #+#             */
-/*   Updated: 2023/10/16 14:58:14 by eslamber         ###   ########.fr       */
+/*   Updated: 2023/10/16 15:32:57 by eslamber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int search_parent_builtins(t_cmd *pip, t_list *spt)
         return (1);
     str = ((char *)(tmp->data_cell->data));
     if (ft_strlen(str) == 4 && ft_strncmp(str, "exit", 4) == 0)
-            return (status = intermediate_exit(spt), -1);
+            return (intermediate_exit(spt), -1);
     else if (ft_strlen(str) == 2 && ft_strncmp(str, "cd", 2) == 0)
     {
         pip->parent_builtin = TRUE;
@@ -47,7 +47,7 @@ int search_parent_builtins(t_cmd *pip, t_list *spt)
             buf = ft_strdup(((char *)(tmp->data_cell->data)));
             ret = export(pip, buf);
             if (ret == 1)
-                return (free(buf), status = 1, -1); 
+                return (free(buf), -1); 
             // else if (ret == 2)
             //     return (free(buf), 1); //status = 2,
             tmp = tmp->next;
@@ -62,7 +62,7 @@ int search_parent_builtins(t_cmd *pip, t_list *spt)
         {
             buf = ft_strdup(((char *)(tmp->data_cell->data)));
             if (unset(pip, buf) == 1)
-                return (free(buf), status = 1, -1);
+                return (free(buf), -1);
             free(buf);
             tmp = tmp->next;
         }
@@ -81,7 +81,7 @@ int search_builtins(char **spt, t_cmd *pip)
     if (ft_strlen(spt[0]) == 3 && ft_strncmp(spt[0], "pwd", 3) == 0)
         return (free(pwd()), 1);
     else if (ft_strlen(spt[0]) == 4 && ft_strncmp(spt[0], "exit", 4) == 0)
-        return (status = intermediate_exit(NULL), 1);
+        return (intermediate_exit(NULL), 1);
     else if (ft_strlen(spt[0]) == 3 && ft_strncmp(spt[0], "env", 3) == 0)
         return (env(pip->env), 1);
     else if ((ft_strlen(spt[0]) == 4 && ft_strncmp(spt[0], "echo", 4) == 0) \
