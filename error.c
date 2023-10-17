@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eslamber <eslamber@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dbaule <dbaule@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/03 11:08:59 by eslamber          #+#    #+#             */
-/*   Updated: 2023/10/16 16:06:12 by eslamber         ###   ########.fr       */
+/*   Updated: 2023/10/17 15:53:01 by dbaule           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void    error(t_error err, char *cmd)
     else if (err == CMD)
     {
         status = 127;
-        ft_printf_fd(ERR, "Error : Command not found %s\n", cmd);
+        ft_printf_fd(ERR, "Error %s: command not found\n", cmd);
     }
     else if (err == JOIN)
         ft_printf_fd(ERR, "Error : Problem with strjoin function\n");
@@ -66,7 +66,7 @@ static void    error_bis(t_error err, char *cmd)
     else if (err == DIREC)
     {
         status = 126;
-        ft_printf_fd(ERR, "Error : %s: is a directory\n", cmd);
+        ft_printf_fd(ERR, "Error : %s: Is a directory\n", cmd);
     }
 }
 
@@ -84,6 +84,6 @@ static void    error_bis_bis(t_error err)
     else if (err == FILES)
     {
         status = 127;
-        ft_printf_fd(ERR, "Error : no such file or directory\n");
+        ft_printf_fd(ERR, "Error : No such file or directory\n");
     }
 }

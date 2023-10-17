@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   verif_read.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eslamber <eslamber@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dbaule <dbaule@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 11:08:50 by eslamber          #+#    #+#             */
-/*   Updated: 2023/10/16 11:58:14 by eslamber         ###   ########.fr       */
+/*   Updated: 2023/10/17 17:08:47 by dbaule           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static int check_arg(t_list *spt);
 
-char *verif_read(char *b, char *rd_line, t_cmd *pip)
+char *verif_read(char *rd_line, t_cmd *pip)
 {
     int     flag;
     char    *buff;
@@ -26,6 +26,8 @@ char *verif_read(char *b, char *rd_line, t_cmd *pip)
 	if (spt == NULL)
 		return (error(MALLOC, NULL), NULL);
     init_list(spt);
+    if (rd_line[0] == '|')
+        return (error(TOKEN, "0"), NULL);
     parsing(rd_line, &flag, spt);
     if (spt->len == 0)
         return (annihilation(spt, free, DEBUG), rd_line);
@@ -45,7 +47,7 @@ char *verif_read(char *b, char *rd_line, t_cmd *pip)
         return (NULL);
     flag = execution_center(spt, pip);
     if (flag == 1)
-        return (free(b), NULL);
+        return (NULL);
     else if (flag == -1)
         return (free(buff), NULL);
     // else if (flag == -2)

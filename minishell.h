@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eslamber <eslamber@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dbaule <dbaule@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 15:35:11 by eslamber          #+#    #+#             */
-/*   Updated: 2023/10/16 16:06:06 by eslamber         ###   ########.fr       */
+/*   Updated: 2023/10/17 17:09:02 by dbaule           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ void            silent_quit(void);
 
 int             historic_fct(char *bufff, char *test, t_cmd *pip);
 
-char            *verif_read(char *b, char *rd_line, t_cmd *pip);
+char            *verif_read(char *rd_line, t_cmd *pip);
 
 int             cpy_env(char **env, t_cmd *pip);
 

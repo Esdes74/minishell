@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins_parent.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eslamber <eslamber@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dbaule <dbaule@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/31 10:31:07 by dbaule            #+#    #+#             */
-/*   Updated: 2023/10/16 16:14:09 by eslamber         ###   ########.fr       */
+/*   Updated: 2023/10/17 17:35:13 by dbaule           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ int export(t_cmd *pip, char *name_value)
     i = 0;
     if (!ft_isalpha(name_value[0]))
         return (ft_printf_fd(2, "Error : not a valid identifier\n"), 1);
-    if (name_value[i] == '=') // ca doit faire une erreur
+    if (name_value[i] == '=')
         return (ft_printf_fd(2, "Error : not a valid identifier\n"), 1);
     while (name_value[i] && name_value[i] != '=')
     {
