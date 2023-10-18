@@ -6,7 +6,7 @@
 /*   By: dbaule <dbaule@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 21:29:25 by dbaule            #+#    #+#             */
-/*   Updated: 2023/10/18 13:28:29 by dbaule           ###   ########.fr       */
+/*   Updated: 2023/10/18 13:50:08 by dbaule           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ int execution_center(t_list *spt, t_cmd *pip)
     }
     while (i < pip->nb_proc && pip->parent_builtin == FALSE && ret != 1)
     {
+        status = 0;
         id = fork();
         if (id == 0)
         {

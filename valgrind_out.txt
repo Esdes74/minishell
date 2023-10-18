@@ -1,51 +1,191 @@
-==434293== Memcheck, a memory error detector
-==434293== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==434293== Using Valgrind-3.15.0 and LibVEX; rerun with -h for copyright info
-==434293== Command: ./minishell
-==434293== Parent PID: 434292
-==434293== 
-==434322== Conditional jump or move depends on uninitialised value(s)
-==434322==    at 0x483C9F5: free (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==434322==    by 0x10AB9A: close_all_pipes (free_struc.c:42)
-==434322==    by 0x10CBCB: execution_center (execution_center.c:63)
-==434322==    by 0x10C3F3: verif_read (verif_read.c:48)
-==434322==    by 0x1096AF: main (main.c:65)
-==434322== 
-==434322== Invalid free() / delete / delete[] / realloc()
-==434322==    at 0x483CA3F: free (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==434322==    by 0x10AB9A: close_all_pipes (free_struc.c:42)
-==434322==    by 0x10CBCB: execution_center (execution_center.c:63)
-==434322==    by 0x10C3F3: verif_read (verif_read.c:48)
-==434322==    by 0x1096AF: main (main.c:65)
-==434322==  Address 0x1138bd is in the Text segment of /nfs/homes/dbaule/minishell/minishell
-==434322==    at 0x1138BD: __libc_csu_init (in /nfs/homes/dbaule/minishell/minishell)
-==434322== 
-==434322== 
-==434322== HEAP SUMMARY:
-==434322==     in use at exit: 200,624 bytes in 214 blocks
-==434322==   total heap usage: 613 allocs, 400 frees, 239,324 bytes allocated
-==434322== 
-==434322== LEAK SUMMARY:
-==434322==    definitely lost: 0 bytes in 0 blocks
-==434322==    indirectly lost: 0 bytes in 0 blocks
-==434322==      possibly lost: 0 bytes in 0 blocks
-==434322==    still reachable: 0 bytes in 0 blocks
-==434322==         suppressed: 200,624 bytes in 214 blocks
-==434322== 
-==434322== Use --track-origins=yes to see where uninitialised values come from
-==434322== For lists of detected and suppressed errors, rerun with: -s
-==434322== ERROR SUMMARY: 2 errors from 2 contexts (suppressed: 0 from 0)
-==434293== 
-==434293== HEAP SUMMARY:
-==434293==     in use at exit: 204,712 bytes in 218 blocks
-==434293==   total heap usage: 616 allocs, 398 frees, 246,054 bytes allocated
-==434293== 
-==434293== LEAK SUMMARY:
-==434293==    definitely lost: 0 bytes in 0 blocks
-==434293==    indirectly lost: 0 bytes in 0 blocks
-==434293==      possibly lost: 0 bytes in 0 blocks
-==434293==    still reachable: 0 bytes in 0 blocks
-==434293==         suppressed: 204,712 bytes in 218 blocks
-==434293== 
-==434293== For lists of detected and suppressed errors, rerun with: -s
-==434293== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==25263== Memcheck, a memory error detector
+==25263== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==25263== Using Valgrind-3.15.0 and LibVEX; rerun with -h for copyright info
+==25263== Command: ./minishell
+==25263== Parent PID: 25262
+==25263== 
+==25263== Invalid read of size 1
+==25263==    at 0x1117F4: ft_strncmp_wo_plus (builtins_utils.c:78)
+==25263==    by 0x10F66D: export (builtins_parent.c:124)
+==25263==    by 0x10EBBF: search_parent_builtins (search_builtins.c:48)
+==25263==    by 0x10CAD1: execution_center (execution_center.c:47)
+==25263==    by 0x10C3D3: verif_read (verif_read.c:48)
+==25263==    by 0x10968F: main (main.c:65)
+==25263==  Address 0x4b1a350 is 0 bytes inside a block of size 9 free'd
+==25263==    at 0x483CA3F: free (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==25263==    by 0x10FB0B: export (builtins_parent.c:191)
+==25263==    by 0x10EBBF: search_parent_builtins (search_builtins.c:48)
+==25263==    by 0x10CAD1: execution_center (execution_center.c:47)
+==25263==    by 0x10C3D3: verif_read (verif_read.c:48)
+==25263==    by 0x10968F: main (main.c:65)
+==25263==  Block was alloc'd at
+==25263==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==25263==    by 0x1116BA: rm_char (builtins_utils.c:53)
+==25263==    by 0x10F902: export (builtins_parent.c:160)
+==25263==    by 0x10EBBF: search_parent_builtins (search_builtins.c:48)
+==25263==    by 0x10CAD1: execution_center (execution_center.c:47)
+==25263==    by 0x10C3D3: verif_read (verif_read.c:48)
+==25263==    by 0x10968F: main (main.c:65)
+==25263== 
+==25263== Invalid read of size 1
+==25263==    at 0x1117A9: ft_strncmp_wo_plus (builtins_utils.c:82)
+==25263==    by 0x10F66D: export (builtins_parent.c:124)
+==25263==    by 0x10EBBF: search_parent_builtins (search_builtins.c:48)
+==25263==    by 0x10CAD1: execution_center (execution_center.c:47)
+==25263==    by 0x10C3D3: verif_read (verif_read.c:48)
+==25263==    by 0x10968F: main (main.c:65)
+==25263==  Address 0x4b1a350 is 0 bytes inside a block of size 9 free'd
+==25263==    at 0x483CA3F: free (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==25263==    by 0x10FB0B: export (builtins_parent.c:191)
+==25263==    by 0x10EBBF: search_parent_builtins (search_builtins.c:48)
+==25263==    by 0x10CAD1: execution_center (execution_center.c:47)
+==25263==    by 0x10C3D3: verif_read (verif_read.c:48)
+==25263==    by 0x10968F: main (main.c:65)
+==25263==  Block was alloc'd at
+==25263==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==25263==    by 0x1116BA: rm_char (builtins_utils.c:53)
+==25263==    by 0x10F902: export (builtins_parent.c:160)
+==25263==    by 0x10EBBF: search_parent_builtins (search_builtins.c:48)
+==25263==    by 0x10CAD1: execution_center (execution_center.c:47)
+==25263==    by 0x10C3D3: verif_read (verif_read.c:48)
+==25263==    by 0x10968F: main (main.c:65)
+==25263== 
+==25263== Invalid read of size 1
+==25263==    at 0x113803: ft_strlen (ft_strlen.c:20)
+==25263==    by 0x10F6FF: export (builtins_parent.c:133)
+==25263==    by 0x10EBBF: search_parent_builtins (search_builtins.c:48)
+==25263==    by 0x10CAD1: execution_center (execution_center.c:47)
+==25263==    by 0x10C3D3: verif_read (verif_read.c:48)
+==25263==    by 0x10968F: main (main.c:65)
+==25263==  Address 0x4b1a350 is 0 bytes inside a block of size 9 free'd
+==25263==    at 0x483CA3F: free (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==25263==    by 0x10FB0B: export (builtins_parent.c:191)
+==25263==    by 0x10EBBF: search_parent_builtins (search_builtins.c:48)
+==25263==    by 0x10CAD1: execution_center (execution_center.c:47)
+==25263==    by 0x10C3D3: verif_read (verif_read.c:48)
+==25263==    by 0x10968F: main (main.c:65)
+==25263==  Block was alloc'd at
+==25263==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==25263==    by 0x1116BA: rm_char (builtins_utils.c:53)
+==25263==    by 0x10F902: export (builtins_parent.c:160)
+==25263==    by 0x10EBBF: search_parent_builtins (search_builtins.c:48)
+==25263==    by 0x10CAD1: execution_center (execution_center.c:47)
+==25263==    by 0x10C3D3: verif_read (verif_read.c:48)
+==25263==    by 0x10968F: main (main.c:65)
+==25263== 
+==25263== Invalid read of size 1
+==25263==    at 0x113803: ft_strlen (ft_strlen.c:20)
+==25263==    by 0x10F748: export (builtins_parent.c:137)
+==25263==    by 0x10EBBF: search_parent_builtins (search_builtins.c:48)
+==25263==    by 0x10CAD1: execution_center (execution_center.c:47)
+==25263==    by 0x10C3D3: verif_read (verif_read.c:48)
+==25263==    by 0x10968F: main (main.c:65)
+==25263==  Address 0x4b1a350 is 0 bytes inside a block of size 9 free'd
+==25263==    at 0x483CA3F: free (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==25263==    by 0x10FB0B: export (builtins_parent.c:191)
+==25263==    by 0x10EBBF: search_parent_builtins (search_builtins.c:48)
+==25263==    by 0x10CAD1: execution_center (execution_center.c:47)
+==25263==    by 0x10C3D3: verif_read (verif_read.c:48)
+==25263==    by 0x10968F: main (main.c:65)
+==25263==  Block was alloc'd at
+==25263==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==25263==    by 0x1116BA: rm_char (builtins_utils.c:53)
+==25263==    by 0x10F902: export (builtins_parent.c:160)
+==25263==    by 0x10EBBF: search_parent_builtins (search_builtins.c:48)
+==25263==    by 0x10CAD1: execution_center (execution_center.c:47)
+==25263==    by 0x10C3D3: verif_read (verif_read.c:48)
+==25263==    by 0x10968F: main (main.c:65)
+==25263== 
+==25263== Invalid read of size 1
+==25263==    at 0x11344D: ft_strlcpy (ft_strlcpy.c:20)
+==25263==    by 0x10F772: export (builtins_parent.c:137)
+==25263==    by 0x10EBBF: search_parent_builtins (search_builtins.c:48)
+==25263==    by 0x10CAD1: execution_center (execution_center.c:47)
+==25263==    by 0x10C3D3: verif_read (verif_read.c:48)
+==25263==    by 0x10968F: main (main.c:65)
+==25263==  Address 0x4b1a350 is 0 bytes inside a block of size 9 free'd
+==25263==    at 0x483CA3F: free (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==25263==    by 0x10FB0B: export (builtins_parent.c:191)
+==25263==    by 0x10EBBF: search_parent_builtins (search_builtins.c:48)
+==25263==    by 0x10CAD1: execution_center (execution_center.c:47)
+==25263==    by 0x10C3D3: verif_read (verif_read.c:48)
+==25263==    by 0x10968F: main (main.c:65)
+==25263==  Block was alloc'd at
+==25263==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==25263==    by 0x1116BA: rm_char (builtins_utils.c:53)
+==25263==    by 0x10F902: export (builtins_parent.c:160)
+==25263==    by 0x10EBBF: search_parent_builtins (search_builtins.c:48)
+==25263==    by 0x10CAD1: execution_center (execution_center.c:47)
+==25263==    by 0x10C3D3: verif_read (verif_read.c:48)
+==25263==    by 0x10968F: main (main.c:65)
+==25263== 
+==25263== Invalid read of size 1
+==25263==    at 0x11342A: ft_strlcpy (ft_strlcpy.c:22)
+==25263==    by 0x10F772: export (builtins_parent.c:137)
+==25263==    by 0x10EBBF: search_parent_builtins (search_builtins.c:48)
+==25263==    by 0x10CAD1: execution_center (execution_center.c:47)
+==25263==    by 0x10C3D3: verif_read (verif_read.c:48)
+==25263==    by 0x10968F: main (main.c:65)
+==25263==  Address 0x4b1a350 is 0 bytes inside a block of size 9 free'd
+==25263==    at 0x483CA3F: free (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==25263==    by 0x10FB0B: export (builtins_parent.c:191)
+==25263==    by 0x10EBBF: search_parent_builtins (search_builtins.c:48)
+==25263==    by 0x10CAD1: execution_center (execution_center.c:47)
+==25263==    by 0x10C3D3: verif_read (verif_read.c:48)
+==25263==    by 0x10968F: main (main.c:65)
+==25263==  Block was alloc'd at
+==25263==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==25263==    by 0x1116BA: rm_char (builtins_utils.c:53)
+==25263==    by 0x10F902: export (builtins_parent.c:160)
+==25263==    by 0x10EBBF: search_parent_builtins (search_builtins.c:48)
+==25263==    by 0x10CAD1: execution_center (execution_center.c:47)
+==25263==    by 0x10C3D3: verif_read (verif_read.c:48)
+==25263==    by 0x10968F: main (main.c:65)
+==25263== 
+==25263== Invalid read of size 1
+==25263==    at 0x113803: ft_strlen (ft_strlen.c:20)
+==25263==    by 0x11347B: ft_strlcpy (ft_strlcpy.c:27)
+==25263==    by 0x10F772: export (builtins_parent.c:137)
+==25263==    by 0x10EBBF: search_parent_builtins (search_builtins.c:48)
+==25263==    by 0x10CAD1: execution_center (execution_center.c:47)
+==25263==    by 0x10C3D3: verif_read (verif_read.c:48)
+==25263==    by 0x10968F: main (main.c:65)
+==25263==  Address 0x4b1a350 is 0 bytes inside a block of size 9 free'd
+==25263==    at 0x483CA3F: free (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==25263==    by 0x10FB0B: export (builtins_parent.c:191)
+==25263==    by 0x10EBBF: search_parent_builtins (search_builtins.c:48)
+==25263==    by 0x10CAD1: execution_center (execution_center.c:47)
+==25263==    by 0x10C3D3: verif_read (verif_read.c:48)
+==25263==    by 0x10968F: main (main.c:65)
+==25263==  Block was alloc'd at
+==25263==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==25263==    by 0x1116BA: rm_char (builtins_utils.c:53)
+==25263==    by 0x10F902: export (builtins_parent.c:160)
+==25263==    by 0x10EBBF: search_parent_builtins (search_builtins.c:48)
+==25263==    by 0x10CAD1: execution_center (execution_center.c:47)
+==25263==    by 0x10C3D3: verif_read (verif_read.c:48)
+==25263==    by 0x10968F: main (main.c:65)
+==25263== 
+==25263== Invalid free() / delete / delete[] / realloc()
+==25263==    at 0x483CA3F: free (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==25263==    by 0x10F7B6: export (builtins_parent.c:139)
+==25263==    by 0x10EBBF: search_parent_builtins (search_builtins.c:48)
+==25263==    by 0x10CAD1: execution_center (execution_center.c:47)
+==25263==    by 0x10C3D3: verif_read (verif_read.c:48)
+==25263==    by 0x10968F: main (main.c:65)
+==25263==  Address 0x4b1a350 is 0 bytes inside a block of size 9 free'd
+==25263==    at 0x483CA3F: free (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==25263==    by 0x10FB0B: export (builtins_parent.c:191)
+==25263==    by 0x10EBBF: search_parent_builtins (search_builtins.c:48)
+==25263==    by 0x10CAD1: execution_center (execution_center.c:47)
+==25263==    by 0x10C3D3: verif_read (verif_read.c:48)
+==25263==    by 0x10968F: main (main.c:65)
+==25263==  Block was alloc'd at
+==25263==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==25263==    by 0x1116BA: rm_char (builtins_utils.c:53)
+==25263==    by 0x10F902: export (builtins_parent.c:160)
+==25263==    by 0x10EBBF: search_parent_builtins (search_builtins.c:48)
+==25263==    by 0x10CAD1: execution_center (execution_center.c:47)
+==25263==    by 0x10C3D3: verif_read (verif_read.c:48)
+==25263==    by 0x10968F: main (main.c:65)
+==25263== 

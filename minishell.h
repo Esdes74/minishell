@@ -6,7 +6,7 @@
 /*   By: dbaule <dbaule@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 15:35:11 by eslamber          #+#    #+#             */
-/*   Updated: 2023/10/18 13:17:24 by dbaule           ###   ########.fr       */
+/*   Updated: 2023/10/18 18:09:29 by dbaule           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,6 +120,14 @@ int             add_exp_env(t_cmd *pip, char *str);
 
 int             unset(t_cmd *pip, char *name_value);
 
+char            *rm_char(char *str, char c);
+
+char	        *check_quote(char *str);
+
+char            *trash_quote(char *str);
+
+int             ft_strncmp_wo_plus(char *first, char *sec, size_t n);
+
 // Free functions
 
 void            anihilation(char **str);
@@ -151,7 +159,4 @@ char            **prep_hd(t_cmd *pip, t_list *spt);
 
 int             execution_center(t_list *spt, t_cmd *pip);
 
-char	        *check_quote(char *str);
-
-char            *trash_quote(char *str);
 #endif

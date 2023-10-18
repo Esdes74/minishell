@@ -6,7 +6,7 @@
 /*   By: dbaule <dbaule@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 11:08:50 by eslamber          #+#    #+#             */
-/*   Updated: 2023/10/18 13:17:09 by dbaule           ###   ########.fr       */
+/*   Updated: 2023/10/18 16:55:56 by dbaule           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ static t_cell *moving_to_the_needed_cell(int *tab, int i, t_cell *tmp)
     return (tmp);
 }
 
-char *trash_quote(char *str)
+char *trash_quote(char *str) // rm_char fais la meme mai free le str
 {
 	int	i;
 	int j;

@@ -6,7 +6,7 @@
 #    By: dbaule <dbaule@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/04 16:30:03 by eslamber          #+#    #+#              #
-#    Updated: 2023/07/03 14:09:06 by eslamber         ###   ########.fr        #
+#    Updated: 2023/10/18 16:37:19 by dbaule           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -50,7 +50,8 @@ SRC := main.c \
 	   search_builtins.c \
 	   builtins_parent.c \
 	   environement.c \
-	   check_variables.c
+	   check_variables.c \
+	   builtins_utils.c
 OBJ := $(SRC:%.c=.obj/%.o)
 
 #
