@@ -6,7 +6,7 @@
 /*   By: dbaule <dbaule@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/31 10:31:07 by dbaule            #+#    #+#             */
-/*   Updated: 2023/10/17 17:35:13 by dbaule           ###   ########.fr       */
+/*   Updated: 2023/10/18 09:39:05 by dbaule           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,8 +138,9 @@ int export(t_cmd *pip, char *name_value)
     {
         while (pip->exp_env[i]) // cherche dans exp_env pour remplacer
         {
+                ft_printf_fd(2, "test %s\n", var_name);
             if (strncmp(pip->exp_env[i] + 11, var_name, (ft_strlen(var_name))) == 0)
-            {            
+            {
                 buff = ft_strdup(name_value);
                 if (!buff)
                     return (free(var_name), 2);

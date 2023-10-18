@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_redirection.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eslamber <eslamber@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dbaule <dbaule@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 11:08:50 by eslamber          #+#    #+#             */
-/*   Updated: 2023/10/16 15:30:41 by eslamber         ###   ########.fr       */
+/*   Updated: 2023/10/18 09:38:47 by dbaule           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ char    **check_redirection(char **arg, t_cmd *struc)
                     return (anihilation(arg), error(TOKEN, "0"), NULL);
                 file = open(arg[i + 1], O_RDONLY);
                 if (file == -1)
-                    return (anihilation(arg), error(OPEN, "0"), NULL);
+                    return (anihilation(arg), perror("Error : "), NULL);
                 else if (dup2(file, STDIN_FILENO) == -1)
                     return (anihilation(arg), close(file), error(DUP, "0"), NULL);
                 close(file);
@@ -51,7 +51,7 @@ char    **check_redirection(char **arg, t_cmd *struc)
             {
                 file = open(&arg[i][1], O_RDONLY);
                 if (file == -1)
-                    return (anihilation(arg), error(OPEN, "0"), NULL);
+                    return (anihilation(arg), perror("Error : "), status = 1, NULL);
                 else if (dup2(file, STDIN_FILENO) == -1)
                     return (anihilation(arg), close(file), error(DUP, "0"), NULL);
                 close(file);
@@ -66,7 +66,7 @@ char    **check_redirection(char **arg, t_cmd *struc)
                     return (anihilation(arg), error(TOKEN, "0"), NULL);
                 file = open(arg[i + 1], O_CREAT | O_RDWR | O_TRUNC, 0644);
                 if (file == -1)
-                    return (anihilation(arg), error(OPEN, "0"), NULL);
+                    return (anihilation(arg), perror("Error : "), status = 1, NULL);
                 else if (dup2(file, STDOUT_FILENO) == -1)
                     return (anihilation(arg), close(file), error(DUP, "0"), NULL);
                 close(file);
@@ -80,7 +80,7 @@ char    **check_redirection(char **arg, t_cmd *struc)
                         return (anihilation(arg), error(TOKEN, "0"), NULL);
                     file = open(arg[i + 1], O_CREAT | O_RDWR | O_APPEND, 0644);
                     if (file == -1)
-                        return (anihilation(arg), error(OPEN, "0"), NULL);
+                        return (anihilation(arg), perror("Error : "), status = 1, NULL);
                     else if (dup2(file, STDOUT_FILENO) == -1)
                         return (anihilation(arg), close(file), error(DUP, "0"), NULL);
                     close(file);
@@ -90,7 +90,7 @@ char    **check_redirection(char **arg, t_cmd *struc)
                 {
                     file = open(&arg[i][2], O_CREAT | O_RDWR | O_APPEND, 0644);
                     if (file == -1)
-                        return (anihilation(arg), error(OPEN, "0"), NULL);
+                        return (anihilation(arg), perror("Error : "), status = 1, NULL);
                     else if (dup2(file, STDOUT_FILENO) == -1)
                         return (anihilation(arg), close(file), error(DUP, "0"), NULL);
                     close(file);
@@ -100,7 +100,7 @@ char    **check_redirection(char **arg, t_cmd *struc)
             {
                 file = open(&arg[i][1], O_CREAT | O_RDWR | O_TRUNC, 0644);
                 if (file == -1)
-                    return (anihilation(arg), error(OPEN, "0"), NULL);
+                    return (anihilation(arg), perror("Error : "), status = 1, NULL);
                 else if (dup2(file, STDOUT_FILENO) == -1)
                     return (anihilation(arg), close(file), error(DUP, "0"), NULL);
                 close(file);
