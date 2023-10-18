@@ -6,7 +6,7 @@
 /*   By: dbaule <dbaule@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/31 10:31:07 by dbaule            #+#    #+#             */
-/*   Updated: 2023/10/18 09:39:05 by dbaule           ###   ########.fr       */
+/*   Updated: 2023/10/18 12:57:19 by dbaule           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,44 +75,47 @@ int export(t_cmd *pip, char *name_value)
     char    *var_name;
     char    *buff;
     char    **new_env;
+    char    *na_val;
 
     i = 0;
-    if (!ft_isalpha(name_value[0]))
-        return (ft_printf_fd(2, "Error : not a valid identifier\n"), 1);
-    if (name_value[i] == '=')
-        return (ft_printf_fd(2, "Error : not a valid identifier\n"), 1);
-    while (name_value[i] && name_value[i] != '=')
+    na_val = check_quote(name_value);
+    if (na_val != name_value)
+        free(name_value);
+    if (!ft_isalpha(na_val[0]))
+        return (ft_printf_fd(2, "Error : not a valid identifier\n"), status = 1, 1);
+    if (na_val[0] == '=')
+        return (ft_printf_fd(2, "Error : not a valid identifier\n"), status = 1, 1);
+    while (na_val[i] && na_val[i] != '=')
     {
-        if (name_value[i] == '-' || name_value[i] == '+')
-            return(ft_printf_fd(2, "Error : not a valid identifier\n"), 1);
+        if (na_val[i] == '-' || na_val[i] == '+')
+            return(ft_printf_fd(2, "Error : not a valid identifier\n"), status = 1, 1);
         i++;
     }
-    if (name_value[i] == '\0') // a utiliser pour export sans rien
+    if (na_val[i] == '\0' && na_val[i - 1] != '=') // a utiliser pour export sans rien
     {
-        if (add_exp_env(pip, name_value) == 1)
+        if (add_exp_env(pip, na_val) == 1)
             return (1);
-        free(name_value);
+        free(na_val);
         pip->builtin = TRUE;
         return (0);
     }
-    var_name = malloc(sizeof(char) * (i + 1));
+    var_name = malloc(sizeof(char) * (i + 2)); // + 2 pour gerer le '='
     if (!var_name)
         return (error(MALLOC, "0"), 1);
-    z = i;
-    i = 0;
-    while (i < z)
+    z = 0;
+    while (z <= i)
     {
-        var_name[i] = name_value[i];
-        i++;
+        var_name[z] = na_val[z];
+        z++;
     }
-    var_name[i] = '\0';
+    var_name[z] = '\0';
     i = 0;
     while (pip->env[i]) // cherche dans env pour remplacer
     {
         if (strncmp(pip->env[i], var_name, (ft_strlen(var_name))) == 0)
         {
             free(pip->env[i]);
-            pip->env[i] = name_value;
+            pip->env[i] = na_val;
             break;
         }
         i++;
@@ -128,7 +131,7 @@ int export(t_cmd *pip, char *name_value)
             new_env[i] = pip->env[i];
             i++;
         }
-        new_env[i] = name_value;
+        new_env[i] = na_val;
         new_env[i + 1] = NULL;
         free(pip->env);
         pip->env = new_env;
@@ -138,10 +141,9 @@ int export(t_cmd *pip, char *name_value)
     {
         while (pip->exp_env[i]) // cherche dans exp_env pour remplacer
         {
-                ft_printf_fd(2, "test %s\n", var_name);
             if (strncmp(pip->exp_env[i] + 11, var_name, (ft_strlen(var_name))) == 0)
             {
-                buff = ft_strdup(name_value);
+                buff = ft_strdup(na_val);
                 if (!buff)
                     return (free(var_name), 2);
                 free(pip->exp_env[i]);
@@ -154,7 +156,7 @@ int export(t_cmd *pip, char *name_value)
             i++;
         }
         if (pip->exp_env[i] == NULL) // Ajoute dans exp_env si rien trouvé
-            if (add_exp_env(pip, name_value) == 1)
+            if (add_exp_env(pip, na_val) == 1)
                 return (free(var_name), 2);
     }
     pip->builtin = TRUE;

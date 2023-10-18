@@ -6,7 +6,7 @@
 /*   By: dbaule <dbaule@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 21:29:25 by dbaule            #+#    #+#             */
-/*   Updated: 2023/10/17 17:37:59 by dbaule           ###   ########.fr       */
+/*   Updated: 2023/10/18 13:28:29 by dbaule           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ int execution_center(t_list *spt, t_cmd *pip)
     {
         if (WIFSIGNALED(statut))
             exit_status = WTERMSIG(statut);
-        else if (WIFEXITED(status))
+        else if (WIFEXITED(statut))
             exit_status = WEXITSTATUS(statut);
         status = exit_status; // Stockage du code de sortie
     }

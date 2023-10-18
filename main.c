@@ -6,7 +6,7 @@
 /*   By: dbaule <dbaule@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 14:04:59 by eslamber          #+#    #+#             */
-/*   Updated: 2023/10/17 17:07:36 by dbaule           ###   ########.fr       */
+/*   Updated: 2023/10/18 09:56:15 by dbaule           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,8 @@ int	main(int argc, char **argv, char **env)
 	rl_bind_key('\t', rl_complete);
 	bufff = NULL;
 	pip.hd_history = NULL;
-	status = 0;
 	pip.ani_flag = 0;
+	status = 0;
 	while (1)
 	{
 		if (pip.hd_history != NULL)

@@ -6,7 +6,7 @@
 /*   By: dbaule <dbaule@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/03 11:08:59 by eslamber          #+#    #+#             */
-/*   Updated: 2023/10/17 15:53:01 by dbaule           ###   ########.fr       */
+/*   Updated: 2023/10/18 13:04:06 by dbaule           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ static void    error_bis(t_error err, char *cmd)
     else if (err == TOKEN)
         ft_printf_fd(ERR, "Error : Syntax error near unexpected token `\\n`\n");
     else if (err == OPEN)
-        ft_printf_fd(ERR, "Error : Problem with open function\n");
+        perror("Error ");
     else if (err == DUP)
         ft_printf_fd(ERR, "Error : Problem with dup2 function\n");
     else if (err == STRDUP)

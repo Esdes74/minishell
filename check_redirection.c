@@ -6,7 +6,7 @@
 /*   By: dbaule <dbaule@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 11:08:50 by eslamber          #+#    #+#             */
-/*   Updated: 2023/10/18 09:38:47 by dbaule           ###   ########.fr       */
+/*   Updated: 2023/10/18 13:29:11 by dbaule           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,92 +22,106 @@ char    **check_redirection(char **arg, t_cmd *struc)
     int     compt;
     int     i;
     int     j;
+    char    **buf;
 
     i = 0;
     struc->in = FALSE;
     struc->out = FALSE;
     if (check_heredoc(arg, struc) == 1)
         return (NULL);
+    while (arg[i])
+        i++;
+    buf = malloc(sizeof(char *) * (i + 1));
+    i = 0;
+    while (arg[i])
+    {
+        buf[i] = trash_quote(arg[i]);
+        // printf("%s valeur de buf[i]\n", buf[i]);
+        i++;
+    }
+    buf[i] = NULL;
+    i = 0;
     while (arg[i]) // récupération des différentes redirection
     {
-        if (arg[i][0] == '<')
+        if (buf[i][0] == '<')
         {
             struc->in = TRUE;
-            if (arg[i][1] == '\0')
+            if (buf[i][1] == '\0')
             {
-                if (arg[i + 1] == NULL)
-                    return (anihilation(arg), error(TOKEN, "0"), NULL);
-                file = open(arg[i + 1], O_RDONLY);
+                if (buf[i + 1] == NULL)
+                    return (anihilation(buf), anihilation(arg), error(TOKEN, "0"), NULL);
+                file = open(buf[i + 1], O_RDONLY);
                 if (file == -1)
-                    return (anihilation(arg), perror("Error : "), NULL);
+                    return (anihilation(buf), anihilation(arg), error(OPEN, "0"), status = 1,NULL);
                 else if (dup2(file, STDIN_FILENO) == -1)
-                    return (anihilation(arg), close(file), error(DUP, "0"), NULL);
+                    return (anihilation(buf), anihilation(arg),close(file), error(DUP, "0"), NULL);
                 close(file);
                 i++;
             }
-            else if (arg[i][1] == '<' && arg[i][2] == '\0')
+            else if (buf[i][1] == '<' && buf[i][2] == '\0')
                 i++;
-            else if (arg[i][1] != '<' || arg[i][2] == '\0')
+            else if (buf[i][1] != '<' || buf[i][2] == '\0')
             {
-                file = open(&arg[i][1], O_RDONLY);
+                file = open(&buf[i][1], O_RDONLY);
                 if (file == -1)
-                    return (anihilation(arg), perror("Error : "), status = 1, NULL);
+                    return (anihilation(buf), anihilation(arg), error(OPEN, "0"), status = 1, NULL);
                 else if (dup2(file, STDIN_FILENO) == -1)
-                    return (anihilation(arg), close(file), error(DUP, "0"), NULL);
+                    return (anihilation(buf), anihilation(arg), close(file), error(DUP, "0"), NULL);
                 close(file);
             }
         }
-        else if (arg[i][0] == '>')
+        else if (buf[i][0] == '>')
         {
             struc->out = TRUE;
-            if (arg[i][1] == '\0')
+            if (buf[i][1] == '\0')
             {
-                if (arg[i + 1] == NULL)
-                    return (anihilation(arg), error(TOKEN, "0"), NULL);
-                file = open(arg[i + 1], O_CREAT | O_RDWR | O_TRUNC, 0644);
+                if (buf[i + 1] == NULL)
+                    return (anihilation(buf), anihilation(arg), error(TOKEN, "0"), NULL);
+                file = open(buf[i + 1], O_CREAT | O_RDWR | O_TRUNC, 0644);
                 if (file == -1)
-                    return (anihilation(arg), perror("Error : "), status = 1, NULL);
+                    return (anihilation(buf), anihilation(arg), error(OPEN, "0"), status = 1, NULL);
                 else if (dup2(file, STDOUT_FILENO) == -1)
-                    return (anihilation(arg), close(file), error(DUP, "0"), NULL);
+                    return (anihilation(buf), anihilation(arg), close(file), error(DUP, "0"), NULL);
                 close(file);
                 i++;
             }
-            else if (arg[i][1] == '>')
+            else if (buf[i][1] == '>')
             {
-                if (arg[i][2] == '\0')
+                if (buf[i][2] == '\0')
                 {
-                    if (arg[i + 1] == NULL)
-                        return (anihilation(arg), error(TOKEN, "0"), NULL);
-                    file = open(arg[i + 1], O_CREAT | O_RDWR | O_APPEND, 0644);
+                    if (buf[i + 1] == NULL)
+                        return (anihilation(buf), anihilation(arg), error(TOKEN, "0"), NULL);
+                    file = open(buf[i + 1], O_CREAT | O_RDWR | O_APPEND, 0644);
                     if (file == -1)
-                        return (anihilation(arg), perror("Error : "), status = 1, NULL);
+                        return (anihilation(buf), anihilation(arg), error(OPEN, "0"), status = 1, NULL);
                     else if (dup2(file, STDOUT_FILENO) == -1)
-                        return (anihilation(arg), close(file), error(DUP, "0"), NULL);
+                        return (anihilation(buf), anihilation(arg), close(file), error(DUP, "0"), NULL);
                     close(file);
                     i++;
                 }
                 else
                 {
-                    file = open(&arg[i][2], O_CREAT | O_RDWR | O_APPEND, 0644);
+                    file = open(&buf[i][2], O_CREAT | O_RDWR | O_APPEND, 0644);
                     if (file == -1)
-                        return (anihilation(arg), perror("Error : "), status = 1, NULL);
+                        return (anihilation(buf), anihilation(arg), error(OPEN, "0"), status = 1, NULL);
                     else if (dup2(file, STDOUT_FILENO) == -1)
-                        return (anihilation(arg), close(file), error(DUP, "0"), NULL);
+                        return (anihilation(buf), anihilation(arg), close(file), error(DUP, "0"), NULL);
                     close(file);
                 }
             }
             else
             {
-                file = open(&arg[i][1], O_CREAT | O_RDWR | O_TRUNC, 0644);
+                file = open(&buf[i][1], O_CREAT | O_RDWR | O_TRUNC, 0644);
                 if (file == -1)
-                    return (anihilation(arg), perror("Error : "), status = 1, NULL);
+                    return (anihilation(buf), anihilation(arg), error(OPEN, "0"), status = 1, NULL);
                 else if (dup2(file, STDOUT_FILENO) == -1)
-                    return (anihilation(arg), close(file), error(DUP, "0"), NULL);
+                    return (anihilation(buf), anihilation(arg), close(file), error(DUP, "0"), NULL);
                 close(file);
             }
         }
         i++;
     }
+    anihilation(buf);
     if (struc->in == FALSE && struc->out == FALSE) // S'il n'y a pas de redirections pas besoin de retravailler le tableau de chaine de caractères
         return (arg);
     if (struc->heredoc == 1)

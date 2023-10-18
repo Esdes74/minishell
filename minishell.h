@@ -6,7 +6,7 @@
 /*   By: dbaule <dbaule@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 15:35:11 by eslamber          #+#    #+#             */
-/*   Updated: 2023/10/17 17:09:02 by dbaule           ###   ########.fr       */
+/*   Updated: 2023/10/18 13:17:24 by dbaule           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,4 +152,6 @@ char            **prep_hd(t_cmd *pip, t_list *spt);
 int             execution_center(t_list *spt, t_cmd *pip);
 
 char	        *check_quote(char *str);
+
+char            *trash_quote(char *str);
 #endif
