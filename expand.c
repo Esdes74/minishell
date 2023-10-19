@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eslamber <eslamber@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dbaule <dbaule@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 18:55:25 by eslamber          #+#    #+#             */
-/*   Updated: 2023/10/19 19:00:45 by eslamber         ###   ########.fr       */
+/*   Updated: 2023/10/19 19:12:04 by dbaule           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,15 @@
 
 int expand(char *rd_line, t_cmd *pip)
 {
-    char    *new;
-    int     i;
+    (void) (rd_line);
+    (void)pip;
+//     char    *new;
+//     int     i;
 
-    i = 0;
-    while (rd_line[i])
-    {
+//     i = 0;
+//     while (rd_line[i])
+//     {
         
-    }
+//     }
     return (0);
 }

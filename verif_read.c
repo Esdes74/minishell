@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   verif_read.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eslamber <eslamber@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dbaule <dbaule@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 11:08:50 by eslamber          #+#    #+#             */
-/*   Updated: 2023/10/19 18:53:43 by eslamber         ###   ########.fr       */
+/*   Updated: 2023/10/19 22:00:05 by dbaule           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,8 @@ char *verif_read(char *rd_line, t_cmd *pip)
         return (NULL);
     else if (flag == -1)
         return (free(buff), NULL);
-    // else if (flag == -2)
-    //     return (free(b), NULL); // annihilation(spt, free, DEBUG) exitt(pip, TRUE),
+    // else if (flag == 0)
+    //     return (status = 0, NULL); // annihilation(spt, free, DEBUG) exitt(pip, TRUE),
     annihilation(spt, free, DEBUG);
     return (buff);
 }

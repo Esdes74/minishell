@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eslamber <eslamber@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dbaule <dbaule@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 11:08:50 by eslamber          #+#    #+#             */
-/*   Updated: 2023/08/29 11:08:54 by eslamber         ###   ########.fr       */
+/*   Updated: 2023/10/19 22:19:29 by dbaule           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,12 +39,19 @@ void    echo(char **arg, int option)
     int flag;
     int type_flag;
 
+
+    i = 1;
     flag = 0;
+    j = 0;
+    if (option == 1)
+        i = position_echo_n(arg, &j, &flag, &option);
     type_flag = 0;
-    i = 1 + option;
     while (arg[i])
     {
-        j = 1;
+        if (flag != 2)
+            j = 1;
+        if (flag == 2)
+            flag = 0;
         while (arg[i][j] && arg[i][j] != '"' && arg[i][j] != '\'')
             j++;
         if ((arg[i][j] == '"' || arg[i][j] == '\'') && arg[i][j + 1] != '\0')

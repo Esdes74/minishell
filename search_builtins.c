@@ -6,7 +6,7 @@
 /*   By: dbaule <dbaule@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/13 11:08:50 by eslamber          #+#    #+#             */
-/*   Updated: 2023/10/17 17:34:10 by dbaule           ###   ########.fr       */
+/*   Updated: 2023/10/19 21:41:46 by dbaule           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ int search_builtins(char **spt, t_cmd *pip)
     {
         determine_echo_or_cd(spt, &option);
         if (option == 0 || option == 1)
-            return (echo(spt, option), 1);
+            return (echo(spt, option), status = 0, 1);
         else if (option == 2)
             return (cd(spt[1], pip, NULL), -1);
     }
@@ -107,7 +107,7 @@ static void determine_echo_or_cd(char **str, int *option)
     {
         if (str[1] == NULL)
             return ;
-        else if (ft_strlen(str[1]) == 2 && ft_strncmp(str[1], "-n", 2) == 0)
+        else if (ft_strncmp(str[1], "-n", 2) == 0)
         {
             *option = 1;
             if (str[2] == NULL)

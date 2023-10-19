@@ -6,15 +6,16 @@
 /*   By: dbaule <dbaule@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 10:47:27 by dbaule            #+#    #+#             */
-/*   Updated: 2023/10/19 19:04:38 by dbaule           ###   ########.fr       */
+/*   Updated: 2023/10/19 19:14:30 by dbaule           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void sort_export(t_cmd *pip);
-static int check_sort(t_cmd *pip);
-static int pars_exp(int *flag, char	*na_val);
+static void	sort_export(t_cmd *pip);
+static int	check_sort(t_cmd *pip);
+static int	pars_exp(int *flag, char	*na_val);
+static int	check_double_exp_env(char **exp_env, char *str);
 
 int export(t_cmd *pip, char *name_value)
 {
@@ -44,8 +45,8 @@ int export(t_cmd *pip, char *name_value)
 		return (0);
     if (na_val[i] == '\0' && na_val[i - 1] != '=' && flag == 0) // a utiliser pour export sans rien
     {
-		// if (check_if_double(pip->exp_env, na_val) == 1)
-			// return (0);
+		if (check_double_exp_env(pip->exp_env, na_val) == 1)
+			return (free(na_val), 0);
         if (add_exp_env(pip, na_val) == 1)
             return (free(na_val), 1);
         free(na_val);
@@ -292,7 +293,10 @@ static int	check_double_exp_env(char **exp_env, char *str)
 	i = 0;
 	while(exp_env[i])
 	{
-		z = pars_exp(&0, &(exp_env[i])[11]);
-			if (ft_strncmp(&(exp_env[i])[11], str, z))
-	}	
+		z = pars_exp(&z, &(exp_env[i])[11]);
+			if (ft_strncmp(&(exp_env[i])[11], str, z) == 0)
+				return (1);
+		i++;
+	}
+	return (0);
 }
