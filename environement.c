@@ -6,15 +6,13 @@
 /*   By: dbaule <dbaule@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/01 14:26:08 by dbaule            #+#    #+#             */
-/*   Updated: 2023/10/18 16:56:07 by dbaule           ###   ########.fr       */
+/*   Updated: 2023/10/19 10:50:19 by dbaule           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 static int check_if_double(char **env, char *cmp);
 static char **ft_cpy_env(char **env);
-static void sort_export(t_cmd *pip);
-static int check_sort(t_cmd *pip);
 
 int cpy_env(char **env, t_cmd *pip)
 {
@@ -166,104 +164,3 @@ static char **ft_cpy_env(char **env)
     return (buf_env);
 }
 
-int add_exp_env(t_cmd *pip, char *str)
-{
-    int     i;
-    char    *buf;
-    char    **new_one;
-    int     flag;
-
-    buf = malloc(sizeof(char) * (ft_strlen(str) + 12));
-    if (!buf)
-        return (1);
-    ft_strlcpy(buf, "declare -x ", 12);
-    ft_strlcpy(&(buf[11]), str, ft_strlen(str) + 1);
-    i = 0;
-    flag = 0;
-    while (pip->exp_env[i])
-    {
-        if (strncmp(buf, pip->exp_env[i], ft_strlen(buf) + 1) == 0 && ft_in('=', buf) == 1)
-            return (free(buf), 0);
-        else if (strncmp(buf, pip->exp_env[i], ft_strlen(buf)) == 0 && ft_in('=', buf) == 0 && pip->exp_env[i][ft_strlen(buf)] == '=')
-            return (free(buf), 0);
-        if (ft_in('=', buf) == 1 && strncmp(buf, pip->exp_env[i], ft_strlen(pip->exp_env[i])) == 0)
-            flag = 1;
-        i++;
-    }
-    while (pip->exp_env[i])
-        i++;
-    if (flag == 0)
-        new_one = malloc(sizeof(char*) * (i + 2));
-    else
-        new_one = malloc(sizeof(char*) * (i + 1));
-    if (new_one == NULL)
-        return (free(buf), error(MALLOC, 0), 1);
-    i = 0;
-    while (pip->exp_env[i])
-    {
-        if (ft_in('=', buf) == 1 && strncmp(buf, pip->exp_env[i], ft_strlen(pip->exp_env[i])) == 0)
-        {
-            new_one[i] = ft_strdup(buf);
-            if (!new_one[i])
-                return (free(new_one), free(buf), 1);
-            flag = 1;
-        }
-        else
-        {
-            new_one[i] = ft_strdup(pip->exp_env[i]);
-            if (!new_one[i])
-                return (free(new_one), free(buf), 1);
-        }
-        i++;
-    }
-    if (flag == 0)
-    {
-        new_one[i] = buf;
-        new_one[i + 1] = NULL;
-    }
-    else
-    {
-        new_one[i] = NULL;
-        free(buf);
-    }
-    anihilation(pip->exp_env);
-    pip->exp_env = new_one;
-    sort_export(pip);
-    return (0);
-}
-
-static void sort_export(t_cmd *pip)
-{
-    size_t  i;
-    char    *buf;
-
-    i = 0;
-    while (pip->exp_env[i])
-    {
-        if (pip->exp_env[i + 1] && strncmp(pip->exp_env[i], pip->exp_env[i + 1],ft_strlen(pip->exp_env[i])) > 0)
-        {
-            buf = pip->exp_env[i];
-            pip->exp_env[i] = pip->exp_env[i + 1];
-            pip->exp_env[i + 1] = buf;
-        }
-        i++;
-    }
-    if (check_sort(pip) == 1)
-        sort_export(pip);
-    else
-        return ;
-}
-
-static int check_sort(t_cmd *pip)
-{
-    size_t i;
-
-    i = 0;
-    while (pip->exp_env[i + 1])
-    {
-        if (ft_strncmp(pip->exp_env[i], pip->exp_env[i + 1], ft_strlen(pip->exp_env[i])) > 0)
-            return (1);
-        i++;
-    }
-    return (0);
-}
