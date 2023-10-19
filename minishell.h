@@ -6,7 +6,7 @@
 /*   By: dbaule <dbaule@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 15:35:11 by eslamber          #+#    #+#             */
-/*   Updated: 2023/10/19 21:53:37 by dbaule           ###   ########.fr       */
+/*   Updated: 2023/10/20 01:36:29 by dbaule           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,6 +136,7 @@ void            anihilation(char **str);
 
 void	        free_all(t_cmd *pip);
 
+void            free_tab_pid(pid_t *tab, int size);
 
 // Fork and pipes
 int             close_all_pipes(t_cmd *pi);

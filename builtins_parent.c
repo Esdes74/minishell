@@ -6,7 +6,7 @@
 /*   By: dbaule <dbaule@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/31 10:31:07 by dbaule            #+#    #+#             */
-/*   Updated: 2023/10/19 22:13:47 by dbaule           ###   ########.fr       */
+/*   Updated: 2023/10/20 01:03:03 by dbaule           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,6 @@ unsigned char    exitt(unsigned char ret_value)
 
 void    cd(char *path, t_cmd *pip, t_list *spt)
 {
-    printf("%s\n", path);
     if (spt->len <= 2 && path != NULL && chdir(path) != 0)
     {
         ft_printf_fd(2, "-bash: cd: %s: No such file or directory\n");
