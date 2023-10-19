@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   verif_read.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dbaule <dbaule@student.42.fr>              +#+  +:+       +#+        */
+/*   By: eslamber <eslamber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 11:08:50 by eslamber          #+#    #+#             */
-/*   Updated: 2023/10/17 17:08:47 by dbaule           ###   ########.fr       */
+/*   Updated: 2023/10/19 18:53:43 by eslamber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ char *verif_read(char *rd_line, t_cmd *pip)
     init_list(spt);
     if (rd_line[0] == '|')
         return (error(TOKEN, "0"), NULL);
+    if (expand(rd_line, pip) == 1)
+        return (annihilation(spt, free, DEBUG), NULL);
     parsing(rd_line, &flag, spt);
     if (spt->len == 0)
         return (annihilation(spt, free, DEBUG), rd_line);

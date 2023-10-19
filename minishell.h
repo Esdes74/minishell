@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dbaule <dbaule@student.42.fr>              +#+  +:+       +#+        */
+/*   By: eslamber <eslamber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 15:35:11 by eslamber          #+#    #+#             */
-/*   Updated: 2023/10/18 18:09:29 by dbaule           ###   ########.fr       */
+/*   Updated: 2023/10/19 18:54:56 by eslamber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,6 +146,8 @@ int             check_variables(t_list *spt, t_cmd *pip);
 char	        *cmd_build(char *str, char **env);
 
 int             cmd_center_simple(char **str, t_cmd *pip);
+
+int             expand(char *rd_line, t_cmd *pip);
 
 void            parsing(const char *rd_line, int *flag, t_list *spt);
 

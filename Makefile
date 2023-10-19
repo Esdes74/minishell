@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: dbaule <dbaule@student.42.fr>              +#+  +:+       +#+         #
+#    By: eslamber <eslamber@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/04 16:30:03 by eslamber          #+#    #+#              #
-#    Updated: 2023/10/19 10:49:55 by dbaule           ###   ########.fr        #
+#    Updated: 2023/10/19 18:56:23 by eslamber         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -52,7 +52,8 @@ SRC := main.c \
 	   environement.c \
 	   check_variables.c \
 	   builtins_utils.c \
-	   export.c
+	   export.c \
+	   expand.c
 OBJ := $(SRC:%.c=.obj/%.o)
 
 #
