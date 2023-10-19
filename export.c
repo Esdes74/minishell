@@ -6,7 +6,7 @@
 /*   By: dbaule <dbaule@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 10:47:27 by dbaule            #+#    #+#             */
-/*   Updated: 2023/10/19 16:16:47 by dbaule           ###   ########.fr       */
+/*   Updated: 2023/10/19 16:39:40 by dbaule           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int export(t_cmd *pip, char *name_value)
     flag = 0;
     na_val = check_quote(name_value);
     if (!na_val)
-        return (1);
+        return (error(MALLOC, "0"), 1);
     if (na_val != name_value)
 	{
         free(name_value);
@@ -110,7 +110,7 @@ int export(t_cmd *pip, char *name_value)
         na_val = rm_char(na_val, '+');
         new_env[i] = ft_strdup(na_val);
 		if (!new_env[i])
-			return (free(var_name), free(na_val), free(name_value), 2);
+			return (free(var_name), free(na_val), 2);
         new_env[i + 1] = NULL;
         free(pip->env);
         pip->env = new_env;
@@ -153,13 +153,12 @@ int export(t_cmd *pip, char *name_value)
             i++;
         }
         if (pip->exp_env[i] == NULL) // Ajoute dans exp_env si rien trouvé
-            if (add_exp_env(pip, na_val) == 1) // pareil sans le '=' dangereux
+            if (add_exp_env(pip, na_val) == 1)
                 return (free(var_name), 2);
     }
     pip->builtin = TRUE;
     free(var_name);
     free(na_val);
-	// free(name_value);
     return (0);
 }
 
