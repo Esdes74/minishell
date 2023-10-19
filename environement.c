@@ -6,7 +6,7 @@
 /*   By: dbaule <dbaule@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/01 14:26:08 by dbaule            #+#    #+#             */
-/*   Updated: 2023/09/05 02:47:53 by dbaule           ###   ########.fr       */
+/*   Updated: 2023/10/19 10:50:19 by dbaule           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -164,44 +164,3 @@ static char **ft_cpy_env(char **env)
     return (buf_env);
 }
 
-int add_exp_env(t_cmd *pip, char *str)
-{
-    int  i;
-    char *buf;
-    char **new_one;
-
-    buf = malloc(sizeof(char) * (ft_strlen(str) + 12));
-    if (!buf)
-        return (1);
-    ft_strlcpy(buf, "declare -x ", 12);
-    ft_strlcpy(&(buf[11]), str, ft_strlen(str) + 1);
-    i = 0;
-    while (pip->exp_env[i])
-    {
-        if (strncmp(buf, pip->exp_env[i], ft_strlen(buf)) == 0)
-        {
-            free(buf);
-            return (0);
-        }
-        i++;
-    }
-    while (pip->exp_env[i])
-        i++;
-    new_one = malloc(sizeof(char*) * (i + 2));
-    if (new_one == NULL)
-        return (free(buf), error(MALLOC, 0), 1);
-    i = 0;
-    while (pip->exp_env[i])
-    {
-        new_one[i] = ft_strdup(pip->exp_env[i]);
-        if (!new_one[i])
-            return (free(new_one), free(buf), 1);
-        i++;
-    }
-    new_one[i] = buf;
-    new_one[i + 1] = NULL;
-    anihilation(pip->exp_env);
-    pip->exp_env = new_one;
-    // initialize_exp_env(pip, pip->exp_env); // PK ? (provoque leaks)
-    return (0);
-}

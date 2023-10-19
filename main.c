@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eslamber <eslamber@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dbaule <dbaule@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 14:04:59 by eslamber          #+#    #+#             */
-/*   Updated: 2023/10/16 15:36:16 by eslamber         ###   ########.fr       */
+/*   Updated: 2023/10/18 13:49:58 by dbaule           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,8 @@ int	main(int argc, char **argv, char **env)
 	rl_bind_key('\t', rl_complete);
 	bufff = NULL;
 	pip.hd_history = NULL;
-	status = 0;
 	pip.ani_flag = 0;
+	status = 0;
 	while (1)
 	{
 		if (pip.hd_history != NULL)
@@ -62,7 +62,7 @@ int	main(int argc, char **argv, char **env)
 			free_all(&pip);
 			return (quit(), 1);
 		}
-		rd_line = verif_read(bufff, rd_line, &pip);
+		rd_line = verif_read(rd_line, &pip);
 		if (rd_line == NULL)
 		{
 			free(bufff);

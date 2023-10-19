@@ -6,7 +6,7 @@
 /*   By: dbaule <dbaule@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/03 11:30:24 by dbaule            #+#    #+#             */
-/*   Updated: 2023/08/04 17:02:18 by dbaule           ###   ########.fr       */
+/*   Updated: 2023/10/18 10:58:24 by dbaule           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ int historic_fct(char *bufff, char *test, t_cmd *pip) // gérer les espace dans 
     int     flag;
     char    *tmp;
     char    *buf;
+    (void)bufff;
 
     i = 0;
     flag = 0;
@@ -86,15 +87,7 @@ int historic_fct(char *bufff, char *test, t_cmd *pip) // gérer les espace dans 
     }
     else
         tmp = test;
-    if (test[0] == ' ' || test[0] == '\0')
-        return (0);
-    if (bufff == NULL)
-        add_history(tmp);
-    else
-    {
-        if (strncmp(test, bufff, ft_strlen(test) + 1) != 0 || flag == 1)
-            add_history(tmp);
-    }
+    add_history(tmp);
     if (tmp != test)
         free(tmp);
     return (0);

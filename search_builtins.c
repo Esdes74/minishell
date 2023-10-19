@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   search_builtins.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eslamber <eslamber@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dbaule <dbaule@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/13 11:08:50 by eslamber          #+#    #+#             */
-/*   Updated: 2023/10/16 15:32:57 by eslamber         ###   ########.fr       */
+/*   Updated: 2023/10/17 17:34:10 by dbaule           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int search_parent_builtins(t_cmd *pip, t_list *spt)
     else if (ft_strlen(str) == 6 && ft_strncmp(str, "export", 6) == 0)
     {
         if (tmp->next == NULL)
-            return (1);
+            return (2);
         pip->parent_builtin = TRUE;
         tmp = tmp->next;
         while (tmp != NULL)
@@ -66,7 +66,7 @@ int search_parent_builtins(t_cmd *pip, t_list *spt)
             free(buf);
             tmp = tmp->next;
         }
-        return (-1);
+        return (1);
     }
     return (0);
 }

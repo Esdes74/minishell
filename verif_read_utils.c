@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   verif_read_utils.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eslamber <eslamber@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dbaule <dbaule@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 11:08:50 by eslamber          #+#    #+#             */
-/*   Updated: 2023/08/29 11:08:54 by eslamber         ###   ########.fr       */
+/*   Updated: 2023/10/18 16:55:56 by dbaule           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,4 +90,33 @@ static t_cell *moving_to_the_needed_cell(int *tab, int i, t_cell *tmp)
         j++;
     }
     return (tmp);
+}
+
+char *trash_quote(char *str) // rm_char fais la meme mai free le str
+{
+	int	i;
+	int j;
+	char *new_str;
+
+	j = 0;
+	i = 0;
+	while (str[i] != '\0')
+	{
+		if (str[i] == '"' || str[i] == '\'')
+			j++;
+		i++;
+	}
+	new_str = malloc(sizeof(char) * ((i - j) + 1));
+	if (!new_str)
+		return (NULL);
+	i = 0;
+	j = 0;
+	while (str[i])
+	{
+		if (str[i] != '"' && str[i] != '\'')
+			new_str[j++] = str[i];
+		i++;
+	}
+	new_str[j] = '\0';
+	return (new_str);
 }

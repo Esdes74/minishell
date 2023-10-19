@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eslamber <eslamber@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dbaule <dbaule@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 15:35:11 by eslamber          #+#    #+#             */
-/*   Updated: 2023/10/16 16:06:06 by eslamber         ###   ########.fr       */
+/*   Updated: 2023/10/18 18:09:29 by dbaule           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ void            silent_quit(void);
 
 int             historic_fct(char *bufff, char *test, t_cmd *pip);
 
-char            *verif_read(char *b, char *rd_line, t_cmd *pip);
+char            *verif_read(char *rd_line, t_cmd *pip);
 
 int             cpy_env(char **env, t_cmd *pip);
 
@@ -119,6 +119,14 @@ int             initialize_exp_env(t_cmd *pip, char **env);
 int             add_exp_env(t_cmd *pip, char *str);
 
 int             unset(t_cmd *pip, char *name_value);
+
+char            *rm_char(char *str, char c);
+
+char	        *check_quote(char *str);
+
+char            *trash_quote(char *str);
+
+int             ft_strncmp_wo_plus(char *first, char *sec, size_t n);
 
 // Free functions
 
@@ -151,5 +159,4 @@ char            **prep_hd(t_cmd *pip, t_list *spt);
 
 int             execution_center(t_list *spt, t_cmd *pip);
 
-char	        *check_quote(char *str);
 #endif
