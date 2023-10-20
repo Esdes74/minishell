@@ -6,7 +6,7 @@
 /*   By: dbaule <dbaule@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 10:47:27 by dbaule            #+#    #+#             */
-/*   Updated: 2023/10/19 19:14:30 by dbaule           ###   ########.fr       */
+/*   Updated: 2023/10/20 02:38:29 by dbaule           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,7 @@ int export(t_cmd *pip, char *name_value)
     int     i;
     int     j;
     int     z;
-    char    *var_name;
-    char    *buff;
+    // char    *buff;
     char    **new_env;
     char    *na_val;
     int     flag;
@@ -53,16 +52,6 @@ int export(t_cmd *pip, char *name_value)
         pip->builtin = TRUE;
         return (0);
     }
-    var_name = malloc(sizeof(char) * (i + 2)); // + 2 pour gerer le '='
-    if (!var_name)
-        return (error(MALLOC, "0"), 1);
-    z = 0;
-    while (z <= i)
-    {
-        var_name[z] = na_val[z];
-        z++;
-    }
-    var_name[z] = '\0';
     i = 0;
     z = 0;
 	j = pars_exp(&flag, na_val);
@@ -103,7 +92,7 @@ int export(t_cmd *pip, char *name_value)
     {
         new_env = malloc(sizeof(char *) * (i + 2));
         if (!new_env)
-            return (error(MALLOC, "0"), free(var_name), 1);
+            return (error(MALLOC, "0"), 1);
         i = 0;
         while (pip->env[i])
         {
@@ -113,7 +102,7 @@ int export(t_cmd *pip, char *name_value)
         na_val = rm_char(na_val, '+');
         new_env[i] = ft_strdup(na_val);
 		if (!new_env[i])
-			return (free(var_name), free(na_val), 2);
+			return (free(na_val), 2);
         new_env[i + 1] = NULL;
         free(pip->env);
         pip->env = new_env;
@@ -131,10 +120,10 @@ int export(t_cmd *pip, char *name_value)
 				if (ft_strncmp_wo_plus(pip->exp_env[i] + 11, na_val, z + 1) == 0) // -1 est bon mais il faut une autre comapraison
 				{
 					j++;
-					buff = ft_strjoin(pip->exp_env[i], na_val + j);
+					buf = ft_strjoin(pip->exp_env[i], na_val + j);
 					free(pip->exp_env[i]);
-					pip->exp_env[i] = ft_strdup(buff);
-					free(buff);
+					pip->exp_env[i] = ft_strdup(buf);
+					free(buf);
 					break;
 				}
 			}
@@ -142,14 +131,14 @@ int export(t_cmd *pip, char *name_value)
 			{
 				if (ft_strncmp(pip->exp_env[i] + 11, na_val, z + 1) == 0)
 				{
-					buff = ft_strdup(na_val); // peut etre douteux maintenant que je supprime le '=' a voir comment je peux remplacer ca 
-					if (!buff)
-						return (free(var_name), free(na_val), 2);
+					buf = ft_strdup(na_val); // peut etre douteux maintenant que je supprime le '=' a voir comment je peux remplacer ca 
+					if (!buf)
+						return (free(na_val), 2);
 					free(pip->exp_env[i]);
-					pip->exp_env[i] = ft_strjoin("declare -x ", buff);
+					pip->exp_env[i] = ft_strjoin("declare -x ", buf);
 					if (!pip->exp_env[i])
-						return (free(buff), free(var_name), free(na_val), 2);
-					free(buff);
+						return (free(buf), free(na_val), 2);
+					free(buf);
 					break;
 				}
 			}
@@ -157,10 +146,9 @@ int export(t_cmd *pip, char *name_value)
         }
         if (pip->exp_env[i] == NULL) // Ajoute dans exp_env si rien trouvé
             if (add_exp_env(pip, na_val) == 1)
-                return (free(var_name), 2);
+                return (2);
     }
     pip->builtin = TRUE;
-    free(var_name);
     free(na_val);
     return (0);
 }
@@ -289,12 +277,13 @@ static int	check_double_exp_env(char **exp_env, char *str)
 {
 	size_t	i;
 	int		z;
+    int     flag;
 
 	i = 0;
 	while(exp_env[i])
 	{
-		z = pars_exp(&z, &(exp_env[i])[11]);
-			if (ft_strncmp(&(exp_env[i])[11], str, z) == 0)
+		z = pars_exp(&flag, &(exp_env[i])[11]);
+			if (ft_strncmp(&(exp_env[i])[11], str, z) == 0 && ft_strlen(&(exp_env[i])[11]) == ft_strlen(str))
 				return (1);
 		i++;
 	}
