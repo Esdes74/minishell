@@ -6,7 +6,7 @@
 /*   By: eslamber <eslamber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 11:08:50 by eslamber          #+#    #+#             */
-/*   Updated: 2023/10/19 18:53:43 by eslamber         ###   ########.fr       */
+/*   Updated: 2023/10/20 02:46:16 by eslamber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ static int check_arg(t_list *spt);
 char *verif_read(char *rd_line, t_cmd *pip)
 {
     int     flag;
+    char    *save;
     char    *buff;
     char    *buf;
     t_list  *spt;
@@ -28,25 +29,41 @@ char *verif_read(char *rd_line, t_cmd *pip)
     init_list(spt);
     if (rd_line[0] == '|')
         return (error(TOKEN, "0"), NULL);
-    if (expand(rd_line, pip) == 1)
+    buff = ft_strdup(rd_line);
+    if (buff == NULL)
+        return (error(MALLOC, "0"), annihilation(spt, free, DEBUG), NULL);
+    rd_line = expand(rd_line, pip);
+    if (rd_line == NULL)
         return (annihilation(spt, free, DEBUG), NULL);
     parsing(rd_line, &flag, spt);
+    free(rd_line);
     if (spt->len == 0)
-        return (annihilation(spt, free, DEBUG), rd_line);
-    buff = rd_line;
+        return (annihilation(spt, free, DEBUG), buff);
     while (flag == 1 || flag == 2)
     {
         rd_line = readline("> ");
+        save = ft_strdup(rd_line);
+        rd_line = expand(rd_line, pip);
+        if (rd_line == NULL)
+            return (annihilation(spt, free, DEBUG), NULL);
+        if (save == NULL)
+            return (error(MALLOC, "0"), annihilation(spt, free, DEBUG), NULL);
         parsing(rd_line, &flag, spt);
+        free(rd_line);
         buf = ft_strjoin(buff, "\n");
+        if (buf == NULL)
+            return (error(MALLOC, "0"), annihilation(spt, free, DEBUG), NULL);
         free(buff);
-        buff = ft_strjoin(buf, rd_line);
+        buff = ft_strjoin(buf, save);
+        free(save);
+        if (buff == NULL)
+            return (error(MALLOC, "0"), annihilation(spt, free, DEBUG), NULL);
         free(buf);
     }
     if (check_arg(spt) == 1)
         return(annihilation(spt, free, DEBUG), buff);
-    if (check_variables(spt, pip) == 1)
-        return (NULL);
+    // if (check_variables(spt, pip) == 1)
+    //     return (NULL);
     flag = execution_center(spt, pip);
     if (flag == 1)
         return (NULL);
