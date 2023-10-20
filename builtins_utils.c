@@ -6,7 +6,7 @@
 /*   By: dbaule <dbaule@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 16:36:54 by dbaule            #+#    #+#             */
-/*   Updated: 2023/10/19 22:16:33 by dbaule           ###   ########.fr       */
+/*   Updated: 2023/10/20 04:41:14 by dbaule           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,4 +121,14 @@ int	position_echo_n(char **arg, int *j, int *flag, int *option)
 		i++;
 	}
 	return(i);
+}
+
+int	count_name_env(char *str)
+{
+	int i;
+
+	i = 0;
+	while (str[i] && str[i + 1] != '=')
+		i++;
+	return (i);
 }
