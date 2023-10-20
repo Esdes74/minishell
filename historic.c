@@ -6,7 +6,7 @@
 /*   By: dbaule <dbaule@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/03 11:30:24 by dbaule            #+#    #+#             */
-/*   Updated: 2023/10/18 10:58:24 by dbaule           ###   ########.fr       */
+/*   Updated: 2023/10/20 02:13:34 by dbaule           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,8 @@ int historic_fct(char *bufff, char *test, t_cmd *pip) // gérer les espace dans 
     }
     else
         tmp = test;
-    add_history(tmp);
+    if (tmp[0] != '\0')
+        add_history(tmp);
     if (tmp != test)
         free(tmp);
     return (0);
