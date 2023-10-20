@@ -6,7 +6,7 @@
 /*   By: eslamber <eslamber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 18:55:25 by eslamber          #+#    #+#             */
-/*   Updated: 2023/10/20 05:16:38 by eslamber         ###   ########.fr       */
+/*   Updated: 2023/10/20 06:04:43 by eslamber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,19 +35,20 @@ char    *expand(char *rd_line, t_cmd *pip, int *flag)
             *flag = 0;
         else if (*flag == 0 && rd_line[i] == '"')
             *flag = 2;
-        if (rd_line[i] == '$' && rd_line[i] == '?' && *flag != 1)
+        if (rd_line[i] == '$' && rd_line[i + 1] == '?' && *flag != 1)
         {
             tmp = ft_itoa(status);
             if (tmp == NULL)
                 return (error(MALLOC, "0"), NULL);
             new = add_var_to_sentence(rd_line, tmp, i, flag);
-            if (new == NULL)
-                return (free(var), NULL);
-            free(rd_line);
-            rd_line = new;
+            if (new != NULL)
+            {
+                free(rd_line);
+                rd_line = new;
+            }
             new = NULL;
         }
-        if (rd_line[i] == '$' && *flag != 1)
+        if (rd_line[i] == '$' && rd_line[i + 1] != '\0' && *flag != 1)
         {
             len_var = 0;
             j = i + 1;
@@ -69,9 +70,11 @@ char    *expand(char *rd_line, t_cmd *pip, int *flag)
             free(tmp);
             new = NULL;
             new = add_var_to_sentence(rd_line, var, i, flag);
-            free(rd_line);
             if (new != NULL)
+            {
+                free(rd_line);
                 rd_line = new;
+            }
             new = NULL;
         }
         i++;
@@ -111,7 +114,6 @@ static char *add_var_to_sentence(char *rd_line, char *var, int i, int *flag)
         rd_line[j] != '\'' && rd_line[j++] != '"')
         len++;
 
-    
     if (var == NULL)
         new = (char *) malloc(sizeof(char) * (ft_strlen(rd_line) - len + \
     1 + quote));
@@ -121,6 +123,7 @@ static char *add_var_to_sentence(char *rd_line, char *var, int i, int *flag)
     if (new == NULL)
         return (error(MALLOC, "0"), NULL);
 
+    // ft_printf_fd(2, "len = %d\n", ft_strlen(var));
 
     j = -1;
     while (++j < i)
@@ -129,10 +132,14 @@ static char *add_var_to_sentence(char *rd_line, char *var, int i, int *flag)
     len = 0;
     if (var != NULL)
     {
-        while (var[len] != '=')
+        if (var[0] > '9' || var[0] < '0')
+        {
+            while (var[len] != '=')
+                len++;
             len++;
-        while (var[++len])
-            new[j++] = var[len];
+        }
+        while (var[len])
+            new[j++] = var[len++];
     }
     while (rd_line[i])
         new[j++] = rd_line[i++];
