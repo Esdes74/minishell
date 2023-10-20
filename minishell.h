@@ -6,7 +6,7 @@
 /*   By: eslamber <eslamber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 15:35:11 by eslamber          #+#    #+#             */
-/*   Updated: 2023/10/20 02:44:55 by eslamber         ###   ########.fr       */
+/*   Updated: 2023/10/20 02:56:50 by eslamber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,12 +128,15 @@ char            *trash_quote(char *str);
 
 int             ft_strncmp_wo_plus(char *first, char *sec, size_t n);
 
+int             position_echo_n(char **arg, int *j, int *flag, int *option);
+
 // Free functions
 
 void            anihilation(char **str);
 
 void	        free_all(t_cmd *pip);
 
+void            free_tab_pid(pid_t *tab, int size);
 
 // Fork and pipes
 int             close_all_pipes(t_cmd *pi);

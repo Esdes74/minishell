@@ -6,7 +6,7 @@
 /*   By: dbaule <dbaule@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 16:36:54 by dbaule            #+#    #+#             */
-/*   Updated: 2023/10/18 18:52:26 by dbaule           ###   ########.fr       */
+/*   Updated: 2023/10/19 22:16:33 by dbaule           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,4 +85,40 @@ int ft_strncmp_wo_plus(char *first, char *sec, size_t n)
 		len++;
 	}
 	return (0);
+}
+
+int	position_echo_n(char **arg, int *j, int *flag, int *option)
+{
+	int i;
+	int k;
+	
+	i = 1;
+	k = 0;
+	while (arg[i])
+	{
+		if (arg[i][k] != '-')
+		{
+			return (i);	
+		}
+		while (arg[i][k])
+		{
+			if (arg[i][k + 1] && arg[i][k] == '-' && arg[i][k + 1] == 'n' && *flag != 2)
+			{
+				*j = k;
+				k += 1;
+				while (arg[i][k] && arg[i][k] == 'n')
+					k += 1;
+			}
+			if (arg[i][k])
+			{
+				*flag = 2;
+				*j = k;
+				*option = 0;
+				return (i);
+			}
+		}
+		k = 0;
+		i++;
+	}
+	return(i);
 }
