@@ -6,7 +6,7 @@
 /*   By: dbaule <dbaule@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/31 10:31:07 by dbaule            #+#    #+#             */
-/*   Updated: 2023/10/20 05:26:15 by dbaule           ###   ########.fr       */
+/*   Updated: 2023/10/20 05:45:24 by dbaule           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,8 +77,8 @@ int unset(t_cmd *pip, char *name_value)
     trigger = 0;
     while (pip->env[i])
     {
-        if (ft_strncmp(pip->env[i], name_value, count_name_env(pip->env[i])) == 0\
-        && (count_name_env(pip->env[i]) == count_name_env(name_value)) == 0)
+        if (ft_strncmp(pip->env[i], name_value, count_name_env(pip->env[i]) - 1) == 0\
+        && (count_name_env(pip->env[i]) == count_name_env(name_value)))
             trigger++;
         i++;
     }
@@ -86,11 +86,10 @@ int unset(t_cmd *pip, char *name_value)
     while (pip->exp_env[i])
     {
         if (ft_strncmp(pip->exp_env[i] + 11, name_value, \
-        count_name_env(pip->exp_env[i] + 11) - 1) == 0 && (count_name_env(pip->exp_env[i] + 11) == count_name_env(name_value)) == 0)
+        count_name_env(pip->exp_env[i] + 11) - 1) == 0 && (count_name_env(pip->exp_env[i] + 11) == count_name_env(name_value)))
             trigger++;
         i++;
     }
-    ft_printf_fd(2, "valeur de trigger %d\n", trigger);
     if (trigger == 0)
     {
         pip->builtin = TRUE;
@@ -117,7 +116,7 @@ static int  unset_env(t_cmd *pip, char *name_value, int len)
         return (error(MALLOC, "0"), 1);
     while (pip->env[j])
     {
-        if (strncmp(pip->env[j], name_value, count_name_env(pip->env[j])) == 0 && (count_name_env(pip->env[j]) == count_name_env(name_value)) == 0)
+        if (strncmp(pip->env[j], name_value, count_name_env(pip->env[j]) - 1) == 0 && (count_name_env(pip->env[j]) == count_name_env(name_value)))
             free(pip->env[j++]);
         else
             new_env[i++] = pip->env[j++];
@@ -143,7 +142,7 @@ static int  unset_exp_env(t_cmd *pip, char *name_value, int len)
     while (pip->exp_env[j])
     {
         if (strncmp(pip->exp_env[j] + 11, name_value, \
-            count_name_env(pip->exp_env[j] + 11) - 1) == 0 && (count_name_env(pip->exp_env[j] + 11) == count_name_env(name_value)) == 0)
+            count_name_env(pip->exp_env[j] + 11) - 1) == 0 && (count_name_env(pip->exp_env[j] + 11) == count_name_env(name_value)))
             free(pip->exp_env[j++]);
         else
             new_env[i++] = pip->exp_env[j++];
