@@ -6,7 +6,7 @@
 /*   By: eslamber <eslamber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 11:08:50 by eslamber          #+#    #+#             */
-/*   Updated: 2023/10/20 02:59:49 by eslamber         ###   ########.fr       */
+/*   Updated: 2023/10/20 03:30:46 by eslamber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ static int check_arg(t_list *spt);
 char *verif_read(char *rd_line, t_cmd *pip)
 {
     int     flag;
+    int     expand_flag;
     char    *save;
     char    *buff;
     char    *buf;
@@ -32,7 +33,8 @@ char *verif_read(char *rd_line, t_cmd *pip)
     buff = ft_strdup(rd_line);
     if (buff == NULL)
         return (error(MALLOC, "0"), annihilation(spt, free, DEBUG), NULL);
-    rd_line = expand(rd_line, pip);
+    expand_flag = 0;
+    rd_line = expand(rd_line, pip, &expand_flag);
     if (rd_line == NULL)
         return (annihilation(spt, free, DEBUG), NULL);
     parsing(rd_line, &flag, spt);
@@ -43,7 +45,7 @@ char *verif_read(char *rd_line, t_cmd *pip)
     {
         rd_line = readline("> ");
         save = ft_strdup(rd_line);
-        rd_line = expand(rd_line, pip);
+        rd_line = expand(rd_line, pip, &expand_flag);
         if (rd_line == NULL)
             return (annihilation(spt, free, DEBUG), NULL);
         if (save == NULL)

@@ -6,16 +6,16 @@
 /*   By: eslamber <eslamber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 18:55:25 by eslamber          #+#    #+#             */
-/*   Updated: 2023/10/20 02:56:35 by eslamber         ###   ########.fr       */
+/*   Updated: 2023/10/20 05:16:38 by eslamber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 static char *is_in_env(char **env, char *cmp);
-static char *add_var_to_sentence(char *rd_line, char *var, int i);
+static char *add_var_to_sentence(char *rd_line, char *var, int i, int *flag);
 
-char    *expand(char *rd_line, t_cmd *pip)
+char    *expand(char *rd_line, t_cmd *pip, int *flag)
 {
     char    *new;
     char    *tmp;
@@ -27,41 +27,51 @@ char    *expand(char *rd_line, t_cmd *pip)
     i = 0;
     while (rd_line[i])
     {
-        if (rd_line[i] == '$' && rd_line[i] == '?')
+        if (*flag == 1 && rd_line[i] == '\'')
+            *flag = 0;
+        else if (*flag == 0 && rd_line[i] == '\'')
+            *flag = 1;
+        else if (*flag == 2 && rd_line[i] == '"')
+            *flag = 0;
+        else if (*flag == 0 && rd_line[i] == '"')
+            *flag = 2;
+        if (rd_line[i] == '$' && rd_line[i] == '?' && *flag != 1)
         {
             tmp = ft_itoa(status);
             if (tmp == NULL)
                 return (error(MALLOC, "0"), NULL);
-            new = add_var_to_sentence(rd_line, tmp, i) - 1;
-            if (i == -1)
+            new = add_var_to_sentence(rd_line, tmp, i, flag);
+            if (new == NULL)
                 return (free(var), NULL);
             free(rd_line);
             rd_line = new;
             new = NULL;
         }
-        if (rd_line[i] == '$')
+        if (rd_line[i] == '$' && *flag != 1)
         {
             len_var = 0;
-            j = i;
-            while (ft_isprint(rd_line[j]) && rd_line[++j] != ' ')
+            j = i + 1;
+            while (ft_isprint(rd_line[j]) && rd_line[j] != ' ' && rd_line[j++] != '\'')
                 len_var++;
+            if (rd_line[i + len_var] == '"')
+                len_var--;
             tmp = (char *) malloc(sizeof(char) * (len_var + 1));
             if (tmp == NULL)
                 return (error(MALLOC, "0"), NULL);
-            j = i;
-            len_var = -1;
-            while (ft_isprint(rd_line[j]) && rd_line[j++] != ' ')
-                tmp[++len_var] = rd_line[j];
+            j = i + 1;
+            len_var = 0;
+            while (ft_isprint(rd_line[j]) && rd_line[j] != ' ' && \
+            rd_line[j] != '\'' && rd_line[j] != '"')
+                tmp[len_var++] = rd_line[j++];
             tmp[len_var] = '\0';
-            
 
             var = is_in_env(pip->env, tmp);
             free(tmp);
-            new = add_var_to_sentence(rd_line, var, i);
-            if (i == -1)
-                return (free(var), NULL);
+            new = NULL;
+            new = add_var_to_sentence(rd_line, var, i, flag);
             free(rd_line);
-            rd_line = new;
+            if (new != NULL)
+                rd_line = new;
             new = NULL;
         }
         i++;
@@ -85,40 +95,47 @@ static char *is_in_env(char **env, char *cmp)
     return (NULL);
 }
 
-static char *add_var_to_sentence(char *rd_line, char *var, int i)
+static char *add_var_to_sentence(char *rd_line, char *var, int i, int *flag)
 {
     int     j;
     int     len;
+    int     quote;
     char    *new;
 
+    len = 0;
+    j = i;
+    quote = 0;
+    if (*flag == 2)
+        quote = 1;
+    while (ft_isprint(rd_line[j]) && rd_line[j] != ' ' && \
+        rd_line[j] != '\'' && rd_line[j++] != '"')
+        len++;
+
+    
     if (var == NULL)
-    {
-        while (rd_line[i] != '\0' && ft_isprint(rd_line[i]) && \
-        rd_line[i] != ' ')
-            rd_line[i++] = ' ';
-    }
-    else
-    {
-        len = 0;
-        j = i;
-        while (ft_isprint(rd_line[j]) && rd_line[j++] != ' ')
-            len++;
         new = (char *) malloc(sizeof(char) * (ft_strlen(rd_line) - len + \
-        ft_strlen(var) + 1));
-        if (new == NULL)
-            return (error(MALLOC, "0"), NULL);
-        j = -1;
-        while (++j < i)
-            new[j] = rd_line[j];
-        i += len;
-        len = 0;
+    1 + quote));
+    else
+        new = (char *) malloc(sizeof(char) * (ft_strlen(rd_line) - len + \
+    ft_strlen(var) + 1 + quote));
+    if (new == NULL)
+        return (error(MALLOC, "0"), NULL);
+
+
+    j = -1;
+    while (++j < i)
+        new[j] = rd_line[j];
+    i += len;
+    len = 0;
+    if (var != NULL)
+    {
         while (var[len] != '=')
             len++;
         while (var[++len])
             new[j++] = var[len];
-        while (rd_line[i])
-            new[j++] = rd_line[i++];
-        new[j] = '\0';
     }
+    while (rd_line[i])
+        new[j++] = rd_line[i++];
+    new[j] = '\0';
     return (new);
 }
