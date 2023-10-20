@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eslamber <eslamber@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dbaule <dbaule@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 15:35:11 by eslamber          #+#    #+#             */
-/*   Updated: 2023/10/20 03:30:09 by eslamber         ###   ########.fr       */
+/*   Updated: 2023/10/20 05:30:00 by dbaule           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,6 +129,8 @@ char            *trash_quote(char *str);
 int             ft_strncmp_wo_plus(char *first, char *sec, size_t n);
 
 int             position_echo_n(char **arg, int *j, int *flag, int *option);
+
+int             count_name_env(char *str);
 
 // Free functions
 
