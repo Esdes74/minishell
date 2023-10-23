@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eslamber <eslamber@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dbaule <dbaule@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/20 15:16:22 by eslamber          #+#    #+#             */
-/*   Updated: 2023/10/19 17:48:18 by eslamber         ###   ########.fr       */
+/*   Updated: 2023/10/23 11:40:30 by dbaule           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,15 +66,15 @@ void    parsing(const char *rd_line, int *flag, t_list *ret)
             compt++;
             break;
         }
-        if ((rd_line[i] != ' ' && *flag == 3) || (i > 0 && rd_line[i] == ' ' && rd_line[i - 1] == '|'))
+        if ((rd_line[i] != ' ' && *flag == 3) || (i > 0 && rd_line[i] == ' ' && rd_line[i - 1] == '|' && *flag != 1 && *flag != 2))
             *flag = 0;
         if (tmp_flag == 0 && rd_line[i] != ' ')
             tmp_flag = 1;
         if (*flag == 4 && rd_line[i] == '\n')
         {
             compt++;
-            *flag = 0;
-            tmp_flag = 0;
+            // *flag = 0;
+            // tmp_flag = 0;
             break;
         }
         if (*flag == 4 && rd_line[i] == ' ')
@@ -123,7 +123,6 @@ void    parsing(const char *rd_line, int *flag, t_list *ret)
     *flag = save_flag;
     new_flag = 0;
     tmp_flag = 0;
-    int turbo_flag = 0;
     while (rd_line[i]) // compte le nombre de caractère par arguments
     {
         while (rd_line[i] == '|' && (*flag == 0 || *flag == 3 ||*flag == 4))
@@ -141,10 +140,9 @@ void    parsing(const char *rd_line, int *flag, t_list *ret)
         }
         if (i > 0 && rd_line[i] != ' ' && rd_line[i - 1] == '|' && (*flag == 0 || *flag == 3))
             compt++;
-        if (rd_line[i] == '\n' && (*flag == 0 || *flag == 3) && turbo_flag == 0)
+        if (rd_line[i] == '\n' && (*flag == 0 || *flag == 3))
         {
             *flag = 5;
-            turbo_flag = 1;
             tab[compt] += 1;
             compt++;
             tab[compt] -= 1;
@@ -158,7 +156,7 @@ void    parsing(const char *rd_line, int *flag, t_list *ret)
             tab[compt] += 1;
             compt++;
             tab[compt] -= 1;
-            *flag = 0;
+            *flag = 5;
         }
         if (*flag == 4 && rd_line[i] == ' ')
             *flag = 0;
@@ -201,7 +199,7 @@ void    parsing(const char *rd_line, int *flag, t_list *ret)
         tab[compt] += 1;
     while (i <= compt) // créer les chaines de caractères
     {
-        spt[i] = (char *) malloc(sizeof(char) * (tab[i] + 1));
+        spt[i] = (char *)ft_calloc(sizeof(char) , (tab[i] + 1));
         if (spt[i] == NULL)
         {
             while (i >= 0)
@@ -301,8 +299,6 @@ void    parsing(const char *rd_line, int *flag, t_list *ret)
         i++;
     }
 
-
-
     if (*flag != 3)
     {
         if (*flag != 0 && *flag == save_flag) // Rajoute le \n si c'est un rappel de la fonction et qu'on est toujours pas sortie
@@ -310,7 +306,7 @@ void    parsing(const char *rd_line, int *flag, t_list *ret)
         spt[compt][j] = '\0';
     }
     i = 0;
-    while (spt[i] && spt[i][0] != '\0') // ajoute les arguments a la liste
+    while (spt[i] && spt[i][0] != '\0') // ajoute les arguments a la liste 
     {
         if (tailing_list(ret, spt[i++], STRING, DEBUG) == 0)
         {
