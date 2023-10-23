@@ -6,7 +6,7 @@
 /*   By: dbaule <dbaule@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/04 15:17:58 by eslamber          #+#    #+#             */
-/*   Updated: 2023/10/20 00:10:33 by dbaule           ###   ########.fr       */
+/*   Updated: 2023/10/23 14:41:24 by dbaule           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,9 @@ static int	execute_child(char **environ, char **str, t_cmd *pip)
 	if (cmd == NULL)
 		return (1); // anihilation(str), free(false_cmd)
     // annihilation(list, free, DEBUG);
+	// ft_printf_fd(2, "okok\n");
 	execve(cmd, str, pip->env);
+	// ft_printf_fd(2, "apres exec\n");
 	pip->ani_flag = 1;
 	dir = opendir(cmd);
 	if (dir == NULL && access(cmd, F_OK | X_OK) != -1)

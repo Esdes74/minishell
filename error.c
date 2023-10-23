@@ -6,7 +6,7 @@
 /*   By: dbaule <dbaule@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/03 11:08:59 by eslamber          #+#    #+#             */
-/*   Updated: 2023/10/18 13:04:06 by dbaule           ###   ########.fr       */
+/*   Updated: 2023/10/23 16:06:16 by dbaule           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,7 @@ static void    error_bis_bis(t_error err)
     else if (err == FILES)
     {
         status = 127;
-        ft_printf_fd(ERR, "Error : No such file or directory\n");
+        // ft_printf_fd(ERR, "Error : No such file or directory\n");
+        perror("Error :");
     }
 }

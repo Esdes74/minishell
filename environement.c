@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   environement.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eslamber <eslamber@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dbaule <dbaule@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/01 14:26:08 by dbaule            #+#    #+#             */
-/*   Updated: 2023/10/19 22:02:50 by eslamber         ###   ########.fr       */
+/*   Updated: 2023/10/23 16:10:58 by dbaule           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,10 @@ static char **ft_cpy_env(char **env);
 int cpy_env(char **env, t_cmd *pip)
 {
     int i;
-    // int z;
-    // int for_sh;
-    // char    *sh_lvl;
-    // char    *buf;
+    int z;
+    int for_sh;
+    char    *sh_lvl;
+    char    *buf;
     
     i = 0;
     while (env[i])
@@ -41,29 +41,29 @@ int cpy_env(char **env, t_cmd *pip)
     // met le SHLVL à 2 fait bugger le tester
 
 
-    // while (pip->env[i]) 
-    // {
-    //     if (strncmp(pip->env[i], "SHLVL=", 6) == 0)
-    //     {
-    //         z = 0;
-    //         while ((pip->env[i][z] >= 'A' && pip->env[i][z] <= 'Z') || pip->env[i][z] == '=')
-    //             z++;
-    //         for_sh = ft_atoi(&pip->env[i][z]);
-    //         for_sh++;
-    //         sh_lvl = ft_itoa(for_sh);
-    //         if (!sh_lvl)
-    //             return (anihilation(pip->env), error(MALLOC, 0), 1);
-    //         buf = malloc(sizeof(char) * (ft_strlen(sh_lvl) + 7));
-    //         if (!buf)
-    //             return (anihilation(pip->env), 1);
-    //         ft_strlcpy(buf, "SHLVL=", 7);
-    //         ft_strlcat(buf, sh_lvl, ft_strlen(sh_lvl) + 7);
-    //         free(sh_lvl);
-    //         if (export(pip, buf) == 1)
-    //             return (anihilation(pip->env), 1);
-    //     }
-    //     i++;
-    // }
+    while (pip->env[i]) 
+    {
+        if (strncmp(pip->env[i], "SHLVL=", 6) == 0)
+        {
+            z = 0;
+            while ((pip->env[i][z] >= 'A' && pip->env[i][z] <= 'Z') || pip->env[i][z] == '=')
+                z++;
+            for_sh = ft_atoi(&pip->env[i][z]);
+            for_sh++;
+            sh_lvl = ft_itoa(for_sh);
+            if (!sh_lvl)
+                return (anihilation(pip->env), error(MALLOC, 0), 1);
+            buf = malloc(sizeof(char) * (ft_strlen(sh_lvl) + 7));
+            if (!buf)
+                return (anihilation(pip->env), 1);
+            ft_strlcpy(buf, "SHLVL=", 7);
+            ft_strlcat(buf, sh_lvl, ft_strlen(sh_lvl) + 7);
+            free(sh_lvl);
+            if (export(pip, buf) == 1)
+                return (anihilation(pip->env), 1);
+        }
+        i++;
+    }
     return (0);
 }
 

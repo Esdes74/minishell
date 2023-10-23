@@ -6,7 +6,7 @@
 /*   By: dbaule <dbaule@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 11:08:50 by eslamber          #+#    #+#             */
-/*   Updated: 2023/10/20 00:58:06 by dbaule           ###   ########.fr       */
+/*   Updated: 2023/10/23 15:58:24 by dbaule           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,10 @@ char    **check_redirection(char **arg, t_cmd *struc)
     i = 0;
     while (arg[i])
     {
-        buf[i] = trash_quote(arg[i]);
+        if (arg[i][0] == '"' || arg[i][0] == '\'')
+            buf[i] = ft_strdup(arg[i]);
+        else
+            buf[i] = trash_quote(arg[i]);
         // printf("%s valeur de buf[i]\n", buf[i]);
         i++;
     }
@@ -63,9 +66,13 @@ char    **check_redirection(char **arg, t_cmd *struc)
             else if (buf[i][1] != '<' || buf[i][2] == '\0')
             {
                 file = open(&buf[i][1], O_RDONLY);
-                if (file == -1)
+                if (file == -1) // 
+                {
                     return (anihilation(buf), anihilation(arg), error(OPEN, "0"), status = 1, NULL); // le status dans certains cas doit valoir 2 ici
-                else if (dup2(file, STDIN_FILENO) == -1)
+                    // status = 1;
+                    // break;
+                }
+                if (dup2(file, STDIN_FILENO) == -1)
                     return (anihilation(buf), anihilation(arg), close(file), error(DUP, "0"), NULL);
                 close(file);
                 // ft_printf_fd(2, "TEST\n");

@@ -6,7 +6,7 @@
 /*   By: dbaule <dbaule@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/20 15:16:22 by eslamber          #+#    #+#             */
-/*   Updated: 2023/10/23 12:35:29 by dbaule           ###   ########.fr       */
+/*   Updated: 2023/10/23 12:48:07 by dbaule           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ void    parsing(const char *rd_line, int *flag, t_list *ret)
             *flag = 0;
         if ((rd_line[i] == '<' || rd_line[i] == '>') && *flag == 0)
             *flag = 4;
-        else if (rd_line[i] == '"' && *flag == 0)
+        else if (rd_line[i] == '"' && (*flag == 0 || *flag == 4))
             *flag = 1;
         else if (rd_line[i] == '"' && *flag == 1)
         {
@@ -162,7 +162,7 @@ void    parsing(const char *rd_line, int *flag, t_list *ret)
             *flag = 0;
         if ((rd_line[i] == '<' || rd_line[i] == '>') && *flag == 0)
             *flag = 4;
-        else if (rd_line[i] == '"' && *flag == 0)
+        else if (rd_line[i] == '"' && (*flag == 0 || *flag == 4))
             *flag = 1;
         else if (rd_line[i] == '"' && *flag == 1)
         {
