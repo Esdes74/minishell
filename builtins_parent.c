@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins_parent.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dbaule <dbaule@student.42.fr>              +#+  +:+       +#+        */
+/*   By: eslamber <eslamber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/31 10:31:07 by dbaule            #+#    #+#             */
-/*   Updated: 2023/10/20 05:45:24 by dbaule           ###   ########.fr       */
+/*   Updated: 2023/10/23 12:31:48 by eslamber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ void    cd(char *path, t_cmd *pip, t_list *spt)
 {
     if (spt->len <= 2 && path != NULL && chdir(path) != 0)
     {
+        status = 1;
         ft_printf_fd(2, "-bash: cd: %s: No such file or directory\n");
         return ;
     }

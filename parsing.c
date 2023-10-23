@@ -6,7 +6,7 @@
 /*   By: eslamber <eslamber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/20 15:16:22 by eslamber          #+#    #+#             */
-/*   Updated: 2023/10/19 17:48:18 by eslamber         ###   ########.fr       */
+/*   Updated: 2023/10/23 11:42:49 by eslamber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void    parsing(const char *rd_line, int *flag, t_list *ret)
     spt = 0;
     new_flag = 0;
     tmp_flag = 0;
-    while (rd_line[i]) // Compte le nombre d'aguments qu'il y a (le | sont contés comme des arguments a part entière)
+    while (rd_line[i]) // Compte le nombre d'aguments qu'il y a (les | sont comptés comme des arguments a part entière)
     {
         while(rd_line[i] == '|' && (*flag == 0 || *flag == 3 || *flag == 4))
         {
