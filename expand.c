@@ -6,7 +6,7 @@
 /*   By: eslamber <eslamber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 18:55:25 by eslamber          #+#    #+#             */
-/*   Updated: 2023/10/20 06:04:43 by eslamber         ###   ########.fr       */
+/*   Updated: 2023/10/23 10:57:08 by eslamber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ char    *expand(char *rd_line, t_cmd *pip, int *flag)
             }
             new = NULL;
         }
-        if (rd_line[i] == '$' && rd_line[i + 1] != '\0' && *flag != 1)
+        if (rd_line[i] == '$' && ft_isalpha(rd_line[i + 1]) && *flag != 1)//&& rd_line[i + 1] != '\0' && rd_line[i + 1] != ')' && *flag != 1)
         {
             len_var = 0;
             j = i + 1;
@@ -110,9 +110,12 @@ static char *add_var_to_sentence(char *rd_line, char *var, int i, int *flag)
     quote = 0;
     if (*flag == 2)
         quote = 1;
-    while (ft_isprint(rd_line[j]) && rd_line[j] != ' ' && \
-        rd_line[j] != '\'' && rd_line[j++] != '"')
-        len++;
+    if (rd_line[i + 1] == '?')
+        len = 2;
+    else
+        while (ft_isprint(rd_line[j]) && rd_line[j] != ' ' && \
+            rd_line[j] != '\'' && rd_line[j++] != '"')
+            len++;
 
     if (var == NULL)
         new = (char *) malloc(sizeof(char) * (ft_strlen(rd_line) - len + \
@@ -123,7 +126,6 @@ static char *add_var_to_sentence(char *rd_line, char *var, int i, int *flag)
     if (new == NULL)
         return (error(MALLOC, "0"), NULL);
 
-    // ft_printf_fd(2, "len = %d\n", ft_strlen(var));
 
     j = -1;
     while (++j < i)
