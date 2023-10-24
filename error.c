@@ -6,7 +6,7 @@
 /*   By: dbaule <dbaule@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/03 11:08:59 by eslamber          #+#    #+#             */
-/*   Updated: 2023/10/23 16:06:16 by dbaule           ###   ########.fr       */
+/*   Updated: 2023/10/24 18:52:48 by dbaule           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ static void    error_bis(t_error err, char *cmd)
     else if (err == CLOSE)
         ft_printf_fd(ERR, "Error : Problem with clausing function\n");
     else if (err == TOKEN)
-        ft_printf_fd(ERR, "Error : Syntax error near unexpected token `\\n`\n");
+        ft_printf_fd(ERR, "Error : syntax error near unexpected token `\\n\'\n");
     else if (err == OPEN)
         perror("Error ");
     else if (err == DUP)
@@ -62,7 +62,7 @@ static void    error_bis(t_error err, char *cmd)
     else if (err == WRITE)
         ft_printf_fd(ERR, "Error : Problem with write function\n");
     else if (err == SYNTAX)
-        ft_printf_fd(ERR, "Error : Syntax error near unexpected token %s\n", cmd);
+        ft_printf_fd(ERR, "Error : syntax error near unexpected token `%s\'\n", cmd);
     else if (err == DIREC)
     {
         status = 126;

@@ -6,7 +6,7 @@
 /*   By: dbaule <dbaule@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 11:08:50 by eslamber          #+#    #+#             */
-/*   Updated: 2023/10/19 23:38:09 by dbaule           ###   ########.fr       */
+/*   Updated: 2023/10/24 19:01:43 by dbaule           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,8 +125,8 @@ void    echo(char **arg, int option)
                 j = 0;
                 while (arg[i][j] != '\0' && arg[i][j] != '\n')
                     j++;
-                if (arg[i][j] != '\n' && arg[i + 1] != NULL)
-                    ft_printf_fd(1, "\n");
+                // if (arg[i][j] != '\n' && arg[i + 1] != NULL)
+                //     ft_printf_fd(1, "\n");
             }
             else if ((arg[i][0] == '"' || arg[i][0] == '\'') && flag == 1)
                 flag = 0;

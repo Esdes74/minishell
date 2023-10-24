@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   verif_read.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eslamber <eslamber@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dbaule <dbaule@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 11:08:50 by eslamber          #+#    #+#             */
-/*   Updated: 2023/10/20 03:30:46 by eslamber         ###   ########.fr       */
+/*   Updated: 2023/10/24 19:07:44 by dbaule           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,20 +87,20 @@ static int check_arg(t_list *spt)
     {
         str = (char *)tmp->data_cell->data;
         if (tmp->next != NULL && str[0] ==  '|' && ((char *)tmp->next->data_cell->data)[0] == '|')
-            return (error(SYNTAX, "'|'"), 1);
+            return (error(SYNTAX, "|"), status = 2, 1);
         if (str[0] == '<')
         {
             if (str[1] == '\0' && tmp->next == NULL)
-                return (error(SYNTAX, "'newline'"), 1);
+                return (error(SYNTAX, "newline"), status = 2, 1);
             else if (str[1] == '<' && str[2] == '\0' && tmp->next == NULL)
-                return (error(SYNTAX, "'newline'"), 1);
+                return (error(SYNTAX, "newline"), status = 2, 1);
         }
         else if (str[0] == '>')
         {
             if (str[1] == '\0' && tmp->next == NULL)
-                return (error(SYNTAX, "'newline'"), 1);
+                return (error(SYNTAX, "newline"), status = 2, 1);
             else if (str[1] == '>' && str[2] == '\0' && tmp->next == NULL)
-                return (error(SYNTAX, "'newline'"), 1);
+                return (error(SYNTAX, "newline"), status = 2, 1);
         }
         tmp = tmp->next;
     }

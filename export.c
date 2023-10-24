@@ -6,7 +6,7 @@
 /*   By: dbaule <dbaule@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 10:47:27 by dbaule            #+#    #+#             */
-/*   Updated: 2023/10/23 10:48:11 by dbaule           ###   ########.fr       */
+/*   Updated: 2023/10/24 16:29:05 by dbaule           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int export(t_cmd *pip, char *name_value)
         return (ft_printf_fd(2, "Error : not a valid identifier\n"), free(na_val), status = 1, -1);
 	i = pars_exp(&flag, na_val);
 	if (i == -1)
-		return (0);
+		return (status = 1, 0);
     if (na_val[i] == '\0' && na_val[i - 1] != '=' && flag == 0) // a utiliser pour export sans rien
     {
 		if (check_double_exp_env(pip->exp_env, na_val) == 1)

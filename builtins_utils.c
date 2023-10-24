@@ -6,7 +6,7 @@
 /*   By: dbaule <dbaule@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 16:36:54 by dbaule            #+#    #+#             */
-/*   Updated: 2023/10/20 05:42:39 by dbaule           ###   ########.fr       */
+/*   Updated: 2023/10/24 17:19:12 by dbaule           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,8 @@ char	*rm_char(char *str, char c)
 		i++;
 	}
 	new_str[z] = '\0';
-	free(str);
+	// free(str);
+	// str = new_str;
 	return (new_str);
 }
 

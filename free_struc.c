@@ -6,7 +6,7 @@
 /*   By: dbaule <dbaule@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 14:39:50 by dbaule            #+#    #+#             */
-/*   Updated: 2023/10/20 01:39:57 by dbaule           ###   ########.fr       */
+/*   Updated: 2023/10/24 19:42:14 by dbaule           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,8 @@ void	free_all(t_cmd *pip)
 {
 	anihilation(pip->env);
 	anihilation(pip->exp_env);
+	free(pip->save_path);
 	pip->env = NULL;
 	pip->exp_env = NULL;
+	pip->save_path = NULL;
 }
