@@ -6,7 +6,7 @@
 #    By: eslamber <eslamber@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/04 16:30:03 by eslamber          #+#    #+#              #
-#    Updated: 2023/10/19 18:56:23 by eslamber         ###   ########.fr        #
+#    Updated: 2023/10/24 10:42:50 by eslamber         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -53,7 +53,8 @@ SRC := main.c \
 	   check_variables.c \
 	   builtins_utils.c \
 	   export.c \
-	   expand.c
+	   expand.c \
+	   minishell_utils.c
 OBJ := $(SRC:%.c=.obj/%.o)
 
 #

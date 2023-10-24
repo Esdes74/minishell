@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dbaule <dbaule@student.42.fr>              +#+  +:+       +#+        */
+/*   By: eslamber <eslamber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/06 09:45:13 by dbaule            #+#    #+#             */
-/*   Updated: 2023/10/23 12:34:02 by dbaule           ###   ########.fr       */
+/*   Updated: 2023/10/24 10:56:05 by eslamber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,4 +27,17 @@ char	*ft_strjoin_pip(char *dest, char *src)
 		free(dest);
 	ft_strlcat(new, src, len_tot);
 	return (new);
+}
+
+int	ft_is_redirection(const char *str, int i)
+{
+	if (str[i] == '>' && i == 0)
+		return (str[i] == '>' || (str[i] == '>' && str[i + 1] == '>'));
+	else if (str[i] == '>' && i > 0)
+		return ((str[i] == '>' || (str[i] == '>' && str[i + 1] == '>')) \
+		&& str[i - 1] != '>');
+	else if (str[i] == '<' && i > 0)
+		return ((str[i] == '<' || (str[i] == '<' && str[i + 1] == '<')) \
+		&& str[i - 1] != '<');
+	return (str[i] == '<' || (str[i] == '<' && str[i + 1] == '<'));
 }

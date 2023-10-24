@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dbaule <dbaule@student.42.fr>              +#+  +:+       +#+        */
+/*   By: eslamber <eslamber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 15:35:11 by eslamber          #+#    #+#             */
-/*   Updated: 2023/10/20 05:30:00 by dbaule           ###   ########.fr       */
+/*   Updated: 2023/10/24 10:50:38 by eslamber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,8 +154,6 @@ int             cmd_center_simple(char **str, t_cmd *pip);
 
 char            *expand(char *rd_line, t_cmd *pip, int *expand_flag);
 
-void            parsing(const char *rd_line, int *flag, t_list *spt);
-
 int             *counting_arg(int count, t_list *spt);
 
 char            **string_for_cmd_center(int *tab, int i, t_list *spt);
@@ -165,5 +163,11 @@ char            **check_redirection(char **arg, t_cmd *pip);
 char            **prep_hd(t_cmd *pip, t_list *spt);
 
 int             execution_center(t_list *spt, t_cmd *pip);
+
+// Parsing
+
+void            parsing(const char *rd_line, int *flag, t_list *spt);
+
+int             ft_is_redirection(const char *str, int i);
 
 #endif

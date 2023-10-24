@@ -6,7 +6,7 @@
 /*   By: eslamber <eslamber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 18:55:25 by eslamber          #+#    #+#             */
-/*   Updated: 2023/10/23 10:57:08 by eslamber         ###   ########.fr       */
+/*   Updated: 2023/10/24 10:24:42 by eslamber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ char    *expand(char *rd_line, t_cmd *pip, int *flag)
             if (tmp == NULL)
                 return (error(MALLOC, "0"), NULL);
             new = add_var_to_sentence(rd_line, tmp, i, flag);
+            free(tmp);
             if (new != NULL)
             {
                 free(rd_line);

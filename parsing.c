@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dbaule <dbaule@student.42.fr>              +#+  +:+       +#+        */
+/*   By: eslamber <eslamber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/20 15:16:22 by eslamber          #+#    #+#             */
-/*   Updated: 2023/10/23 12:48:07 by dbaule           ###   ########.fr       */
+/*   Updated: 2023/10/24 11:27:17 by eslamber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,14 +73,14 @@ void    parsing(const char *rd_line, int *flag, t_list *ret)
         if (*flag == 4 && rd_line[i] == '\n')
         {
             compt++;
-            // *flag = 0;
-            // tmp_flag = 0;
             break;
         }
         if (*flag == 4 && rd_line[i] == ' ')
             *flag = 0;
         if ((rd_line[i] == '<' || rd_line[i] == '>') && *flag == 0)
             *flag = 4;
+        else if (ft_is_redirection(rd_line, i) && *flag == 4)
+            compt++;
         else if (rd_line[i] == '"' && (*flag == 0 || *flag == 4))
             *flag = 1;
         else if (rd_line[i] == '"' && *flag == 1)
@@ -162,6 +162,13 @@ void    parsing(const char *rd_line, int *flag, t_list *ret)
             *flag = 0;
         if ((rd_line[i] == '<' || rd_line[i] == '>') && *flag == 0)
             *flag = 4;
+        else if (ft_is_redirection(rd_line, i) && *flag == 4)
+        {
+            compt++;
+            tab[compt] += 1;
+            if (rd_line[i + 1] == '>' || rd_line[i + 1] == '<')
+                tab[compt] += 1;
+        }
         else if (rd_line[i] == '"' && (*flag == 0 || *flag == 4))
             *flag = 1;
         else if (rd_line[i] == '"' && *flag == 1)
@@ -239,6 +246,15 @@ void    parsing(const char *rd_line, int *flag, t_list *ret)
         }
         if ((rd_line[i] == '<' || rd_line[i] == '>') && tmp_flag == 0 && *flag != 5)
             tmp_flag = 1;
+        else if (ft_is_redirection(rd_line, i) && tmp_flag == 1)
+        {
+            if (i > 0 && rd_line[i - 1] != ' ')
+                spt[compt++][j] = '\0';
+            j = 0;
+            spt[compt][j++] = rd_line[i++];
+            if (rd_line[i] == '>' || rd_line[i] == '<')
+                spt[compt][j++] = rd_line[i++];
+        }
         else if (tmp_flag == 1 && (rd_line[i] == ' '))
             tmp_flag = 0;
         else if (rd_line[i] == '\n' && tmp_flag == 1 && *flag != 5)
