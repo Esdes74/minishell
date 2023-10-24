@@ -6,7 +6,7 @@
 /*   By: dbaule <dbaule@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/17 09:13:17 by dbaule            #+#    #+#             */
-/*   Updated: 2023/10/23 15:32:10 by dbaule           ###   ########.fr       */
+/*   Updated: 2023/10/24 21:04:01 by dbaule           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ static char	*check_slash(char *cmd, char *str)
 					return (error(FILES, "0"), free(cmd), NULL);
 				return (error(PERM, "0"), free(cmd), NULL);
 			}
-			return (perror("Error :"), status = 127, free(cmd), NULL); //error(CMD, str)
+			return (perror("Error "), status = 127, free(cmd), NULL); //error(CMD, str)
 		}
 		return (cmd);
 	}

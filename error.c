@@ -6,7 +6,7 @@
 /*   By: dbaule <dbaule@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/03 11:08:59 by eslamber          #+#    #+#             */
-/*   Updated: 2023/10/24 18:52:48 by dbaule           ###   ########.fr       */
+/*   Updated: 2023/10/24 21:03:55 by dbaule           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,6 @@ static void    error_bis_bis(t_error err)
     {
         status = 127;
         // ft_printf_fd(ERR, "Error : No such file or directory\n");
-        perror("Error :");
+        perror("Error ");
     }
 }
