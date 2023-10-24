@@ -6,7 +6,7 @@
 /*   By: dbaule <dbaule@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 15:50:36 by dbaule            #+#    #+#             */
-/*   Updated: 2023/10/24 18:38:59 by dbaule           ###   ########.fr       */
+/*   Updated: 2023/10/24 20:09:02 by dbaule           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,10 +51,10 @@ char    **check_redirection_parent(char **arg, t_cmd *struc)
             if (buf[i][1] == '\0')
             {
                 if (buf[i + 1] == NULL)
-                    return (anihilation(buf), anihilation(buf), error(TOKEN, "0"), NULL);
+                    return (anihilation(buf), error(TOKEN, "0"), NULL);
                 file = open(buf[i + 1], O_RDONLY);
                 if (file == -1)
-                    return (anihilation(buf), anihilation(buf), error(OPEN, "0"), status = 1,NULL);
+                    return (anihilation(buf), error(OPEN, "0"), status = 1, NULL);
                 close(file);
                 i++;
             }
