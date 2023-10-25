@@ -6,7 +6,7 @@
 /*   By: dbaule <dbaule@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/13 11:08:50 by eslamber          #+#    #+#             */
-/*   Updated: 2023/10/19 23:53:58 by dbaule           ###   ########.fr       */
+/*   Updated: 2023/10/24 18:16:37 by dbaule           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,57 +14,49 @@
 
 static void determine_echo_or_cd(char **str, int *option);
 
-int search_parent_builtins(t_cmd *pip, t_list *spt)
+int parent_builtins(t_cmd *pip, t_list *spt, char **exec_cmd)
 {
     int     ret;
-    t_cell *tmp;
-    char    *str;
-    char    *buf;
+    int     i;
+    // char    *str;
 
     pip->builtin = FALSE;
-    tmp = spt->head;
-    if (tmp == NULL)
-        return (1);
-    str = ((char *)(tmp->data_cell->data));
-    if (ft_strlen(str) == 4 && ft_strncmp(str, "exit", 4) == 0)
-            return (intermediate_exit(spt), -1);
-    else if (ft_strlen(str) == 2 && ft_strncmp(str, "cd", 2) == 0)
+    i = 1;
+    // if (!exec_cmd[0])
+    //     return (1);
+    // str = exec_cmd[0];
+    // printf("valeur de exec : %s\n", exec_cmd[0]);
+    if (ft_strlen(exec_cmd[0]) == 4 && ft_strncmp(exec_cmd[0], "exit", 4) == 0)
+        return (intermediate_exit(spt), -1);
+    else if (ft_strlen(exec_cmd[0]) == 2 && ft_strncmp(exec_cmd[0], "cd", 2) == 0)
     {
         pip->parent_builtin = TRUE;
-        if (tmp->next == NULL)
+        if (exec_cmd[1] == NULL)
             return (1);
-        tmp = tmp->next;
-        return (cd(((char *)(tmp->data_cell->data)), pip, spt), 1);
+        return (cd(exec_cmd[1], pip, spt), 1); // il faut retirer le spt car on va se fier a la len de exec_cmd
     }
-    else if (ft_strlen(str) == 6 && ft_strncmp(str, "export", 6) == 0)
+    else if (ft_strlen(exec_cmd[0]) == 6 && ft_strncmp(exec_cmd[0], "export", 6) == 0)
     {
-        if (tmp->next == NULL)
-            return (2);
         pip->parent_builtin = TRUE;
-        tmp = tmp->next;
-        while (tmp != NULL)
+        if (!exec_cmd[i])
+            return (pip->parent_builtin = FALSE, 0);
+        while (exec_cmd[i] != NULL)
         {
-            buf = ft_strdup(((char *)(tmp->data_cell->data)));
-            ret = export(pip, buf);
+            ret = export(pip, exec_cmd[i]);
             if (ret == 1)
-                return (free(buf), -1); 
-            // else if (ret == 2)
-            //     return (free(buf), 1); //status = 2,
-            tmp = tmp->next;
+                return (-1);
+            i++;
         }
         return (1);
     }
-    else if (ft_strlen(str) == 5 && ft_strncmp(str, "unset", 5) == 0)
+    else if (ft_strlen(exec_cmd[0]) == 5 && ft_strncmp(exec_cmd[0], "unset", 5) == 0)
     {
         pip->parent_builtin = TRUE;
-        tmp = tmp->next;
-        while (tmp != NULL)
+        while (exec_cmd[i] != NULL)
         {
-            buf = ft_strdup(((char *)(tmp->data_cell->data)));
-            if (unset(pip, buf) == 1)
-                return (free(buf), -1);
-            free(buf);
-            tmp = tmp->next;
+            if (unset(pip, exec_cmd[i]) == 1)
+                return (-1);
+            i++;
         }
         return (1);
     }

@@ -6,7 +6,7 @@
 /*   By: eslamber <eslamber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 21:29:25 by dbaule            #+#    #+#             */
-/*   Updated: 2023/10/24 16:43:52 by eslamber         ###   ########.fr       */
+/*   Updated: 2023/10/25 11:36:20 by eslamber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ static int  checking_pipe(t_list *spt);
 static int	prep_pipe(t_cmd *pip);
 static int  dup_in_cmd(t_cmd *pip, int i);
 static int dup_out_cmd(t_cmd *pip, int i);
+// static int search_parent_builtins(char **tmp);
 
 int execution_center(t_list *spt, t_cmd *pip)
 {
@@ -27,6 +28,9 @@ int execution_center(t_list *spt, t_cmd *pip)
     int     i;
     int     id;
     int     ret;
+    // int     value_ret;
+    char    **buf;
+    t_cell  *tmp;
 
     i = 0;
     id = -1;
@@ -44,9 +48,20 @@ int execution_center(t_list *spt, t_cmd *pip)
         return (1);
     if (pip->nb_pipe == 0)
     {
-        ret = search_parent_builtins(pip, spt);
-        if (ret == -1)
+        tmp = spt->head;
+        if (tmp == NULL)
+            return (0);
+        exec_cmd = string_for_cmd_center(arg_count, i, spt);
+        if (exec_cmd == NULL)
+            return (error(MALLOC, NULL), 1);
+        buf = check_redirection_parent(exec_cmd, pip);
+        anihilation(exec_cmd);
+        if (buf == NULL)
+            return (free(arg_count), 2); //anihilation(exec_cmd),
+        if (parent_builtins(pip, spt, buf) == -1)
             return (annihilation(spt, free, DEBUG), free(arg_count), 1);
+        anihilation(buf);
+        exec_cmd = NULL;
     }
     tab_pid = (pid_t *) malloc(sizeof(pid_t) * (pip->nb_proc));
     if (tab_pid == NULL)
@@ -93,8 +108,6 @@ int execution_center(t_list *spt, t_cmd *pip)
     {
         close_all_pipes(pip);
     }
-
-
     // Récupération du code de sortie du programme
 	while (i < pip->nb_proc)
     {
@@ -103,7 +116,7 @@ int execution_center(t_list *spt, t_cmd *pip)
     }
     free(tab_pid);
     // Si je suis dans une éxécution de builtin alors je ne rentre pas dedans
-    if (pip->builtin == FALSE  && ret != 1) // && flag_status == 1
+    if (pip->parent_builtin == FALSE && pip->builtin == FALSE  && ret != 1) // && flag_status == 1
     {
         if (WIFSIGNALED(statut))
             exit_status = WTERMSIG(statut);
@@ -111,7 +124,6 @@ int execution_center(t_list *spt, t_cmd *pip)
             exit_status = WEXITSTATUS(statut);
         status = exit_status; // Stockage du code de sortie
     }
-    
     return (0);
 }
 
@@ -172,3 +184,29 @@ static int  dup_out_cmd(t_cmd *pip, int i)
         return (1);
     return (0);
 }
+
+// static int search_parent_builtins(char **tmp)
+// {
+//     char    *str;
+//     int     i;
+
+//     // while (tmp[i] && (tmp[i][0] == '<' || tmp[i][0] == '>')) // ne gere pas si la redirection est espace: "< test"
+//     //     i++;
+//     // if (tmp[i] == NULL)
+//     //     return (0);
+//     i = 0;
+//     str = tmp[i];
+//     if (ft_strlen(str) == 4 && ft_strncmp(str, "exit", 4) == 0)
+//         return (1);
+//     else if (ft_strlen(str) == 2 && ft_strncmp(str, "cd", 2) == 0)
+//         return (2);
+//     else if (ft_strlen(str) == 6 && ft_strncmp(str, "export", 6) == 0)
+//     {
+//         if (tmp[i + 1] == NULL)
+//             return (0);
+//         return (3);
+//     }
+//     else if (ft_strlen(str) == 5 && ft_strncmp(str, "unset", 5) == 0)
+//         return (4);
+//     return (0);
+// }

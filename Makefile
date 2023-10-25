@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: eslamber <eslamber@student.42.fr>          +#+  +:+       +#+         #
+#    By: dbaule <dbaule@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/04 16:30:03 by eslamber          #+#    #+#              #
-#    Updated: 2023/10/24 10:42:50 by eslamber         ###   ########.fr        #
+#    Updated: 2023/10/24 15:54:23 by dbaule           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -54,7 +54,8 @@ SRC := main.c \
 	   builtins_utils.c \
 	   export.c \
 	   expand.c \
-	   minishell_utils.c
+	   minishell_utils.c \
+	   check_redirection_parent.c
 OBJ := $(SRC:%.c=.obj/%.o)
 
 #

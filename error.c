@@ -6,7 +6,7 @@
 /*   By: eslamber <eslamber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/03 11:08:59 by eslamber          #+#    #+#             */
-/*   Updated: 2023/10/24 14:55:19 by eslamber         ###   ########.fr       */
+/*   Updated: 2023/10/25 11:36:09 by eslamber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ static void    error_bis(t_error err, char *cmd)
     else if (err == CLOSE)
         ft_printf_fd(ERR, "Error : Problem with clausing function\n");
     else if (err == TOKEN)
-        ft_printf_fd(ERR, "Error : Syntax error near unexpected token `\\n`\n");
+        ft_printf_fd(ERR, "Error : syntax error near unexpected token `\\n\'\n");
     else if (err == OPEN)
         perror("Error ");
     else if (err == DUP)
@@ -62,7 +62,7 @@ static void    error_bis(t_error err, char *cmd)
     else if (err == WRITE)
         ft_printf_fd(ERR, "Error : Problem with write function\n");
     else if (err == SYNTAX)
-        ft_printf_fd(ERR, "Error : Syntax error near unexpected token %s\n", cmd);
+        ft_printf_fd(ERR, "Error : syntax error near unexpected token `%s\'\n", cmd);
     else if (err == DIREC)
     {
         status = 126;
@@ -85,6 +85,6 @@ static void    error_bis_bis(t_error err)
     {
         status = 127;
         // ft_printf_fd(ERR, "Error : No such file or directory\n");
-        perror("Error :");
+        perror("Error ");
     }
 }

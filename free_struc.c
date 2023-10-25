@@ -6,7 +6,7 @@
 /*   By: eslamber <eslamber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 14:39:50 by dbaule            #+#    #+#             */
-/*   Updated: 2023/10/24 13:58:34 by eslamber         ###   ########.fr       */
+/*   Updated: 2023/10/25 11:36:28 by eslamber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,8 @@ void	free_all(t_cmd *pip)
 {
 	anihilation(pip->env);
 	anihilation(pip->exp_env);
+	free(pip->save_path);
 	pip->env = NULL;
 	pip->exp_env = NULL;
+	pip->save_path = NULL;
 }

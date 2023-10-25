@@ -6,7 +6,7 @@
 /*   By: dbaule <dbaule@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/01 14:26:08 by dbaule            #+#    #+#             */
-/*   Updated: 2023/10/23 16:10:58 by dbaule           ###   ########.fr       */
+/*   Updated: 2023/10/24 19:44:48 by dbaule           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,12 @@ int cpy_env(char **env, t_cmd *pip)
     i = 0;
     while (env[i])
     {
+        if (ft_strncmp(env[i], "PWD=", 4) == 0)
+        {
+            pip->save_path = ft_strdup(&(env[i])[4]);
+            if (!pip->save_path)
+                return (error(MALLOC, 0), pip->env = '\0', anihilation(pip->env), 1);
+        }
         pip->env[i] = ft_strdup(env[i]);
         if (pip->env[i] == NULL)
             return (error(MALLOC, 0), pip->env = '\0', anihilation(pip->env), 1);
@@ -50,6 +56,11 @@ int cpy_env(char **env, t_cmd *pip)
                 z++;
             for_sh = ft_atoi(&pip->env[i][z]);
             for_sh++;
+            if (for_sh > 1000)
+            {
+                for_sh = 1;
+                ft_printf_fd(2, "warning : shell level (1000) too high, resetting to 1\n");
+            }
             sh_lvl = ft_itoa(for_sh);
             if (!sh_lvl)
                 return (anihilation(pip->env), error(MALLOC, 0), 1);
@@ -61,6 +72,7 @@ int cpy_env(char **env, t_cmd *pip)
             free(sh_lvl);
             if (export(pip, buf) == 1)
                 return (anihilation(pip->env), 1);
+            free(buf);
         }
         i++;
     }

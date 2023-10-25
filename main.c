@@ -6,7 +6,7 @@
 /*   By: dbaule <dbaule@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 14:04:59 by eslamber          #+#    #+#             */
-/*   Updated: 2023/10/20 00:13:19 by dbaule           ###   ########.fr       */
+/*   Updated: 2023/10/24 20:33:10 by dbaule           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,12 @@ int	main(int argc, char **argv, char **env)
 		}
 		pip.nb_proc = 0;
 		buf = getcwd(NULL, 0);
+		if (!buf)
+		{
+			if (chdir(pip.save_path) == -1)
+				return (perror("Error "), 1); 
+			buf = getcwd(NULL, 0);
+		}
 		buff = ft_strjoin(buf, "$ ");
 		free(buf);
 		rd_line = readline(buff);

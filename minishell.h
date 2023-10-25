@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eslamber <eslamber@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dbaule <dbaule@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 15:35:11 by eslamber          #+#    #+#             */
-/*   Updated: 2023/10/24 10:50:38 by eslamber         ###   ########.fr       */
+/*   Updated: 2023/10/24 19:34:43 by dbaule           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ typedef struct  t_cmd
     int             nb_pipe;
     int             nb_proc;
     int             parent_builtin;
+    char            *save_path;
     int             builtin; //utilisé
     int             heredoc; // utilisé
     int             ind_hd; // utilisé
@@ -94,7 +95,7 @@ char            *verif_read(char *rd_line, t_cmd *pip);
 int             cpy_env(char **env, t_cmd *pip);
 
 // Builtins
-int             search_parent_builtins(t_cmd *pip, t_list *spt);
+int             parent_builtins(t_cmd *pip, t_list *spt, char **exec_cmd);
 
 int             search_builtins(char **spt, t_cmd *pip);
 
@@ -159,6 +160,8 @@ int             *counting_arg(int count, t_list *spt);
 char            **string_for_cmd_center(int *tab, int i, t_list *spt);
 
 char            **check_redirection(char **arg, t_cmd *pip);
+
+char            **check_redirection_parent(char **arg, t_cmd *struc);
 
 char            **prep_hd(t_cmd *pip, t_list *spt);
 
