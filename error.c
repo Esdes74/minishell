@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dbaule <dbaule@student.42.fr>              +#+  +:+       +#+        */
+/*   By: eslamber <eslamber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/03 11:08:59 by eslamber          #+#    #+#             */
-/*   Updated: 2023/10/23 16:06:16 by dbaule           ###   ########.fr       */
+/*   Updated: 2023/10/24 14:55:19 by eslamber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void    error(t_error err, char *cmd)
     else if (err == CMD)
     {
         status = 127;
-        ft_printf_fd(ERR, "Error %s: command not found\n", cmd);
+        ft_printf_fd(ERR, "Error : %s: command not found\n", cmd);
     }
     else if (err == JOIN)
         ft_printf_fd(ERR, "Error : Problem with strjoin function\n");

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution_center.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dbaule <dbaule@student.42.fr>              +#+  +:+       +#+        */
+/*   By: eslamber <eslamber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 21:29:25 by dbaule            #+#    #+#             */
-/*   Updated: 2023/10/23 13:18:19 by dbaule           ###   ########.fr       */
+/*   Updated: 2023/10/24 16:43:52 by eslamber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ int execution_center(t_list *spt, t_cmd *pip)
     char    **exec_cmd;
     pid_t   *tab_pid;
     int     *arg_count;
-    // int     flag_status;
     int     statut;
     int     exit_status;
     int     i;
@@ -97,11 +96,8 @@ int execution_center(t_list *spt, t_cmd *pip)
 
 
     // Récupération du code de sortie du programme
-    // flag_status = 0;
 	while (i < pip->nb_proc)
     {
-        // flag_status = 1;
-        // wait(&statut);
         waitpid(tab_pid[i], &statut, 0);
         i++;
     }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_center_simple.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dbaule <dbaule@student.42.fr>              +#+  +:+       +#+        */
+/*   By: eslamber <eslamber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/04 15:17:58 by eslamber          #+#    #+#             */
-/*   Updated: 2023/10/23 14:41:24 by dbaule           ###   ########.fr       */
+/*   Updated: 2023/10/24 14:51:02 by eslamber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,11 +48,11 @@ static int	execute_child(char **environ, char **str, t_cmd *pip)
 		str[i] = new_str;
 		i++;
 	}
+	if (str[0][0] == '\0')
+		return (error(CMD, str[0]), 1);
 	cmd = cmd_build(str[0], environ);
 	if (cmd == NULL)
 		return (1); // anihilation(str), free(false_cmd)
-    // annihilation(list, free, DEBUG);
-	// ft_printf_fd(2, "okok\n");
 	execve(cmd, str, pip->env);
 	// ft_printf_fd(2, "apres exec\n");
 	pip->ani_flag = 1;

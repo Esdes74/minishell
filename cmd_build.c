@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_build.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dbaule <dbaule@student.42.fr>              +#+  +:+       +#+        */
+/*   By: eslamber <eslamber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/17 09:13:17 by dbaule            #+#    #+#             */
-/*   Updated: 2023/10/23 15:32:10 by dbaule           ###   ########.fr       */
+/*   Updated: 2023/10/24 12:08:04 by eslamber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ char	*cmd_build(char *str, char **env)
 		i++;
 	}
 	if (!env[i])
-		return (NULL);
+		return (error(CMD, str), NULL);
 	if (cmd == NULL)
 		cmd = ft_strdup(&env[i][5]);
 	if (!cmd)
