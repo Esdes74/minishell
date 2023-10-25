@@ -6,7 +6,7 @@
 /*   By: eslamber <eslamber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/20 15:16:22 by eslamber          #+#    #+#             */
-/*   Updated: 2023/10/25 19:28:09 by eslamber         ###   ########.fr       */
+/*   Updated: 2023/10/25 19:54:14 by eslamber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -337,7 +337,7 @@ void    parsing(const char *rd_line, int *flag, t_list *ret)
             error(MALLOC, NULL);
         }
     }
-    if (j == 0)
+    if (j == 0 && spt[compt] == NULL)
         free(spt[compt]);
     if (i != compt)
         free(spt[i]);
