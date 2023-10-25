@@ -6,7 +6,7 @@
 /*   By: dbaule <dbaule@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 14:04:59 by eslamber          #+#    #+#             */
-/*   Updated: 2023/10/24 20:33:10 by dbaule           ###   ########.fr       */
+/*   Updated: 2023/10/25 11:30:34 by dbaule           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,10 @@ int	main(int argc, char **argv, char **env)
 	(void)	argc;
 	(void)	argv;
 	t_cmd   pip;
+	int		i;
 
 	cmd = NULL;
+	i = 0;
 	pip.here_pipe = NULL;
 	pip.exp_env = NULL;
 	if (getenv("PATH") == NULL)
@@ -53,9 +55,16 @@ int	main(int argc, char **argv, char **env)
 		buf = getcwd(NULL, 0);
 		if (!buf)
 		{
-			if (chdir(pip.save_path) == -1)
-				return (perror("Error "), 1); 
+			if (chdir("/") == -1)
+				return (perror("Error "), 1);
+			while (pip.save_path[i])
+			{
+				if (chdir(pip.save_path[i]) == -1)
+					return (perror("Error "), 1);
+				i++;
+			}
 			buf = getcwd(NULL, 0);
+			i = 0;
 		}
 		buff = ft_strjoin(buf, "$ ");
 		free(buf);

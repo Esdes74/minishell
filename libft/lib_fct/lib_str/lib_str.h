@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lib_str.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eslamber <eslamber@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: dbaule <dbaule@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 11:06:15 by eslamber          #+#    #+#             */
-/*   Updated: 2023/01/11 13:49:24 by eslamber         ###   ########.fr       */
+/*   Updated: 2023/10/25 10:51:17 by dbaule           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ int		ft_strncmp(const char *first, const char *sec, size_t n);
 char	*ft_strnstr(const char *big, const char *little, size_t n);
 
 // Change int string to int
-int		ft_atoi(const char *s);
+long long	ft_atoi(const char *s);
 
 // Duplicate string in another string allocated
 char	*ft_strdup(const char *src);

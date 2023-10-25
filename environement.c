@@ -6,7 +6,7 @@
 /*   By: dbaule <dbaule@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/01 14:26:08 by dbaule            #+#    #+#             */
-/*   Updated: 2023/10/24 19:44:48 by dbaule           ###   ########.fr       */
+/*   Updated: 2023/10/25 11:31:42 by dbaule           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int cpy_env(char **env, t_cmd *pip)
     {
         if (ft_strncmp(env[i], "PWD=", 4) == 0)
         {
-            pip->save_path = ft_strdup(&(env[i])[4]);
+            pip->save_path = ft_split(&(env[i])[4], '/');
             if (!pip->save_path)
                 return (error(MALLOC, 0), pip->env = '\0', anihilation(pip->env), 1);
         }
