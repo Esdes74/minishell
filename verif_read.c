@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   verif_read.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eslamber <eslamber@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dbaule <dbaule@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 11:08:50 by eslamber          #+#    #+#             */
-/*   Updated: 2023/10/25 19:28:19 by eslamber         ###   ########.fr       */
+/*   Updated: 2023/10/25 19:59:04 by dbaule           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,10 +105,13 @@ static int check_arg(t_list *spt)
         }
         else if (str[0] == '>')
         {
-            if (str[1] == '\0' && (((char *)tmp->next->data_cell->data)[0] == '<'))
-                return (error(SYNTAX, "<"), status = 2, 1);
-            if (str[1] == '\0' && ((char *)tmp->next->data_cell->data)[0] == '>')
-                return (error(SYNTAX, ">"), status = 2, 1);
+            if (tmp->next != NULL)
+            {
+                if (str[1] == '\0' && (((char *)tmp->next->data_cell->data)[0] == '<'))
+                    return (error(SYNTAX, "<"), status = 2, 1);
+                if (str[1] == '\0' && ((char *)tmp->next->data_cell->data)[0] == '>')
+                    return (error(SYNTAX, ">"), status = 2, 1);
+            }
             if (str[1] == '\0' && tmp->next == NULL)
                 return (error(SYNTAX, "newline"), status = 2, 1);
             else if (str[1] == '>' && str[2] == '\0' && tmp->next == NULL)
