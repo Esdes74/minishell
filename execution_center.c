@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution_center.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eslamber <eslamber@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dbaule <dbaule@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 21:29:25 by dbaule            #+#    #+#             */
-/*   Updated: 2023/10/25 15:24:41 by eslamber         ###   ########.fr       */
+/*   Updated: 2023/10/25 17:06:14 by dbaule           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int execution_center(t_list *spt, t_cmd *pip)
     int     i;
     int     id;
     int     ret;
-    // int     value_ret;
+    int     value_ret;
     char    **buf;
     t_cell  *tmp;
 
@@ -60,13 +60,19 @@ int execution_center(t_list *spt, t_cmd *pip)
         if (exec_cmd == NULL)
             return (error(MALLOC, NULL), 1);
         buf = check_redirection_parent(exec_cmd, pip);
-        anihilation(exec_cmd);
+        // anihilation(exec_cmd);
         if (buf == NULL)
             return (free(arg_count), 2); //anihilation(exec_cmd),
-        if (parent_builtins(pip, spt, buf) == -1)
-            return (annihilation(spt, free, DEBUG), free(arg_count), 1);
-        anihilation(buf);
-        exec_cmd = NULL;
+        value_ret = parent_builtins(pip, spt, buf);
+        if (value_ret == -1)
+            return (annihilation(spt, free, DEBUG), free(arg_count), anihilation(buf), 1);
+        if (value_ret > 0)
+        {
+            free(buf[0]);
+            free(buf);
+        }
+        else
+            anihilation(buf);
     }
     tab_pid = (pid_t *) malloc(sizeof(pid_t) * (pip->nb_proc));
     if (tab_pid == NULL)

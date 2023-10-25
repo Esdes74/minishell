@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eslamber <eslamber@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dbaule <dbaule@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 15:35:11 by eslamber          #+#    #+#             */
-/*   Updated: 2023/10/25 15:20:52 by eslamber         ###   ########.fr       */
+/*   Updated: 2023/10/25 17:05:36 by dbaule           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,7 +123,7 @@ unsigned char   exitt(unsigned char ret_value);
 
 void            echo(char **arg, int option);
 
-void            cd(char *path, t_cmd *pip, t_list *spt);
+void            cd(char **path, t_cmd *pip);
 
 int             export(t_cmd *pip, char *name_value);
 

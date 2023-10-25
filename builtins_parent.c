@@ -6,7 +6,7 @@
 /*   By: dbaule <dbaule@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/31 10:31:07 by dbaule            #+#    #+#             */
-/*   Updated: 2023/10/25 11:14:19 by dbaule           ###   ########.fr       */
+/*   Updated: 2023/10/25 16:50:14 by dbaule           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,19 +57,32 @@ unsigned char    exitt(unsigned char ret_value)
     return(ret_value);
 }
 
-void    cd(char *path, t_cmd *pip, t_list *spt)
+void    cd(char **path, t_cmd *pip)
 {
-    if (spt->len <= 2 && path != NULL && chdir(path) != 0)
+    int i;
+
+    i = 0;
+    while (path[i]) // faut adapter avec les redirection ??
+    {
+        if (i > 2)
+            free(path[i]);
+        i++;
+    }
+    if (i <= 2 && path != NULL && chdir(path[1]) != 0)
     {
         status = 1;
-        ft_printf_fd(2, "-bash: cd: %s: No such file or directory\n");
+        ft_printf_fd(2, "-bash: cd: %s: No such file or directory\n", path[1]);
+        free(path[1]);
         return ;
     }
-    else if (spt->len > 2)
+    if (i > 2)
     {
         error(TOO_MANY_ARG, "cd");
+        free(path[1]);
+        free(path[2]);
         return ;
     }
+    status = 0;
     pip->builtin = TRUE;
 }
 
@@ -80,6 +93,13 @@ int unset(t_cmd *pip, char *name_value)
 
     i = 0;
     trigger = 0;
+    if (name_value[0] == '\0' || ft_isdigit(name_value[0]) == 1)
+        return (free(name_value), ft_printf_fd(2, "Error : not a valid identifier\n"), status = 1, 0);
+    while (name_value[i] && (ft_isalnum(name_value[i]) == 1 || name_value[i] == '_'))
+        i++;
+    if (name_value[i] != '\0')
+        return (free(name_value), ft_printf_fd(2, "Error : not a valid identifier\n"), status = 1, 0);
+    i = 0;
     while (pip->env[i])
     {
         if (ft_strncmp(pip->env[i], name_value, count_name_env(pip->env[i]) - 1) == 0\
@@ -98,13 +118,14 @@ int unset(t_cmd *pip, char *name_value)
     if (trigger == 0)
     {
         pip->builtin = TRUE;
-        return (0);
+        return (free(name_value), 0);
     }
     else
         if (unset_env(pip, name_value, i) == 1)
-            return (1);
+            return (free(name_value), 1);
     if (unset_exp_env(pip, name_value, i) == 1)
-        return (1);
+        return (free(name_value), 1);
+    free(name_value);
     return (0);
 }
 

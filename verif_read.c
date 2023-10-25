@@ -6,7 +6,7 @@
 /*   By: dbaule <dbaule@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 11:08:50 by eslamber          #+#    #+#             */
-/*   Updated: 2023/10/24 20:59:46 by dbaule           ###   ########.fr       */
+/*   Updated: 2023/10/25 15:57:55 by dbaule           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ char *verif_read(char *rd_line, t_cmd *pip)
     //     return (NULL);
     flag = execution_center(spt, pip);
     if (flag == 1)
-        return (NULL);
+        return (free(buff), NULL);
     else if (flag == -1)
         return (free(buff), NULL);
     // else if (flag == 0)
