@@ -6,7 +6,7 @@
 /*   By: eslamber <eslamber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/20 15:16:22 by eslamber          #+#    #+#             */
-/*   Updated: 2023/10/25 11:36:37 by eslamber         ###   ########.fr       */
+/*   Updated: 2023/10/25 18:05:35 by eslamber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,7 @@ void    parsing(const char *rd_line, int *flag, t_list *ret)
         i++;
     }
     // Créer le tableau de chaine de caractères et le tableau permettant de compter le nombre de caractères dans chaque arguments
-    if (*flag == 3)
+    if (*flag == 3 && compt != 1)
             compt--;
     // ft_printf_fd(2, "première boucle = %d, flag = %d\n", compt, *flag);
     spt = (char **) malloc(sizeof(char *) * (compt + 1));
@@ -199,13 +199,14 @@ void    parsing(const char *rd_line, int *flag, t_list *ret)
         i++;
     }
     i = 0;
-    if (*flag == 3)
+    if (*flag == 3 && compt != 0)
         compt--;
     // ft_printf_fd(2, "seconde boucle = %d\n", compt);
     if (*flag != 0 && *flag == save_flag) // permet de compter le \n si jamais on doit en rajouter un a la fin de la chaine pasque l'argument n'est pas finis
         tab[compt] += 1;
     while (i <= compt) // créer les chaines de caractères
     {
+        // ft_printf_fd(2, "tab[%d] = %d\n", i, tab[i]);
         spt[i] = (char *)ft_calloc(sizeof(char) , (tab[i] + 1));
         if (spt[i] == NULL)
         {
@@ -227,12 +228,15 @@ void    parsing(const char *rd_line, int *flag, t_list *ret)
             spt[compt++][j] = '\0';
         while(rd_line[i] == '|' && (*flag == 0 || *flag == 3 || *flag == 4))
         {
+            // ft_printf_fd(2, "compt = %d\n", compt);
             spt[compt][0] = '|';
             spt[compt][1] = '\0';
             j = 0;
             i++;
             compt++;
         }
+        if (rd_line[i] == '\0')
+            break ;
         if (rd_line[i] == '\n' && (*flag == 0 || *flag == 3))
         {
             tmp_flag = -1;

@@ -6,7 +6,7 @@
 /*   By: eslamber <eslamber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 18:55:25 by eslamber          #+#    #+#             */
-/*   Updated: 2023/10/25 17:02:26 by eslamber         ###   ########.fr       */
+/*   Updated: 2023/10/25 18:13:49 by eslamber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,8 @@ char    *expand(char *rd_line, t_cmd *pip, int *flag)
             }
             new = NULL;
         }
-        i++;
+        if (rd_line[i] != '\0')
+            i++;
     }
     return (rd_line);
 }
@@ -144,6 +145,5 @@ static char *add_var_to_sentence(char *rd_line, char *var, int i, int *flag)
     while (rd_line[i])
         new[j++] = rd_line[i++];
     new[j] = '\0';
-    ft_printf_fd(2, "i = %d\n", i);
     return (new);
 }

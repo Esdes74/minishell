@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dbaule <dbaule@student.42.fr>              +#+  +:+       +#+        */
+/*   By: eslamber <eslamber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 14:04:59 by eslamber          #+#    #+#             */
-/*   Updated: 2023/10/25 17:05:18 by dbaule           ###   ########.fr       */
+/*   Updated: 2023/10/25 17:34:23 by eslamber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,9 +43,9 @@ int	main(int argc, char **argv, char **env)
 	pip.hd_history = NULL;
 	pip.ani_flag = 0;
 	status = 0;
-	pip.status_hd = 0;
 	while (1)
 	{
+		pip.status_hd = 0;
 		main_signals();
 		if (pip.hd_history != NULL)
 		{
