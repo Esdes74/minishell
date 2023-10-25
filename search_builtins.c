@@ -6,7 +6,7 @@
 /*   By: dbaule <dbaule@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/13 11:08:50 by eslamber          #+#    #+#             */
-/*   Updated: 2023/10/25 17:02:05 by dbaule           ###   ########.fr       */
+/*   Updated: 2023/10/25 17:47:17 by dbaule           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static void determine_echo_or_cd(char **str, int *option);
 
-int parent_builtins(t_cmd *pip, t_list *spt, char **exec_cmd)
+int parent_builtins(t_cmd *pip, char **exec_cmd)
 {
     int     ret;
     int     i;
@@ -22,12 +22,8 @@ int parent_builtins(t_cmd *pip, t_list *spt, char **exec_cmd)
 
     pip->builtin = FALSE;
     i = 1;
-    // if (!exec_cmd[0])
-    //     return (1);
-    // str = exec_cmd[0];
-    // printf("valeur de exec : %s\n", exec_cmd[0]);
     if (ft_strlen(exec_cmd[0]) == 4 && ft_strncmp(exec_cmd[0], "exit", 4) == 0)
-        return (intermediate_exit(spt), -1);
+        return (intermediate_exit(exec_cmd), -1);
     else if (ft_strlen(exec_cmd[0]) == 2 && ft_strncmp(exec_cmd[0], "cd", 2) == 0)
     {
         pip->parent_builtin = TRUE;
