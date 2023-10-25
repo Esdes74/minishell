@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prep_heredoc.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dbaule <dbaule@student.42.fr>              +#+  +:+       +#+        */
+/*   By: eslamber <eslamber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 11:08:50 by eslamber          #+#    #+#             */
-/*   Updated: 2023/10/24 19:08:08 by dbaule           ###   ########.fr       */
+/*   Updated: 2023/10/25 16:36:09 by eslamber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,8 +89,10 @@ char    **prep_hd(t_cmd *pip, t_list *spt)
         rd_line = pip->hd_history[i];
         // Ici je demande a l'utilisateur de rentrer ses phrases jusqu'a ce que je retrouve le bon mot
         buff = readline("> ");
-        while (ft_strncmp(stop, buff, ft_strlen(buff) + 1) != 0)
+        while (status != 130)
         {
+            if (ft_strncmp(stop, buff, ft_strlen(buff) + 1) == 0)
+                break;
             if (rd_line == NULL) // Si c'est la première phrase alors je join un \n
             {
                 rd_line = ft_strjoin(buff, "\n");
@@ -112,6 +114,15 @@ char    **prep_hd(t_cmd *pip, t_list *spt)
                 rd_line = buff;
             }
             buff = readline("> ");
+        }
+        if (status == 130)
+        {
+            free(buff);
+            free(buf);
+            free(rd_line);
+            pip->status_hd = 1;
+            free(pip->hd_history);
+            return (NULL);
         }
         // Je récupère le dernier mot afin de pouvoir l'ajouter a l'historique
         if (rd_line != NULL)

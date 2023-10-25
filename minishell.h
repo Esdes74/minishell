@@ -6,7 +6,7 @@
 /*   By: dbaule <dbaule@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 15:35:11 by eslamber          #+#    #+#             */
-/*   Updated: 2023/10/25 16:28:50 by dbaule           ###   ########.fr       */
+/*   Updated: 2023/10/25 17:05:36 by dbaule           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,15 +21,15 @@
 # include <readline/history.h>
 # include <sys/wait.h>
 # include <dirent.h>
+# include <sys/ioctl.h>
 
 # include "libft/libft.h"
 
-# define KILL_ALL SIGUSR2
-# define SCAN SIGUSR1
-# define QUIT -1
 # define CON_C SIGINT
+# define IGN SIG_IGN
+# define QUIT SIGQUIT
 # define DEBUG 1
-#define ERR STDERR_FILENO
+# define ERR STDERR_FILENO
 
 extern unsigned char    status;
 
@@ -61,6 +61,7 @@ typedef enum    e_error{
 typedef struct  t_cmd
 {
     int             nb_pipe;
+    int             status_hd;
     int             nb_proc;
     int             parent_builtin;
     char            **save_path;
@@ -78,10 +79,6 @@ typedef struct  t_cmd
 }   t_cmd;
 
 // Générals
-void	        signals(void);
-
-int             add_list(pid_t data, t_list *list);
-
 void            error(t_error err, char *cmd);
 
 void	        quit(void);
@@ -93,6 +90,23 @@ int             historic_fct(char *bufff, char *test, t_cmd *pip);
 char            *verif_read(char *rd_line, t_cmd *pip);
 
 int             cpy_env(char **env, t_cmd *pip);
+
+// Signals
+void	        main_signals(void);
+
+void	        exec_signals(void);
+
+void            unset_signals(void);
+
+void	        hd_signals();
+
+void            hsigint(int sig);
+
+void            hsigint_exec(int sig);
+
+void            hsigint_hd(int sig);
+
+void            hsigquit(int sig);
 
 // Builtins
 int             parent_builtins(t_cmd *pip, t_list *spt, char **exec_cmd);

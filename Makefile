@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: dbaule <dbaule@student.42.fr>              +#+  +:+       +#+         #
+#    By: eslamber <eslamber@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/04 16:30:03 by eslamber          #+#    #+#              #
-#    Updated: 2023/10/24 15:54:23 by dbaule           ###   ########.fr        #
+#    Updated: 2023/10/25 16:38:35 by eslamber         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,7 +34,6 @@ HEADER := minishell.h
 # Definition of files variables
 SRC := main.c \
 	   signals.c \
-	   add_list.c \
 	   error.c \
 	   cmd_build.c \
 	   historic.c \
