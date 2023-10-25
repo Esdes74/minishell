@@ -6,7 +6,7 @@
 /*   By: eslamber <eslamber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 18:55:25 by eslamber          #+#    #+#             */
-/*   Updated: 2023/10/25 18:13:49 by eslamber         ###   ########.fr       */
+/*   Updated: 2023/10/25 19:07:36 by eslamber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +116,7 @@ static char *add_var_to_sentence(char *rd_line, char *var, int i, int *flag)
         len = 2;
     else
         while (ft_isprint(rd_line[j]) && rd_line[j] != ' ' && \
-            rd_line[j] != '\'' && rd_line[j++] != '"')
+            rd_line[j] != '\'' && rd_line[j] != '"' && rd_line[j++] != '|')
             len++;
     if (var == NULL)
         new = (char *) malloc(sizeof(char) * (ft_strlen(rd_line) - len + \

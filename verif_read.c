@@ -6,7 +6,7 @@
 /*   By: eslamber <eslamber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 11:08:50 by eslamber          #+#    #+#             */
-/*   Updated: 2023/10/25 17:52:51 by eslamber         ###   ########.fr       */
+/*   Updated: 2023/10/25 19:26:30 by eslamber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ char *verif_read(char *rd_line, t_cmd *pip)
     rd_line = expand(rd_line, pip, &expand_flag);
     if (rd_line == NULL)
         return (annihilation(spt, free, DEBUG), NULL);
+    // ft_printf_fd(2, "rd_line = :%s:\n", rd_line);
     parsing(rd_line, &flag, spt);
     free(rd_line);
     if (spt->len == 0)

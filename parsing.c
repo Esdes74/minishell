@@ -6,7 +6,7 @@
 /*   By: eslamber <eslamber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/20 15:16:22 by eslamber          #+#    #+#             */
-/*   Updated: 2023/10/25 18:05:35 by eslamber         ###   ########.fr       */
+/*   Updated: 2023/10/25 19:25:52 by eslamber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,8 @@ void    parsing(const char *rd_line, int *flag, t_list *ret)
         }
         if(rd_line[i] == '\0')
         {
-            *flag = 3;
+            if (i > 0 && rd_line[i - 1] != '|')
+                *flag = 3;
             break;
         }
         if (i > 0 && rd_line[i] != ' ' && rd_line[i - 1] == '|' && (*flag == 0 || *flag == 3))
@@ -135,7 +136,8 @@ void    parsing(const char *rd_line, int *flag, t_list *ret)
         }
         if (rd_line[i] == '\0')
         {
-            *flag = 3;
+            if (i > 0 && rd_line[i - 1] != '|')
+                *flag = 3;
             break;
         }
         if (i > 0 && rd_line[i] != ' ' && rd_line[i - 1] == '|' && (*flag == 0 || *flag == 3))
@@ -233,7 +235,8 @@ void    parsing(const char *rd_line, int *flag, t_list *ret)
             spt[compt][1] = '\0';
             j = 0;
             i++;
-            compt++;
+            if (rd_line[i] != '\0')
+                compt++;
         }
         if (rd_line[i] == '\0')
             break ;
