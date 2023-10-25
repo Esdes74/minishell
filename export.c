@@ -6,7 +6,7 @@
 /*   By: dbaule <dbaule@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 10:47:27 by dbaule            #+#    #+#             */
-/*   Updated: 2023/10/24 16:29:05 by dbaule           ###   ########.fr       */
+/*   Updated: 2023/10/25 13:30:10 by dbaule           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,12 @@ int export(t_cmd *pip, char *name_value)
     }
 	if (!ft_isalpha(na_val[0]))
         return (ft_printf_fd(2, "Error : not a valid identifier\n"), free(na_val), status = 1, -1);
+    while (na_val[i] && na_val[i] != '=')
+    {
+        if (ft_isalnum(na_val[i]) != 1 && na_val[i] != '+')
+            return (ft_printf_fd(2, "Error : not a valid identifier\n"), free(na_val), status = 1, -1);
+        i++;
+    }
 	i = pars_exp(&flag, na_val);
 	if (i == -1)
 		return (status = 1, 0);

@@ -6,7 +6,7 @@
 /*   By: dbaule <dbaule@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 15:50:36 by dbaule            #+#    #+#             */
-/*   Updated: 2023/10/24 20:09:02 by dbaule           ###   ########.fr       */
+/*   Updated: 2023/10/25 15:49:10 by dbaule           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,16 +32,27 @@ char    **check_redirection_parent(char **arg, t_cmd *struc)
     while (arg[i])
         i++;
     buf = malloc(sizeof(char *) * (i + 1));
+    if (!buf)
+        return (NULL);
     i = 0;
     while (arg[i])
     {
         if (arg[i][0] == '"' || arg[i][0] == '\'')
+        {
             buf[i] = ft_strdup(arg[i]);
+            if (!buf[i])
+                return (NULL);
+        }
         else
+        {
             buf[i] = trash_quote(arg[i]);
+            if (!buf[i])
+                return (NULL);
+        }
         i++;
     }
     buf[i] = NULL;
+    anihilation(arg);
     i = 0;
     while (buf[i]) // récupération des différentes redirection
     {
@@ -150,25 +161,25 @@ char    **check_redirection_parent(char **arg, t_cmd *struc)
         {
             if (buf[i][1] == '\0' || (buf[i][1] == '<' && buf[i][2] == '\0'))
             {
-                free(buf[i]);
+                // free(buf[i]);
                 i++;
             }
-            free(buf[i]);
+            // free(buf[i]);
         }
         else if (buf[i][0] == '>')
         {
             if (buf[i][1] == '\0' || (buf[i][1] == '>' && buf[i][2] == '\0'))
             {
-                free(buf[i]);
+                // free(buf[i]);
                 i++;
             }
-            free(buf[i]);
+            // free(buf[i]);
         }
         else
-            tmp[j++] = buf[i];
+            tmp[j++] = ft_strdup(buf[i]);
         i++;
     }
-    free(buf);
+    anihilation(buf);
     buf = tmp;
     buf[j] = NULL;
     return (buf);

@@ -6,7 +6,7 @@
 /*   By: dbaule <dbaule@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/13 11:08:50 by eslamber          #+#    #+#             */
-/*   Updated: 2023/10/24 18:16:37 by dbaule           ###   ########.fr       */
+/*   Updated: 2023/10/25 17:02:05 by dbaule           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,22 @@ int parent_builtins(t_cmd *pip, t_list *spt, char **exec_cmd)
     else if (ft_strlen(exec_cmd[0]) == 2 && ft_strncmp(exec_cmd[0], "cd", 2) == 0)
     {
         pip->parent_builtin = TRUE;
-        if (exec_cmd[1] == NULL)
+        if (exec_cmd[1] == NULL || (exec_cmd[1][0] == '~' && !exec_cmd[2] && (!exec_cmd[1][1] || (exec_cmd[1][1] == '/' && !exec_cmd[1][2]))))
+        {
+            i = 0;
+            if (exec_cmd[1])
+                free (exec_cmd[1]);
+            if (chdir("/") == -1)
+                return (perror("Error "), status = 1, 1);
+            while (pip->save_path[i])
+            {
+                if (chdir(pip->save_path[i]) == -1)
+                    return (perror("Error "), status = 1, 1);
+                i++;
+            }
             return (1);
-        return (cd(exec_cmd[1], pip, spt), 1); // il faut retirer le spt car on va se fier a la len de exec_cmd
+        }
+        return (cd(exec_cmd, pip), 1);
     }
     else if (ft_strlen(exec_cmd[0]) == 6 && ft_strncmp(exec_cmd[0], "export", 6) == 0)
     {
@@ -47,7 +60,7 @@ int parent_builtins(t_cmd *pip, t_list *spt, char **exec_cmd)
                 return (-1);
             i++;
         }
-        return (1);
+        return (2);
     }
     else if (ft_strlen(exec_cmd[0]) == 5 && ft_strncmp(exec_cmd[0], "unset", 5) == 0)
     {
@@ -58,7 +71,7 @@ int parent_builtins(t_cmd *pip, t_list *spt, char **exec_cmd)
                 return (-1);
             i++;
         }
-        return (1);
+        return (3);
     }
     return (0);
 }
@@ -83,7 +96,7 @@ int search_builtins(char **spt, t_cmd *pip)
         if (option == 0 || option == 1)
             return (echo(spt, option), status = 0, 1);
         else if (option == 2)
-            return (cd(spt[1], pip, NULL), -1);
+            return (cd(spt, pip), -1);
     }
     else if ((ft_strlen(spt[0]) == 6 && ft_strncmp(spt[0], "export", 6) == 0) && spt[1] == NULL)
         return (print_export(pip->exp_env), 1);

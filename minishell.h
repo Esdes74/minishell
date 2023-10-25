@@ -6,7 +6,7 @@
 /*   By: dbaule <dbaule@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 15:35:11 by eslamber          #+#    #+#             */
-/*   Updated: 2023/10/25 11:14:58 by dbaule           ###   ########.fr       */
+/*   Updated: 2023/10/25 16:28:50 by dbaule           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,7 @@ unsigned char   exitt(unsigned char ret_value);
 
 void            echo(char **arg, int option);
 
-void            cd(char *path, t_cmd *pip, t_list *spt);
+void            cd(char **path, t_cmd *pip);
 
 int             export(t_cmd *pip, char *name_value);
 

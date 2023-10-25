@@ -6,7 +6,7 @@
 /*   By: dbaule <dbaule@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/01 14:26:08 by dbaule            #+#    #+#             */
-/*   Updated: 2023/10/25 11:31:42 by dbaule           ###   ########.fr       */
+/*   Updated: 2023/10/25 13:44:21 by dbaule           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ int cpy_env(char **env, t_cmd *pip)
             free(sh_lvl);
             if (export(pip, buf) == 1)
                 return (anihilation(pip->env), 1);
-            free(buf);
+            // free(buf);
         }
         i++;
     }
