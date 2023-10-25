@@ -6,7 +6,7 @@
 /*   By: dbaule <dbaule@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 11:08:50 by eslamber          #+#    #+#             */
-/*   Updated: 2023/10/25 17:59:16 by dbaule           ###   ########.fr       */
+/*   Updated: 2023/10/25 18:22:02 by dbaule           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,15 +64,11 @@ char *verif_read(char *rd_line, t_cmd *pip)
     }
     if (check_arg(spt) == 1)
         return(annihilation(spt, free, DEBUG), buff);
-    // if (check_variables(spt, pip) == 1)
-    //     return (NULL);
     flag = execution_center(spt, pip);
     if (flag == 1)
         return (free(buff), NULL);
     else if (flag == -1)
         return (free(buff), NULL);
-    // else if (flag == 0)
-    //     return (status = 0, NULL); // annihilation(spt, free, DEBUG) exitt(pip, TRUE),
     annihilation(spt, free, DEBUG);
     return (buff);
 }

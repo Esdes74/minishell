@@ -6,7 +6,7 @@
 /*   By: eslamber <eslamber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 11:08:50 by eslamber          #+#    #+#             */
-/*   Updated: 2023/10/25 16:36:09 by eslamber         ###   ########.fr       */
+/*   Updated: 2023/10/25 17:31:23 by eslamber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ char    **prep_hd(t_cmd *pip, t_list *spt)
     char    *stop;
     char    *rd_line;
 
+    status = 0;
     // Compte du nombre de potentiels hd pour savoir de combien doit etre fait
     // le malloc
     compt = 0;
@@ -89,7 +90,7 @@ char    **prep_hd(t_cmd *pip, t_list *spt)
         rd_line = pip->hd_history[i];
         // Ici je demande a l'utilisateur de rentrer ses phrases jusqu'a ce que je retrouve le bon mot
         buff = readline("> ");
-        while (status != 130)
+        while (buff != NULL && status != 130)
         {
             if (ft_strncmp(stop, buff, ft_strlen(buff) + 1) == 0)
                 break;
@@ -115,8 +116,13 @@ char    **prep_hd(t_cmd *pip, t_list *spt)
             }
             buff = readline("> ");
         }
-        if (status == 130)
+        if (buff == NULL || status == 130)
         {
+            if (buff == NULL)
+            {
+                status = 0;
+                ft_printf("\n");
+            }
             free(buff);
             free(buf);
             free(rd_line);

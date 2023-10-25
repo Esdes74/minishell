@@ -6,7 +6,7 @@
 /*   By: dbaule <dbaule@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 18:55:25 by eslamber          #+#    #+#             */
-/*   Updated: 2023/10/25 17:51:56 by dbaule           ###   ########.fr       */
+/*   Updated: 2023/10/25 18:22:25 by dbaule           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,8 @@ char    *expand(char *rd_line, t_cmd *pip, int *flag)
             }
             new = NULL;
         }
-        i++;
+        if (rd_line[i] != '\0')
+            i++;
     }
     return (rd_line);
 }
