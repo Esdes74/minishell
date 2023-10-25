@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dbaule <dbaule@student.42.fr>              +#+  +:+       +#+        */
+/*   By: eslamber <eslamber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 14:04:59 by eslamber          #+#    #+#             */
-/*   Updated: 2023/10/25 11:30:34 by dbaule           ###   ########.fr       */
+/*   Updated: 2023/10/25 15:24:21 by eslamber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,15 +37,16 @@ int	main(int argc, char **argv, char **env)
 		return (error(MALLOC, '\0'), 1);
 	if (initialize_exp_env(&pip, pip.env) == 1)
 		return (error(MALLOC, 0), 1);
-	signals();
 	using_history();
 	rl_bind_key('\t', rl_complete);
 	bufff = NULL;
 	pip.hd_history = NULL;
 	pip.ani_flag = 0;
 	status = 0;
+	pip.status_hd = 0;
 	while (1)
 	{
+		main_signals();
 		if (pip.hd_history != NULL)
 		{
 			anihilation(pip.hd_history);

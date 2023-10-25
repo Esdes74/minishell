@@ -6,7 +6,7 @@
 /*   By: eslamber <eslamber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 21:29:25 by dbaule            #+#    #+#             */
-/*   Updated: 2023/10/25 11:36:20 by eslamber         ###   ########.fr       */
+/*   Updated: 2023/10/25 15:24:41 by eslamber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ int execution_center(t_list *spt, t_cmd *pip)
     char    **buf;
     t_cell  *tmp;
 
+    unset_signals();
     i = 0;
     id = -1;
     ret = 0;
@@ -42,7 +43,11 @@ int execution_center(t_list *spt, t_cmd *pip)
     if (pip->nb_proc > 1)
         if (prep_pipe(pip) == 1)
             return (-2);
+    hd_signals();
     pip->hd_history = prep_hd(pip, spt);
+    if (pip->status_hd == 1)
+        return (2);
+    unset_signals();
     arg_count = counting_arg(pip->nb_proc, spt);
     if (arg_count == NULL)
         return (1);
@@ -119,7 +124,13 @@ int execution_center(t_list *spt, t_cmd *pip)
     if (pip->parent_builtin == FALSE && pip->builtin == FALSE  && ret != 1) // && flag_status == 1
     {
         if (WIFSIGNALED(statut))
-            exit_status = WTERMSIG(statut);
+        {
+            if (WTERMSIG(statut) == SIGINT)
+                hsigint_exec(SIGINT);
+            else if (WTERMSIG(statut) == SIGQUIT)
+                hsigquit(SIGQUIT);
+            exit_status = 128 + WTERMSIG(statut);
+        }
         else if (WIFEXITED(statut))
             exit_status = WEXITSTATUS(statut);
         status = exit_status; // Stockage du code de sortie

@@ -6,7 +6,7 @@
 /*   By: eslamber <eslamber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/04 15:17:58 by eslamber          #+#    #+#             */
-/*   Updated: 2023/10/25 11:36:00 by eslamber         ###   ########.fr       */
+/*   Updated: 2023/10/25 13:52:53 by eslamber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,8 @@ static int	execute_child(char **environ, char **str, t_cmd *pip)
 	cmd = cmd_build(str[0], environ);
 	if (cmd == NULL)
 		return (1); // anihilation(str), free(false_cmd)
+	exec_signals();
 	execve(cmd, str, pip->env);
-	// ft_printf_fd(2, "apres exec\n");
 	pip->ani_flag = 1;
 	dir = opendir(cmd);
 	if (dir == NULL && access(cmd, F_OK | X_OK) != -1)
