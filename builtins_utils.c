@@ -6,7 +6,7 @@
 /*   By: dbaule <dbaule@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 16:36:54 by dbaule            #+#    #+#             */
-/*   Updated: 2023/10/24 17:19:12 by dbaule           ###   ########.fr       */
+/*   Updated: 2023/10/25 10:39:51 by dbaule           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,4 +132,17 @@ int	count_name_env(char *str)
 	while (str[i] && str[i] != '=')
 		i++;
 	return (i);
+}
+
+int check_zero(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i] == '0')
+		i++;
+	if (!str[i])
+		return (1);
+	else
+		return (0);
 }

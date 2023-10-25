@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eslamber <eslamber@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: dbaule <dbaule@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 14:07:50 by eslamber          #+#    #+#             */
-/*   Updated: 2022/11/25 14:15:52 by eslamber         ###   ########.fr       */
+/*   Updated: 2023/10/25 10:51:00 by dbaule           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static int	ft_iswhitespace(int car)
 	return (0);
 }
 
-int	ft_atoi(const char *str)
+long long	ft_atoi(const char *str)
 {
 	long long	res;
 	size_t		ind;
@@ -49,5 +49,5 @@ int	ft_atoi(const char *str)
 		ind++;
 	}
 	res = res * minus;
-	return ((int) res);
+	return (res);
 }

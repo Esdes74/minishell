@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins_parent.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eslamber <eslamber@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dbaule <dbaule@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/31 10:31:07 by dbaule            #+#    #+#             */
-/*   Updated: 2023/10/23 12:31:48 by eslamber         ###   ########.fr       */
+/*   Updated: 2023/10/25 11:14:19 by dbaule           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,16 +18,16 @@ static int  unset_exp_env(t_cmd *pip, char *name_value, int len);
 unsigned char    intermediate_exit(t_list *tmp)
 {
     char    *new_tmp;
-    int     ret_value;
+    long long     ret_value;
     int     i;
+    char    *buf;
 
-    if (tmp->len > 2)
-        return(error(TOO_MANY_ARG, "exit"), exitt(1));
     if (tmp->len == 1)
         return (exitt(0));
-    else if (tmp->len == 2)
+    else
     {
-        new_tmp = check_quote((char *) tmp->head->next->data_cell->data);
+        buf = (char *) tmp->head->next->data_cell->data;
+        new_tmp = check_quote(buf);
         if (new_tmp != tmp->head->next->data_cell->data)
             free(tmp->head->next->data_cell->data);
         tmp->head->next->data_cell->data = new_tmp;
@@ -40,7 +40,11 @@ unsigned char    intermediate_exit(t_list *tmp)
             i++;
         }
         ret_value = ft_atoi(new_tmp);
+        if (ret_value == 0 && ft_strlen(buf) > 2 && check_zero(buf) == 0)
+            return (ft_printf_fd(2, "Error : %s numeric argument required", buf), exitt(2));
     }
+    if (tmp->len > 2)
+        return(error(TOO_MANY_ARG, "exit"), exitt(1));
     return (exitt((unsigned char) ret_value));
 }
 
@@ -48,7 +52,7 @@ unsigned char    exitt(unsigned char ret_value)
 {
     // ft_printf_fd(1, "exit\n");
     // free_all(pip);
-    status = (int)ret_value;
+    status = ret_value;
     // silent_quit();
     return(ret_value);
 }

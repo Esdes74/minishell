@@ -6,7 +6,7 @@
 /*   By: dbaule <dbaule@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 15:35:11 by eslamber          #+#    #+#             */
-/*   Updated: 2023/10/24 19:34:43 by dbaule           ###   ########.fr       */
+/*   Updated: 2023/10/25 11:14:58 by dbaule           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ typedef struct  t_cmd
     int             nb_pipe;
     int             nb_proc;
     int             parent_builtin;
-    char            *save_path;
+    char            **save_path;
     int             builtin; //utilisé
     int             heredoc; // utilisé
     int             ind_hd; // utilisé
@@ -132,6 +132,8 @@ int             ft_strncmp_wo_plus(char *first, char *sec, size_t n);
 int             position_echo_n(char **arg, int *j, int *flag, int *option);
 
 int             count_name_env(char *str);
+
+int             check_zero(char *str);
 
 // Free functions
 

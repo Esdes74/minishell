@@ -6,7 +6,7 @@
 /*   By: dbaule <dbaule@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 18:55:25 by eslamber          #+#    #+#             */
-/*   Updated: 2023/10/24 19:12:30 by dbaule           ###   ########.fr       */
+/*   Updated: 2023/10/25 10:25:50 by dbaule           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,17 +117,14 @@ static char *add_var_to_sentence(char *rd_line, char *var, int i, int *flag)
         while (ft_isprint(rd_line[j]) && rd_line[j] != ' ' && \
             rd_line[j] != '\'' && rd_line[j++] != '"')
             len++;
-
     if (var == NULL)
         new = (char *) malloc(sizeof(char) * (ft_strlen(rd_line) - len + \
-    1 + quote));
+    1 + quote)); // provoque Conditional jump or move depends on uninitialised value si +1 a la place de +2 : invalid read
     else
         new = (char *) malloc(sizeof(char) * (ft_strlen(rd_line) - len + \
     ft_strlen(var) + 1 + quote));
     if (new == NULL)
         return (error(MALLOC, "0"), NULL);
-
-
     j = -1;
     while (++j < i)
         new[j] = rd_line[j];
