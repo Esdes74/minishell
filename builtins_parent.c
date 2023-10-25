@@ -6,7 +6,7 @@
 /*   By: dbaule <dbaule@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/31 10:31:07 by dbaule            #+#    #+#             */
-/*   Updated: 2023/10/25 17:44:44 by dbaule           ###   ########.fr       */
+/*   Updated: 2023/10/25 18:14:09 by dbaule           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ unsigned char    intermediate_exit(char **tmp)
     int     len;
 
     len = 0;
+    if (tmp == NULL)
+        return (exitt(0));
     while (tmp[len])
         len++;
     if (len == 1)
@@ -87,6 +89,7 @@ void    cd(char **path, t_cmd *pip)
         return ;
     }
     status = 0;
+    free(path[1]);
     pip->builtin = TRUE;
 }
 
