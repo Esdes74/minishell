@@ -6,7 +6,7 @@
 #    By: eslamber <eslamber@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/04 16:30:03 by eslamber          #+#    #+#              #
-#    Updated: 2023/10/25 16:38:35 by eslamber         ###   ########.fr        #
+#    Updated: 2023/10/25 16:48:54 by eslamber         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -77,15 +77,11 @@ $(LIB): FORCE
 debug:
 	make -C libft debug
 	make -C ./ "FLAGS = -Wall -Werror -Wextra -fsanitize=address \
-	-fno-omit-frame-pointer"
+	-fno-omit-frame-pointer -g3"
 
 val_deb:
 	make -C libft valgrind_deb
 	make -C ./ "FLAGS = -Wall -Werror -Wextra -g3"
-
-bonus_deb:
-	make -C libft valgrind_deb
-	make -C ./ "FLAGS = -Wall -Werror -Wextra -g" bonus
 
 #
 ### Cleanup rules

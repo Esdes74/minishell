@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dbaule <dbaule@student.42.fr>              +#+  +:+       +#+        */
+/*   By: eslamber <eslamber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 18:55:25 by eslamber          #+#    #+#             */
-/*   Updated: 2023/10/25 10:25:50 by dbaule           ###   ########.fr       */
+/*   Updated: 2023/10/25 17:02:26 by eslamber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,5 +144,6 @@ static char *add_var_to_sentence(char *rd_line, char *var, int i, int *flag)
     while (rd_line[i])
         new[j++] = rd_line[i++];
     new[j] = '\0';
+    ft_printf_fd(2, "i = %d\n", i);
     return (new);
 }
