@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: eslamber <eslamber@student.42lyon.fr>      +#+  +:+       +#+         #
+#    By: eslamber <eslamber@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/05 15:42:31 by eslamber          #+#    #+#              #
-#    Updated: 2023/06/27 13:16:29 by eslamber         ###   ########.fr        #
+#    Updated: 2023/10/25 16:48:42 by eslamber         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -289,7 +289,7 @@ $(GNL_OBJ_LIB): $(LIB_GNL_OBJ)%.o: $(LIB_GNL_SRC)%.c $(GNL_LIB_H) \
 
 debug:
 	make -C ./ "FLAGS+= -Wall -Werror -Wextra -fsanitize=address \
-	-fno-omit-frame-pointer" print
+	-fno-omit-frame-pointer -g3" print
 
 valgrind_deb:
 	make -C ./ "FLAGS+= -Wall -Werror -Wextra -g3" print
