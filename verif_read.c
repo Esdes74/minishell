@@ -6,7 +6,7 @@
 /*   By: eslamber <eslamber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 11:08:50 by eslamber          #+#    #+#             */
-/*   Updated: 2023/10/25 19:26:30 by eslamber         ###   ########.fr       */
+/*   Updated: 2023/10/25 19:28:19 by eslamber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ char *verif_read(char *rd_line, t_cmd *pip)
 		return (error(MALLOC, NULL), NULL);
     init_list(spt);
     if (rd_line[0] == '|')
-        return (error(SYNTAX, "|"), annihilation(spt, free, DEBUG), rd_line);
+        return (error(SYNTAX, "|"), status = 2, annihilation(spt, free, DEBUG), rd_line);
     buff = ft_strdup(rd_line);
     if (buff == NULL)
         return (error(MALLOC, "0"), annihilation(spt, free, DEBUG), NULL);
