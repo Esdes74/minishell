@@ -6,7 +6,7 @@
 /*   By: dbaule <dbaule@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/31 10:31:07 by dbaule            #+#    #+#             */
-/*   Updated: 2023/10/25 16:50:14 by dbaule           ###   ########.fr       */
+/*   Updated: 2023/10/25 17:44:44 by dbaule           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,22 +15,26 @@
 static int  unset_env(t_cmd *pip, char *name_value, int len);
 static int  unset_exp_env(t_cmd *pip, char *name_value, int len);
 
-unsigned char    intermediate_exit(t_list *tmp)
+unsigned char    intermediate_exit(char **tmp)
 {
     char    *new_tmp;
     long long     ret_value;
     int     i;
     char    *buf;
+    int     len;
 
-    if (tmp->len == 1)
+    len = 0;
+    while (tmp[len])
+        len++;
+    if (len == 1)
         return (exitt(0));
     else
     {
-        buf = (char *) tmp->head->next->data_cell->data;
+        buf = (char *) tmp[1];
         new_tmp = check_quote(buf);
-        if (new_tmp != tmp->head->next->data_cell->data)
-            free(tmp->head->next->data_cell->data);
-        tmp->head->next->data_cell->data = new_tmp;
+        if (new_tmp != tmp[1])
+            free(tmp[1]);
+        tmp[1] = new_tmp;
         i = 0;
         while (new_tmp[i])
         {
@@ -43,7 +47,7 @@ unsigned char    intermediate_exit(t_list *tmp)
         if (ret_value == 0 && ft_strlen(buf) > 2 && check_zero(buf) == 0)
             return (ft_printf_fd(2, "Error : %s numeric argument required", buf), exitt(2));
     }
-    if (tmp->len > 2)
+    if (len > 2)
         return(error(TOO_MANY_ARG, "exit"), exitt(1));
     return (exitt((unsigned char) ret_value));
 }
