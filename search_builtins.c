@@ -6,7 +6,7 @@
 /*   By: dbaule <dbaule@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/13 11:08:50 by eslamber          #+#    #+#             */
-/*   Updated: 2023/10/25 17:47:17 by dbaule           ###   ########.fr       */
+/*   Updated: 2023/10/25 18:39:36 by dbaule           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ int search_builtins(char **spt, t_cmd *pip)
     if (ft_strlen(spt[0]) == 3 && ft_strncmp(spt[0], "pwd", 3) == 0)
         return (free(pwd()), 1);
     else if (ft_strlen(spt[0]) == 4 && ft_strncmp(spt[0], "exit", 4) == 0)
-        return (intermediate_exit(NULL), 1);
+        return (intermediate_exit(spt), 1);
     else if (ft_strlen(spt[0]) == 3 && ft_strncmp(spt[0], "env", 3) == 0)
         return (env(pip->env), 1);
     else if ((ft_strlen(spt[0]) == 4 && ft_strncmp(spt[0], "echo", 4) == 0) \
@@ -92,7 +92,7 @@ int search_builtins(char **spt, t_cmd *pip)
         if (option == 0 || option == 1)
             return (echo(spt, option), status = 0, 1);
         else if (option == 2)
-            return (cd(spt, pip), -1);
+            return (1);
     }
     else if ((ft_strlen(spt[0]) == 6 && ft_strncmp(spt[0], "export", 6) == 0) && spt[1] == NULL)
         return (print_export(pip->exp_env), 1);
