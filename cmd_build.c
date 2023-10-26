@@ -6,7 +6,7 @@
 /*   By: eslamber <eslamber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/17 09:13:17 by dbaule            #+#    #+#             */
-/*   Updated: 2023/10/26 14:57:23 by eslamber         ###   ########.fr       */
+/*   Updated: 2023/10/26 18:28:16 by eslamber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 static char	*search_command(char *str, char *new);
 static char	*check_slash(char *cmd, char *str);
+static char	*cmd_build_bis(int i, char *cmd, char *str, char **env);
 
 char	*cmd_build(char *str, char **env)
 {
@@ -35,6 +36,11 @@ char	*cmd_build(char *str, char **env)
 			break ;
 		i++;
 	}
+	return (cmd_build_bis(i, cmd, str, env));
+}
+
+static char	*cmd_build_bis(int i, char *cmd, char *str, char **env)
+{
 	if (!env[i])
 		return (error(CMD, str), NULL);
 	if (cmd == NULL)
@@ -43,7 +49,7 @@ char	*cmd_build(char *str, char **env)
 		return (perror("Error"), NULL);
 	cmd = search_command(str, cmd);
 	if (cmd == NULL)
-		return (error(CMD, str), NULL); //annihilation(list, free, DEBUG),
+		return (error(CMD, str), NULL);
 	return (cmd);
 }
 
@@ -91,7 +97,7 @@ static char	*check_slash(char *cmd, char *str)
 					return (error(FILES, "0"), free(cmd), NULL);
 				return (error(PERM, "0"), free(cmd), NULL);
 			}
-			return (perror("Error "), status = 127, free(cmd), NULL); //error(CMD, str)
+			return (perror("Error "), status = 127, free(cmd), NULL);
 		}
 		return (cmd);
 	}
