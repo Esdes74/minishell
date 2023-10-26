@@ -6,7 +6,7 @@
 #    By: eslamber <eslamber@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/04 16:30:03 by eslamber          #+#    #+#              #
-#    Updated: 2023/10/26 16:29:05 by eslamber         ###   ########.fr        #
+#    Updated: 2023/10/26 16:51:49 by eslamber         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,7 +30,8 @@ LIBRAIRIE := -lreadline
 # Definition of project variables
 NAME := minishell
 HEADER := incs/minishell.h \
-		incs/parsing.h
+		incs/parsing.h \
+		incs/export.h
 
 # Definition of files variables
 SRC := main.c \
