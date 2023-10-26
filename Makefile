@@ -6,7 +6,7 @@
 #    By: eslamber <eslamber@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/04 16:30:03 by eslamber          #+#    #+#              #
-#    Updated: 2023/10/26 17:27:23 by eslamber         ###   ########.fr        #
+#    Updated: 2023/10/26 18:22:44 by eslamber         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,9 +29,9 @@ LIBRAIRIE := -lreadline
 
 # Definition of project variables
 NAME := minishell
-HEADER := incs/minishell.h \
-		incs/parsing.h \
-		incs/export.h
+REPO_HEADER := incs/
+HEADER := $(REPO_HEADER)minishell.h \
+		$(REPO_HEADER)export.h
 
 # Definition of files variables
 SRC := main.c \
@@ -75,6 +75,9 @@ all: $(NAME)
 
 $(NAME): $(OBJ)
 	$(CC) $(FLAGS) $(OBJ) -o $@ -L. $(LIB) $(LIBRAIRIE)
+
+.obj/parsing/%.o: parsing/%.c $(REPO_HEADER)parsing.h
+	$(CC) $(FLAGS) $(INC) -c $< -o $@ $(LIBRAIRIE)
 
 .obj/%.o: %.c $(HEADER) $(LIB)
 	$(CC) $(FLAGS) $(INC) -c $< -o $@ $(LIBRAIRIE)
