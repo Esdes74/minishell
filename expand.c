@@ -6,11 +6,11 @@
 /*   By: eslamber <eslamber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 18:55:25 by eslamber          #+#    #+#             */
-/*   Updated: 2023/10/25 19:27:59 by eslamber         ###   ########.fr       */
+/*   Updated: 2023/10/26 14:14:14 by eslamber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "incs/minishell.h"
 
 static char *is_in_env(char **env, char *cmp);
 static char *add_var_to_sentence(char *rd_line, char *var, int i, int *flag);

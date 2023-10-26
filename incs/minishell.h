@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dbaule <dbaule@student.42.fr>              +#+  +:+       +#+        */
+/*   By: eslamber <eslamber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 15:35:11 by eslamber          #+#    #+#             */
-/*   Updated: 2023/10/26 11:59:55 by dbaule           ###   ########.fr       */
+/*   Updated: 2023/10/26 14:57:58 by eslamber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
 # include <dirent.h>
 # include <sys/ioctl.h>
 
-# include "libft/libft.h"
+# include "../libft/libft.h"
 
 # define CON_C SIGINT
 # define IGN SIG_IGN
@@ -187,7 +187,7 @@ int             execution_center(t_list *spt, t_cmd *pip);
 
 // Parsing
 
-void            parsing(const char *rd_line, int *flag, t_list *spt);
+int				parsing(const char *rd_line, int *flag, t_list *spt);
 
 int             ft_is_redirection(const char *str, int i);
 

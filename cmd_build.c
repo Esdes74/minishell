@@ -6,11 +6,11 @@
 /*   By: eslamber <eslamber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/17 09:13:17 by dbaule            #+#    #+#             */
-/*   Updated: 2023/10/25 11:35:50 by eslamber         ###   ########.fr       */
+/*   Updated: 2023/10/26 14:57:23 by eslamber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "incs/minishell.h"
 
 static char	*search_command(char *str, char *new);
 static char	*check_slash(char *cmd, char *str);

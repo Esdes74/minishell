@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   verif_read.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dbaule <dbaule@student.42.fr>              +#+  +:+       +#+        */
+/*   By: eslamber <eslamber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 11:08:50 by eslamber          #+#    #+#             */
-/*   Updated: 2023/10/25 21:34:53 by dbaule           ###   ########.fr       */
+/*   Updated: 2023/10/26 14:14:55 by eslamber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "incs/minishell.h"
 
 static int check_arg(t_list *spt);
 static int check_expand(char *rd_line);
@@ -41,7 +41,8 @@ char *verif_read(char *rd_line, t_cmd *pip)
     if (check_expand(rd_line) == 1)
         return (annihilation(spt, free, DEBUG), free(rd_line), buff);
     // ft_printf_fd(2, "rd_line = :%s:\n", rd_line);
-    parsing(rd_line, &flag, spt);
+    if (parsing(rd_line, &flag, spt) == 1)
+		return (free(rd_line), free(buff), NULL);
     free(rd_line);
     if (spt->len == 0)
         return (annihilation(spt, free, DEBUG), buff);

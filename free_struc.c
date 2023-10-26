@@ -6,11 +6,11 @@
 /*   By: eslamber <eslamber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 14:39:50 by dbaule            #+#    #+#             */
-/*   Updated: 2023/10/25 11:38:15 by eslamber         ###   ########.fr       */
+/*   Updated: 2023/10/26 14:14:20 by eslamber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "incs/minishell.h"
 
 void    anihilation(char **str)
 {

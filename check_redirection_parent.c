@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   check_redirection_parent.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dbaule <dbaule@student.42.fr>              +#+  +:+       +#+        */
+/*   By: eslamber <eslamber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 15:50:36 by dbaule            #+#    #+#             */
-/*   Updated: 2023/10/25 21:49:15 by dbaule           ###   ########.fr       */
+/*   Updated: 2023/10/26 14:57:12 by eslamber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "incs/minishell.h"
 
 static int  check_heredoc(char **arg, t_cmd *struc);
 static int  write_hd_to_pip(t_cmd *struc);

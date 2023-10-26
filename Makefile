@@ -6,7 +6,7 @@
 #    By: eslamber <eslamber@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/04 16:30:03 by eslamber          #+#    #+#              #
-#    Updated: 2023/10/26 11:40:45 by eslamber         ###   ########.fr        #
+#    Updated: 2023/10/26 14:56:46 by eslamber         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,8 +29,8 @@ LIBRAIRIE := -lreadline
 
 # Definition of project variables
 NAME := minishell
-HEADER := minishell.h \
-		parsing.h
+HEADER := incs/minishell.h \
+		incs/parsing.h
 
 # Definition of files variables
 SRC := main.c \
@@ -42,7 +42,10 @@ SRC := main.c \
 	   builtins.c \
 	   free_struc.c \
 	   cmd_center_simple.c \
-	   parsing.c \
+	   parsing/parsing.c \
+	   parsing/parse_arguments.c \
+	   parsing/parsing_count_arg.c \
+	   parsing/parsing_count_caractere.c \
 	   verif_read.c \
 	   verif_read_utils.c \
 	   execution_center.c \
