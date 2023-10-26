@@ -6,12 +6,12 @@
 /*   By: dbaule <dbaule@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 10:47:27 by dbaule            #+#    #+#             */
-/*   Updated: 2023/10/26 15:04:09 by dbaule           ###   ########.fr       */
+/*   Updated: 2023/10/26 15:11:45 by dbaule           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
-#include "export.h"
+#include "incs/minishell.h"
+#include "incs/export.h"
 
 static void	sort_export(t_cmd *pip);
 static int	check_sort(t_cmd *pip);

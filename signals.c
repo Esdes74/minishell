@@ -6,11 +6,11 @@
 /*   By: eslamber <eslamber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 16:50:47 by eslamber          #+#    #+#             */
-/*   Updated: 2023/10/26 11:01:05 by eslamber         ###   ########.fr       */
+/*   Updated: 2023/10/26 14:14:48 by eslamber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "incs/minishell.h"
 
 void	main_signals(void)
 {

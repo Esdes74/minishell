@@ -6,11 +6,11 @@
 /*   By: eslamber <eslamber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/26 10:24:52 by eslamber          #+#    #+#             */
-/*   Updated: 2023/10/26 11:01:57 by eslamber         ###   ########.fr       */
+/*   Updated: 2023/10/26 14:14:43 by eslamber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "incs/minishell.h"
 
 void	hsigint(int sig)
 {

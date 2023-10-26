@@ -6,7 +6,7 @@
 /*   By: dbaule <dbaule@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/26 11:02:22 by eslamber          #+#    #+#             */
-/*   Updated: 2023/10/26 13:06:26 by dbaule           ###   ########.fr       */
+/*   Updated: 2023/10/26 15:08:10 by dbaule           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,4 +24,9 @@ typedef struct t_pars{
 	char    **spt;
 }	t_pars;
 
+void	parsing_count_arg(t_pars *p, int *flag, const char *rd_line);
+
+void	parsing_count_caractere(t_pars *p, int *flag, const char *rd_line);
+
+void	parse_arguments(t_pars *p, int *flag, const char *rd_line);
 #endif

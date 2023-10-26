@@ -6,7 +6,7 @@
 /*   By: eslamber <eslamber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/04 15:17:58 by eslamber          #+#    #+#             */
-/*   Updated: 2023/10/25 13:52:53 by eslamber         ###   ########.fr       */
+/*   Updated: 2023/10/26 14:57:31 by eslamber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 -      en amont pour le heredoc
 */
 
-#include "minishell.h"
+#include "incs/minishell.h"
 
 static int	execute_child(char **environ, char **str, t_cmd *pip);
 
