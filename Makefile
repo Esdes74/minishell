@@ -6,7 +6,7 @@
 #    By: eslamber <eslamber@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/04 16:30:03 by eslamber          #+#    #+#              #
-#    Updated: 2023/10/25 16:48:54 by eslamber         ###   ########.fr        #
+#    Updated: 2023/10/26 11:40:45 by eslamber         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,11 +29,13 @@ LIBRAIRIE := -lreadline
 
 # Definition of project variables
 NAME := minishell
-HEADER := minishell.h
+HEADER := minishell.h \
+		parsing.h
 
 # Definition of files variables
 SRC := main.c \
 	   signals.c \
+	   signals_handler.c \
 	   error.c \
 	   cmd_build.c \
 	   historic.c \

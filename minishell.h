@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dbaule <dbaule@student.42.fr>              +#+  +:+       +#+        */
+/*   By: eslamber <eslamber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 15:35:11 by eslamber          #+#    #+#             */
-/*   Updated: 2023/10/25 17:47:27 by dbaule           ###   ########.fr       */
+/*   Updated: 2023/10/26 11:01:15 by eslamber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ void	        exec_signals(void);
 
 void            unset_signals(void);
 
-void	        hd_signals();
+void	        hd_signals(void);
 
 void            hsigint(int sig);
 
@@ -160,7 +160,7 @@ void            free_tab_pid(pid_t *tab, int size);
 // Fork and pipes
 int             close_all_pipes(t_cmd *pi);
 
-char	        *ft_strjoin_pip(char *dest, char *src);
+// char	        *ft_strjoin_pip(char *dest, char *src);
 
 // Commands
 int             check_variables(t_list *spt, t_cmd *pip);
