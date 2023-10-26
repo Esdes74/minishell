@@ -6,7 +6,7 @@
 /*   By: eslamber <eslamber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 16:36:54 by dbaule            #+#    #+#             */
-/*   Updated: 2023/10/26 14:57:02 by eslamber         ###   ########.fr       */
+/*   Updated: 2023/10/26 16:58:24 by eslamber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ char	*rm_char(char *str, char c)
 	}
 	new_str = malloc(sizeof(char) * (i - z + 1));
 	if (!new_str)
-		return (error(MALLOC, "0"), NULL);
+		return (ft_printf_fd(2, "bonjour\n"), error(MALLOC, "0"), NULL);
 	i = 0;
 	z = 0;
 	while (str[i])

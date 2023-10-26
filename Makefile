@@ -6,7 +6,7 @@
 #    By: eslamber <eslamber@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/04 16:30:03 by eslamber          #+#    #+#              #
-#    Updated: 2023/10/26 16:51:49 by eslamber         ###   ########.fr        #
+#    Updated: 2023/10/26 17:27:23 by eslamber         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -61,7 +61,9 @@ SRC := main.c \
 	   expand.c \
 	   minishell_utils.c \
 	   check_redirection_parent.c \
-	   unset.c
+	   unset.c \
+	   echo.c \
+	   echo_utils.c
 OBJ := $(SRC:%.c=.obj/%.o)
 
 #
