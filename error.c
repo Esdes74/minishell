@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eslamber <eslamber@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dbaule <dbaule@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/03 11:08:59 by eslamber          #+#    #+#             */
-/*   Updated: 2023/10/26 14:14:09 by eslamber         ###   ########.fr       */
+/*   Updated: 2023/10/26 19:04:36 by dbaule           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,4 +87,6 @@ static void    error_bis_bis(t_error err)
         // ft_printf_fd(ERR, "Error : No such file or directory\n");
         perror("Error ");
     }
+	else if (err == NVALID)
+		ft_printf_fd(2, "Error : not a valid identifier\n");
 }

@@ -6,7 +6,7 @@
 #    By: dbaule <dbaule@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/04 16:30:03 by eslamber          #+#    #+#              #
-#    Updated: 2023/10/26 15:09:09 by dbaule           ###   ########.fr        #
+#    Updated: 2023/10/26 18:16:01 by dbaule           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -57,7 +57,11 @@ SRC := main.c \
 	   environement.c \
 	   check_variables.c \
 	   builtins_utils.c \
-	   export.c \
+	   export/export.c \
+	   export/add_exp_env.c \
+	   export/check_if_replace_env.c \
+	   export/check_if_replace_exp_env.c \
+	   export/export_utils.c \
 	   expand.c \
 	   minishell_utils.c \
 	   check_redirection_parent.c

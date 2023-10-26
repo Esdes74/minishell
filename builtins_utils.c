@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eslamber <eslamber@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dbaule <dbaule@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 16:36:54 by dbaule            #+#    #+#             */
-/*   Updated: 2023/10/26 14:57:02 by eslamber         ###   ########.fr       */
+/*   Updated: 2023/10/26 17:52:10 by dbaule           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,27 +64,6 @@ char	*rm_char(char *str, char c)
 	new_str[z] = '\0';
 	free(str);
 	return (new_str);
-}
-
-int ft_strncmp_wo_plus(char *first, char *sec, size_t n)
-{
-	size_t			len;
-	unsigned char	*u_first;
-	unsigned char	*u_sec;
-
-	len = 0;
-	u_first = (unsigned char *) first;
-	u_sec = (unsigned char *) sec;
-	while ((u_first[len] != '\0' || u_sec[len] != '\0') && len < n)
-	{
-		if (u_sec[len] != '+')
-		{
-			if (u_first[len] != u_sec[len])
-				return (u_first[len] - u_sec[len]);
-		}
-		len++;
-	}
-	return (0);
 }
 
 int	position_echo_n(char **arg, int *j, int *flag, int *option)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eslamber <eslamber@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dbaule <dbaule@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 15:35:11 by eslamber          #+#    #+#             */
-/*   Updated: 2023/10/26 14:57:58 by eslamber         ###   ########.fr       */
+/*   Updated: 2023/10/26 19:04:50 by dbaule           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ typedef enum    e_error{
     DIREC,
     PERM,
     FILES,
+	NVALID
 }   t_error;
 
 typedef struct  t_cmd
@@ -142,8 +143,6 @@ char	        *rm_char_exp(char *str, char c);
 char	        *check_quote(char *str);
 
 char            *trash_quote(char *str);
-
-int             ft_strncmp_wo_plus(char *first, char *sec, size_t n);
 
 int             position_echo_n(char **arg, int *j, int *flag, int *option);
 
