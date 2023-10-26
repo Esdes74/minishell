@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eslamber <eslamber@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dbaule <dbaule@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 14:04:59 by eslamber          #+#    #+#             */
-/*   Updated: 2023/10/26 14:57:47 by eslamber         ###   ########.fr       */
+/*   Updated: 2023/10/26 22:55:35 by dbaule           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	main(int argc, char **argv, char **env)
 	if (cpy_env(env, &pip) == 1)
 		return (1);
 	if (initialize_exp_env(&pip, pip.env) == 1)
-		return (error(MALLOC, 0), 1);
+		return (error(MALLOC, "0"), anihilation(pip.env), anihilation(pip.save_path), 1);
 	using_history();
 	rl_bind_key('\t', rl_complete);
 	bufff = NULL;

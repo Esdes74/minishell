@@ -6,7 +6,7 @@
 #    By: dbaule <dbaule@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/04 16:30:03 by eslamber          #+#    #+#              #
-#    Updated: 2023/10/26 19:47:42 by dbaule           ###   ########.fr        #
+#    Updated: 2023/10/26 22:20:45 by dbaule           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -46,14 +46,16 @@ SRC := main.c \
 	   parsing/parse_arguments.c \
 	   parsing/parsing_count_arg.c \
 	   parsing/parsing_count_caractere.c \
-	   verif_read.c \
+	   verif_read/verif_read.c \
+	   verif_read/verif_read_utils_bis.c \
 	   verif_read_utils.c \
 	   execution_center.c \
 	   check_redirection.c \
 	   prep_heredoc.c \
 	   search_builtins.c \
 	   builtins_parent.c \
-	   environement.c \
+	   environement/environement.c \
+	   environement/exp_env.c \
 	   check_variables.c \
 	   builtins_utils.c \
 	   export/export.c \
@@ -83,6 +85,12 @@ $(NAME): $(OBJ)
 	$(CC) $(FLAGS) $(INC) -c $< -o $@ $(LIBRAIRIE)
 
 .obj/export/%.o: export/%.c $(REPO_HEADER)export.h
+	$(CC) $(FLAGS) $(INC) -c $< -o $@ $(LIBRAIRIE)
+
+.obj/verif_read/%.o: verif_read/%.c $(REPO_HEADER)verif_read.h
+	$(CC) $(FLAGS) $(INC) -c $< -o $@ $(LIBRAIRIE)
+
+.obj/environement/%.o: environement/%.c $(REPO_HEADER)environement.h
 	$(CC) $(FLAGS) $(INC) -c $< -o $@ $(LIBRAIRIE)
 	
 .obj/%.o: %.c $(HEADER) $(LIB)

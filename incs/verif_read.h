@@ -1,34 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   export.h                                           :+:      :+:    :+:   */
+/*   verif_read.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dbaule <dbaule@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/26 13:06:55 by dbaule            #+#    #+#             */
-/*   Updated: 2023/10/26 19:51:31 by dbaule           ###   ########.fr       */
+/*   Created: 2023/10/26 19:52:12 by dbaule            #+#    #+#             */
+/*   Updated: 2023/10/26 21:38:37 by dbaule           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef EXPORT_H
-# define EXPORT_H
+#ifndef VERIF_READ_H
+# define VERIF_READ_H
 
-typedef struct t_exp{
-    char    **new_env;
-    char    *na_val;
+typedef struct t_verif{
     int     flag;
+    int     expand_flag;
+    char    *save;
+    char    *buff;
     char    *buf;
-	int		i;
-} t_exp;
+}	t_verif;
 
-int strcmp_plus(char *first, char *sec, size_t n);
+int	check_arg(t_list *spt);
 
-int pars_exp(int *flag, char *na_val);
-
-int	check_if_replace_env(t_exp *exp, t_cmd *pip, int i, int j);
-
-int	check_if_replace_exp_env(t_cmd *pip, t_exp *exp, int z, int j);
-
-void sort_export(t_cmd *pip);
+int	check_expand(char *rd_line);
 
 #endif
