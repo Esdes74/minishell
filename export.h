@@ -1,27 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parsing.h                                          :+:      :+:    :+:   */
+/*   export.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dbaule <dbaule@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/26 11:02:22 by eslamber          #+#    #+#             */
-/*   Updated: 2023/10/26 13:06:26 by dbaule           ###   ########.fr       */
+/*   Created: 2023/10/26 13:06:55 by dbaule            #+#    #+#             */
+/*   Updated: 2023/10/26 13:19:44 by dbaule           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PARSING_H
-# define PARSING_H
+#ifndef EXPORT
+# define EXPORT
 
-typedef struct t_pars{
-	int     i;
-	int     j;
-	int     compt;
-	int     tmp_flag;
-	int     new_flag;
-	int     save_flag;
-	int     *tab;
-	char    **spt;
-}	t_pars;
+typedef struct t_exp{
+    char    **new_env;
+    char    *na_val;
+    int     flag;
+    char    *buf;
+} t_exp;
+
 
 #endif

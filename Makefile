@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: eslamber <eslamber@student.42.fr>          +#+  +:+       +#+         #
+#    By: dbaule <dbaule@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/04 16:30:03 by eslamber          #+#    #+#              #
-#    Updated: 2023/10/26 11:40:45 by eslamber         ###   ########.fr        #
+#    Updated: 2023/10/26 13:07:53 by dbaule           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,7 +30,8 @@ LIBRAIRIE := -lreadline
 # Definition of project variables
 NAME := minishell
 HEADER := minishell.h \
-		parsing.h
+		parsing.h \
+		export.h
 
 # Definition of files variables
 SRC := main.c \
