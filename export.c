@@ -6,7 +6,7 @@
 /*   By: dbaule <dbaule@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 10:47:27 by dbaule            #+#    #+#             */
-/*   Updated: 2023/10/25 13:30:10 by dbaule           ###   ########.fr       */
+/*   Updated: 2023/10/25 22:50:36 by dbaule           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int export(t_cmd *pip, char *name_value)
 
     i = 0;
     flag = 0;
-    na_val = rm_char(name_value, '"');
+    na_val = rm_char_exp(name_value, '"');
     if (!na_val)
     {
         return (error(MALLOC, "0"), 1);
@@ -67,17 +67,21 @@ int export(t_cmd *pip, char *name_value)
 				if (ft_strncmp_wo_plus(pip->env[i], na_val, z + 1) == 0)
         		{
 					na_val = rm_char(na_val, '+');
+                    if (na_val == NULL)
+                        return (error(MALLOC, "0"), free(na_val), 1);
 					j = pars_exp(&flag, na_val);
 					j++;
 					z = ft_strlen(na_val + j) + ft_strlen(pip->env[i]);
 					buf = malloc(sizeof(char) * (z + 1));
 					if (!buf)
-						return (free(na_val), 1);
+						return (error(MALLOC, "0"), free(na_val), 1);
 					ft_strlcpy(buf, pip->env[i], ft_strlen(pip->env[i]) + 1);
 					ft_strlcat(buf, na_val + j, z + 1);
 					free(pip->env[i]);
 					pip->env[i] = ft_strdup(buf);
-					free (buf);
+					free(buf);
+                    if (!pip->env[i])
+                        return (error(MALLOC, "0"), free(na_val), 1);
 					break ;
             	}
 			}
@@ -87,6 +91,8 @@ int export(t_cmd *pip, char *name_value)
 				{
 					free(pip->env[i]);
 					pip->env[i] = ft_strdup(na_val);
+                    if (pip->env[i] == NULL)
+                        return (error(MALLOC, "0"), free(na_val), status = 1, 1);
 					break;
 				}
 			}
@@ -96,7 +102,7 @@ int export(t_cmd *pip, char *name_value)
     {
         new_env = malloc(sizeof(char *) * (i + 2));
         if (!new_env)
-            return (error(MALLOC, "0"), 1);
+            return (error(MALLOC, "0"), free(na_val), status = 1, 1);
         i = 0;
         while (pip->env[i])
         {
@@ -104,9 +110,11 @@ int export(t_cmd *pip, char *name_value)
             i++;
         }
         na_val = rm_char(na_val, '+');
+        if (!na_val)
+            return (error(MALLOC, "0"), free(new_env), status = 1, 1);
         new_env[i] = ft_strdup(na_val);
 		if (!new_env[i])
-			return (free(na_val), 2);
+			return (error(MALLOC, "0"), free(new_env), free(na_val), status = 1, 1);
         new_env[i + 1] = NULL;
         free(pip->env);
         pip->env = new_env;
@@ -125,8 +133,12 @@ int export(t_cmd *pip, char *name_value)
 				{
 					j++;
 					buf = ft_strjoin(pip->exp_env[i], na_val + j);
+                    if (!buf)
+                        return (error(MALLOC, "0"), status = 1, free(na_val) , 1);
 					free(pip->exp_env[i]);
 					pip->exp_env[i] = ft_strdup(buf);
+                    if (!pip->exp_env[i])
+                        return (error(MALLOC, "0"), free(buf), status = 1, free(na_val), 1);
 					free(buf);
 					break;
 				}
@@ -135,13 +147,13 @@ int export(t_cmd *pip, char *name_value)
 			{
 				if (ft_strncmp(pip->exp_env[i] + 11, na_val, z + 1) == 0)
 				{
-					buf = ft_strdup(na_val); // peut etre douteux maintenant que je supprime le '=' a voir comment je peux remplacer ca 
+					buf = ft_strdup(na_val);
 					if (!buf)
-						return (free(na_val), 2);
+						return (error(MALLOC, "0"), status = 1, free(na_val), 1);
 					free(pip->exp_env[i]);
 					pip->exp_env[i] = ft_strjoin("declare -x ", buf);
 					if (!pip->exp_env[i])
-						return (free(buf), free(na_val), 2);
+						return (error(MALLOC, "0"), free(buf), status = 1, free(na_val), 1);
 					free(buf);
 					break;
 				}
@@ -150,7 +162,7 @@ int export(t_cmd *pip, char *name_value)
         }
         if (pip->exp_env[i] == NULL) // Ajoute dans exp_env si rien trouvé
             if (add_exp_env(pip, na_val) == 1)
-                return (2);
+                return (1);
     }
     pip->builtin = TRUE;
     free(na_val);
@@ -166,7 +178,7 @@ int add_exp_env(t_cmd *pip, char *str)
 
     buf = malloc(sizeof(char) * (ft_strlen(str) + 12));
     if (!buf)
-        return (1);
+        return (status = 1, 1);
     ft_strlcpy(buf, "declare -x ", 12);
     ft_strlcpy(&(buf[11]), str, ft_strlen(str) + 1);
     i = 0;
@@ -188,7 +200,7 @@ int add_exp_env(t_cmd *pip, char *str)
     else
         new_one = malloc(sizeof(char*) * (i + 1));
     if (new_one == NULL)
-        return (free(buf), error(MALLOC, 0), 1);
+        return (free(buf), error(MALLOC, "0"), 1);
     i = 0;
     while (pip->exp_env[i])
     {
@@ -196,14 +208,14 @@ int add_exp_env(t_cmd *pip, char *str)
         {
             new_one[i] = ft_strdup(buf);
             if (!new_one[i])
-                return (free(new_one), free(buf), 1);
+                return (new_one[i] = '\0', anihilation(new_one), error(MALLOC, "0"), free(buf), 1);
             flag = 1;
         }
         else
         {
             new_one[i] = ft_strdup(pip->exp_env[i]);
             if (!new_one[i])
-                return (free(new_one), free(buf), 1);
+                return (new_one[i] = '\0', anihilation(new_one), error(MALLOC, "0"), free(buf), 1);
         }
         i++;
     }

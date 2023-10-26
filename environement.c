@@ -6,7 +6,7 @@
 /*   By: dbaule <dbaule@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/01 14:26:08 by dbaule            #+#    #+#             */
-/*   Updated: 2023/10/25 13:44:21 by dbaule           ###   ########.fr       */
+/*   Updated: 2023/10/25 22:23:25 by dbaule           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int cpy_env(char **env, t_cmd *pip)
         }
         pip->env[i] = ft_strdup(env[i]);
         if (pip->env[i] == NULL)
-            return (error(MALLOC, 0), pip->env = '\0', anihilation(pip->env), 1);
+            return (error(MALLOC, 0), pip->env = '\0', anihilation(pip->env), anihilation(pip->save_path), 1);
         i++;
     }
     pip->env[i] = NULL;
@@ -71,8 +71,8 @@ int cpy_env(char **env, t_cmd *pip)
             ft_strlcat(buf, sh_lvl, ft_strlen(sh_lvl) + 7);
             free(sh_lvl);
             if (export(pip, buf) == 1)
-                return (anihilation(pip->env), 1);
-            // free(buf);
+                return (anihilation(pip->env), anihilation(pip->save_path), free(buf), 1);
+            free(buf);
         }
         i++;
     }

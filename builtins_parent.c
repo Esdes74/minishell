@@ -6,7 +6,7 @@
 /*   By: dbaule <dbaule@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/31 10:31:07 by dbaule            #+#    #+#             */
-/*   Updated: 2023/10/25 18:39:43 by dbaule           ###   ########.fr       */
+/*   Updated: 2023/10/26 11:48:02 by dbaule           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,28 +68,23 @@ void    cd(char **path, t_cmd *pip)
     int i;
 
     i = 0;
-    while (path[i]) // faut adapter avec les redirection ??
-    {
-        if (i > 2)
-            free(path[i]);
+    if (!path)
+        return ;
+    while (path[i])
         i++;
-    }
     if (i <= 2 && path != NULL && chdir(path[1]) != 0)
     {
         status = 1;
         ft_printf_fd(2, "-bash: cd: %s: No such file or directory\n", path[1]);
-        free(path[1]);
         return ;
     }
     if (i > 2)
     {
         error(TOO_MANY_ARG, "cd");
-        free(path[1]);
-        free(path[2]);
+        status = 1;
         return ;
     }
     status = 0;
-    free(path[1]);
     pip->builtin = TRUE;
 }
 
@@ -125,14 +120,13 @@ int unset(t_cmd *pip, char *name_value)
     if (trigger == 0)
     {
         pip->builtin = TRUE;
-        return (free(name_value), 0);
+        return (0);
     }
     else
         if (unset_env(pip, name_value, i) == 1)
-            return (free(name_value), 1);
+            return (1);
     if (unset_exp_env(pip, name_value, i) == 1)
-        return (free(name_value), 1);
-    free(name_value);
+        return (1);
     return (0);
 }
 

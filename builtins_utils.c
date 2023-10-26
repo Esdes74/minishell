@@ -6,7 +6,7 @@
 /*   By: dbaule <dbaule@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 16:36:54 by dbaule            #+#    #+#             */
-/*   Updated: 2023/10/25 13:41:05 by dbaule           ###   ########.fr       */
+/*   Updated: 2023/10/25 21:54:31 by dbaule           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,8 +63,7 @@ char	*rm_char(char *str, char c)
 	}
 	new_str[z] = '\0';
 	free(str);
-	str = new_str;
-	return (str);
+	return (new_str);
 }
 
 int ft_strncmp_wo_plus(char *first, char *sec, size_t n)

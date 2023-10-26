@@ -6,13 +6,14 @@
 /*   By: dbaule <dbaule@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 11:08:50 by eslamber          #+#    #+#             */
-/*   Updated: 2023/10/25 20:01:15 by dbaule           ###   ########.fr       */
+/*   Updated: 2023/10/25 21:34:53 by dbaule           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 static int check_arg(t_list *spt);
+static int check_expand(char *rd_line);
 
 char *verif_read(char *rd_line, t_cmd *pip)
 {
@@ -37,6 +38,8 @@ char *verif_read(char *rd_line, t_cmd *pip)
     rd_line = expand(rd_line, pip, &expand_flag);
     if (rd_line == NULL)
         return (annihilation(spt, free, DEBUG), NULL);
+    if (check_expand(rd_line) == 1)
+        return (annihilation(spt, free, DEBUG), free(rd_line), buff);
     // ft_printf_fd(2, "rd_line = :%s:\n", rd_line);
     parsing(rd_line, &flag, spt);
     free(rd_line);
@@ -87,10 +90,13 @@ static int check_arg(t_list *spt)
             return (error(SYNTAX, "|"), status = 2, 1);
         if (str[0] == '<')
         {
-            if (str[1] == '\0' && ((char *)tmp->next->data_cell->data)[0] == '<')
-                return (error(SYNTAX, "<"), status = 2, 1);
-            if (str[1] == '\0' && ((char *)tmp->next->data_cell->data)[0] == '>')
-                return (error(SYNTAX, ">"), status = 2, 1);
+            if (tmp->next != NULL)
+            {
+                if (str[1] == '\0' && ((char *)tmp->next->data_cell->data)[0] == '<')
+                    return (error(SYNTAX, "<"), status = 2, 1);
+                if (str[1] == '\0' && ((char *)tmp->next->data_cell->data)[0] == '>')
+                    return (error(SYNTAX, ">"), status = 2, 1);
+            }
             if (str[1] == '\0' && tmp->next == NULL)
                 return (error(SYNTAX, "newline"), status = 2, 1);
             else if (str[1] == '<')
@@ -122,4 +128,23 @@ static int check_arg(t_list *spt)
         tmp = tmp->next;
     }
     return (0);
+}
+
+
+static int check_expand(char *rd_line)
+{
+    size_t  i;
+
+    i = 0;
+    while (rd_line[i] == ' ' || rd_line[i] == '\t')
+        i++;
+    if (rd_line[i] == '\0')
+        return (status = 0, 1);
+    while (rd_line[i])
+    {
+        if (rd_line[i] != ' ' && rd_line[i] != '|' && rd_line[i] != '<' && rd_line[i] != '>')
+            return (0);
+        i++;
+    }
+    return (status = 1, 1);
 }

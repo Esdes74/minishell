@@ -6,7 +6,7 @@
 /*   By: dbaule <dbaule@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 15:35:11 by eslamber          #+#    #+#             */
-/*   Updated: 2023/10/25 17:47:27 by dbaule           ###   ########.fr       */
+/*   Updated: 2023/10/25 21:55:58 by dbaule           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,6 +136,8 @@ int             add_exp_env(t_cmd *pip, char *str);
 int             unset(t_cmd *pip, char *name_value);
 
 char            *rm_char(char *str, char c);
+
+char	        *rm_char_exp(char *str, char c);
 
 char	        *check_quote(char *str);
 

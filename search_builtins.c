@@ -6,7 +6,7 @@
 /*   By: dbaule <dbaule@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/13 11:08:50 by eslamber          #+#    #+#             */
-/*   Updated: 2023/10/25 19:44:20 by dbaule           ###   ########.fr       */
+/*   Updated: 2023/10/25 23:04:10 by dbaule           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,14 +30,12 @@ int parent_builtins(t_cmd *pip, char **exec_cmd)
         if (exec_cmd[1] == NULL || (exec_cmd[1][0] == '~' && !exec_cmd[2] && (!exec_cmd[1][1] || (exec_cmd[1][1] == '/' && !exec_cmd[1][2]))))
         {
             i = 0;
-            if (exec_cmd[1])
-                free (exec_cmd[1]);
             if (chdir("/") == -1)
-                return (perror("Error "), status = 1, 1);
+                return (perror("Error "), status = 1, -1);
             while (pip->save_path[i])
             {
                 if (chdir(pip->save_path[i]) == -1)
-                    return (perror("Error "), status = 1, 1);
+                    return (perror("Error "), status = 1, -1);
                 i++;
             }
             return (1);
@@ -47,13 +45,15 @@ int parent_builtins(t_cmd *pip, char **exec_cmd)
     else if (ft_strlen(exec_cmd[0]) == 6 && ft_strncmp(exec_cmd[0], "export", 6) == 0)
     {
         pip->parent_builtin = TRUE;
+        // free(exec_cmd[0]);
         if (!exec_cmd[i])
             return (pip->parent_builtin = FALSE, 0);
         while (exec_cmd[i] != NULL)
         {
             ret = export(pip, exec_cmd[i]);
             if (ret == 1)
-                return (-1);
+                return (-1);// free(exec_cmd[1]), free(exec_cmd)
+            // free(exec_cmd[i]);
             i++;
         }
         return (2);

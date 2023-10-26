@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution_center.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eslamber <eslamber@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dbaule <dbaule@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 21:29:25 by dbaule            #+#    #+#             */
-/*   Updated: 2023/10/25 18:15:11 by eslamber         ###   ########.fr       */
+/*   Updated: 2023/10/25 22:00:33 by dbaule           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,13 +65,13 @@ int execution_center(t_list *spt, t_cmd *pip)
             return (free(arg_count), 2); //anihilation(exec_cmd),
         value_ret = parent_builtins(pip, buf);
         if (value_ret == -1)
-            return (annihilation(spt, free, DEBUG), free(arg_count), anihilation(buf), 1);
-        if (value_ret > 0)
-        {
-            free(buf[0]);
-            free(buf);
-        }
-        else
+            return (annihilation(spt, free, DEBUG), free(arg_count), anihilation(buf), 1); // j'ai modif anilation pour free buf , free(buf[0]), free(buf)
+        // if (value_ret > 0)
+        // {
+        //     free(buf[0]);
+        //     free(buf);
+        // }
+        // else
             anihilation(buf);
     }
     tab_pid = (pid_t *) malloc(sizeof(pid_t) * (pip->nb_proc));

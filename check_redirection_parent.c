@@ -6,7 +6,7 @@
 /*   By: dbaule <dbaule@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 15:50:36 by dbaule            #+#    #+#             */
-/*   Updated: 2023/10/25 15:49:10 by dbaule           ###   ########.fr       */
+/*   Updated: 2023/10/25 21:49:15 by dbaule           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,8 +128,8 @@ char    **check_redirection_parent(char **arg, t_cmd *struc)
         i++;
     }
     // anihilation(buf);
-    if (struc->in == FALSE && struc->out == FALSE) // S'il n'y a pas de redirections pas besoin de retravailler le tableau de chaine de caractères
-        return (buf);
+    // if (struc->in == FALSE && struc->out == FALSE) // S'il n'y a pas de redirections pas besoin de retravailler le tableau de chaine de caractères
+    //     return (buf);
     if (struc->heredoc == 1)
         if (write_hd_to_pip(struc) == 1)
             return (anihilation(buf), NULL);
@@ -176,13 +176,18 @@ char    **check_redirection_parent(char **arg, t_cmd *struc)
             // free(buf[i]);
         }
         else
-            tmp[j++] = ft_strdup(buf[i]);
+        {
+            tmp[j] = ft_strdup(buf[i]);
+            if (tmp[j] == NULL)
+                return (NULL);
+            j++;
+        }
         i++;
     }
     anihilation(buf);
-    buf = tmp;
-    buf[j] = NULL;
-    return (buf);
+    // buf = tmp;
+    tmp[j] = NULL;
+    return (tmp);
 }
 
 // Cette fonction doit mettre en place le pipe du heredoc s'il y en a besoin,
