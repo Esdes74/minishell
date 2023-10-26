@@ -6,7 +6,7 @@
 /*   By: eslamber <eslamber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/04 15:17:58 by eslamber          #+#    #+#             */
-/*   Updated: 2023/10/26 14:57:31 by eslamber         ###   ########.fr       */
+/*   Updated: 2023/10/26 15:34:22 by eslamber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ char	*check_quote(char *str)
 		return (str);
 	new_str = malloc(sizeof(char) * ((i - j) + 1));
 	if (!new_str)
-		return (NULL);
+		return (error(MALLOC, "0"), NULL);
 	i = 0;
 	j = 0;
 	while (str[i])

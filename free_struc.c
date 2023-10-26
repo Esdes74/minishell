@@ -6,23 +6,23 @@
 /*   By: eslamber <eslamber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 14:39:50 by dbaule            #+#    #+#             */
-/*   Updated: 2023/10/26 14:14:20 by eslamber         ###   ########.fr       */
+/*   Updated: 2023/10/26 18:31:31 by eslamber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "incs/minishell.h"
 
-void    anihilation(char **str)
+void	anihilation(char **str)
 {
-    size_t  y;
+	size_t	y;
 
-    y = 0;
-    while (str[y])
-    {
-        free(str[y]);
-        y++;
-    }
-    free(str);
+	y = 0;
+	while (str[y])
+	{
+		free(str[y]);
+		y++;
+	}
+	free(str);
 }
 
 int	close_all_pipes(t_cmd *pi)

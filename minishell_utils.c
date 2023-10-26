@@ -6,7 +6,7 @@
 /*   By: eslamber <eslamber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/06 09:45:13 by dbaule            #+#    #+#             */
-/*   Updated: 2023/10/26 14:14:33 by eslamber         ###   ########.fr       */
+/*   Updated: 2023/10/26 18:30:44 by eslamber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ char	*rm_char_exp(char *str, char c)
 	return (new_str);
 }
 
-void silent_quit(void)
+void	silent_quit(void)
 {
 	exit(0);
 }

@@ -6,7 +6,7 @@
 /*   By: dbaule <dbaule@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 16:36:54 by dbaule            #+#    #+#             */
-/*   Updated: 2023/10/26 17:52:10 by dbaule           ###   ########.fr       */
+/*   Updated: 2023/10/26 19:28:47 by dbaule           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ char	*rm_char(char *str, char c)
 	}
 	new_str = malloc(sizeof(char) * (i - z + 1));
 	if (!new_str)
-		return (error(MALLOC, "0"), NULL);
+		return (ft_printf_fd(2, "bonjour\n"), error(MALLOC, "0"), NULL);
 	i = 0;
 	z = 0;
 	while (str[i])
