@@ -6,7 +6,7 @@
 /*   By: eslamber <eslamber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 21:29:25 by dbaule            #+#    #+#             */
-/*   Updated: 2023/10/26 14:14:12 by eslamber         ###   ########.fr       */
+/*   Updated: 2023/10/26 15:51:16 by eslamber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ int execution_center(t_list *spt, t_cmd *pip)
         //     free(buf);
         // }
         // else
-            anihilation(buf);
+        anihilation(buf);
     }
     tab_pid = (pid_t *) malloc(sizeof(pid_t) * (pip->nb_proc));
     if (tab_pid == NULL)
