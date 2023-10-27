@@ -3,17 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   export.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dbaule <dbaule@student.42.fr>              +#+  +:+       +#+        */
+/*   By: eslamber <eslamber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/26 13:06:55 by dbaule            #+#    #+#             */
-/*   Updated: 2023/10/26 19:51:31 by dbaule           ###   ########.fr       */
+/*   Updated: 2023/10/27 11:02:00 by eslamber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef EXPORT_H
 # define EXPORT_H
 
-typedef struct t_exp{
+typedef struct t_exp
+{
     char    **new_env;
     char    *na_val;
     int     flag;

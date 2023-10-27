@@ -6,7 +6,7 @@
 /*   By: eslamber <eslamber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 15:35:11 by eslamber          #+#    #+#             */
-/*   Updated: 2023/10/27 10:34:29 by eslamber         ###   ########.fr       */
+/*   Updated: 2023/10/27 12:39:33 by eslamber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -160,8 +160,6 @@ void            free_tab_pid(pid_t *tab, int size);
 
 // Fork and pipes
 int             close_all_pipes(t_cmd *pi);
-
-// char	        *ft_strjoin_pip(char *dest, char *src);
 
 // Commands
 int             check_variables(t_list *spt, t_cmd *pip);
