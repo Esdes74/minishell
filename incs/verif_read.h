@@ -3,17 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   verif_read.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dbaule <dbaule@student.42.fr>              +#+  +:+       +#+        */
+/*   By: eslamber <eslamber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/26 19:52:12 by dbaule            #+#    #+#             */
-/*   Updated: 2023/10/26 21:38:37 by dbaule           ###   ########.fr       */
+/*   Updated: 2023/10/27 11:01:54 by eslamber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef VERIF_READ_H
 # define VERIF_READ_H
 
-typedef struct t_verif{
+typedef struct t_verif
+{
     int     flag;
     int     expand_flag;
     char    *save;
