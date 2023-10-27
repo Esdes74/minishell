@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prep_heredoc.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eslamber <eslamber@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dbaule <dbaule@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 11:08:50 by eslamber          #+#    #+#             */
-/*   Updated: 2023/10/27 13:05:48 by eslamber         ###   ########.fr       */
+/*   Updated: 2023/10/27 14:35:58 by dbaule           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,12 @@ char	**prep_hd(t_cmd *pip, t_list *spt)
 {
 	t_prep	p;
 
-	status = 0;
-	p.compt = 0;
 	p.tmp = spt->head;
 	search_hd(&p);
 	if (p.compt != 0)
 		pip->hd_history = (char **) ft_calloc(p.compt + 1, sizeof(char *));
+	if (pip->hd_history == NULL && p.compt != 0)
+		return (pip->status_hd = 2, status = 1, NULL);
 	if (pip->hd_history == NULL)
 		return (NULL);
 	p.i = 0;

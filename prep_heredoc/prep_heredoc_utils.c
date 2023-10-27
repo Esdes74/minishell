@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prep_heredoc_utils.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eslamber <eslamber@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dbaule <dbaule@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/27 13:03:35 by eslamber          #+#    #+#             */
-/*   Updated: 2023/10/27 13:08:19 by eslamber         ###   ########.fr       */
+/*   Updated: 2023/10/27 14:35:44 by dbaule           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 
 void	search_hd(t_prep *p)
 {
+	status = 0;
+	p->compt = 0;
 	while (p->tmp != NULL)
 	{
 		if (((char *)(p->tmp->data_cell->data))[0] == '<')
