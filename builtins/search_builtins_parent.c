@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   search_builtins_parent.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dbaule <dbaule@student.42.fr>              +#+  +:+       +#+        */
+/*   By: eslamber <eslamber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/27 12:57:06 by dbaule            #+#    #+#             */
-/*   Updated: 2023/10/27 15:10:59 by dbaule           ###   ########.fr       */
+/*   Updated: 2023/10/27 15:48:42 by eslamber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,7 @@ int	parent_builtins(t_cmd *pip, char **exec_cmd)
 
 	pip->builtin = FALSE;
 	if (ft_strlen(exec_cmd[0]) == 4 && ft_strncmp(exec_cmd[0], "exit", 4) == 0)
-	{
 		return (intermediate_exit(exec_cmd), -1);
-	}
 	ret = search_cd(exec_cmd, pip);
 	if (ret == -1)
 		return (-1);
