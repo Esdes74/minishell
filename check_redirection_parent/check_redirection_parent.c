@@ -6,7 +6,7 @@
 /*   By: dbaule <dbaule@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 15:50:36 by dbaule            #+#    #+#             */
-/*   Updated: 2023/10/27 16:23:14 by dbaule           ###   ########.fr       */
+/*   Updated: 2023/10/27 18:33:56 by dbaule           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,11 @@ static int	initialise_redir_parent(t_red_par *red, char **arg, t_cmd *struc);
 static int	search_open_file(t_red_par *red, t_cmd *struc);
 static int	allocate_tmp_char(t_red_par *red);
 static int	fill_tmp(int *j, t_red_par *red);
+static int	check_input_redir(t_cmd *struc, int *i, t_red_par *red);
+static int	check_output_redir(t_cmd *struc, t_red_par *red, int *i);
+static int	allocate_new_buf(char **arg, int i, t_red_par *red);
+static int	open_double_token(t_red_par *red, int *i);
+static int	write_and_close_hd_pip(t_cmd *struc, char *tmp);
 
 char    **check_redirection_parent(char **arg, t_cmd *struc)
 {
@@ -32,7 +37,8 @@ char    **check_redirection_parent(char **arg, t_cmd *struc)
 		return (NULL);
     if (struc->heredoc == 1)
         if (write_hd_to_pip(struc) == 1)
-            return (anihilation(red.buf), NULL);
+            return (anihilation(red.buf), anihilation(struc->hd_history), \
+			free(struc->here_pipe), NULL);
     red.compt = 0;
 	if (allocate_tmp_char(&red) == 1)
 		return (anihilation(red.buf), NULL);
@@ -42,7 +48,7 @@ char    **check_redirection_parent(char **arg, t_cmd *struc)
     anihilation(red.buf);
     red.tmp[j] = NULL;
 	if (j == 0)
-		return (anihilation(red.tmp), NULL);
+		return (struc->flag = 1, free(struc->here_pipe), anihilation(red.tmp), NULL);
     return (red.tmp);
 }
 
@@ -55,20 +61,22 @@ static int	fill_tmp(int *j, t_red_par *red)
     {
         if (red->buf[i][0] == '<')
         {
-            if (red->buf[i][1] == '\0' || (red->buf[i][1] == '<' && red->buf[i][2] == '\0'))
+            if (red->buf[i][1] == '\0' || (red->buf[i][1] == '<' \
+			&& red->buf[i][2] == '\0'))
                 i++;
         }
         else if (red->buf[i][0] == '>')
         {
-            if (red->buf[i][1] == '\0' || (red->buf[i][1] == '>' && red->buf[i][2] == '\0'))
+            if (red->buf[i][1] == '\0' || (red->buf[i][1] == '>' \
+			&& red->buf[i][2] == '\0'))
                 i++;
         }
         else
         {
-            // red->tmp[*j] = ft_strdup(red->buf[i]);
-			red->tmp[*j] = NULL;
+            red->tmp[*j] = ft_strdup(red->buf[i]);
             if (red->tmp[*j] == NULL)
-                return (1);
+                return (error(MALLOC, "0"), anihilation(red->buf), \
+				red->tmp[*j] = '\0', anihilation(red->tmp), 1);
             *j += 1;
         }
         i++;
@@ -80,27 +88,28 @@ static int	allocate_tmp_char(t_red_par *red)
 {
 	int i;
 
-	i = 0;
-	while (red->buf[i])
+	i = -1;
+	while (red->buf[++i])
     {
         if (red->buf[i][0] == '<')
         {
             red->compt--;
-            if (red->buf[i][1] == '\0' || (red->buf[i][1] == '<' && red->buf[i][2] == '\0'))
+            if (red->buf[i][1] == '\0' || (red->buf[i][1] == '<' && \
+			red->buf[i][2] == '\0'))
                 i += 1;
         }
         else if (red->buf[i][0] == '>')
         {
             red->compt--;
-            if (red->buf[i][1] == '\0' || (red->buf[i][1] == '>' && red->buf[i][2] == '\0'))
+            if (red->buf[i][1] == '\0' || (red->buf[i][1] == '>' && \
+			red->buf[i][2] == '\0'))
                 i += 1;
         }
-        i++;
         red->compt++;
     }
     red->tmp = (char **) malloc(sizeof(char *) * (red->compt + 1));
 	if (!red->tmp)
-		return (1);
+		return (error(MALLOC, "0"), 1);
 	return (0);
 }
 
@@ -111,74 +120,99 @@ static int	search_open_file(t_red_par *red, t_cmd *struc)
 	i = 0;
 	while (red->buf[i])
     {
-        if (red->buf[i][0] == '<')
+		if (red->buf[i][0] == '<')
         {
-            struc->in = TRUE;
-            if (red->buf[i][1] == '\0')
-            {
-                if (red->buf[i + 1] == NULL)
-                    return (anihilation(red->buf), error(TOKEN, "0"), 1);
-                red->file = open(red->buf[i + 1], O_RDONLY);
-                if (red->file == -1)
-                    return (anihilation(red->buf), error(OPEN, "0"), g_status = 1, 1);
-                close(red->file);
-                i++;
-            }
-            else if (red->buf[i][1] == '<' && red->buf[i][2] == '\0')
-                i++;
-            else if (red->buf[i][1] != '<' || red->buf[i][2] == '\0')
-            {
-                red->file = open(&red->buf[i][1], O_RDONLY);
-                if (red->file == -1)
-                {
-                    return (anihilation(red->buf), error(OPEN, "0"), g_status = 1, 1);
-                }
-                close(red->file);
-            }
+			if (check_input_redir(struc, &i, red) == 1)
+				return (1);
         }
         else if (red->buf[i][0] == '>')
         {
-            struc->out = TRUE;
-            if (red->buf[i][1] == '\0')
-            {
-                if (red->buf[i + 1] == NULL)
-                    return (anihilation(red->buf), error(TOKEN, "0"), 1);
-                red->file = open(red->buf[i + 1], O_CREAT | O_RDWR | O_TRUNC, 0644);
-                if (red->file == -1)
-                    return (anihilation(red->buf), error(OPEN, "0"), g_status = 1, 1);
-                close(red->file);
-                i++;
-            }
-            else if (red->buf[i][1] == '>')
-            {
-                if (red->buf[i][2] == '\0')
-                {
-                    if (red->buf[i + 1] == NULL)
-                        return (anihilation(red->buf), error(TOKEN, "0"), 1);
-                    red->file = open(red->buf[i + 1], O_CREAT | O_RDWR | O_APPEND, 0644);
-                    if (red->file == -1)
-                        return (anihilation(red->buf), error(OPEN, "0"), g_status = 1, 1);
-                    close(red->file);
-                    i++;
-                }
-                else
-                {
-                    red->file = open(&red->buf[i][2], O_CREAT | O_RDWR | O_APPEND, 0644);
-                    if (red->file == -1)
-                        return (anihilation(red->buf), error(OPEN, "0"), g_status = 1, 1);
-                    close(red->file);
-                }
-            }
-            else
-            {
-                red->file = open(&red->buf[i][1], O_CREAT | O_RDWR | O_TRUNC, 0644);
-                if (red->file == -1)
-                    return (anihilation(red->buf), error(OPEN, "0"), g_status = 1, 1);
-                close(red->file);
-            }
+			if (check_output_redir(struc, red, &i) == 1)
+				return (1);
         }
         i++;
     }
+	return (0);
+}
+
+static int	check_output_redir(t_cmd *struc, t_red_par *red, int *i)
+{
+	struc->out = TRUE;
+	if (red->buf[*i][1] == '\0')
+	{
+		if (red->buf[*i + 1] == NULL)
+			return (anihilation(red->buf), error(TOKEN, "0"), 1);
+		red->file = open(red->buf[*i + 1], O_CREAT | O_RDWR | O_TRUNC, 0644);
+		if (red->file == -1)
+			return (anihilation(red->buf), error(OPEN, "0"), g_status = 1, 1);
+		close(red->file);
+		*i +=1;
+	}
+	else if (red->buf[*i][1] == '>')
+	{
+		if (open_double_token(red, i) == 1)
+			return (1);
+	}
+	else
+	{
+		red->file = open(&red->buf[*i][1], O_CREAT | O_RDWR | O_TRUNC, 0644);
+		if (red->file == -1)
+			return (anihilation(red->buf), error(OPEN, "0"), g_status = 1, 1);
+		close(red->file);
+	}
+	return (0);
+}
+
+static int	open_double_token(t_red_par *red, int *i)
+{
+		if (red->buf[*i][2] == '\0')
+		{
+			if (red->buf[*i + 1] == NULL)
+				return (anihilation(red->buf), error(TOKEN, "0"), 1);
+			red->file = open(red->buf[*i + 1], O_CREAT | O_RDWR | \
+			O_APPEND, 0644);
+			if (red->file == -1)
+				return (anihilation(red->buf), error(OPEN, "0"), \
+				g_status = 1, 1);
+			close(red->file);
+			*i += 1;
+		}
+		else
+		{
+			red->file = open(&red->buf[*i][2], O_CREAT | O_RDWR | \
+			O_APPEND, 0644);
+			if (red->file == -1)
+				return (anihilation(red->buf), error(OPEN, "0"), \
+				g_status = 1, 1);
+			close(red->file);
+		}
+	return (0);
+}
+
+static int	check_input_redir(t_cmd *struc, int *i, t_red_par *red)
+{
+	struc->in = TRUE;
+	if (red->buf[*i][1] == '\0')
+	{
+		if (red->buf[*i + 1] == NULL)
+			return (anihilation(red->buf), error(TOKEN, "0"), 1);
+		red->file = open(red->buf[*i + 1], O_RDONLY);
+		if (red->file == -1)
+			return (anihilation(red->buf), error(OPEN, "0"), g_status = 1, 1);
+		close(red->file);
+		*i += 1;
+	}
+	else if (red->buf[*i][1] == '<' && red->buf[*i][2] == '\0')
+		*i += 1;
+	else if (red->buf[*i][1] != '<' || red->buf[*i][2] == '\0')
+	{
+		red->file = open(&red->buf[*i][1], O_RDONLY);
+		if (red->file == -1)
+		{
+			return (anihilation(red->buf), error(OPEN, "0"), g_status = 1, 1);
+		}
+		close(red->file);
+	}
 	return (0);
 }
 
@@ -190,7 +224,7 @@ static int	initialise_redir_parent(t_red_par *red, char **arg, t_cmd *struc)
     struc->in = FALSE;
     struc->out = FALSE;
     if (check_heredoc(arg, struc) == 1)
-        return (1);
+        return (anihilation(arg), anihilation(struc->hd_history), 1);
     while (arg[i])
         i++;
     red->buf = malloc(sizeof(char *) * (i + 1));
@@ -199,18 +233,8 @@ static int	initialise_redir_parent(t_red_par *red, char **arg, t_cmd *struc)
     i = 0;
     while (arg[i])
     {
-        if (arg[i][0] == '"' || arg[i][0] == '\'')
-        {
-            red->buf[i] = ft_strdup(arg[i]);
-            if (!red->buf[i])
-                return (1);
-        }
-        else
-        {
-            red->buf[i] = trash_quote(arg[i]);
-            if (!red->buf[i])
-                return (1);
-        }
+		if (allocate_new_buf(arg, i, red) == 1)
+			return (1);
         i++;
     }
     red->buf[i] = NULL;
@@ -218,36 +242,54 @@ static int	initialise_redir_parent(t_red_par *red, char **arg, t_cmd *struc)
 	return (0);
 }
 
-// Cette fonction doit mettre en place le pipe du heredoc s'il y en a besoin,
-// pour le savoir elle check si la dernière redirection est un heredoc ou non
-static int  check_heredoc(char **arg, t_cmd *struc)
+static int	allocate_new_buf(char **arg, int i, t_red_par *red)
 {
-    int i;
+	if (arg[i][0] == '"' || arg[i][0] == '\'')
+	{
+		red->buf[i] = ft_strdup(arg[i]);
+		if (!red->buf[i])
+			return (error(MALLOC, "0"), red->buf[i] = '\0', \
+			anihilation(arg), anihilation(red->buf), 1);
+	}
+	else
+	{
+		red->buf[i] = trash_quote(arg[i]);
+		if (!red->buf[i])
+			return (error(MALLOC, "0"), red->buf[i] = '\0', \
+			anihilation(arg), anihilation(red->buf), 1);
+	}
+	return (0);
+}
 
-    i = 0;
-    struc->heredoc = 0;
-    while (arg[i]) // vérification que la dernière redirection est bien un heredoc car si c'est le cas il va falloire faire le pipe
-    {
-        if (arg[i][0] == '<')
-        {
-            if (arg[i][1] == '<')
-            {
-                struc->ind_hd++;
-                struc->heredoc = 1;
-            }
-            else
-                struc->heredoc = 0;
-        }
-        i++;
-    }
-    if (struc->heredoc == 0)
-        return (0);
-    struc->here_pipe = (int *)ft_calloc(2, sizeof(int));
-    if (struc->here_pipe != NULL && pipe(struc->here_pipe) == -1) // création du pipe pour le heredoc
-        return (error(PIPE, "0"), 1);
-    else if (struc->here_pipe == NULL)
-        return (error(CALLOC, "0"), 1);
-    return (0);
+// This function should set up the heredoc pipe if necessary.
+// To find out, check if the last redirection is a heredoc or not
+static int	check_heredoc(char **arg, t_cmd *struc)
+{
+	int	i;
+
+	i = -1;
+	struc->heredoc = 0;
+	while (arg[++i])
+	{
+		if (arg[i][0] == '<')
+		{
+			if (arg[i][1] == '<')
+			{
+				struc->ind_hd++;
+				struc->heredoc = 1;
+			}
+			else
+				struc->heredoc = 0;
+		}
+	}
+	if (struc->heredoc == 0)
+		return (0);
+	struc->here_pipe = (int *)ft_calloc(2, sizeof(int));
+	if (struc->here_pipe != NULL && pipe(struc->here_pipe) == -1)
+		return (error(PIPE, "0"), free(struc->here_pipe), 1);
+	else if (struc->here_pipe == NULL)
+		return (error(CALLOC, "0"), 1);
+	return (0);
 }
 
 static int  write_hd_to_pip(t_cmd *struc)
@@ -271,12 +313,21 @@ static int  write_hd_to_pip(t_cmd *struc)
     while (++i <= compt)
         tmp[i] = struc->hd_history[struc->ind_hd][i];
     tmp[i] = '\0';
-    if (write(struc->here_pipe[1], tmp, ft_strlen(tmp)) == -1)
+	if (write_and_close_hd_pip(struc, tmp) == 1)
+		return (1);
+    free(tmp);
+    return (0);
+}
+
+static int	write_and_close_hd_pip(t_cmd *struc, char *tmp)
+{
+	if (write(struc->here_pipe[1], tmp, ft_strlen(tmp)) == -1)
         return (free(tmp), error(WRITE, "0"), 1);
     if (close(struc->here_pipe[1]) == -1)
         return (free(tmp), error(CLOSE, "0"), 1);
     if (close(struc->here_pipe[0]) == -1)
+	{
         return (free(tmp), error(CLOSE, "0"), 1);
-    free(tmp);
-    return (0);
+	}
+	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: dbaule <dbaule@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 15:35:11 by eslamber          #+#    #+#             */
-/*   Updated: 2023/10/27 15:14:10 by dbaule           ###   ########.fr       */
+/*   Updated: 2023/10/27 18:32:05 by dbaule           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@ typedef struct t_cmd
 	int		heredoc;
 	int		ind_hd;
 	int		ani_flag;
+	int		flag;
 	int		*here_pipe;
 	int		**pipe;
 	char	**hd_history;

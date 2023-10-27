@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution_center.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eslamber <eslamber@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dbaule <dbaule@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 21:29:25 by dbaule            #+#    #+#             */
-/*   Updated: 2023/10/27 16:00:15 by eslamber         ###   ########.fr       */
+/*   Updated: 2023/10/27 18:38:26 by dbaule           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +61,10 @@ int execution_center(t_list *spt, t_cmd *pip)
             return (error(MALLOC, NULL), 1);
         buf = check_redirection_parent(exec_cmd, pip);
         // anihilation(exec_cmd);
+		if (pip->flag == 1 && buf == NULL)
+			return (free(arg_count), 2);
         if (buf == NULL)
-            return (free(arg_count), 2); //anihilation(exec_cmd),
+            return (free(arg_count), annihilation(spt, free, DEBUG), 1); //anihilation(exec_cmd),
         value_ret = parent_builtins(pip, buf);
         if (value_ret == -1)
             return (annihilation(spt, free, DEBUG), free(arg_count), anihilation(buf), 1); // j'ai modif anilation pour free buf , free(buf[0]), free(buf)
@@ -102,8 +104,11 @@ int execution_center(t_list *spt, t_cmd *pip)
             }
             if (pip->here_pipe)
             {
-                free(pip->here_pipe);
-                anihilation(pip->hd_history);
+				if (pip->flag != 1)
+				{
+                	free(pip->here_pipe);
+				}
+                // anihilation(pip->hd_history); // me fait segfault mais peut etre utile ?
             }
             if (cmd_center_simple(exec_cmd, pip) == 1)
                 return (anihilation(exec_cmd), -1);
