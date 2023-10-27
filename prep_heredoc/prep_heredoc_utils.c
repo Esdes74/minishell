@@ -6,7 +6,7 @@
 /*   By: eslamber <eslamber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/27 13:03:35 by eslamber          #+#    #+#             */
-/*   Updated: 2023/10/27 13:08:19 by eslamber         ###   ########.fr       */
+/*   Updated: 2023/10/27 14:56:29 by eslamber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,19 +24,19 @@ void	search_hd(t_prep *p)
 	}
 }
 
-int	verif_status_hd(t_prep *p, t_cmd *pip)
+int	verif_g_status_hd(t_prep *p, t_cmd *pip)
 {
-	if (p->buff == NULL || status == 130)
+	if (p->buff == NULL || g_status == 130)
 	{
 		if (p->buff == NULL)
 		{
-			status = 0;
+			g_status = 0;
 			ft_printf("\n");
 		}
 		free(p->buff);
 		free(p->buf);
 		free(p->rd_line);
-		pip->status_hd = 1;
+		pip->g_status_hd = 1;
 		free(pip->hd_history);
 		return (1);
 	}

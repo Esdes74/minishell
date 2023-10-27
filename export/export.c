@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dbaule <dbaule@student.42.fr>              +#+  +:+       +#+        */
+/*   By: eslamber <eslamber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 10:47:27 by dbaule            #+#    #+#             */
-/*   Updated: 2023/10/26 19:07:18 by dbaule           ###   ########.fr       */
+/*   Updated: 2023/10/27 14:56:29 by eslamber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,16 +70,16 @@ static int	check_valid_and_add_only_exp(char *na_val, t_exp *exp, t_cmd *pip)
 
 	i = 0;
 	if (!ft_isalpha(na_val[0]))
-		return (error(NVALID, "0"), free(na_val), status = 1, -1);
+		return (error(NVALID, "0"), free(na_val), g_status = 1, -1);
 	while (na_val[i] && na_val[i] != '=')
 	{
 		if (ft_isalnum(na_val[i]) != 1 && na_val[i] != '+')
-			return (error(NVALID, "0"), free(na_val), status = 1, -1);
+			return (error(NVALID, "0"), free(na_val), g_status = 1, -1);
 		i++;
 	}
 	i = pars_exp((&exp->flag), na_val);
 	if (i == -1)
-		return (status = 1, -1);
+		return (g_status = 1, -1);
 	if (na_val[i] == '\0' && na_val[i - 1] != '=' && exp->flag == 0)
 	{
 		if (check_double_exp_env(pip->exp_env, na_val) == 1)
@@ -122,7 +122,7 @@ static int	add_to_env(int i, t_cmd *pip, t_exp *exp)
 	{
 		exp->new_env = malloc(sizeof(char *) * (i + 2));
 		if (!exp->new_env)
-			return (error(MALLOC, "0"), free(exp->na_val), status = 1, 1);
+			return (error(MALLOC, "0"), free(exp->na_val), g_status = 1, 1);
 		i = 0;
 		while (pip->env[i])
 		{
@@ -131,11 +131,11 @@ static int	add_to_env(int i, t_cmd *pip, t_exp *exp)
 		}
 		exp->na_val = rm_char(exp->na_val, '+');
 		if (!exp->na_val)
-			return (error(MALLOC, "0"), free(exp->new_env), status = 1, 1);
+			return (error(MALLOC, "0"), free(exp->new_env), g_status = 1, 1);
 		exp->new_env[i] = ft_strdup(exp->na_val);
 		if (!exp->new_env[i])
 			return (error(MALLOC, "0"), free(exp->new_env), free(exp->na_val), \
-			status = 1, 1);
+			g_status = 1, 1);
 		exp->new_env[i + 1] = NULL;
 		free(pip->env);
 		pip->env = exp->new_env;

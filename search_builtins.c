@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   search_builtins.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dbaule <dbaule@student.42.fr>              +#+  +:+       +#+        */
+/*   By: eslamber <eslamber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/13 11:08:50 by eslamber          #+#    #+#             */
-/*   Updated: 2023/10/26 16:53:25 by dbaule           ###   ########.fr       */
+/*   Updated: 2023/10/27 14:56:29 by eslamber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,11 +31,11 @@ int parent_builtins(t_cmd *pip, char **exec_cmd)
         {
             i = 0;
             if (chdir("/") == -1)
-                return (perror("Error "), status = 1, -1);
+                return (perror("Error "), g_status = 1, -1);
             while (pip->save_path[i])
             {
                 if (chdir(pip->save_path[i]) == -1)
-                    return (perror("Error "), status = 1, -1);
+                    return (perror("Error "), g_status = 1, -1);
                 i++;
             }
             return (1);
@@ -82,7 +82,7 @@ int search_builtins(char **spt, t_cmd *pip)
     if (ft_strlen(spt[0]) == 3 && ft_strncmp(spt[0], "pwd", 3) == 0)
     {
         if (spt[1] && spt[1][0] == '-')
-            return (ft_printf_fd(2, "Error : invalid option\n"), status = 2, 1);
+            return (ft_printf_fd(2, "Error : invalid option\n"), g_status = 2, 1);
         return (free(pwd()), 1);
     }
     else if (ft_strlen(spt[0]) == 4 && ft_strncmp(spt[0], "exit", 4) == 0)
@@ -94,7 +94,7 @@ int search_builtins(char **spt, t_cmd *pip)
     {
         determine_echo_or_cd(spt, &option);
         if (option == 0 || option == 1)
-            return (echo(spt, option), status = 0, 1);
+            return (echo(spt, option), g_status = 0, 1);
         else if (option == 2)
             return (1);
     }

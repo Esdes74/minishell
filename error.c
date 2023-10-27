@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dbaule <dbaule@student.42.fr>              +#+  +:+       +#+        */
+/*   By: eslamber <eslamber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/03 11:08:59 by eslamber          #+#    #+#             */
-/*   Updated: 2023/10/26 19:29:13 by dbaule           ###   ########.fr       */
+/*   Updated: 2023/10/27 14:56:29 by eslamber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static void	error_bis_bis(t_error err);
 
 void	error(t_error err, char *cmd)
 {
-	status = 1;
+	g_status = 1;
 	if (err == ADD_LIST)
 		ft_printf_fd(ERR, "Error : Problem when adding pid to list.\n");
 	else if (err == MALLOC)
@@ -28,7 +28,7 @@ void	error(t_error err, char *cmd)
 		ft_printf_fd(ERR, "Error : Problem tailing PID tailing in list.\n");
 	else if (err == CMD)
 	{
-		status = 127;
+		g_status = 127;
 		ft_printf_fd(ERR, "Error : %s: command not found\n", cmd);
 	}
 	else if (err == JOIN)
@@ -67,7 +67,7 @@ static void	error_bis(t_error err, char *cmd)
 		"Error : syntax error near unexpected token `%s\'\n", cmd);
 	else if (err == DIREC)
 	{
-		status = 126;
+		g_status = 126;
 		ft_printf_fd(ERR, "Error : %s: Is a directory\n", cmd);
 	}
 }
@@ -76,7 +76,7 @@ static void	error_bis_bis(t_error err)
 {
 	if (err == PERM)
 	{
-		status = 126;
+		g_status = 126;
 		ft_printf_fd(ERR, "Error : Permission denied\n");
 	}
 	else if (err == SPLIT)
@@ -85,7 +85,7 @@ static void	error_bis_bis(t_error err)
 		ft_printf_fd(ERR, "Error : numeric argument required\n");
 	else if (err == FILES)
 	{
-		status = 127;
+		g_status = 127;
 		perror("Error ");
 	}
 	else if (err == NVALID)

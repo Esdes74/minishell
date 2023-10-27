@@ -6,7 +6,7 @@
 /*   By: eslamber <eslamber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/31 10:31:07 by dbaule            #+#    #+#             */
-/*   Updated: 2023/10/26 16:50:01 by eslamber         ###   ########.fr       */
+/*   Updated: 2023/10/27 14:58:55 by eslamber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ char **tmp)
 
 unsigned char	exitt(unsigned char ret_value)
 {
-	status = ret_value;
+	g_status = ret_value;
 	return (ret_value);
 }
 
@@ -85,16 +85,16 @@ void	cd(char **path, t_cmd *pip)
 		i++;
 	if (i <= 2 && path != NULL && chdir(path[1]) != 0)
 	{
-		status = 1;
+		g_status = 1;
 		ft_printf_fd(2, "-bash: cd: %s: No such file or directory\n", path[1]);
 		return ;
 	}
 	if (i > 2)
 	{
 		error(TOO_MANY_ARG, "cd");
-		status = 1;
+		g_status = 1;
 		return ;
 	}
-	status = 0;
+	g_status = 0;
 	pip->builtin = TRUE;
 }

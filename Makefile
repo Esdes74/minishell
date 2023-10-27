@@ -6,7 +6,7 @@
 #    By: eslamber <eslamber@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/04 16:30:03 by eslamber          #+#    #+#              #
-#    Updated: 2023/10/27 13:06:23 by eslamber         ###   ########.fr        #
+#    Updated: 2023/10/27 14:46:35 by eslamber         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,6 +39,7 @@ EXP := export/
 VERIF := verif_read/
 ENV := environement/
 PREP := prep_heredoc/
+RED := check_redirection/
 
 # Definition of files variables
 SRC := main.c \
@@ -58,7 +59,9 @@ SRC := main.c \
 	   $(VERIF)verif_read_utils_bis.c \
 	   $(VERIF)verif_read_utils.c \
 	   execution_center.c \
-	   check_redirection.c \
+	   $(RED)check_redirection.c \
+	   $(RED)duplication.c \
+	   $(RED)check_red_utils.c \
 	   $(PREP)prep_heredoc.c \
 	   $(PREP)prep_heredoc_utils.c \
 	   $(PREP)handle_history.c \
@@ -66,7 +69,6 @@ SRC := main.c \
 	   builtins_parent.c \
 	   $(ENV)environement.c \
 	   $(ENV)exp_env.c \
-	   check_variables.c \
 	   builtins_utils.c \
 	   $(EXP)export.c \
 	   $(EXP)add_exp_env.c \
@@ -107,6 +109,9 @@ $(NAME): $(OBJ)
 	$(CC) $(FLAGS) $(INC) -c $< -o $@ $(LIBRAIRIE)
 
 .obj/$(PREP)%.o: $(PREP)%.c $(REPO_HEADER)prep_heredoc.h $(HEADER) $(LIB)
+	$(CC) $(FLAGS) $(INC) -c $< -o $@ $(LIBRAIRIE)
+
+.obj/$(RED)%.o: $(RED)%.c $(REPO_HEADER)check_redirection.h $(HEADER) $(LIB)
 	$(CC) $(FLAGS) $(INC) -c $< -o $@ $(LIBRAIRIE)
 
 .obj/%.o: %.c $(HEADER) $(LIB)

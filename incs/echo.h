@@ -6,14 +6,14 @@
 /*   By: eslamber <eslamber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/27 10:24:40 by eslamber          #+#    #+#             */
-/*   Updated: 2023/10/27 10:34:55 by eslamber         ###   ########.fr       */
+/*   Updated: 2023/10/27 14:59:24 by eslamber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef ECHO_H
 # define ECHO_H
 
-typedef struct	t_echo
+typedef struct t_echo
 {
 	int	i;
 	int	j;

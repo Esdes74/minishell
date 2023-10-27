@@ -6,7 +6,7 @@
 /*   By: eslamber <eslamber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/26 17:24:55 by eslamber          #+#    #+#             */
-/*   Updated: 2023/10/27 10:31:10 by eslamber         ###   ########.fr       */
+/*   Updated: 2023/10/27 14:56:29 by eslamber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	init_echo(t_echo *e)
 	e->i = 1;
 	e->flag = 0;
 	e->j = 0;
-	status = 0;
+	g_status = 0;
 }
 
 void	echo_quote_bis(t_echo *e, char **arg)

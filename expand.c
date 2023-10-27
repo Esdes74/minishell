@@ -6,7 +6,7 @@
 /*   By: eslamber <eslamber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 18:55:25 by eslamber          #+#    #+#             */
-/*   Updated: 2023/10/26 14:14:14 by eslamber         ###   ########.fr       */
+/*   Updated: 2023/10/27 14:56:29 by eslamber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ char    *expand(char *rd_line, t_cmd *pip, int *flag)
             *flag = 2;
         if (rd_line[i] == '$' && rd_line[i + 1] == '?' && *flag != 1)
         {
-            tmp = ft_itoa(status);
+            tmp = ft_itoa(g_status);
             if (tmp == NULL)
                 return (error(MALLOC, "0"), NULL);
             new = add_var_to_sentence(rd_line, tmp, i, flag);

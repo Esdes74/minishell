@@ -6,7 +6,7 @@
 /*   By: eslamber <eslamber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 21:29:25 by dbaule            #+#    #+#             */
-/*   Updated: 2023/10/26 15:51:16 by eslamber         ###   ########.fr       */
+/*   Updated: 2023/10/27 14:58:16 by eslamber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int execution_center(t_list *spt, t_cmd *pip)
     pid_t   *tab_pid;
     int     *arg_count;
     int     statut;
-    int     exit_status;
+    int     exit_g_status;
     int     i;
     int     id;
     int     ret;
@@ -45,7 +45,7 @@ int execution_center(t_list *spt, t_cmd *pip)
             return (-2);
     hd_signals();
     pip->hd_history = prep_hd(pip, spt);
-    if (pip->status_hd == 1)
+    if (pip->g_status_hd == 1)
         return (2);
     unset_signals();
     arg_count = counting_arg(pip->nb_proc, spt);
@@ -79,7 +79,7 @@ int execution_center(t_list *spt, t_cmd *pip)
         return (annihilation(spt, free, DEBUG), free(arg_count), 1);
     while (i < pip->nb_proc && pip->parent_builtin == FALSE && ret != 1)
     {
-        status = 0;
+        g_status = 0;
         id = fork();
         if (id == 0)
         {
@@ -127,7 +127,7 @@ int execution_center(t_list *spt, t_cmd *pip)
     }
     free(tab_pid);
     // Si je suis dans une éxécution de builtin alors je ne rentre pas dedans
-    if (pip->parent_builtin == FALSE && pip->builtin == FALSE  && ret != 1) // && flag_status == 1
+    if (pip->parent_builtin == FALSE && pip->builtin == FALSE  && ret != 1) // && flag_g_status == 1
     {
         if (WIFSIGNALED(statut))
         {
@@ -135,11 +135,11 @@ int execution_center(t_list *spt, t_cmd *pip)
                 hsigint_exec(SIGINT);
             else if (WTERMSIG(statut) == SIGQUIT)
                 hsigquit(SIGQUIT);
-            exit_status = 128 + WTERMSIG(statut);
+            exit_g_status = 128 + WTERMSIG(statut);
         }
         else if (WIFEXITED(statut))
-            exit_status = WEXITSTATUS(statut);
-        status = exit_status; // Stockage du code de sortie
+            exit_g_status = WEXITSTATUS(statut);
+        g_status = exit_g_status; // Stockage du code de sortie
     }
     return (0);
 }
