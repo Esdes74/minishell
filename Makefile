@@ -6,7 +6,7 @@
 #    By: dbaule <dbaule@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/04 16:30:03 by eslamber          #+#    #+#              #
-#    Updated: 2023/10/27 17:00:27 by dbaule           ###   ########.fr        #
+#    Updated: 2023/10/27 19:14:38 by dbaule           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -69,6 +69,10 @@ SRC := main.c \
 	   $(RED)check_redirection.c \
 	   $(RED)duplication.c \
 	   $(RED)check_red_utils.c \
+	   $(RED_PAR)check_redirection_parent.c \
+	   $(RED_PAR)search_open_file.c \
+	   $(RED_PAR)initialise_redir_parent.c \
+	   $(RED_PAR)here_doc_check_redir.c \
 	   $(PREP)prep_heredoc.c \
 	   $(PREP)prep_heredoc_utils.c \
 	   $(PREP)handle_history.c \
@@ -81,7 +85,6 @@ SRC := main.c \
 	   $(EXP)export_utils.c \
 	   expand.c \
 	   minishell_utils.c \
-	   $(RED_PAR)check_redirection_parent.c \
 	   unset.c \
 	   $(ECHO)echo.c \
 	   $(ECHO)echo_utils.c
