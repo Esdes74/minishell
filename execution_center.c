@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution_center.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dbaule <dbaule@student.42.fr>              +#+  +:+       +#+        */
+/*   By: eslamber <eslamber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 21:29:25 by dbaule            #+#    #+#             */
-/*   Updated: 2023/10/27 15:06:55 by dbaule           ###   ########.fr       */
+/*   Updated: 2023/10/27 16:00:15 by eslamber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,9 @@
 
 static int  checking_pipe(t_list *spt);
 static int	prep_pipe(t_cmd *pip);
+static int  dup_in_cmd(t_cmd *pip, int i);
+static int dup_out_cmd(t_cmd *pip, int i);
+// static int search_parent_builtins(char **tmp);
 
 int execution_center(t_list *spt, t_cmd *pip)
 {
@@ -39,23 +42,15 @@ int execution_center(t_list *spt, t_cmd *pip)
     pip->nb_pipe = pip->nb_proc - 1;
     if (pip->nb_proc > 1)
         if (prep_pipe(pip) == 1)
-            return (annihilation(spt, free, DEBUG), -1);
+            return (1);
     hd_signals();
     pip->hd_history = prep_hd(pip, spt);
-    if (pip->status_hd == 2 && pip->nb_proc > 1)
-	{
-        return (close_all_pipes(pip), annihilation(spt, free, DEBUG), 1);
-	}
-	if (pip->status_hd == 2)
-		return (annihilation(spt, free, DEBUG), 1);
+    if (pip->status_hd == 2)
+        return (1);
     unset_signals();
     arg_count = counting_arg(pip->nb_proc, spt);
-    if (arg_count == NULL && pip->nb_proc > 1)
-	{
-        return (close_all_pipes(pip), annihilation(spt, free, DEBUG), 1);
-	}
-	if (arg_count == NULL)
-		return (annihilation(spt, free, DEBUG), 1);
+    if (arg_count == NULL)
+        return (1);
     if (pip->nb_pipe == 0)
     {
         tmp = spt->head;
@@ -63,13 +58,20 @@ int execution_center(t_list *spt, t_cmd *pip)
             return (0);
         exec_cmd = string_for_cmd_center(arg_count, i, spt);
         if (exec_cmd == NULL)
-            return (free(arg_count), annihilation(spt, free, DEBUG), 1);
+            return (error(MALLOC, NULL), 1);
         buf = check_redirection_parent(exec_cmd, pip);
+        // anihilation(exec_cmd);
         if (buf == NULL)
-            return (free(arg_count), 1);
+            return (free(arg_count), 2); //anihilation(exec_cmd),
         value_ret = parent_builtins(pip, buf);
         if (value_ret == -1)
-            return (annihilation(spt, free, DEBUG), free(arg_count), anihilation(buf), 1);
+            return (annihilation(spt, free, DEBUG), free(arg_count), anihilation(buf), 1); // j'ai modif anilation pour free buf , free(buf[0]), free(buf)
+        // if (value_ret > 0)
+        // {
+        //     free(buf[0]);
+        //     free(buf);
+        // }
+        // else
         anihilation(buf);
     }
     tab_pid = (pid_t *) malloc(sizeof(pid_t) * (pip->nb_proc));
@@ -93,11 +95,9 @@ int execution_center(t_list *spt, t_cmd *pip)
             if (pip->nb_proc > 1)
             {
                 if (i > 0 && pip->in == FALSE)
-                    if (dup2(pip->pipe[i - 1][0], STDIN_FILENO) == -1)
-        				return (1);
+                    dup_in_cmd(pip, i - 1);
                 if (i < pip->nb_pipe && pip->out == FALSE)
-                    if (dup2(pip->pipe[i][1], STDOUT_FILENO) == -1)
-        				return (1);
+                    dup_out_cmd(pip, i);
                 close_all_pipes(pip);
             }
             if (pip->here_pipe)
@@ -168,7 +168,7 @@ static int	prep_pipe(t_cmd *pip)
     pip->pipe = (int **) ft_calloc(pip->nb_pipe, sizeof(int *));
     if (pip->pipe == NULL)
     {
-        return (error(MALLOC, "0"), 1);
+        return (1);
     }
 	while (i < pip->nb_pipe)
 	{
@@ -179,9 +179,51 @@ static int	prep_pipe(t_cmd *pip)
 			return (error(CALLOC, "0"), close_all_pipes(pip), 1);
 		}
 		if (pipe(pip->pipe[i]) == -1)
-			return (pip->nb_pipe = i, free(pip->pipe[i]), \
-			close_all_pipes(pip), error(PIPE, "0"), 1);
+		{
+			pip->nb_pipe = i;
+			return (close_all_pipes(pip), error(PIPE, NULL), 1);
+		}
 		i++;
 	}
 	return (0);
 }
+
+static int  dup_in_cmd(t_cmd *pip, int i)
+{
+    if (dup2(pip->pipe[i][0], STDIN_FILENO) == -1)
+        return (1);
+    return (0);
+}
+
+static int  dup_out_cmd(t_cmd *pip, int i)
+{
+    if (dup2(pip->pipe[i][1], STDOUT_FILENO) == -1)
+        return (1);
+    return (0);
+}
+
+// static int search_parent_builtins(char **tmp)
+// {
+//     char    *str;
+//     int     i;
+
+//     // while (tmp[i] && (tmp[i][0] == '<' || tmp[i][0] == '>')) // ne gere pas si la redirection est espace: "< test"
+//     //     i++;
+//     // if (tmp[i] == NULL)
+//     //     return (0);
+//     i = 0;
+//     str = tmp[i];
+//     if (ft_strlen(str) == 4 && ft_strncmp(str, "exit", 4) == 0)
+//         return (1);
+//     else if (ft_strlen(str) == 2 && ft_strncmp(str, "cd", 2) == 0)
+//         return (2);
+//     else if (ft_strlen(str) == 6 && ft_strncmp(str, "export", 6) == 0)
+//     {
+//         if (tmp[i + 1] == NULL)
+//             return (0);
+//         return (3);
+//     }
+//     else if (ft_strlen(str) == 5 && ft_strncmp(str, "unset", 5) == 0)
+//         return (4);
+//     return (0);
+// }

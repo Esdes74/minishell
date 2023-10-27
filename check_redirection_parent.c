@@ -6,7 +6,7 @@
 /*   By: eslamber <eslamber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 15:50:36 by dbaule            #+#    #+#             */
-/*   Updated: 2023/10/27 14:56:29 by eslamber         ###   ########.fr       */
+/*   Updated: 2023/10/27 16:24:50 by eslamber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -187,6 +187,8 @@ char    **check_redirection_parent(char **arg, t_cmd *struc)
     anihilation(buf);
     // buf = tmp;
     tmp[j] = NULL;
+	if (j == 0)
+		return (free(struc->here_pipe), anihilation(tmp), NULL);
     return (tmp);
 }
 

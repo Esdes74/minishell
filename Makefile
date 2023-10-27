@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: dbaule <dbaule@student.42.fr>              +#+  +:+       +#+         #
+#    By: eslamber <eslamber@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/04 16:30:03 by eslamber          #+#    #+#              #
-#    Updated: 2023/10/27 15:15:14 by dbaule           ###   ########.fr        #
+#    Updated: 2023/10/27 15:51:05 by eslamber         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -129,12 +129,12 @@ $(LIB): FORCE
 # Debug
 debug:
 	make -C libft debug
-	make -C ./ "FLAGS = -Wall -Werror -Wextra -fsanitize=address \
+	make -C ./ "FLAGS = -Wall -Wextra -fsanitize=address \
 	-fno-omit-frame-pointer -g3"
 
 val_deb:
 	make -C libft valgrind_deb
-	make -C ./ "FLAGS = -Wall -Werror -Wextra -g3"
+	make -C ./ "FLAGS = -Wall -Wextra -g3"
 
 #
 ### Cleanup rules

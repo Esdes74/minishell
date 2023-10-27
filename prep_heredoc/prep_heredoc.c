@@ -6,7 +6,7 @@
 /*   By: eslamber <eslamber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 11:08:50 by eslamber          #+#    #+#             */
-/*   Updated: 2023/10/27 15:17:02 by eslamber         ###   ########.fr       */
+/*   Updated: 2023/10/27 15:54:39 by eslamber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ char	**prep_hd(t_cmd *pip, t_list *spt)
 	p.tmp = spt->head;
 	while (p.i < p.compt)
 		if (creat_hd(&p, pip) == 1)
-			return (NULL);
+			return (pip->status_hd = 2, anihilation(pip->hd_history), NULL);
 	pip->hd_history[p.i] = NULL;
 	pip->ind_hd = -1;
 	return (pip->hd_history);
@@ -52,8 +52,7 @@ static int	creat_hd(t_prep *p, t_cmd *pip)
 	&& ((char *)(p->tmp->data_cell->data))[1] != '<')
 		p->tmp = p->tmp->next;
 	if (((char *)(p->tmp->data_cell->data))[2] == '\0' && p->tmp->next == NULL)
-		return (error(SYNTAX, "newline"), free(pip->hd_history), \
-		g_status = 2, 1);
+		return (error(SYNTAX, "newline"), g_status = 2, 1);
 	if (((char *)(p->tmp->data_cell->data))[2] == '\0')
 		p->stop = (char *) p->tmp->next->data_cell->data;
 	else
@@ -77,10 +76,11 @@ static int	creat_hd(t_prep *p, t_cmd *pip)
 
 static int	demanding_user(t_prep *p, t_cmd *pip)
 {
-	while (p->buff != NULL && g_status != 130)
+	while (p->buff != NULL && g_status != 130 \
+	&& ft_strncmp(p->stop, p->buff, ft_strlen(p->buff) + 1) != 0)
 		if (get_hd(p) == 1)
 			return (1);
-	if (verif_g_status_hd(p, pip) == 1)
+	if (verif_status_hd(p, pip) == 1)
 		return (1);
 	if (p->rd_line != NULL)
 	{
