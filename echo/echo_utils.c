@@ -6,11 +6,12 @@
 /*   By: eslamber <eslamber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/26 17:24:55 by eslamber          #+#    #+#             */
-/*   Updated: 2023/10/26 18:04:06 by eslamber         ###   ########.fr       */
+/*   Updated: 2023/10/27 10:31:10 by eslamber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "incs/minishell.h"
+#include "../incs/minishell.h"
+#include "../incs/echo.h"
 
 void	init_echo(t_echo *e)
 {

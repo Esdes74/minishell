@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dbaule <dbaule@student.42.fr>              +#+  +:+       +#+        */
+/*   By: eslamber <eslamber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 15:35:11 by eslamber          #+#    #+#             */
-/*   Updated: 2023/10/26 19:28:34 by dbaule           ###   ########.fr       */
+/*   Updated: 2023/10/27 10:34:29 by eslamber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,14 +79,6 @@ typedef struct  t_cmd
     t_bool          out; // utilisé
 }   t_cmd;
 
-typedef struct	t_echo
-{
-	int	i;
-	int	j;
-	int	flag;
-	int	type_flag;
-}	t_echo;
-
 // Générals
 void            error(t_error err, char *cmd);
 
@@ -130,6 +122,8 @@ unsigned char   intermediate_exit(char **tmp);
 
 unsigned char   exitt(unsigned char ret_value);
 
+void            echo(char **arg, int option);
+
 void            cd(char **path, t_cmd *pip);
 
 int             export(t_cmd *pip, char *name_value);
@@ -155,18 +149,6 @@ int             position_echo_n(char **arg, int *j, int *flag, int *option);
 int             count_name_env(char *str);
 
 int             check_zero(char *str);
-
-// Echo
-
-void            echo(char **arg, int option);
-
-void			init_echo(t_echo *e);
-
-void			echo_quote(t_echo *e, char **arg);
-
-void			echo_quote_bis(t_echo *e, char **arg);
-
-void			echo_quote_bis_bis(t_echo *e, char **arg);
 
 // Free functions
 

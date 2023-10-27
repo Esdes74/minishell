@@ -8,3 +8,4 @@ minishell_tester
 minishell-tester
 run.sh
 .nfs*
+*.o

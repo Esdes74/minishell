@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: dbaule <dbaule@student.42.fr>              +#+  +:+       +#+         #
+#    By: eslamber <eslamber@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/04 16:30:03 by eslamber          #+#    #+#              #
-#    Updated: 2023/10/26 22:20:45 by dbaule           ###   ########.fr        #
+#    Updated: 2023/10/27 10:38:30 by eslamber         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,6 +32,13 @@ NAME := minishell
 REPO_HEADER := incs/
 HEADER := $(REPO_HEADER)minishell.h
 
+# Definitions of differents repos
+PARS := parsing/
+ECHO := echo/
+EXP := export/
+VERIF := verif_read/
+ENV := environement/
+
 # Definition of files variables
 SRC := main.c \
 	   signals.c \
@@ -42,33 +49,33 @@ SRC := main.c \
 	   builtins.c \
 	   free_struc.c \
 	   cmd_center_simple.c \
-	   parsing/parsing.c \
-	   parsing/parse_arguments.c \
-	   parsing/parsing_count_arg.c \
-	   parsing/parsing_count_caractere.c \
-	   verif_read/verif_read.c \
-	   verif_read/verif_read_utils_bis.c \
-	   verif_read_utils.c \
+	   $(PARS)parsing.c \
+	   $(PARS)parse_arguments.c \
+	   $(PARS)parsing_count_arg.c \
+	   $(PARS)parsing_count_caractere.c \
+	   $(VERIF)verif_read.c \
+	   $(VERIF)verif_read_utils_bis.c \
+	   $(VERIF)verif_read_utils.c \
 	   execution_center.c \
 	   check_redirection.c \
 	   prep_heredoc.c \
 	   search_builtins.c \
 	   builtins_parent.c \
-	   environement/environement.c \
-	   environement/exp_env.c \
+	   $(ENV)environement.c \
+	   $(ENV)exp_env.c \
 	   check_variables.c \
 	   builtins_utils.c \
-	   export/export.c \
-	   export/add_exp_env.c \
-	   export/check_if_replace_env.c \
-	   export/check_if_replace_exp_env.c \
-	   export/export_utils.c \
+	   $(EXP)export.c \
+	   $(EXP)add_exp_env.c \
+	   $(EXP)check_if_replace_env.c \
+	   $(EXP)check_if_replace_exp_env.c \
+	   $(EXP)export_utils.c \
 	   expand.c \
 	   minishell_utils.c \
 	   check_redirection_parent.c \
 	   unset.c \
-	   echo.c \
-	   echo_utils.c
+	   $(ECHO)echo.c \
+	   $(ECHO)echo_utils.c
 OBJ := $(SRC:%.c=.obj/%.o)
 
 #
@@ -81,16 +88,19 @@ all: $(NAME)
 $(NAME): $(OBJ)
 	$(CC) $(FLAGS) $(OBJ) -o $@ -L. $(LIB) $(LIBRAIRIE)
 
-.obj/parsing/%.o: parsing/%.c $(REPO_HEADER)parsing.h
+.obj/$(PARS)%.o: $(PARS)%.c $(REPO_HEADER)parsing.h $(HEADER) $(LIB)
 	$(CC) $(FLAGS) $(INC) -c $< -o $@ $(LIBRAIRIE)
 
-.obj/export/%.o: export/%.c $(REPO_HEADER)export.h
+.obj/$(EXP)%.o: $(EXP)%.c $(REPO_HEADER)export.h $(HEADER) $(LIB)
 	$(CC) $(FLAGS) $(INC) -c $< -o $@ $(LIBRAIRIE)
 
-.obj/verif_read/%.o: verif_read/%.c $(REPO_HEADER)verif_read.h
+.obj/$(VERIF)%.o: $(VERIF)%.c $(REPO_HEADER)verif_read.h $(HEADER) $(LIB)
 	$(CC) $(FLAGS) $(INC) -c $< -o $@ $(LIBRAIRIE)
 
-.obj/environement/%.o: environement/%.c $(REPO_HEADER)environement.h
+.obj/$(ENV)%.o: $(ENV)%.c $(REPO_HEADER)environement.h $(HEADER) $(LIB)
+	$(CC) $(FLAGS) $(INC) -c $< -o $@ $(LIBRAIRIE)
+
+.obj/$(ECHO)%.o: $(ECHO)%.c $(REPO_HEADER)echo.h $(HEADER) $(LIB)
 	$(CC) $(FLAGS) $(INC) -c $< -o $@ $(LIBRAIRIE)
 	
 .obj/%.o: %.c $(HEADER) $(LIB)
