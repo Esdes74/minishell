@@ -6,14 +6,14 @@
 /*   By: eslamber <eslamber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 11:08:50 by eslamber          #+#    #+#             */
-/*   Updated: 2023/10/27 15:54:39 by eslamber         ###   ########.fr       */
+/*   Updated: 2023/10/27 17:59:15 by eslamber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incs/minishell.h"
 #include "../incs/prep_heredoc.h"
 
-static int	creat_hd(t_prep *p, t_cmd *pip);
+static int	creat_hd(t_prep *p, t_cmd *pip, t_list *spt);
 static int	demanding_user(t_prep *p, t_cmd *pip);
 static int	get_hd(t_prep *p);
 
@@ -39,20 +39,21 @@ char	**prep_hd(t_cmd *pip, t_list *spt)
 		p.i = 0;
 	p.tmp = spt->head;
 	while (p.i < p.compt)
-		if (creat_hd(&p, pip) == 1)
+		if (creat_hd(&p, pip, spt) == 1)
 			return (pip->status_hd = 2, anihilation(pip->hd_history), NULL);
 	pip->hd_history[p.i] = NULL;
 	pip->ind_hd = -1;
 	return (pip->hd_history);
 }
 
-static int	creat_hd(t_prep *p, t_cmd *pip)
+static int	creat_hd(t_prep *p, t_cmd *pip, t_list *spt)
 {
 	while (p->tmp != NULL && ((char *)(p->tmp->data_cell->data))[0] != '<' \
 	&& ((char *)(p->tmp->data_cell->data))[1] != '<')
 		p->tmp = p->tmp->next;
 	if (((char *)(p->tmp->data_cell->data))[2] == '\0' && p->tmp->next == NULL)
-		return (error(SYNTAX, "newline"), g_status = 2, 1);
+		return (annihilation(spt, free, DEBUG), error(SYNTAX, "newline"), \
+		g_status = 2, 1);
 	if (((char *)(p->tmp->data_cell->data))[2] == '\0')
 		p->stop = (char *) p->tmp->next->data_cell->data;
 	else
