@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_history.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dbaule <dbaule@student.42.fr>              +#+  +:+       +#+        */
+/*   By: eslamber <eslamber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/27 12:43:04 by eslamber          #+#    #+#             */
-/*   Updated: 2023/10/27 14:25:45 by dbaule           ###   ########.fr       */
+/*   Updated: 2023/10/27 17:38:57 by eslamber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ static int	creat_hd(t_prep_hist *p, t_cmd *pip)
 	while (p->tmp != NULL && ((char *)(p->tmp->data_cell->data))[0] != '<' \
 	&& ((char *)(p->tmp->data_cell->data))[1] != '<')
 		p->tmp = p->tmp->next;
-	if (((char *)(p->tmp->data_cell->data))[2] == '\0')
+	if (p->tmp->next != NULL && ((char *)(p->tmp->data_cell->data))[2] == '\0')
 		p->stop = (char *) p->tmp->next->data_cell->data;
 	else
 		p->stop = &(((char *) p->tmp->data_cell->data)[2]);
