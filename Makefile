@@ -6,7 +6,7 @@
 #    By: dbaule <dbaule@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/04 16:30:03 by eslamber          #+#    #+#              #
-#    Updated: 2023/10/27 15:15:14 by dbaule           ###   ########.fr        #
+#    Updated: 2023/10/27 15:29:36 by dbaule           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,6 +41,7 @@ ENV := environement/
 BUILTINS := builtins/
 PREP := prep_heredoc/
 RED := check_redirection/
+RED_PAR := check_redirection_parent/
 
 # Definition of files variables
 SRC := main.c \
@@ -80,7 +81,7 @@ SRC := main.c \
 	   $(EXP)export_utils.c \
 	   expand.c \
 	   minishell_utils.c \
-	   check_redirection_parent.c \
+	   $(RED_PAR)check_redirection_parent.c \
 	   unset.c \
 	   $(ECHO)echo.c \
 	   $(ECHO)echo_utils.c
@@ -118,6 +119,9 @@ $(NAME): $(OBJ)
 	$(CC) $(FLAGS) $(INC) -c $< -o $@ $(LIBRAIRIE)
 
 .obj/$(RED)%.o: $(RED)%.c $(REPO_HEADER)check_redirection.h $(HEADER) $(LIB)
+	$(CC) $(FLAGS) $(INC) -c $< -o $@ $(LIBRAIRIE)
+
+.obj/$(RED_PAR)%.o: $(RED_PAR)%.c $(REPO_HEADER)check_redirection_parent.h $(HEADER) $(LIB)
 	$(CC) $(FLAGS) $(INC) -c $< -o $@ $(LIBRAIRIE)
 
 .obj/%.o: %.c $(HEADER) $(LIB)
