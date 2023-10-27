@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   verif_read.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dbaule <dbaule@student.42.fr>              +#+  +:+       +#+        */
+/*   By: eslamber <eslamber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 11:08:50 by eslamber          #+#    #+#             */
-/*   Updated: 2023/10/26 23:23:49 by dbaule           ###   ########.fr       */
+/*   Updated: 2023/10/27 10:58:18 by eslamber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ char	*verif_read(char *rd_line, t_cmd *pip)
 {
 	t_verif	verif;
 	t_list	*spt;
-	char	*tmp;
 
 	verif.flag = 0;
 	verif.buf = NULL;
@@ -39,11 +38,8 @@ char	*verif_read(char *rd_line, t_cmd *pip)
 	if (parsing(rd_line, &verif.flag, spt) == 1)
 		return (free(rd_line), free(verif.buff), NULL);
 	free(rd_line);
-	tmp = check_vr_read(spt, rd_line, pip, &verif);
-	if (tmp == NULL)
+	if (check_vr_read(spt, rd_line, pip, &verif) == NULL)
 		return (NULL);
-	if (tmp == verif.buf)
-		return (verif.buf);
 	return (verif.buff);
 }
 
@@ -64,18 +60,14 @@ static int	init_verif_read(char **line, t_verif *vr, t_cmd *pip, t_list *spt)
 	vr->expand_flag = 0;
 	*line = expand(*line, pip, &vr->expand_flag);
 	if (*line == NULL)
-	{
 		return (free(vr->buff), annihilation(spt, free, DEBUG), 1);
-	}
 	return (0);
 }
 
 static char	*check_vr_read(t_list *spt, char *rd_line, t_cmd *pip, t_verif *vr)
 {
 	if (spt->len == 0)
-	{
 		return (annihilation(spt, free, DEBUG), vr->buff);
-	}
 	if (still_quote(vr, rd_line, pip, spt) == 1)
 		return (NULL);
 	if (check_arg(spt) == 1)
@@ -84,11 +76,9 @@ static char	*check_vr_read(t_list *spt, char *rd_line, t_cmd *pip, t_verif *vr)
 	if (vr->flag == 1)
 		return (free(vr->buff), NULL);
 	else if (vr->flag == -1)
-	{
 		return (free(vr->buff), NULL);
-	}
 	annihilation(spt, free, DEBUG);
-	return ("ok");
+	return (vr->buff);
 }
 
 static int	still_quote(t_verif *verif, char *rd_line, t_cmd *pip, t_list *spt)

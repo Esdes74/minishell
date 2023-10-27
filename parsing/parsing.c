@@ -6,7 +6,7 @@
 /*   By: eslamber <eslamber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/20 15:16:22 by eslamber          #+#    #+#             */
-/*   Updated: 2023/10/26 14:09:48 by eslamber         ###   ########.fr       */
+/*   Updated: 2023/10/27 10:54:24 by eslamber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 #include "../incs/minishell.h"
 
 static void	init_parsing(t_pars *struc, int *flag);
-static int	after_first_while(t_pars *p, int *flag, t_list *ret);
-static int	after_second_while(t_pars *p, int *flag, t_list *ret);
+static int	creat_tab(t_pars *p, int *flag, t_list *ret);
+static int	creat_split(t_pars *p, int *flag, t_list *ret);
 static int	end_of_parsing(t_pars *p, int *flag, t_list *ret);
 
 int	parsing(const char *rd_line, int *flag, t_list *ret)
@@ -24,10 +24,10 @@ int	parsing(const char *rd_line, int *flag, t_list *ret)
 
 	init_parsing(&struc, flag);
 	parsing_count_arg(&struc, flag, rd_line);
-	if (after_first_while(&struc, flag, ret) == 1)
+	if (creat_tab(&struc, flag, ret) == 1)
 		return (1);
 	parsing_count_caractere(&struc, flag, rd_line);
-	if (after_second_while(&struc, flag, ret) == 1)
+	if (creat_split(&struc, flag, ret) == 1)
 		return (1);
 	parse_arguments(&struc, flag, rd_line);
 	if (end_of_parsing(&struc, flag, ret) == 1)
@@ -45,7 +45,7 @@ static void	init_parsing(t_pars *struc, int *flag)
 	struc->tmp_flag = 0;
 }
 
-static int	after_first_while(t_pars *p, int *flag, t_list *ret)
+static int	creat_tab(t_pars *p, int *flag, t_list *ret)
 {
 	if (*flag == 3 && p->compt != 1)
 		p->compt--;
@@ -65,7 +65,7 @@ static int	after_first_while(t_pars *p, int *flag, t_list *ret)
 	return (0);
 }
 
-static int	after_second_while(t_pars *p, int *flag, t_list *ret)
+static int	creat_split(t_pars *p, int *flag, t_list *ret)
 {
 	p->i = 0;
 	if (*flag == 3 && p->compt != 0)
