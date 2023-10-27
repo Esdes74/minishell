@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   verif_read_utils.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eslamber <eslamber@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dbaule <dbaule@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 11:08:50 by eslamber          #+#    #+#             */
-/*   Updated: 2023/10/27 10:30:23 by eslamber         ###   ########.fr       */
+/*   Updated: 2023/10/27 13:58:51 by dbaule           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ char	**string_for_cmd_center(int *tab, int i, t_list *spt)
 	tmp = moving_to_the_needed_cell(tab, i, tmp);
 	for_cmd = (char **)malloc(sizeof(char *) * (tab[i] + 1));
 	if (!for_cmd)
-		return (error(MALLOC, NULL), NULL);
+		return (error(MALLOC, "0"), NULL);
 	j = 0;
 	while (tab[i] > j)
 	{
@@ -62,7 +62,7 @@ char	**string_for_cmd_center(int *tab, int i, t_list *spt)
 			tmp = tmp->next;
 		for_cmd[j] = ft_strdup((char *)tmp->data_cell->data);
 		if (!for_cmd[j])
-			return (anihilation(for_cmd), NULL);
+			return (error(MALLOC, "0"), anihilation(for_cmd), NULL);
 		j++;
 		tmp = tmp->next;
 	}

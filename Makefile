@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: eslamber <eslamber@student.42.fr>          +#+  +:+       +#+         #
+#    By: dbaule <dbaule@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/04 16:30:03 by eslamber          #+#    #+#              #
-#    Updated: 2023/10/27 15:03:42 by eslamber         ###   ########.fr        #
+#    Updated: 2023/10/27 15:15:14 by dbaule           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -73,7 +73,6 @@ SRC := main.c \
 	   $(PREP)handle_history.c \
 	   $(ENV)environement.c \
 	   $(ENV)exp_env.c \
-	   check_variables.c \
 	   $(EXP)export.c \
 	   $(EXP)add_exp_env.c \
 	   $(EXP)check_if_replace_env.c \

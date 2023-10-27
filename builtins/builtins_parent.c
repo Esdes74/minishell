@@ -6,11 +6,7 @@
 /*   By: dbaule <dbaule@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/31 10:31:07 by dbaule            #+#    #+#             */
-<<<<<<< HEAD:builtins_parent.c
-/*   Updated: 2023/10/27 14:58:55 by eslamber         ###   ########.fr       */
-=======
-/*   Updated: 2023/10/27 11:11:54 by dbaule           ###   ########.fr       */
->>>>>>> e3a5dd25a25c797d51fbec37eda127732c6a823b:builtins/builtins_parent.c
+/*   Updated: 2023/10/27 15:13:14 by dbaule           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
