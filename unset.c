@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dbaule <dbaule@student.42.fr>              +#+  +:+       +#+        */
+/*   By: eslamber <eslamber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/26 16:21:39 by eslamber          #+#    #+#             */
-/*   Updated: 2023/10/27 10:45:21 by dbaule           ###   ########.fr       */
+/*   Updated: 2023/10/27 15:04:22 by eslamber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,13 +52,13 @@ static int	unset_bis(t_cmd *pip, char *name_value, int *i, int *trigger)
 	*trigger = 0;
 	if (name_value[0] == '\0' || ft_isdigit(name_value[0]) == 1)
 		return (ft_printf_fd(2, "Error : not a valid identifier\n") \
-		, status = 1, 0);
+		, g_status = 1, 0);
 	while (name_value[*i] && (ft_isalnum(name_value[*i]) == 1 \
 	|| name_value[*i] == '_'))
 		(*i)++;
 	if (name_value[*i] != '\0')
 		return (ft_printf_fd(2, "Error : not a valid identifier\n") \
-		, status = 1, 0);
+		, g_status = 1, 0);
 	*i = 0;
 	while (pip->env[*i])
 	{

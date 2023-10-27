@@ -6,13 +6,13 @@
 /*   By: dbaule <dbaule@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 14:04:59 by eslamber          #+#    #+#             */
-/*   Updated: 2023/10/27 14:12:58 by dbaule           ###   ########.fr       */
+/*   Updated: 2023/10/27 15:07:24 by dbaule           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "incs/minishell.h"
 
-unsigned char	status;
+unsigned char	g_status;
 
 int	main(int argc, char **argv, char **env)
 {
@@ -42,10 +42,10 @@ int	main(int argc, char **argv, char **env)
 	bufff = NULL;
 	pip.hd_history = NULL;
 	pip.ani_flag = 0;
-	status = 0;
+	g_status = 0;
 	while (1)
 	{
-		pip.status_hd = 0;
+		pip.g_status_hd = 0;
 		main_signals();
 		if (pip.hd_history != NULL)
 		{
@@ -83,7 +83,7 @@ int	main(int argc, char **argv, char **env)
 		{
 			free(bufff);
 			free_all(&pip);
-			exit(status);
+			exit(g_status);
 		}
 		free(cmd);
 		historic_fct(bufff, rd_line, &pip);

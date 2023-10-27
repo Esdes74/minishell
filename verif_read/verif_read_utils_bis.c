@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   verif_read_utils_bis.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dbaule <dbaule@student.42.fr>              +#+  +:+       +#+        */
+/*   By: eslamber <eslamber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/26 21:11:41 by dbaule            #+#    #+#             */
-/*   Updated: 2023/10/26 21:43:35 by dbaule           ###   ########.fr       */
+/*   Updated: 2023/10/27 14:56:29 by eslamber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	check_arg(t_list *spt)
 		str = (char *)tmp->data_cell->data;
 		if (tmp->next != NULL && str[0] == '|' && \
 		((char *)tmp->next->data_cell->data)[0] == '|')
-			return (error(SYNTAX, "|"), status = 2, 1);
+			return (error(SYNTAX, "|"), g_status = 2, 1);
 		if (str[0] == '<')
 		{
 			if (check_input_redirect(tmp, str) != 0)
@@ -48,16 +48,16 @@ static int	check_output_redirect(t_cell *tmp, char *str)
 	if (tmp->next != NULL)
 	{
 		if (str[1] == '\0' && (((char *)tmp->next->data_cell->data)[0] == '<'))
-			return (error(SYNTAX, "<"), status = 2, 1);
+			return (error(SYNTAX, "<"), g_status = 2, 1);
 		if (str[1] == '\0' && ((char *)tmp->next->data_cell->data)[0] == '>')
-			return (error(SYNTAX, ">"), status = 2, 1);
+			return (error(SYNTAX, ">"), g_status = 2, 1);
 	}
 	if (str[1] == '\0' && tmp->next == NULL)
-		return (error(SYNTAX, "newline"), status = 2, 1);
+		return (error(SYNTAX, "newline"), g_status = 2, 1);
 	else if (str[1] == '>' && str[2] == '\0' && tmp->next == NULL)
-		return (error(SYNTAX, "newline"), status = 2, 1);
+		return (error(SYNTAX, "newline"), g_status = 2, 1);
 	else if (str[1] == '>' && str[2] == '>')
-		return (error(SYNTAX, ">"), status = 2, 1);
+		return (error(SYNTAX, ">"), g_status = 2, 1);
 	return (0);
 }
 
@@ -66,21 +66,21 @@ static int	check_input_redirect(t_cell *tmp, char *str)
 	if (tmp->next != NULL)
 	{
 		if (str[1] == '\0' && ((char *)tmp->next->data_cell->data)[0] == '<')
-			return (error(SYNTAX, "<"), status = 2, 1);
+			return (error(SYNTAX, "<"), g_status = 2, 1);
 		if (str[1] == '\0' && ((char *)tmp->next->data_cell->data)[0] == '>')
-			return (error(SYNTAX, ">"), status = 2, 1);
+			return (error(SYNTAX, ">"), g_status = 2, 1);
 	}
 	if (str[1] == '\0' && tmp->next == NULL)
-		return (error(SYNTAX, "newline"), status = 2, 1);
+		return (error(SYNTAX, "newline"), g_status = 2, 1);
 	else if (str[1] == '<')
 	{
 		if (str[2] == '\0' && tmp->next == NULL)
-			return (error(SYNTAX, "newline"), status = 2, 1);
+			return (error(SYNTAX, "newline"), g_status = 2, 1);
 		else if (str[2] == '<')
-			return (error(SYNTAX, "newline"), status = 2, 1);
+			return (error(SYNTAX, "newline"), g_status = 2, 1);
 	}
 	else if (str[1] == '>')
-		return (error(SYNTAX, "newline"), status = 2, 1);
+		return (error(SYNTAX, "newline"), g_status = 2, 1);
 	return (0);
 }
 
@@ -92,7 +92,7 @@ int	check_expand(char *rd_line)
 	while (rd_line[i] == ' ' || rd_line[i] == '\t')
 		i++;
 	if (rd_line[i] == '\0')
-		return (status = 0, 1);
+		return (g_status = 0, 1);
 	while (rd_line[i])
 	{
 		if (rd_line[i] != ' ' && rd_line[i] != '|' \
@@ -100,5 +100,5 @@ int	check_expand(char *rd_line)
 			return (0);
 		i++;
 	}
-	return (error(SYNTAX, "newline"), status = 1, 1);
+	return (error(SYNTAX, "newline"), g_status = 1, 1);
 }

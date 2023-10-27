@@ -6,7 +6,7 @@
 /*   By: eslamber <eslamber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/26 19:52:12 by dbaule            #+#    #+#             */
-/*   Updated: 2023/10/27 11:01:54 by eslamber         ###   ########.fr       */
+/*   Updated: 2023/10/27 15:00:56 by eslamber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,11 @@
 
 typedef struct t_verif
 {
-    int     flag;
-    int     expand_flag;
-    char    *save;
-    char    *buff;
-    char    *buf;
+	int		flag;
+	int		expand_flag;
+	char	*save;
+	char	*buff;
+	char	*buf;
 }	t_verif;
 
 int	check_arg(t_list *spt);

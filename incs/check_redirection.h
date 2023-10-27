@@ -1,33 +1,43 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parsing.h                                          :+:      :+:    :+:   */
+/*   check_redirection.h                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: eslamber <eslamber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/26 11:02:22 by eslamber          #+#    #+#             */
-/*   Updated: 2023/10/27 15:01:18 by eslamber         ###   ########.fr       */
+/*   Created: 2023/10/27 13:16:58 by eslamber          #+#    #+#             */
+/*   Updated: 2023/10/27 14:47:55 by eslamber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PARSING_H
-# define PARSING_H
+#ifndef CHECK_REDIRECTION_H
+# define CHECK_REDIRECTION_H
 
-typedef struct t_pars
+typedef struct t_red
 {
+	char	**tmp;
+	int		file;
+	int		compt;
 	int		i;
 	int		j;
+	char	**buf;
+}	t_red;
+
+typedef struct t_write_hd
+{
+	int		i;
 	int		compt;
-	int		tmp_flag;
-	int		new_flag;
-	int		save_flag;
-	int		*tab;
-	char	**spt;
-}	t_pars;
+	char	*tmp;
+}	t_write_hd;
 
-void	parsing_count_arg(t_pars *p, int *flag, const char *rd_line);
+int	duplication(t_red *r, char **arg, t_cmd *s);
 
-void	parsing_count_caractere(t_pars *p, int *flag, const char *rd_line);
+int	write_hd_to_pip(t_cmd *struc);
 
-void	parse_arguments(t_pars *p, int *flag, const char *rd_line);
+int	redir_in_bis(t_red *r, char **arg);
+
+int	redit_append_bis(t_red *r, char **arg);
+
+int	redir_out_bis(t_red *r, char **arg);
+
 #endif

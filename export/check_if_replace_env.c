@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_if_replace_env.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dbaule <dbaule@student.42.fr>              +#+  +:+       +#+        */
+/*   By: eslamber <eslamber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/26 17:46:28 by dbaule            #+#    #+#             */
-/*   Updated: 2023/10/26 18:51:14 by dbaule           ###   ########.fr       */
+/*   Updated: 2023/10/27 14:56:29 by eslamber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ static int	replace_value_env(t_cmd *pip, t_exp *exp, int z, int i)
 		free(pip->env[i]);
 		pip->env[i] = ft_strdup(exp->na_val);
 		if (pip->env[i] == NULL)
-			return (error(MALLOC, "0"), free(exp->na_val), status = 1, -1);
+			return (error(MALLOC, "0"), free(exp->na_val), g_status = 1, -1);
 		return (2);
 	}
 	return (0);

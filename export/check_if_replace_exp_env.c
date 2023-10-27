@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_if_replace_exp_env.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dbaule <dbaule@student.42.fr>              +#+  +:+       +#+        */
+/*   By: eslamber <eslamber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/26 18:00:59 by dbaule            #+#    #+#             */
-/*   Updated: 2023/10/26 18:59:31 by dbaule           ###   ########.fr       */
+/*   Updated: 2023/10/27 14:56:29 by eslamber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,11 +50,11 @@ static int	replace_if_plus_exp_env(int j, t_exp *exp, t_cmd *pip, int i)
 	j++;
 	exp->buf = ft_strjoin(pip->exp_env[i], exp->na_val + j);
 	if (!exp->buf)
-		return (error(MALLOC, "0"), status = 1, free(exp->na_val), 1);
+		return (error(MALLOC, "0"), g_status = 1, free(exp->na_val), 1);
 	free(pip->exp_env[i]);
 	pip->exp_env[i] = ft_strdup(exp->buf);
 	if (!pip->exp_env[i])
-		return (error(MALLOC, "0"), free(exp->buf), status = 1, \
+		return (error(MALLOC, "0"), free(exp->buf), g_status = 1, \
 		free(exp->na_val), 1);
 	free(exp->buf);
 	return (0);
@@ -64,12 +64,12 @@ static int	replace_if_exp_env(t_cmd *pip, t_exp *exp, int i)
 {
 	exp->buf = ft_strdup(exp->na_val);
 	if (!exp->buf)
-		return (error(MALLOC, "0"), status = 1, free(exp->na_val), 1);
+		return (error(MALLOC, "0"), g_status = 1, free(exp->na_val), 1);
 	free(pip->exp_env[i]);
 	pip->exp_env[i] = ft_strjoin("declare -x ", exp->buf);
 	if (!pip->exp_env[i])
 		return (error(MALLOC, "0"), free(exp->buf), \
-		status = 1, free(exp->na_val), 1);
+		g_status = 1, free(exp->na_val), 1);
 	free(exp->buf);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: eslamber <eslamber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 15:50:36 by dbaule            #+#    #+#             */
-/*   Updated: 2023/10/26 14:57:12 by eslamber         ###   ########.fr       */
+/*   Updated: 2023/10/27 14:56:29 by eslamber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ char    **check_redirection_parent(char **arg, t_cmd *struc)
                     return (anihilation(buf), error(TOKEN, "0"), NULL);
                 file = open(buf[i + 1], O_RDONLY);
                 if (file == -1)
-                    return (anihilation(buf), error(OPEN, "0"), status = 1, NULL);
+                    return (anihilation(buf), error(OPEN, "0"), g_status = 1, NULL);
                 close(file);
                 i++;
             }
@@ -76,8 +76,8 @@ char    **check_redirection_parent(char **arg, t_cmd *struc)
                 file = open(&buf[i][1], O_RDONLY);
                 if (file == -1) // 
                 {
-                    return (anihilation(buf), error(OPEN, "0"), status = 1, NULL); // le status dans certains cas doit valoir 2 ici
-                    // status = 1;
+                    return (anihilation(buf), error(OPEN, "0"), g_status = 1, NULL); // le g_status dans certains cas doit valoir 2 ici
+                    // g_status = 1;
                     // break;
                 }
                 close(file);
@@ -93,7 +93,7 @@ char    **check_redirection_parent(char **arg, t_cmd *struc)
                     return (anihilation(buf), error(TOKEN, "0"), NULL);
                 file = open(buf[i + 1], O_CREAT | O_RDWR | O_TRUNC, 0644);
                 if (file == -1)
-                    return (anihilation(buf), error(OPEN, "0"), status = 1, NULL);
+                    return (anihilation(buf), error(OPEN, "0"), g_status = 1, NULL);
                 close(file);
                 i++;
             }
@@ -105,7 +105,7 @@ char    **check_redirection_parent(char **arg, t_cmd *struc)
                         return (anihilation(buf), error(TOKEN, "0"), NULL);
                     file = open(buf[i + 1], O_CREAT | O_RDWR | O_APPEND, 0644);
                     if (file == -1)
-                        return (anihilation(buf), error(OPEN, "0"), status = 1, NULL);
+                        return (anihilation(buf), error(OPEN, "0"), g_status = 1, NULL);
                     close(file);
                     i++;
                 }
@@ -113,7 +113,7 @@ char    **check_redirection_parent(char **arg, t_cmd *struc)
                 {
                     file = open(&buf[i][2], O_CREAT | O_RDWR | O_APPEND, 0644);
                     if (file == -1)
-                        return (anihilation(buf), error(OPEN, "0"), status = 1, NULL);
+                        return (anihilation(buf), error(OPEN, "0"), g_status = 1, NULL);
                     close(file);
                 }
             }
@@ -121,7 +121,7 @@ char    **check_redirection_parent(char **arg, t_cmd *struc)
             {
                 file = open(&buf[i][1], O_CREAT | O_RDWR | O_TRUNC, 0644);
                 if (file == -1)
-                    return (anihilation(buf), error(OPEN, "0"), status = 1, NULL);
+                    return (anihilation(buf), error(OPEN, "0"), g_status = 1, NULL);
                 close(file);
             }
         }

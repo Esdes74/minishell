@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: dbaule <dbaule@student.42.fr>              +#+  +:+       +#+         #
+#    By: eslamber <eslamber@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/04 16:30:03 by eslamber          #+#    #+#              #
-#    Updated: 2023/10/27 13:17:35 by dbaule           ###   ########.fr        #
+#    Updated: 2023/10/27 15:03:42 by eslamber         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -40,6 +40,7 @@ VERIF := verif_read/
 ENV := environement/
 BUILTINS := builtins/
 PREP := prep_heredoc/
+RED := check_redirection/
 
 # Definition of files variables
 SRC := main.c \
@@ -64,7 +65,9 @@ SRC := main.c \
 	   $(BUILTINS)builtins_utils_bis.c \
 	   $(BUILTINS)search_builtins_parent.c \
 	   execution_center.c \
-	   check_redirection.c \
+	   $(RED)check_redirection.c \
+	   $(RED)duplication.c \
+	   $(RED)check_red_utils.c \
 	   $(PREP)prep_heredoc.c \
 	   $(PREP)prep_heredoc_utils.c \
 	   $(PREP)handle_history.c \
@@ -113,6 +116,9 @@ $(NAME): $(OBJ)
 	$(CC) $(FLAGS) $(INC) -c $< -o $@ $(LIBRAIRIE)
 	
 .obj/$(PREP)%.o: $(PREP)%.c $(REPO_HEADER)prep_heredoc.h $(HEADER) $(LIB)
+	$(CC) $(FLAGS) $(INC) -c $< -o $@ $(LIBRAIRIE)
+
+.obj/$(RED)%.o: $(RED)%.c $(REPO_HEADER)check_redirection.h $(HEADER) $(LIB)
 	$(CC) $(FLAGS) $(INC) -c $< -o $@ $(LIBRAIRIE)
 
 .obj/%.o: %.c $(HEADER) $(LIB)

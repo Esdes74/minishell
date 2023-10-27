@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   add_exp_env.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dbaule <dbaule@student.42.fr>              +#+  +:+       +#+        */
+/*   By: eslamber <eslamber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/26 17:41:55 by dbaule            #+#    #+#             */
-/*   Updated: 2023/10/26 18:26:41 by dbaule           ###   ########.fr       */
+/*   Updated: 2023/10/27 14:56:29 by eslamber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	add_exp_env(t_cmd *pip, char *str)
 	new_one = NULL;
 	buf = malloc(sizeof(char) * (ft_strlen(str) + 12));
 	if (!buf)
-		return (status = 1, 1);
+		return (g_status = 1, 1);
 	ft_strlcpy(buf, "declare -x ", 12);
 	ft_strlcpy(&(buf[11]), str, ft_strlen(str) + 1);
 	flag = 0;

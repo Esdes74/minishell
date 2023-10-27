@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dbaule <dbaule@student.42.fr>              +#+  +:+       +#+        */
+/*   By: eslamber <eslamber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/26 17:48:07 by dbaule            #+#    #+#             */
-/*   Updated: 2023/10/26 19:01:31 by dbaule           ###   ########.fr       */
+/*   Updated: 2023/10/27 14:56:29 by eslamber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,13 @@ int	pars_exp(int *flag, char *na_val)
 	i = 0;
 	if (na_val[0] == '=')
 		return (ft_printf_fd(2, "Error : not a valid identifier\n"), \
-		free(na_val), status = 1, -1);
+		free(na_val), g_status = 1, -1);
 	while (na_val[i] && na_val[i] != '=')
 	{
 		if ((na_val[i] == '-' || (i > 0 && na_val[i] == '+' && na_val[i - 1] \
 		!= '+' && (na_val[i + 1] != '=' || na_val[i + 1] == '\0'))))
 			return (ft_printf_fd(2, "Error : not a valid identifier\n"), \
-			status = 1, free(na_val), -1);
+			g_status = 1, free(na_val), -1);
 		else if (na_val[i + 1] && na_val[i] == '+' && na_val[i + 1] == '=')
 			*flag = 1;
 		i++;
