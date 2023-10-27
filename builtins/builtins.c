@@ -3,16 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eslamber <eslamber@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dbaule <dbaule@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 11:08:50 by eslamber          #+#    #+#             */
-/*   Updated: 2023/10/26 18:02:19 by eslamber         ###   ########.fr       */
+/*   Updated: 2023/10/27 13:15:54 by dbaule           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "incs/minishell.h"
-
-// static int redirect_info(char **arg);
+#include "../incs/minishell.h"
+#include "../incs/builtins.h"
 
 char	*pwd(void)
 {
@@ -29,12 +28,12 @@ void	env(char **envir)
 {
 	int	i;
 
-    i = 0;
-    while (envir[i])
-        ft_printf("%s\n", envir[i++]);
+	i = 0;
+	while (envir[i])
+		ft_printf("%s\n", envir[i++]);
 }
 
-void    quit(void)
+void	quit(void)
 {
 	printf("exit\n");
 	silent_quit();

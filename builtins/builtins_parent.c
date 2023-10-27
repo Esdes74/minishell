@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   builtins_parent.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eslamber <eslamber@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dbaule <dbaule@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/31 10:31:07 by dbaule            #+#    #+#             */
-/*   Updated: 2023/10/26 16:50:01 by eslamber         ###   ########.fr       */
+/*   Updated: 2023/10/27 11:11:54 by dbaule           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "incs/minishell.h"
+#include "../incs/minishell.h"
+#include "../incs/builtins.h"
 
 static unsigned char	intermediate_exit_bis(char *new_tmp, \
 long long *ret, char **tmp);
