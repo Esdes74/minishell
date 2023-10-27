@@ -6,7 +6,7 @@
 #    By: dbaule <dbaule@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/04 16:30:03 by eslamber          #+#    #+#              #
-#    Updated: 2023/10/27 19:14:38 by dbaule           ###   ########.fr        #
+#    Updated: 2023/10/27 20:09:03 by dbaule           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -42,6 +42,7 @@ BUILTINS := builtins/
 PREP := prep_heredoc/
 RED := check_redirection/
 RED_PAR := check_redirection_parent/
+HIST := historic/
 
 # Definition of files variables
 SRC := main.c \
@@ -49,7 +50,7 @@ SRC := main.c \
 	   signals_handler.c \
 	   error.c \
 	   cmd_build.c \
-	   historic.c \
+	   $(HIST)historic.c \
 	   free_struc.c \
 	   cmd_center_simple.c \
 	   $(PARS)parsing.c \
@@ -119,6 +120,9 @@ $(NAME): $(OBJ)
 	$(CC) $(FLAGS) $(INC) -c $< -o $@ $(LIBRAIRIE)
 	
 .obj/$(PREP)%.o: $(PREP)%.c $(REPO_HEADER)prep_heredoc.h $(HEADER) $(LIB)
+	$(CC) $(FLAGS) $(INC) -c $< -o $@ $(LIBRAIRIE)
+
+.obj/$(HIST)%.o: $(HIST)%.c $(REPO_HEADER)historic.h $(HEADER) $(LIB)
 	$(CC) $(FLAGS) $(INC) -c $< -o $@ $(LIBRAIRIE)
 
 .obj/$(RED)%.o: $(RED)%.c $(REPO_HEADER)check_redirection.h $(HEADER) $(LIB)

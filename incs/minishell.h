@@ -6,7 +6,7 @@
 /*   By: dbaule <dbaule@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 15:35:11 by eslamber          #+#    #+#             */
-/*   Updated: 2023/10/27 18:32:05 by dbaule           ###   ########.fr       */
+/*   Updated: 2023/10/27 20:22:21 by dbaule           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ void			quit(void);
 
 void			silent_quit(void);
 
-int				historic_fct(char *bufff, char *test, t_cmd *pip);
+int				historic_fct(char *rd_line, t_cmd *pip);
 
 char			*verif_read(char *rd_line, t_cmd *pip);
 
