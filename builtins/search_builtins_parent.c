@@ -6,7 +6,7 @@
 /*   By: dbaule <dbaule@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/27 12:57:06 by dbaule            #+#    #+#             */
-/*   Updated: 2023/10/27 13:15:28 by dbaule           ###   ########.fr       */
+/*   Updated: 2023/10/27 15:10:59 by dbaule           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,11 +56,11 @@ static int	search_cd(char **exec_cmd, t_cmd *pip)
 		(!exec_cmd[1][1] || (exec_cmd[1][1] == '/' && !exec_cmd[1][2]))))
 		{
 			if (chdir("/") == -1)
-				return (perror("Error "), status = 1, -1);
+				return (perror("Error "), g_status = 1, -1);
 			while (pip->save_path[i])
 			{
 				if (chdir(pip->save_path[i]) == -1)
-					return (perror("Error "), status = 1, -1);
+					return (perror("Error "), g_status = 1, -1);
 				i++;
 			}
 			return (1);

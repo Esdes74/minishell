@@ -6,7 +6,7 @@
 /*   By: dbaule <dbaule@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/27 13:03:35 by eslamber          #+#    #+#             */
-/*   Updated: 2023/10/27 15:06:44 by dbaule           ###   ########.fr       */
+/*   Updated: 2023/10/27 15:14:41 by dbaule           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 void	search_hd(t_prep *p)
 {
-	status = 0;
+	g_status = 0;
 	p->compt = 0;
 	while (p->tmp != NULL)
 	{
@@ -38,7 +38,7 @@ int	verif_g_status_hd(t_prep *p, t_cmd *pip)
 		free(p->buff);
 		free(p->buf);
 		free(p->rd_line);
-		pip->g_status_hd = 1;
+		pip->status_hd = 1;
 		free(pip->hd_history);
 		return (1);
 	}

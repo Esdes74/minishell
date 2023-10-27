@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eslamber <eslamber@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dbaule <dbaule@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 15:35:11 by eslamber          #+#    #+#             */
-/*   Updated: 2023/10/27 14:57:31 by eslamber         ###   ########.fr       */
+/*   Updated: 2023/10/27 15:14:10 by dbaule           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ typedef enum e_error{
 typedef struct t_cmd
 {
 	int		nb_pipe;
-	int		g_status_hd;
+	int		status_hd;
 	int		nb_proc;
 	int		parent_builtin;
 	char	**save_path;
