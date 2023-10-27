@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lib_data.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eslamber <eslamber@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: eslamber <eslamber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/11 10:38:47 by eslamber          #+#    #+#             */
-/*   Updated: 2023/02/28 16:41:56 by eslamber         ###   ########.fr       */
+/*   Updated: 2023/10/27 15:09:16 by eslamber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,7 @@ t_cell			*untail_list(t_list *lst, int debug);
 void			rmtail_list(t_list *lst, t_bool allow, int debug);
 
 // Remove cell at the index i and free it
-void    rmindex_list(t_list *lst, t_bool allow, int index, int debug);
+void			rmindex_list(t_list *lst, t_bool allow, int index, int debug);
 
 /*##################### LIST_IND ######################*/
 void			init_list_ind(void);

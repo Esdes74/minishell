@@ -6,7 +6,7 @@
 /*   By: eslamber <eslamber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 11:08:50 by eslamber          #+#    #+#             */
-/*   Updated: 2023/10/27 14:56:29 by eslamber         ###   ########.fr       */
+/*   Updated: 2023/10/27 15:06:17 by eslamber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,8 @@ static int	creat_hd(t_prep *p, t_cmd *pip)
 	&& ((char *)(p->tmp->data_cell->data))[1] != '<')
 		p->tmp = p->tmp->next;
 	if (((char *)(p->tmp->data_cell->data))[2] == '\0' && p->tmp->next == NULL)
-		return (error(SYNTAX, "newline"), free(pip->hd_history), g_status = 2, 1);
+		return (error(SYNTAX, "newline"), free(pip->hd_history), \
+		g_status = 2, 1);
 	if (((char *)(p->tmp->data_cell->data))[2] == '\0')
 		p->stop = (char *) p->tmp->next->data_cell->data;
 	else

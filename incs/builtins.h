@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dbaule <dbaule@student.42.fr>              +#+  +:+       +#+        */
+/*   By: eslamber <eslamber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/27 11:05:44 by dbaule            #+#    #+#             */
-/*   Updated: 2023/10/27 11:18:16 by dbaule           ###   ########.fr       */
+/*   Updated: 2023/10/27 15:06:33 by eslamber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ typedef struct t_buil_ut
 {
 	int	i;
 	int	k;
-} t_buil_ut;
+}	t_buil_ut;
 
 void	cd(char **path, t_cmd *pip);
 
