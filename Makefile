@@ -6,7 +6,7 @@
 #    By: eslamber <eslamber@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/04 16:30:03 by eslamber          #+#    #+#              #
-#    Updated: 2023/10/27 14:46:35 by eslamber         ###   ########.fr        #
+#    Updated: 2023/10/27 15:03:42 by eslamber         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,6 +38,7 @@ ECHO := echo/
 EXP := export/
 VERIF := verif_read/
 ENV := environement/
+BUILTINS := builtins/
 PREP := prep_heredoc/
 RED := check_redirection/
 
@@ -48,7 +49,6 @@ SRC := main.c \
 	   error.c \
 	   cmd_build.c \
 	   historic.c \
-	   builtins.c \
 	   free_struc.c \
 	   cmd_center_simple.c \
 	   $(PARS)parsing.c \
@@ -58,6 +58,12 @@ SRC := main.c \
 	   $(VERIF)verif_read.c \
 	   $(VERIF)verif_read_utils_bis.c \
 	   $(VERIF)verif_read_utils.c \
+	   $(BUILTINS)builtins_utils.c \
+	   $(BUILTINS)search_builtins.c \
+	   $(BUILTINS)builtins_parent.c \
+	   $(BUILTINS)builtins.c \
+	   $(BUILTINS)builtins_utils_bis.c \
+	   $(BUILTINS)search_builtins_parent.c \
 	   execution_center.c \
 	   $(RED)check_redirection.c \
 	   $(RED)duplication.c \
@@ -65,11 +71,9 @@ SRC := main.c \
 	   $(PREP)prep_heredoc.c \
 	   $(PREP)prep_heredoc_utils.c \
 	   $(PREP)handle_history.c \
-	   search_builtins.c \
-	   builtins_parent.c \
 	   $(ENV)environement.c \
 	   $(ENV)exp_env.c \
-	   builtins_utils.c \
+	   check_variables.c \
 	   $(EXP)export.c \
 	   $(EXP)add_exp_env.c \
 	   $(EXP)check_if_replace_env.c \
@@ -108,6 +112,9 @@ $(NAME): $(OBJ)
 .obj/$(ECHO)%.o: $(ECHO)%.c $(REPO_HEADER)echo.h $(HEADER) $(LIB)
 	$(CC) $(FLAGS) $(INC) -c $< -o $@ $(LIBRAIRIE)
 
+.obj/$(BUILTINS)%.o: $(BUILTINS)%.c $(REPO_HEADER)builtins.h $(HEADER) $(LIB)
+	$(CC) $(FLAGS) $(INC) -c $< -o $@ $(LIBRAIRIE)
+	
 .obj/$(PREP)%.o: $(PREP)%.c $(REPO_HEADER)prep_heredoc.h $(HEADER) $(LIB)
 	$(CC) $(FLAGS) $(INC) -c $< -o $@ $(LIBRAIRIE)
 
