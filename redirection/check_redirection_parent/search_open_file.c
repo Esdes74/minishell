@@ -6,12 +6,12 @@
 /*   By: dbaule <dbaule@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/27 18:56:44 by dbaule            #+#    #+#             */
-/*   Updated: 2023/10/27 19:26:04 by dbaule           ###   ########.fr       */
+/*   Updated: 2023/10/28 21:53:54 by dbaule           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../incs/minishell.h"
-#include "../incs/check_redirection_parent.h"
+#include "../../incs/minishell.h"
+#include "../../incs/check_redirection_parent.h"
 
 static int	check_input_redir(t_cmd *struc, int *i, t_red_par *red);
 

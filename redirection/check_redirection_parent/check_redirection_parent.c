@@ -6,12 +6,12 @@
 /*   By: dbaule <dbaule@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 15:50:36 by dbaule            #+#    #+#             */
-/*   Updated: 2023/10/27 19:24:39 by dbaule           ###   ########.fr       */
+/*   Updated: 2023/10/28 21:53:44 by dbaule           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../incs/minishell.h"
-#include "../incs/check_redirection_parent.h"
+#include "../../incs/minishell.h"
+#include "../../incs/check_redirection_parent.h"
 
 static int	allocate_tmp_char(t_red_par *red);
 static int	fill_tmp(int *j, t_red_par *red);

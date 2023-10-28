@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eslamber <eslamber@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dbaule <dbaule@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/26 16:21:39 by eslamber          #+#    #+#             */
-/*   Updated: 2023/10/27 15:04:22 by eslamber         ###   ########.fr       */
+/*   Updated: 2023/10/28 21:51:17 by dbaule           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "incs/minishell.h"
+#include "../../incs/minishell.h"
 
 static int	unset_env(t_cmd *pip, char *name_value, int len);
 static int	unset_exp_env(t_cmd *pip, char *name_value, int len);

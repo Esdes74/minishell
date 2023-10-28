@@ -6,12 +6,12 @@
 /*   By: dbaule <dbaule@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/27 19:10:04 by dbaule            #+#    #+#             */
-/*   Updated: 2023/10/27 19:23:48 by dbaule           ###   ########.fr       */
+/*   Updated: 2023/10/28 21:53:50 by dbaule           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../incs/minishell.h"
-#include "../incs/check_redirection_parent.h"
+#include "../../incs/minishell.h"
+#include "../../incs/check_redirection_parent.h"
 
 static int	allocate_new_buf(char **arg, int i, t_red_par *red);
 

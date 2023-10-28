@@ -3,15 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   add_exp_env.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eslamber <eslamber@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dbaule <dbaule@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/26 17:41:55 by dbaule            #+#    #+#             */
-/*   Updated: 2023/10/27 14:56:29 by eslamber         ###   ########.fr       */
+/*   Updated: 2023/10/28 21:46:26 by dbaule           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../incs/minishell.h"
-#include "../incs/export.h"
+#include "../../incs/minishell.h"
+#include "../../incs/export.h"
 
 static int	check_if_exist_exp_env(t_cmd *pip, int *flag, char *buf);
 static int	allocate_new_exp_env(t_cmd *pip, int i, char ***new_one, int flag);

@@ -3,15 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   check_if_replace_exp_env.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eslamber <eslamber@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dbaule <dbaule@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/26 18:00:59 by dbaule            #+#    #+#             */
-/*   Updated: 2023/10/27 14:56:29 by eslamber         ###   ########.fr       */
+/*   Updated: 2023/10/28 21:46:18 by dbaule           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../incs/minishell.h"
-#include "../incs/export.h"
+#include "../../incs/minishell.h"
+#include "../../incs/export.h"
 
 static int	replace_if_plus_exp_env(int j, t_exp *exp, t_cmd *pip, int i);
 static int	replace_if_exp_env(t_cmd *pip, t_exp *exp, int i);

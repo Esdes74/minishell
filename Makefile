@@ -6,7 +6,7 @@
 #    By: dbaule <dbaule@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/04 16:30:03 by eslamber          #+#    #+#              #
-#    Updated: 2023/10/28 21:41:31 by dbaule           ###   ########.fr        #
+#    Updated: 2023/10/28 21:54:24 by dbaule           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,25 +34,26 @@ HEADER := $(REPO_HEADER)minishell.h
 
 # Definitions of differents repos
 PARS := parsing/
-ECHO := echo/
-EXP := export/
+ECHO := builtins/echo/
+BUILTINS := builtins/
+EXP := builtins/export/
 VERIF := verif_read/
 ENV := environement/
-BUILTINS := builtins/
 PREP := prep_heredoc/
-RED := check_redirection/
-RED_PAR := check_redirection_parent/
+RED := redirection/check_redirection/
+RED_PAR := redirection/check_redirection_parent/
 HIST := historic/
 EXPAND := expand/
 EXEC := execution_center/
 FOR_EXEC := execution_center/for_exec/
 ERR_FREE := error_and_free/
 SIGNAL := signals/
+UNSET := builtins/unset/
 
 # Definition of files variables
 SRC := main.c \
 	   minishell_utils.c \
-	   unset.c \
+	   $(UNSET)unset.c \
 	   $(SIGNAL)signals.c \
 	   $(SIGNAL)signals_handler.c \
 	   $(ERR_FREE)free_struc.c \

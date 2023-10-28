@@ -6,12 +6,12 @@
 /*   By: dbaule <dbaule@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/27 19:05:08 by dbaule            #+#    #+#             */
-/*   Updated: 2023/10/27 19:25:18 by dbaule           ###   ########.fr       */
+/*   Updated: 2023/10/28 21:53:47 by dbaule           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../incs/minishell.h"
-#include "../incs/check_redirection_parent.h"
+#include "../../incs/minishell.h"
+#include "../../incs/check_redirection_parent.h"
 
 static int	write_and_close_hd_pip(t_cmd *struc, char *tmp);
 

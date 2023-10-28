@@ -3,15 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eslamber <eslamber@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dbaule <dbaule@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/26 17:01:38 by eslamber          #+#    #+#             */
-/*   Updated: 2023/10/27 10:31:05 by eslamber         ###   ########.fr       */
+/*   Updated: 2023/10/28 21:48:31 by dbaule           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../incs/minishell.h"
-#include "../incs/echo.h"
+#include "../../incs/minishell.h"
+#include "../../incs/echo.h"
 
 static void	echo_bis(t_echo *e, char **arg);
 static void	second_echo(t_echo *e, char **arg);
