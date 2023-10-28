@@ -6,7 +6,7 @@
 /*   By: dbaule <dbaule@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/13 11:08:50 by eslamber          #+#    #+#             */
-/*   Updated: 2023/10/27 15:11:39 by dbaule           ###   ########.fr       */
+/*   Updated: 2023/10/28 17:26:47 by dbaule           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,8 @@ static int	search_pwd_exit_env(char **spt, t_cmd *pip)
 	if (ft_strlen(spt[0]) == 3 && ft_strncmp(spt[0], "pwd", 3) == 0)
 	{
 		if (spt[1] && spt[1][0] == '-')
-			return (ft_printf_fd(2, "Error : invalid option\n"), g_status = 2, 1);
+			return (ft_printf_fd(2, "Error : invalid option\n"), \
+			g_status = 2, 1);
 		return (free(pwd()), 1);
 	}
 	else if (ft_strlen(spt[0]) == 4 && ft_strncmp(spt[0], "exit", 4) == 0)

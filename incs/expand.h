@@ -1,32 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   check_redirection_parent.h                         :+:      :+:    :+:   */
+/*   expand.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dbaule <dbaule@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/27 15:22:39 by dbaule            #+#    #+#             */
-/*   Updated: 2023/10/28 17:26:16 by dbaule           ###   ########.fr       */
+/*   Created: 2023/10/28 17:31:10 by dbaule            #+#    #+#             */
+/*   Updated: 2023/10/28 19:06:24 by dbaule           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef CHECK_REDIRECTION_PARENT_H
-# define CHECK_REDIRECTION_PARENT_H
+#ifndef EXPAND_H
+# define EXPAND_H
 
-typedef struct t_red_par
+typedef struct t_expand
 {
-	char	**tmp;
-	int		file;
-	int		compt;
-	char	**buf;
-}	t_red_par;
+	char	*new;
+	char	*tmp;
+	char	*var;
+	int		j;
+	int		len_var;
+}	t_expand;
 
-int	search_open_file(t_red_par *red, t_cmd *struc);
+typedef struct t_add
+{
+	int		j;
+	int		len;
+	int		quote;
+	char	*new;
+}	t_add;
 
-int	write_hd_to_pip_par(t_cmd *struc);
-
-int	check_heredoc(char **arg, t_cmd *struc);
-
-int	initialise_redir_parent(t_red_par *red, char **arg, t_cmd *struc);
+char	*add_var_to_sentence(char *rd_line, char *var, int i, int *flag);
+void	check_var_env(char *rd_line, t_expand *exp, int i, t_cmd *pip);
+void	quote_check(int *flag, char *rd_line, int i);
 
 #endif

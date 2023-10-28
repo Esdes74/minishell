@@ -6,7 +6,7 @@
 #    By: dbaule <dbaule@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/04 16:30:03 by eslamber          #+#    #+#              #
-#    Updated: 2023/10/27 20:09:03 by dbaule           ###   ########.fr        #
+#    Updated: 2023/10/28 21:05:05 by dbaule           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -43,6 +43,8 @@ PREP := prep_heredoc/
 RED := check_redirection/
 RED_PAR := check_redirection_parent/
 HIST := historic/
+EXPAND := expand/
+EXEC := execution_center/
 
 # Definition of files variables
 SRC := main.c \
@@ -66,7 +68,9 @@ SRC := main.c \
 	   $(BUILTINS)builtins.c \
 	   $(BUILTINS)builtins_utils_bis.c \
 	   $(BUILTINS)search_builtins_parent.c \
-	   execution_center.c \
+	   $(EXEC)execution_center.c \
+	   $(EXEC)execution_center_utils.c \
+	   $(EXEC)pipe.c \
 	   $(RED)check_redirection.c \
 	   $(RED)duplication.c \
 	   $(RED)check_red_utils.c \
@@ -84,7 +88,9 @@ SRC := main.c \
 	   $(EXP)check_if_replace_env.c \
 	   $(EXP)check_if_replace_exp_env.c \
 	   $(EXP)export_utils.c \
-	   expand.c \
+	   $(EXPAND)expand.c \
+	   $(EXPAND)add_var_to_sentence.c \
+	   $(EXPAND)expand_utils.c \
 	   minishell_utils.c \
 	   unset.c \
 	   $(ECHO)echo.c \
@@ -129,6 +135,12 @@ $(NAME): $(OBJ)
 	$(CC) $(FLAGS) $(INC) -c $< -o $@ $(LIBRAIRIE)
 
 .obj/$(RED_PAR)%.o: $(RED_PAR)%.c $(REPO_HEADER)check_redirection_parent.h $(HEADER) $(LIB)
+	$(CC) $(FLAGS) $(INC) -c $< -o $@ $(LIBRAIRIE)
+
+.obj/$(EXPAND)%.o: $(EXPAND)%.c $(REPO_HEADER)expand.h $(HEADER) $(LIB)
+	$(CC) $(FLAGS) $(INC) -c $< -o $@ $(LIBRAIRIE)
+
+.obj/$(EXEC)%.o: $(EXEC)%.c $(REPO_HEADER)execution_center.h $(HEADER) $(LIB)
 	$(CC) $(FLAGS) $(INC) -c $< -o $@ $(LIBRAIRIE)
 
 .obj/%.o: %.c $(HEADER) $(LIB)
