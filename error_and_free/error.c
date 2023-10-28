@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eslamber <eslamber@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dbaule <dbaule@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/03 11:08:59 by eslamber          #+#    #+#             */
-/*   Updated: 2023/10/27 14:56:29 by eslamber         ###   ########.fr       */
+/*   Updated: 2023/10/28 21:39:31 by dbaule           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "incs/minishell.h"
+#include "../incs/minishell.h"
 
 static void	error_bis(t_error err, char *cmd);
 static void	error_bis_bis(t_error err);

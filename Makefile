@@ -6,7 +6,7 @@
 #    By: dbaule <dbaule@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/04 16:30:03 by eslamber          #+#    #+#              #
-#    Updated: 2023/10/28 21:05:05 by dbaule           ###   ########.fr        #
+#    Updated: 2023/10/28 21:41:31 by dbaule           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -45,16 +45,21 @@ RED_PAR := check_redirection_parent/
 HIST := historic/
 EXPAND := expand/
 EXEC := execution_center/
+FOR_EXEC := execution_center/for_exec/
+ERR_FREE := error_and_free/
+SIGNAL := signals/
 
 # Definition of files variables
 SRC := main.c \
-	   signals.c \
-	   signals_handler.c \
-	   error.c \
-	   cmd_build.c \
+	   minishell_utils.c \
+	   unset.c \
+	   $(SIGNAL)signals.c \
+	   $(SIGNAL)signals_handler.c \
+	   $(ERR_FREE)free_struc.c \
+	   $(ERR_FREE)error.c \
+	   $(FOR_EXEC)cmd_build.c \
+	   $(FOR_EXEC)cmd_center_simple.c \
 	   $(HIST)historic.c \
-	   free_struc.c \
-	   cmd_center_simple.c \
 	   $(PARS)parsing.c \
 	   $(PARS)parse_arguments.c \
 	   $(PARS)parsing_count_arg.c \
@@ -91,8 +96,6 @@ SRC := main.c \
 	   $(EXPAND)expand.c \
 	   $(EXPAND)add_var_to_sentence.c \
 	   $(EXPAND)expand_utils.c \
-	   minishell_utils.c \
-	   unset.c \
 	   $(ECHO)echo.c \
 	   $(ECHO)echo_utils.c
 OBJ := $(SRC:%.c=.obj/%.o)
@@ -141,6 +144,12 @@ $(NAME): $(OBJ)
 	$(CC) $(FLAGS) $(INC) -c $< -o $@ $(LIBRAIRIE)
 
 .obj/$(EXEC)%.o: $(EXEC)%.c $(REPO_HEADER)execution_center.h $(HEADER) $(LIB)
+	$(CC) $(FLAGS) $(INC) -c $< -o $@ $(LIBRAIRIE)
+
+.obj/$(FOR_EXEC)%.o: $(FOR_EXEC)%.c $(HEADER) $(LIB)
+	$(CC) $(FLAGS) $(INC) -c $< -o $@ $(LIBRAIRIE)
+
+.obj/$(ERR_FREE)%.o: $(ERR_FREE)%.c $(HEADER) $(LIB)
 	$(CC) $(FLAGS) $(INC) -c $< -o $@ $(LIBRAIRIE)
 
 .obj/%.o: %.c $(HEADER) $(LIB)

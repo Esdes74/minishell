@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_build.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eslamber <eslamber@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dbaule <dbaule@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/17 09:13:17 by dbaule            #+#    #+#             */
-/*   Updated: 2023/10/27 14:56:29 by eslamber         ###   ########.fr       */
+/*   Updated: 2023/10/28 21:35:41 by dbaule           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "incs/minishell.h"
+#include "../../incs/minishell.h"
 
 static char	*search_command(char *str, char *new);
 static char	*check_slash(char *cmd, char *str);

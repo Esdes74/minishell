@@ -6,19 +6,11 @@
 /*   By: dbaule <dbaule@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/04 15:17:58 by eslamber          #+#    #+#             */
-/*   Updated: 2023/10/28 18:01:53 by dbaule           ###   ########.fr       */
+/*   Updated: 2023/10/28 21:36:00 by dbaule           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-/*
--   il faut prendre en compte entré et sortie en amont
--   uniquement la string qu'on lui envoie doit s'executer
--   le nombre de pipe et le nombre de processeur sera établis en amont
--   les dup et la fermeture des pipes en amont
--      en amont pour le heredoc
-*/
-
-#include "incs/minishell.h"
+#include "../../incs/minishell.h"
 
 static int	execute_child(char **environ, char **str, t_cmd *pip);
 static int	in_case_execve_didnt_work(t_cmd *pip, DIR *dir, char *cmd);
