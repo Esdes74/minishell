@@ -6,7 +6,7 @@
 /*   By: dbaule <dbaule@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/31 10:31:07 by dbaule            #+#    #+#             */
-/*   Updated: 2023/10/28 21:46:03 by dbaule           ###   ########.fr       */
+/*   Updated: 2023/10/29 17:03:54 by dbaule           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,12 @@
 #include "../incs/builtins.h"
 
 static unsigned char	intermediate_exit_bis(char *new_tmp, \
-long long *ret, char **tmp);
+long *ret, char **tmp);
 
 unsigned char	intermediate_exit(char **tmp)
 {
 	char			*new_tmp;
-	long long		ret_value;
+	long			ret_value;
 	int				len;
 	unsigned char	ret;
 
@@ -41,7 +41,7 @@ unsigned char	intermediate_exit(char **tmp)
 	return (exitt((unsigned char) ret_value));
 }
 
-static unsigned char	intermediate_exit_bis(char *new_tmp, long long *ret, \
+static unsigned char	intermediate_exit_bis(char *new_tmp, long *ret, \
 char **tmp)
 {
 	int		i;

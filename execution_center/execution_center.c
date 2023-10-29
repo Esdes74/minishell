@@ -6,7 +6,7 @@
 /*   By: dbaule <dbaule@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 21:29:25 by dbaule            #+#    #+#             */
-/*   Updated: 2023/10/28 21:06:32 by dbaule           ###   ########.fr       */
+/*   Updated: 2023/10/29 16:15:54 by dbaule           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ int	execution_center(t_list *spt, t_cmd *pip)
 	tab_pid = (pid_t *) malloc(sizeof(pid_t) * (pip->nb_proc));
 	if (tab_pid == NULL)
 	{
+		close_all_pipes(pip);
 		return (annihilation(spt, free, DEBUG), free(ex.arg_count), 1);
 	}
 	if (exec_wait(&ex, pip, tab_pid, spt) == 1)
@@ -75,7 +76,7 @@ static int	exec_children(pid_t *tab_pid, t_exec *ex, t_cmd *pip, t_list *spt)
 		return (error(MALLOC, NULL), 1);
 	ex->exec_cmd = check_redirection(ex->exec_cmd, pip);
 	if (ex->exec_cmd == NULL)
-		return (1);
+		return (close_all_pipes(pip), 1);
 	if (pip->nb_proc > 1)
 	{
 		if (ex->i > 0 && pip->in == FALSE)

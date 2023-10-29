@@ -6,7 +6,7 @@
 /*   By: dbaule <dbaule@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 15:50:36 by dbaule            #+#    #+#             */
-/*   Updated: 2023/10/28 21:53:44 by dbaule           ###   ########.fr       */
+/*   Updated: 2023/10/29 15:40:18 by dbaule           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ char	**check_redirection_parent(char **arg, t_cmd *struc)
 	if (initialise_redir_parent(&red, arg, struc) == 1)
 		return (NULL);
 	if (search_open_file(&red, struc) == 1)
-		return (NULL);
+		return (struc->flag = 1, NULL);
 	if (struc->heredoc == 1)
 		if (write_hd_to_pip_par(struc) == 1)
 			return (anihilation(red.buf), anihilation(struc->hd_history), \

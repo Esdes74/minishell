@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   verif_read.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eslamber <eslamber@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dbaule <dbaule@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 11:08:50 by eslamber          #+#    #+#             */
-/*   Updated: 2023/10/27 14:56:29 by eslamber         ###   ########.fr       */
+/*   Updated: 2023/10/29 16:21:40 by dbaule           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,16 +27,17 @@ char	*verif_read(char *rd_line, t_cmd *pip)
 	verif.buf = NULL;
 	spt = NULL;
 	if (init_lst_verif_read(&spt) == 1)
-		return (NULL);
+		return (g_status = 1, NULL);
 	if (rd_line[0] == '|')
 		return (error(SYNTAX, "|"), g_status = 2, \
 		annihilation(spt, free, DEBUG), rd_line);
 	if (init_verif_read(&rd_line, &verif, pip, spt) == 1)
-		return (NULL);
+		return (g_status = 1, NULL);
 	if (check_expand(rd_line) == 1)
-		return (annihilation(spt, free, DEBUG), free(rd_line), verif.buff);
+		return (annihilation(spt, free, DEBUG), free(rd_line), \
+		verif.buff);
 	if (parsing(rd_line, &verif.flag, spt) == 1)
-		return (free(rd_line), free(verif.buff), NULL);
+		return (g_status = 1, free(rd_line), free(verif.buff), NULL);
 	free(rd_line);
 	if (check_vr_read(spt, rd_line, pip, &verif) == NULL)
 		return (NULL);

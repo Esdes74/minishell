@@ -6,7 +6,7 @@
 /*   By: dbaule <dbaule@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/03 11:30:24 by dbaule            #+#    #+#             */
-/*   Updated: 2023/10/27 20:47:19 by dbaule           ###   ########.fr       */
+/*   Updated: 2023/10/29 16:11:18 by dbaule           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,10 @@ static void	check_quote_historic(t_hist *his, char *rd_line)
 			his->save = i + 1;
 		}
 		else if (rd_line[i] == '\'' && his->flag == 0)
+		{
 			his->flag = 2;
+			his->save = i + 1;
+		}
 		else if (rd_line[i] == '\'' && his->flag == 2)
 		{
 			his->flag = 0;
