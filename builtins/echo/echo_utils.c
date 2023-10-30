@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dbaule <dbaule@student.42.fr>              +#+  +:+       +#+        */
+/*   By: eslamber <eslamber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/26 17:24:55 by eslamber          #+#    #+#             */
-/*   Updated: 2023/10/28 21:48:28 by dbaule           ###   ########.fr       */
+/*   Updated: 2023/10/30 14:52:45 by eslamber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	echo_quote(t_echo *e, char **arg)
 		if (arg[e->i][e->j] != '"')
 		{
 			e->flag = 0;
-			ft_printf_fd(1, "%c", arg[e->i][e->j]);
+			ft_printf_fd(1, " %c", arg[e->i][e->j]);
 		}
 		else if (arg[e->i][e->j] == '"' && e->flag == 0)
 			e->flag = 1;

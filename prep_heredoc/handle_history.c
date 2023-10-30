@@ -6,7 +6,7 @@
 /*   By: eslamber <eslamber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/27 12:43:04 by eslamber          #+#    #+#             */
-/*   Updated: 2023/10/30 13:27:28 by eslamber         ###   ########.fr       */
+/*   Updated: 2023/10/30 14:43:40 by eslamber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,13 +45,14 @@ int	handle_hist(int compt, t_list *spt, t_cmd *pip)
 
 static int	creat_hd(t_prep_hist *p, t_cmd *pip)
 {
-	while (p->tmp != NULL && ((char *)(p->tmp->data_cell->data))[0] != '<' \
+	while (p->tmp->next != NULL && \
+	((char *)(p->tmp->data_cell->data))[0] != '<'
 	&& ((char *)(p->tmp->data_cell->data))[1] != '<')
 		p->tmp = p->tmp->next;
 	if (p->tmp->next != NULL && ((char *)(p->tmp->data_cell->data))[2] == '\0')
 		p->stop = (char *) p->tmp->next->data_cell->data;
 	else
-		p->stop = &(((char *) p->tmp->data_cell->data)[2]);
+		p->stop = &((char *) p->tmp->data_cell->data)[2];
 	p->tmp = p->tmp->next;
 	p->k = 0;
 	while (p->stop[p->k] != '\n' && p->stop[p->k] != '\0')
