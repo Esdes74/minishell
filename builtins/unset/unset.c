@@ -6,7 +6,7 @@
 /*   By: dbaule <dbaule@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/26 16:21:39 by eslamber          #+#    #+#             */
-/*   Updated: 2023/10/29 16:01:53 by dbaule           ###   ########.fr       */
+/*   Updated: 2023/10/30 16:58:59 by dbaule           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ static int	unset_bis(t_cmd *pip, char *name_value, int *i, int *trigger)
 	*i = 0;
 	*trigger = 0;
 	if (name_value[0] == '-')
-		return (ft_printf_fd(2, "Error : inalid option\n"), \
+		return (ft_printf_fd(2, "Error : invalid option\n"), \
 		g_status = 2, 0);
 	if (name_value[0] == '\0' || ft_isdigit(name_value[0]) == 1)
 		return (ft_printf_fd(2, "Error : not a valid identifier\n"), \

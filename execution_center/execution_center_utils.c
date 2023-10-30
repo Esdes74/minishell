@@ -6,7 +6,7 @@
 /*   By: eslamber <eslamber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/28 21:01:08 by dbaule            #+#    #+#             */
-/*   Updated: 2023/10/30 17:17:17 by eslamber         ###   ########.fr       */
+/*   Updated: 2023/10/30 17:30:21 by eslamber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int	trash_and_build(t_exec *ex, t_cmd *pip)
 	{
 		ex->exec_cmd[i] = trash_quote_buil_exec(ex->exec_cmd[i]);
 		if (ex->exec_cmd == NULL)
-			return (error(MALLOC, "0"), 1);
+			return (error(MALLOC, "0"), anihilation(ex->exec_cmd), 1);
 		i++;
 	}
 	if (pip->nb_proc > 1)

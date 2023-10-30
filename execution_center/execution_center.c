@@ -6,7 +6,7 @@
 /*   By: eslamber <eslamber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 21:29:25 by dbaule            #+#    #+#             */
-/*   Updated: 2023/10/30 17:09:24 by eslamber         ###   ########.fr       */
+/*   Updated: 2023/10/30 17:28:15 by eslamber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,11 +97,14 @@ static int	handle_builtins_parent(t_cmd *pip, t_exec *ex, t_list *spt)
 		ex->buf = check_redirection_parent(ex->exec_cmd, pip);
 		if (pip->flag == 1 && ex->buf == NULL)
 			return (free(ex->arg_count), 2);
+		if (ex->buf == NULL)
+			return (free(ex->arg_count), annihilation(spt, free, DEBUG), 1);
 		while (ex->buf[i])
 		{
 			ex->buf[i] = trash_quote_buil_exec(ex->buf[i]);
-			if (ex->buf[0] == NULL)
-				return (1);
+			if (ex->buf[i] == NULL)
+				return (error(MALLOC, "0"), anihilation(ex->buf), \
+				annihilation(spt, free, DEBUG), free(ex->arg_count), 1);
 			i++;
 		}
 		if (handle_builtins_parent_bis(ex, pip, spt) == 1)
