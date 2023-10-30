@@ -6,7 +6,7 @@
 /*   By: dbaule <dbaule@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/01 14:26:08 by dbaule            #+#    #+#             */
-/*   Updated: 2023/10/26 23:16:53 by dbaule           ###   ########.fr       */
+/*   Updated: 2023/10/29 17:13:40 by dbaule           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	cpy_env(char **env, t_cmd *pip)
 	i = 0;
 	pip->save_path = NULL;
 	while (env[i])
-		i ++;
+		i++;
 	pip->env = malloc(sizeof(char *) * (i + 1));
 	if (pip->env == NULL)
 	{

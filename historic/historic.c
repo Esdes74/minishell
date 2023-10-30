@@ -6,7 +6,7 @@
 /*   By: eslamber <eslamber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/03 11:30:24 by dbaule            #+#    #+#             */
-/*   Updated: 2023/10/30 09:20:42 by eslamber         ###   ########.fr       */
+/*   Updated: 2023/10/30 09:27:20 by eslamber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ static void	check_quote_historic(t_hist *his, char *rd_line)
 	int	i;
 
 	i = 0;
+	his->flag = 0;
 	while (rd_line[i] != '\0')
 	{
 		if (rd_line[i] == '"' && his->flag == 0)
