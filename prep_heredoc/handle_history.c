@@ -6,7 +6,7 @@
 /*   By: eslamber <eslamber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/27 12:43:04 by eslamber          #+#    #+#             */
-/*   Updated: 2023/10/27 17:38:57 by eslamber         ###   ########.fr       */
+/*   Updated: 2023/10/30 13:27:28 by eslamber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,6 @@ int	handle_hist(int compt, t_list *spt, t_cmd *pip)
 	p.tmp = spt->head;
 	p.unt_lst = untail_list(spt, DEBUG);
 	p.rdline = ft_split((char *) p.unt_lst->data_cell->data, '\n');
-	free(p.unt_lst->data_cell->data);
-	free(p.unt_lst->data_cell);
-	free(p.unt_lst);
 	if (p.rdline == NULL)
 		return (error(SPLIT, "0"), -1);
 	p.j = 0;
@@ -39,6 +36,9 @@ int	handle_hist(int compt, t_list *spt, t_cmd *pip)
 		if (p.buff == NULL)
 			return (p.i);
 	}
+	free(p.unt_lst->data_cell->data);
+	free(p.unt_lst->data_cell);
+	free(p.unt_lst);
 	free(p.rdline);
 	return (p.i - p.test_buff);
 }
