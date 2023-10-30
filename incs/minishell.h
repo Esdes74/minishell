@@ -6,7 +6,7 @@
 /*   By: dbaule <dbaule@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 15:35:11 by eslamber          #+#    #+#             */
-/*   Updated: 2023/10/30 15:13:29 by dbaule           ###   ########.fr       */
+/*   Updated: 2023/10/30 16:05:13 by dbaule           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,9 +113,9 @@ void			hsigint_hd(int sig);
 void			hsigquit(int sig);
 
 // Builtins
-int				parent_builtins(t_cmd *pip, char **exec_cmd, char **buf);
+int				parent_builtins(t_cmd *pip, char **exec_cmd);
 
-int				search_builtins(char **spt, t_cmd *pip, char **buf);
+int				search_builtins(char **spt, t_cmd *pip);
 
 char			*pwd(void);
 
@@ -146,6 +146,8 @@ char			*rm_char_exp(char *str, char c);
 char			*check_quote(char *str);
 
 char			*trash_quote(char *str);
+
+char			*trash_quote_buil_exec(char *str);
 
 int				position_echo_n(char **arg, int *j, int *flag, int *option);
 

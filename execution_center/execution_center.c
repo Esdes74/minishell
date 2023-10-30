@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution_center.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eslamber <eslamber@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dbaule <dbaule@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 21:29:25 by dbaule            #+#    #+#             */
-/*   Updated: 2023/10/30 15:24:59 by eslamber         ###   ########.fr       */
+/*   Updated: 2023/10/30 16:52:54 by dbaule           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ int	execution_center(t_list *spt, t_cmd *pip)
 	if (ex.arg_count == NULL)
 		return (1);
 	ex.i = 0;
+	ex.statut = 0;
 	ret = handle_builtins_parent(pip, &ex, spt);
 	if (ret == 1)
 		return (1);
@@ -41,6 +42,7 @@ int	execution_center(t_list *spt, t_cmd *pip)
 		close_all_pipes(pip);
 		return (annihilation(spt, free, DEBUG), free(ex.arg_count), 1);
 	}
+	ex.i = 0;
 	if (exec_wait(&ex, pip, tab_pid, spt) == 1)
 		return (1);
 	parent_wait_and_signal(&ex, tab_pid, pip);
@@ -68,15 +70,24 @@ static int	exec_wait(t_exec *ex, t_cmd *pip, pid_t *tab_pid, t_list *spt)
 
 static int	exec_children(pid_t *tab_pid, t_exec *ex, t_cmd *pip, t_list *spt)
 {
+	int i;
+
+	i = 0;
 	free(tab_pid);
 	ex->exec_cmd = string_for_cmd_center(ex->arg_count, ex->i, spt);
 	free(ex->arg_count);
 	annihilation(spt, free, DEBUG);
-	if (ex->exec_cmd == NULL)
-		return (error(MALLOC, NULL), 1);
+
 	ex->exec_cmd = check_redirection(ex->exec_cmd, pip);
 	if (ex->exec_cmd == NULL)
 		return (close_all_pipes(pip), 1);
+	while (ex->exec_cmd[i])
+	{
+		ex->exec_cmd[i] = trash_quote_buil_exec(ex->exec_cmd[i]);
+		if (ex->exec_cmd == NULL)
+			return (error(MALLOC, NULL), 1);
+		i++;
+	}
 	if (pip->nb_proc > 1)
 	{
 		if (ex->i > 0 && pip->in == FALSE)
@@ -102,21 +113,23 @@ static int	handle_builtins_parent(t_cmd *pip, t_exec *ex, t_list *spt)
 	i = 0;
 	if (pip->nb_pipe == 0)
 	{
-		ex->exec_cmd = string_for_cmd_center(ex->arg_count, i, spt);
+		ex->exec_cmd = string_for_cmd_center(ex->arg_count, ex->i, spt);
 		if (ex->exec_cmd == NULL)
 			return (error(MALLOC, NULL), 1);
 		ex->buf = check_redirection_parent(ex->exec_cmd, pip);
 		if (pip->flag == 1 && ex->buf == NULL)
 			return (free(ex->arg_count), 2);
+		while (ex->buf[i])
+		{
+			ex->buf[i] = trash_quote_buil_exec(ex->buf[i]);
+			if (ex->buf[0] == NULL)
+				return (1);
+			i++;
+		}
 		if (ex->buf == NULL)
 			return (free(ex->arg_count), annihilation(spt, free, DEBUG), 1);
 		free(pip->here_pipe);
-		while (ex->buf[i])
-		{
-			ex->exec_cmd = trash_quote(ex->buf);
-			i++;
-		}
-		ex->value_ret = parent_builtins(pip, ex->buf, ex->exec_cmd);
+		ex->value_ret = parent_builtins(pip, ex->buf);
 		if (ex->value_ret == -1)
 			return (annihilation(spt, free, DEBUG), free(ex->arg_count), \
 			anihilation(ex->buf), 1);

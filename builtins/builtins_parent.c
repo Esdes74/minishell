@@ -6,7 +6,7 @@
 /*   By: dbaule <dbaule@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/31 10:31:07 by dbaule            #+#    #+#             */
-/*   Updated: 2023/10/30 14:43:09 by dbaule           ###   ########.fr       */
+/*   Updated: 2023/10/30 15:32:44 by dbaule           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,14 +17,12 @@ static unsigned char	intermediate_exit_bis(long *ret, char **tmp);
 
 unsigned char	intermediate_exit(char **tmp)
 {
-	// char			*new_tmp;
 	long			ret_value;
 	int				len;
 	unsigned char	ret;
 
 	len = 0;
 	ret = 0;
-	// new_tmp = NULL;
 	if (tmp == NULL)
 		return (exitt(0));
 	while (tmp[len])
@@ -46,9 +44,6 @@ static unsigned char	intermediate_exit_bis(long *ret, char **tmp)
 	char	*buf;
 
 	buf = (char *) tmp[1];
-	// new_tmp = tra_quote(buf);
-	// if (new_tmp == NULL)
-	// 	return (1);
 	if (buf != tmp[1])
 		free(tmp[1]);
 	tmp[1] = buf;

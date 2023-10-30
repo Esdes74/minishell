@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_center_simple.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eslamber <eslamber@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dbaule <dbaule@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/04 15:17:58 by eslamber          #+#    #+#             */
-/*   Updated: 2023/10/30 15:25:04 by eslamber         ###   ########.fr       */
+/*   Updated: 2023/10/30 16:46:29 by dbaule           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,40 +18,19 @@ static int	in_case_execve_didnt_work(t_cmd *pip, DIR *dir, char *cmd);
 
 int	cmd_center_simple(char **str, t_cmd *pip)
 {
-	int	i;
-	char **buf;
-
-	i = 0;
-	while (str[i])
-	{
-		buf[i] = trash_quote(str[i]);
-		if (!buf[i])
-			return (close_all_pipes(pip), 1);
-		i++;
-	}
-	if (search_builtins(str, pip, buf) == 1)
-		return (anihilation(buf), 1);
-	if (execute_child(pip->env, buf, pip) == 1)
-		return (anihilation(buf), 1);
+	if (search_builtins(str, pip) == 1)
+		return (1);
+	if (execute_child(pip->env, str, pip) == 1)
+		return (1);
 	return (-1);
 }
 
 static int	execute_child(char **environ, char **str, t_cmd *pip)
 {
-	// int		i;
 	char	*cmd;
-	// char	*new_str;
 	DIR		*dir;
 
-	// i = -1;
 	dir = NULL;
-	// while (str[++i])
-	// {
-	// 	new_str = check_quote(str[i]);
-	// 	if (str[i] != new_str)
-	// 		free(str[i]);
-	// 	str[i] = new_str;
-	// }
 	if (str[0][0] == '\0')
 		return (error(CMD, str[0]), 1);
 	cmd = cmd_build(str[0], environ);

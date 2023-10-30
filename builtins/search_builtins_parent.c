@@ -6,7 +6,7 @@
 /*   By: dbaule <dbaule@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/27 12:57:06 by dbaule            #+#    #+#             */
-/*   Updated: 2023/10/30 15:13:03 by dbaule           ###   ########.fr       */
+/*   Updated: 2023/10/30 15:43:25 by dbaule           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,24 +17,24 @@ static int	search_cd(char **exec_cmd, t_cmd *pip);
 static int	search_export(char **exec_cmd, t_cmd *pip);
 static int	search_unset(char **exec_cmd, t_cmd *pip);
 
-int	parent_builtins(t_cmd *pip, char **exec_cmd, char **buf)
+int	parent_builtins(t_cmd *pip, char **exec_cmd)
 {
 	int	ret;
 
 	pip->builtin = FALSE;
 	if (ft_strlen(exec_cmd[0]) == 4 && ft_strncmp(exec_cmd[0], "exit", 4) == 0)
-		return (intermediate_exit(buf), -1);
-	ret = search_cd(buf, pip);
+		return (intermediate_exit(exec_cmd), -1);
+	ret = search_cd(exec_cmd, pip);
 	if (ret == -1)
 		return (-1);
 	if (ret == 1)
 		return (1);
-	ret = search_export(buf, pip);
+	ret = search_export(exec_cmd, pip);
 	if (ret == -1)
 		return (-1);
 	if (ret == 2)
 		return (2);
-	ret = search_unset(buf, pip);
+	ret = search_unset(exec_cmd, pip);
 	if (ret == -1)
 		return (-1);
 	if (ret == 3)

@@ -6,38 +6,26 @@
 /*   By: dbaule <dbaule@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/26 17:01:38 by eslamber          #+#    #+#             */
-/*   Updated: 2023/10/30 15:21:24 by dbaule           ###   ########.fr       */
+/*   Updated: 2023/10/30 16:27:00 by dbaule           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incs/minishell.h"
 #include "../../incs/echo.h"
 
-static int	dollar_check(char *arg);
 // static void	second_echo(t_echo *e, char **arg);
 
 void	echo(char **arg, int option)
 {
 	t_echo	e;
-	// int		j;
 
 	init_echo(&e);
 	if (option == 1)
 		e.i = position_echo_n(arg, &e.j, &e.flag, &option);
 	while (arg[e.i])
 	{
-		// j = 0;
-		if (dollar_check(arg[e.i]) == 0)
-			ft_printf("%s", arg[e.i]);
-		// else
-		// {
-			// while (arg[e.i][j])
-			// {
-			// 	if (arg[e.i][j] != '$')
-			// 		ft_printf("%c", arg[e.i][j]);
-			// 	j++;
-			// }
-		// }
+		ft_printf("%s", arg[e.i]);
+
 		e.i += 1;
 		if (arg[e.i])
 			ft_printf(" ");
@@ -62,19 +50,6 @@ void	echo(char **arg, int option)
 		ft_printf_fd(1, "\n");
 }
 
-static int	dollar_check(char *arg)
-{
-	int	i;
-
-	i = 0;
-	while (arg[i])
-	{
-		if (arg[i] == '$')
-			return (1);
-		i++;
-	}
-	return (0);
-}
 // {
 // 	if (arg[e->i][0] == '"')
 // 	{
