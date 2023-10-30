@@ -6,7 +6,7 @@
 /*   By: dbaule <dbaule@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 21:29:25 by dbaule            #+#    #+#             */
-/*   Updated: 2023/10/29 16:15:54 by dbaule           ###   ########.fr       */
+/*   Updated: 2023/10/30 10:48:50 by dbaule           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,11 +110,13 @@ static int	handle_builtins_parent(t_cmd *pip, t_exec *ex, t_list *spt)
 			return (free(ex->arg_count), 2);
 		if (ex->buf == NULL)
 			return (free(ex->arg_count), annihilation(spt, free, DEBUG), 1);
+		free(pip->here_pipe);
 		ex->value_ret = parent_builtins(pip, ex->buf);
 		if (ex->value_ret == -1)
 			return (annihilation(spt, free, DEBUG), free(ex->arg_count), \
 			anihilation(ex->buf), 1);
 		anihilation(ex->buf);
+		pip->ind_hd = -1;
 	}
 	return (0);
 }

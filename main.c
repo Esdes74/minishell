@@ -6,7 +6,7 @@
 /*   By: dbaule <dbaule@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 14:04:59 by eslamber          #+#    #+#             */
-/*   Updated: 2023/10/29 17:15:01 by dbaule           ###   ########.fr       */
+/*   Updated: 2023/10/30 11:25:58 by dbaule           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,9 @@ static int	initialise_main(t_main *main, t_cmd *pip, char **env)
 	pip->exp_env = NULL;
 	main->rd_line = NULL;
 	pip->flag = 0;
-	if (getenv("PATH") == NULL)
-		return (0);
+	pip->hd_history = NULL;
+	pip->ani_flag = 0;
+	g_status = 0;
 	if (cpy_env(env, pip) == 1)
 		return (1);
 	if (initialize_exp_env(pip, pip->env) == 1)
@@ -55,9 +56,6 @@ static int	initialise_main(t_main *main, t_cmd *pip, char **env)
 		anihilation(pip->save_path), 1);
 	using_history();
 	rl_bind_key('\t', rl_complete);
-	pip->hd_history = NULL;
-	pip->ani_flag = 0;
-	g_status = 0;
 	return (0);
 }
 

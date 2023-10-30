@@ -6,7 +6,7 @@
 /*   By: dbaule <dbaule@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 15:35:11 by eslamber          #+#    #+#             */
-/*   Updated: 2023/10/29 15:39:32 by dbaule           ###   ########.fr       */
+/*   Updated: 2023/10/30 10:57:59 by dbaule           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,8 @@ int				historic_fct(char *rd_line, t_cmd *pip);
 char			*verif_read(char *rd_line, t_cmd *pip);
 
 int				cpy_env(char **env, t_cmd *pip);
+
+int				check_heredoc(char **arg, t_cmd *struc);
 
 // Signals
 void			main_signals(void);
