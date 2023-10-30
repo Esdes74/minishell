@@ -6,7 +6,7 @@
 /*   By: dbaule <dbaule@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 11:08:50 by eslamber          #+#    #+#             */
-/*   Updated: 2023/10/28 21:53:37 by dbaule           ###   ########.fr       */
+/*   Updated: 2023/10/30 10:57:36 by dbaule           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@
 static int	init_redirection(t_red *r, char **arg, t_cmd *struc);
 static void	creat_tab(t_red *r, char **arg);
 static void	fill_tab(t_red *r, char **arg);
-static int	check_heredoc(char **arg, t_cmd *struc);
 
 char	**check_redirection(char **arg, t_cmd *struc)
 {
@@ -116,35 +115,4 @@ static void	fill_tab(t_red *r, char **arg)
 			r->tmp[r->j++] = arg[r->i];
 		r->i++;
 	}
-}
-
-// Cette fonction doit mettre en place le pipe du heredoc s'il y en a besoin,
-// pour le savoir elle check si la dernière redirection est un heredoc ou non
-static int	check_heredoc(char **arg, t_cmd *struc)
-{
-	int	i;
-
-	i = -1;
-	struc->heredoc = 0;
-	while (arg[++i])
-	{
-		if (arg[i][0] == '<')
-		{
-			if (arg[i][1] == '<')
-			{
-				struc->ind_hd++;
-				struc->heredoc = 1;
-			}
-			else
-				struc->heredoc = 0;
-		}
-	}
-	if (struc->heredoc == 0)
-		return (0);
-	struc->here_pipe = (int *)ft_calloc(2, sizeof(int));
-	if (struc->here_pipe != NULL && pipe(struc->here_pipe) == -1)
-		return (error(PIPE, "0"), 1);
-	else if (struc->here_pipe == NULL)
-		return (error(CALLOC, "0"), 1);
-	return (0);
 }
