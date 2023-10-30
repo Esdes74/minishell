@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution_center.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dbaule <dbaule@student.42.fr>              +#+  +:+       +#+        */
+/*   By: eslamber <eslamber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 21:29:25 by dbaule            #+#    #+#             */
-/*   Updated: 2023/10/30 16:52:54 by dbaule           ###   ########.fr       */
+/*   Updated: 2023/10/30 17:09:24 by eslamber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,6 @@ int	execution_center(t_list *spt, t_cmd *pip)
 	pid_t	*tab_pid;
 
 	if (initialise_exec_center(&ex, pip, spt) == 1)
-		return (1);
-	ex.arg_count = counting_arg(pip->nb_proc, spt);
-	if (ex.arg_count == NULL)
 		return (1);
 	ex.i = 0;
 	ex.statut = 0;
@@ -70,34 +67,15 @@ static int	exec_wait(t_exec *ex, t_cmd *pip, pid_t *tab_pid, t_list *spt)
 
 static int	exec_children(pid_t *tab_pid, t_exec *ex, t_cmd *pip, t_list *spt)
 {
-	int i;
-
-	i = 0;
 	free(tab_pid);
 	ex->exec_cmd = string_for_cmd_center(ex->arg_count, ex->i, spt);
 	free(ex->arg_count);
 	annihilation(spt, free, DEBUG);
-
 	ex->exec_cmd = check_redirection(ex->exec_cmd, pip);
 	if (ex->exec_cmd == NULL)
 		return (close_all_pipes(pip), 1);
-	while (ex->exec_cmd[i])
-	{
-		ex->exec_cmd[i] = trash_quote_buil_exec(ex->exec_cmd[i]);
-		if (ex->exec_cmd == NULL)
-			return (error(MALLOC, NULL), 1);
-		i++;
-	}
-	if (pip->nb_proc > 1)
-	{
-		if (ex->i > 0 && pip->in == FALSE)
-			if (dup2(pip->pipe[ex->i - 1][0], STDIN_FILENO) == -1)
-				return (1);
-		if (ex->i < pip->nb_pipe && pip->out == FALSE)
-			if (dup2(pip->pipe[ex->i][1], STDOUT_FILENO) == -1)
-				return (1);
-		close_all_pipes(pip);
-	}
+	if (trash_and_build(ex, pip) == 1)
+		return (1);
 	if (pip->here_pipe)
 		if (pip->flag != 1)
 			free(pip->here_pipe);
@@ -126,15 +104,8 @@ static int	handle_builtins_parent(t_cmd *pip, t_exec *ex, t_list *spt)
 				return (1);
 			i++;
 		}
-		if (ex->buf == NULL)
-			return (free(ex->arg_count), annihilation(spt, free, DEBUG), 1);
-		free(pip->here_pipe);
-		ex->value_ret = parent_builtins(pip, ex->buf);
-		if (ex->value_ret == -1)
-			return (annihilation(spt, free, DEBUG), free(ex->arg_count), \
-			anihilation(ex->buf), 1);
-		anihilation(ex->buf);
-		pip->ind_hd = -1;
+		if (handle_builtins_parent_bis(ex, pip, spt) == 1)
+			return (1);
 	}
 	return (0);
 }
@@ -156,5 +127,8 @@ static int	initialise_exec_center(t_exec *ex, t_cmd *pip, t_list *spt)
 	if (pip->status_hd == 2)
 		return (1);
 	unset_signals();
+	ex->arg_count = counting_arg(pip->nb_proc, spt);
+	if (ex->arg_count == NULL)
+		return (1);
 	return (0);
 }

@@ -6,7 +6,7 @@
 #    By: eslamber <eslamber@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/04 16:30:03 by eslamber          #+#    #+#              #
-#    Updated: 2023/10/30 09:36:05 by eslamber         ###   ########.fr        #
+#    Updated: 2023/10/30 17:23:35 by eslamber         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -68,6 +68,7 @@ SRC := main.c \
 	   $(VERIF)verif_read.c \
 	   $(VERIF)verif_read_utils_bis.c \
 	   $(VERIF)verif_read_utils.c \
+	   $(VERIF)trash_quote_buil_exec.c \
 	   $(BUILTINS)builtins_utils.c \
 	   $(BUILTINS)search_builtins.c \
 	   $(BUILTINS)builtins_parent.c \

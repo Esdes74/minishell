@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_center_simple.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dbaule <dbaule@student.42.fr>              +#+  +:+       +#+        */
+/*   By: eslamber <eslamber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/04 15:17:58 by eslamber          #+#    #+#             */
-/*   Updated: 2023/10/30 16:46:29 by dbaule           ###   ########.fr       */
+/*   Updated: 2023/10/30 16:56:24 by eslamber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 static int	execute_child(char **environ, char **str, t_cmd *pip);
 static int	in_case_execve_didnt_work(t_cmd *pip, DIR *dir, char *cmd);
-// static void	avoid_quote(int *j, char *str, char **new_str);
 
 int	cmd_center_simple(char **str, t_cmd *pip)
 {
@@ -61,44 +60,3 @@ static int	in_case_execve_didnt_work(t_cmd *pip, DIR *dir, char *cmd)
 	free(cmd);
 	return (0);
 }
-
-// char	*check_quote(char *str)
-// {
-// 	int		i;
-// 	int		j;
-// 	char	*new_str;
-
-// 	j = 0;
-// 	i = 0;
-// 	while (str[i] != '\0')
-// 	{
-// 		if (str[i] == '"' || str[i] == '\'')
-// 			j++;
-// 		i++;
-// 	}
-// 	if (j == 0)
-// 		return (str);
-// 	new_str = malloc(sizeof(char) * ((i - j) + 1));
-// 	if (!new_str)
-// 		return (error(MALLOC, "0"), NULL);
-// 	j = 0;
-// 	avoid_quote(&j, str, &new_str);
-// 	new_str[j] = '\0';
-// 	return (new_str);
-// }
-
-// static void	avoid_quote(int *j, char *str, char **new_str)
-// {
-// 	int	i;
-
-// 	i = 0;
-// 	while (str[i])
-// 	{
-// 		if (str[i] != '"' && str[i] != '\'')
-// 		{
-// 			new_str[0][*j] = str[i];
-// 			*j += 1;
-// 		}
-// 		i++;
-// 	}
-// }

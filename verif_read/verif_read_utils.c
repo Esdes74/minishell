@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   verif_read_utils.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dbaule <dbaule@student.42.fr>              +#+  +:+       +#+        */
+/*   By: eslamber <eslamber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 11:08:50 by eslamber          #+#    #+#             */
-/*   Updated: 2023/10/30 16:10:12 by dbaule           ###   ########.fr       */
+/*   Updated: 2023/10/30 17:13:27 by eslamber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,64 +119,4 @@ char	*trash_quote(char *str)
 	}
 	new_str[j] = '\0';
 	return (new_str);
-}
-
-
-char    *trash_quote_buil_exec(char *str)
-{
-    int		i;
-    int		j;
-    char	*new_str;
-    int		flag;
-
-    j = 0;
-    i = 0;
-    flag = 0;
-    while (str[i] != '\0')
-    {
-        if (str[i] == '"' && flag == 0)
-        {
-            j++;
-            flag = 1;
-        }
-        else if (str[i] == '\'' && flag == 0)
-        {
-            j++;
-            flag = 2;
-        }
-        else if (str[i] == '"' && flag == 1)
-        {
-            j++;
-            flag = 0;
-        }
-        else if (str[i] == '\'' && flag == 2)
-        {
-            j++;
-            flag = 0;
-        }
-        i++;
-    }
-    new_str = malloc(sizeof(char) * ((i - j) + 1));
-    if (!new_str)
-        return (NULL);
-    i = 0;
-    j = 0;
-    flag = 0;
-    while (str[i])
-    {
-        if (str[i] == '"' && flag == 0)
-            flag = 1;
-        else if (str[i] == '\'' && flag == 0)
-            flag = 2;
-        else if (str[i] == '"' && flag == 1)
-            flag = 0;
-        else if (str[i] == '\'' && flag == 2)
-            flag = 0;
-        if ((flag == 2 && str[i] != '\'') || (flag == 1 && str[i] != '"') || (flag == 0 && str[i] != '"' && str[i] != '\''))
-            new_str[j++] = str[i];
-        i++;
-    }
-    new_str[j] = '\0';
-	free(str);
-    return (new_str);
 }
