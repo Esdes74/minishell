@@ -6,7 +6,7 @@
 /*   By: dbaule <dbaule@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 11:08:50 by eslamber          #+#    #+#             */
-/*   Updated: 2023/10/30 13:32:16 by dbaule           ###   ########.fr       */
+/*   Updated: 2023/10/30 15:21:02 by dbaule           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,12 +57,16 @@ static int	init_redirection(t_red *r, char **arg, t_cmd *struc)
 	r->i = 0;
 	while (arg[r->i])
 	{
-		// if (arg[r->i][0] == '"' || arg[r->i][0] == '\'')
-		// 	r->buf[r->i] = ft_strdup(arg[r->i]);
-		// else
-		r->buf[r->i] = trash_quote(arg[r->i]);
-		// ft_printf_fd(2, "valeur de arg[r->i] %s et r->i %d\n", arg[r->i], r->i);
-		r->i += 1;
+		if (arg[r->i][0] == '"' || arg[r->i][0] == '\'')
+			r->buf[r->i] = ft_strdup(arg[r->i]);
+		else
+			r->buf[r->i] = trash_quote(arg[r->i]);
+		r->i++;
+		if (arg[r->i][0] == '"' || arg[r->i][0] == '\'')
+			r->buf[r->i] = ft_strdup(arg[r->i]);
+		else
+			r->buf[r->i] = trash_quote(arg[r->i]);
+		r->i++;
 	}
 	r->buf[r->i] = NULL;
 	r->i = 0;

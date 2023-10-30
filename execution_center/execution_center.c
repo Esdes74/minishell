@@ -6,7 +6,7 @@
 /*   By: eslamber <eslamber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 21:29:25 by dbaule            #+#    #+#             */
-/*   Updated: 2023/10/30 14:55:41 by eslamber         ###   ########.fr       */
+/*   Updated: 2023/10/30 15:24:59 by eslamber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,12 @@ static int	handle_builtins_parent(t_cmd *pip, t_exec *ex, t_list *spt)
 		if (ex->buf == NULL)
 			return (free(ex->arg_count), annihilation(spt, free, DEBUG), 1);
 		free(pip->here_pipe);
-		ex->value_ret = parent_builtins(pip, ex->buf);
+		while (ex->buf[i])
+		{
+			ex->exec_cmd = trash_quote(ex->buf);
+			i++;
+		}
+		ex->value_ret = parent_builtins(pip, ex->buf, ex->exec_cmd);
 		if (ex->value_ret == -1)
 			return (annihilation(spt, free, DEBUG), free(ex->arg_count), \
 			anihilation(ex->buf), 1);
