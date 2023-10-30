@@ -6,7 +6,7 @@
 /*   By: dbaule <dbaule@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 21:29:25 by dbaule            #+#    #+#             */
-/*   Updated: 2023/10/30 16:52:54 by dbaule           ###   ########.fr       */
+/*   Updated: 2023/10/30 17:10:48 by dbaule           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,8 +84,8 @@ static int	exec_children(pid_t *tab_pid, t_exec *ex, t_cmd *pip, t_list *spt)
 	while (ex->exec_cmd[i])
 	{
 		ex->exec_cmd[i] = trash_quote_buil_exec(ex->exec_cmd[i]);
-		if (ex->exec_cmd == NULL)
-			return (error(MALLOC, NULL), 1);
+		if (ex->exec_cmd[i] == NULL)
+			return (error(MALLOC, "0"), anihilation(ex->exec_cmd), 1);
 		i++;
 	}
 	if (pip->nb_proc > 1)
@@ -119,21 +119,21 @@ static int	handle_builtins_parent(t_cmd *pip, t_exec *ex, t_list *spt)
 		ex->buf = check_redirection_parent(ex->exec_cmd, pip);
 		if (pip->flag == 1 && ex->buf == NULL)
 			return (free(ex->arg_count), 2);
+		if (ex->buf == NULL)
+			return (free(ex->arg_count), annihilation(spt, free, DEBUG), 1);
 		while (ex->buf[i])
 		{
 			ex->buf[i] = trash_quote_buil_exec(ex->buf[i]);
-			if (ex->buf[0] == NULL)
-				return (1);
+			if (ex->buf[i] == NULL)
+				return (error(MALLOC, "0"), anihilation(ex->buf), \
+				annihilation(spt, free, DEBUG), free(ex->arg_count), 1);
 			i++;
 		}
-		if (ex->buf == NULL)
-			return (free(ex->arg_count), annihilation(spt, free, DEBUG), 1);
 		free(pip->here_pipe);
 		ex->value_ret = parent_builtins(pip, ex->buf);
-		if (ex->value_ret == -1)
-			return (annihilation(spt, free, DEBUG), free(ex->arg_count), \
-			anihilation(ex->buf), 1);
 		anihilation(ex->buf);
+		if (ex->value_ret == -1)
+			return (annihilation(spt, free, DEBUG), free(ex->arg_count), 1);
 		pip->ind_hd = -1;
 	}
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: dbaule <dbaule@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 11:08:50 by eslamber          #+#    #+#             */
-/*   Updated: 2023/10/30 16:10:12 by dbaule           ###   ########.fr       */
+/*   Updated: 2023/10/30 17:14:38 by dbaule           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -158,7 +158,7 @@ char    *trash_quote_buil_exec(char *str)
     }
     new_str = malloc(sizeof(char) * ((i - j) + 1));
     if (!new_str)
-        return (NULL);
+        return (free(str), NULL);
     i = 0;
     j = 0;
     flag = 0;
