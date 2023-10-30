@@ -6,26 +6,25 @@
 /*   By: dbaule <dbaule@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/31 10:31:07 by dbaule            #+#    #+#             */
-/*   Updated: 2023/10/29 17:03:54 by dbaule           ###   ########.fr       */
+/*   Updated: 2023/10/30 14:43:09 by dbaule           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incs/minishell.h"
 #include "../incs/builtins.h"
 
-static unsigned char	intermediate_exit_bis(char *new_tmp, \
-long *ret, char **tmp);
+static unsigned char	intermediate_exit_bis(long *ret, char **tmp);
 
 unsigned char	intermediate_exit(char **tmp)
 {
-	char			*new_tmp;
+	// char			*new_tmp;
 	long			ret_value;
 	int				len;
 	unsigned char	ret;
 
 	len = 0;
 	ret = 0;
-	new_tmp = NULL;
+	// new_tmp = NULL;
 	if (tmp == NULL)
 		return (exitt(0));
 	while (tmp[len])
@@ -33,7 +32,7 @@ unsigned char	intermediate_exit(char **tmp)
 	if (len == 1)
 		return (exitt(0));
 	else
-		ret = intermediate_exit_bis(new_tmp, &ret_value, tmp);
+		ret = intermediate_exit_bis(&ret_value, tmp);
 	if (ret != 0)
 		return (ret);
 	if (len > 2)
@@ -41,28 +40,27 @@ unsigned char	intermediate_exit(char **tmp)
 	return (exitt((unsigned char) ret_value));
 }
 
-static unsigned char	intermediate_exit_bis(char *new_tmp, long *ret, \
-char **tmp)
+static unsigned char	intermediate_exit_bis(long *ret, char **tmp)
 {
 	int		i;
 	char	*buf;
 
 	buf = (char *) tmp[1];
-	new_tmp = check_quote(buf);
-	if (new_tmp == NULL)
-		return (1);
-	if (new_tmp != tmp[1])
+	// new_tmp = tra_quote(buf);
+	// if (new_tmp == NULL)
+	// 	return (1);
+	if (buf != tmp[1])
 		free(tmp[1]);
-	tmp[1] = new_tmp;
+	tmp[1] = buf;
 	i = 0;
-	while (new_tmp[i])
+	while (buf[i])
 	{
-		if (!ft_isdigit(new_tmp[i]))
-			if (i > 0 || (i == 0 && new_tmp[i] != '-' && new_tmp[i] != '+'))
+		if (!ft_isdigit(buf[i]))
+			if (i > 0 || (i == 0 && buf[i] != '-' && buf[i] != '+'))
 				return (error(NUM_ARG, "0"), exitt(2));
 		i++;
 	}
-	*ret = ft_atoi(new_tmp);
+	*ret = ft_atoi(buf);
 	if (*ret == 0 && ft_strlen(buf) > 2 && check_zero(buf) == 0)
 		return (ft_printf_fd(2, "Error : %s numeric argument required", buf) \
 		, exitt(2));
