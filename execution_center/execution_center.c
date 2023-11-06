@@ -129,6 +129,8 @@ static int	initialise_exec_center(t_exec *ex, t_cmd *pip, t_list *spt)
 	pip->hd_history = prep_hd(pip, spt);
 	if (pip->status_hd == 2)
 		return (1);
+	if (pip->status_hd == 2 && pip->hd_history == NULL)
+		return (0);
 	unset_signals();
 	ex->arg_count = counting_arg(pip->nb_proc, spt);
 	if (ex->arg_count == NULL)

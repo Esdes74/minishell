@@ -36,7 +36,6 @@ int	verif_status_hd(t_prep *p, t_cmd *pip)
 			ft_printf("\n");
 		}
 		free(p->buff);
-		free(p->buf);
 		free(p->rd_line);
 		pip->status_hd = 1;
 		return (1);

@@ -71,7 +71,6 @@ int	handle_builtins_parent_bis(t_exec *ex, t_cmd *pip, t_list *spt)
 {
 	if (ex->buf == NULL)
 		return (free(ex->arg_count), annihilation(spt, free, DEBUG), 1);
-	free(pip->here_pipe);
 	ex->value_ret = parent_builtins(pip, ex->buf);
 	if (ex->value_ret == -1)
 		return (annihilation(spt, free, DEBUG), free(ex->arg_count), \
